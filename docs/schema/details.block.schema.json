@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "blocked": {
+      "enum": [
+        "shot",
+        "pass"
+      ],
+      "title": "Blocked",
+      "type": "string"
+    },
+    "shooter_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Shooter Id"
+    },
+    "passer_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Passer Id"
+    }
+  },
+  "required": [
+    "blocked"
+  ],
+  "title": "BlockDetails",
+  "type": "object"
+}

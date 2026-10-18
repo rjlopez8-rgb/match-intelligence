@@ -1,0 +1,65 @@
+{
+  "$defs": {
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "description": "metres along the pitch length",
+          "maximum": 110,
+          "minimum": -5,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "metres along the pitch width",
+          "maximum": 73,
+          "minimum": -5,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Location",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "end_location": {
+      "$ref": "#/$defs/Location"
+    },
+    "distance_m": {
+      "title": "Distance M",
+      "type": "number"
+    },
+    "duration_s": {
+      "title": "Duration S",
+      "type": "number"
+    },
+    "progression_m": {
+      "title": "Progression M",
+      "type": "number"
+    },
+    "max_speed_kmh": {
+      "title": "Max Speed Kmh",
+      "type": "number"
+    },
+    "under_pressure": {
+      "title": "Under Pressure",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "end_location",
+    "distance_m",
+    "duration_s",
+    "progression_m",
+    "max_speed_kmh",
+    "under_pressure"
+  ],
+  "title": "CarryDetails",
+  "type": "object"
+}

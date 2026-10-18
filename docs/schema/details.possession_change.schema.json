@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "from_team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "From Team Id"
+    },
+    "how": {
+      "title": "How",
+      "type": "string"
+    },
+    "previous_duration_s": {
+      "title": "Previous Duration S",
+      "type": "number"
+    },
+    "previous_completed_passes": {
+      "title": "Previous Completed Passes",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "from_team_id",
+    "how",
+    "previous_duration_s",
+    "previous_completed_passes"
+  ],
+  "title": "PossessionChangeDetails",
+  "type": "object"
+}

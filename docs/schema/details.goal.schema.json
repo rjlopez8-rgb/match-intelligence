@@ -1,0 +1,109 @@
+{
+  "$defs": {
+    "Score": {
+      "additionalProperties": false,
+      "properties": {
+        "home": {
+          "title": "Home",
+          "type": "integer"
+        },
+        "away": {
+          "title": "Away",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "scorer_id": {
+      "title": "Scorer Id",
+      "type": "string"
+    },
+    "scorer_name": {
+      "title": "Scorer Name",
+      "type": "string"
+    },
+    "assist_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Assist Id"
+    },
+    "assist_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Assist Name"
+    },
+    "shot_kind": {
+      "title": "Shot Kind",
+      "type": "string"
+    },
+    "body_part": {
+      "enum": [
+        "head",
+        "foot"
+      ],
+      "title": "Body Part",
+      "type": "string"
+    },
+    "xg": {
+      "title": "Xg",
+      "type": "number"
+    },
+    "big_chance": {
+      "title": "Big Chance",
+      "type": "boolean"
+    },
+    "shot_event_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Shot Event Id"
+    },
+    "new_score": {
+      "$ref": "#/$defs/Score"
+    },
+    "minute_display": {
+      "title": "Minute Display",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scorer_id",
+    "scorer_name",
+    "assist_id",
+    "assist_name",
+    "shot_kind",
+    "body_part",
+    "xg",
+    "big_chance",
+    "shot_event_id",
+    "new_score",
+    "minute_display"
+  ],
+  "title": "GoalDetails",
+  "type": "object"
+}

@@ -1,0 +1,406 @@
+{
+  "matches": 24,
+  "passed": 15,
+  "total": 22,
+  "rows": [
+    {
+      "key": "goals",
+      "label": "Goals",
+      "mean": 1.75,
+      "sd": 1.346,
+      "low": 1.2,
+      "high": 1.65,
+      "ok": false
+    },
+    {
+      "key": "xg",
+      "label": "Expected goals (xG)",
+      "mean": 1.713,
+      "sd": 1.034,
+      "low": 1.2,
+      "high": 1.65,
+      "ok": false
+    },
+    {
+      "key": "shots",
+      "label": "Shots",
+      "mean": 11.625,
+      "sd": 5.476,
+      "low": 11.0,
+      "high": 14.5,
+      "ok": true
+    },
+    {
+      "key": "shots_on_target",
+      "label": "Shots on target",
+      "mean": 4.604,
+      "sd": 2.531,
+      "low": 3.6,
+      "high": 5.2,
+      "ok": true
+    },
+    {
+      "key": "conversion",
+      "label": "Goals per shot",
+      "mean": 0.151,
+      "sd": 0.117,
+      "low": 0.09,
+      "high": 0.125,
+      "ok": false
+    },
+    {
+      "key": "passes",
+      "label": "Passes",
+      "mean": 383.333,
+      "sd": 143.087,
+      "low": 380.0,
+      "high": 560.0,
+      "ok": true
+    },
+    {
+      "key": "pass_completion",
+      "label": "Pass completion",
+      "mean": 0.831,
+      "sd": 0.051,
+      "low": 0.77,
+      "high": 0.86,
+      "ok": true
+    },
+    {
+      "key": "crosses",
+      "label": "Crosses (open play + set piece)",
+      "mean": 10.396,
+      "sd": 5.306,
+      "low": 12.0,
+      "high": 22.0,
+      "ok": false
+    },
+    {
+      "key": "corners",
+      "label": "Corners",
+      "mean": 4.167,
+      "sd": 2.585,
+      "low": 4.2,
+      "high": 6.2,
+      "ok": false
+    },
+    {
+      "key": "fouls",
+      "label": "Fouls committed",
+      "mean": 11.667,
+      "sd": 4.789,
+      "low": 9.0,
+      "high": 12.5,
+      "ok": true
+    },
+    {
+      "key": "yellow_cards",
+      "label": "Yellow cards",
+      "mean": 2.25,
+      "sd": 1.639,
+      "low": 1.4,
+      "high": 2.3,
+      "ok": true
+    },
+    {
+      "key": "offsides",
+      "label": "Offsides",
+      "mean": 1.562,
+      "sd": 1.526,
+      "low": 1.2,
+      "high": 2.6,
+      "ok": true
+    },
+    {
+      "key": "tackles",
+      "label": "Tackles",
+      "mean": 12.104,
+      "sd": 5.157,
+      "low": 14.0,
+      "high": 22.0,
+      "ok": false
+    },
+    {
+      "key": "interceptions",
+      "label": "Interceptions",
+      "mean": 11.688,
+      "sd": 4.027,
+      "low": 7.0,
+      "high": 14.0,
+      "ok": true
+    },
+    {
+      "key": "clearances",
+      "label": "Clearances",
+      "mean": 12.958,
+      "sd": 7.326,
+      "low": 12.0,
+      "high": 26.0,
+      "ok": true
+    },
+    {
+      "key": "pressures",
+      "label": "Pressures",
+      "mean": 130.5,
+      "sd": 35.562,
+      "low": 120.0,
+      "high": 190.0,
+      "ok": true
+    },
+    {
+      "key": "dribbles",
+      "label": "Take-ons attempted",
+      "mean": 8.396,
+      "sd": 6.457,
+      "low": 7.0,
+      "high": 15.0,
+      "ok": true
+    },
+    {
+      "key": "aerials_won",
+      "label": "Aerial duels won",
+      "mean": 17.333,
+      "sd": 6.631,
+      "low": 12.0,
+      "high": 22.0,
+      "ok": true
+    },
+    {
+      "key": "distance_km",
+      "label": "Distance covered (km, incl. subs)",
+      "mean": 102.938,
+      "sd": 5.657,
+      "low": 104.0,
+      "high": 118.0,
+      "ok": false
+    },
+    {
+      "key": "sprints",
+      "label": "Sprints (>25.2 km/h, >1 s)",
+      "mean": 195.771,
+      "sd": 56.248,
+      "low": 110.0,
+      "high": 260.0,
+      "ok": true
+    },
+    {
+      "key": "ball_in_play_min",
+      "label": "Ball in play (minutes)",
+      "mean": 56.867,
+      "sd": 8.975,
+      "low": 52.0,
+      "high": 60.0,
+      "ok": true
+    },
+    {
+      "key": "added_time_total",
+      "label": "Added time (minutes, both halves)",
+      "mean": 9.458,
+      "sd": 1.755,
+      "low": 5.0,
+      "high": 11.0,
+      "ok": true
+    }
+  ],
+  "results": {
+    "home_win": 0.458,
+    "draw": 0.208,
+    "away_win": 0.333,
+    "goals_per_match": 3.5,
+    "max_goals": 7
+  },
+  "matches_detail": [
+    {
+      "fixture": "RIV-KIN",
+      "seed": 1000,
+      "score": {
+        "home": 1,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "ASH-RIV",
+      "seed": 1001,
+      "score": {
+        "home": 3,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "RIV-NGC",
+      "seed": 1002,
+      "score": {
+        "home": 2,
+        "away": 0
+      }
+    },
+    {
+      "fixture": "WES-RIV",
+      "seed": 1003,
+      "score": {
+        "home": 5,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "RIV-CRW",
+      "seed": 1004,
+      "score": {
+        "home": 3,
+        "away": 4
+      }
+    },
+    {
+      "fixture": "SAL-RIV",
+      "seed": 1005,
+      "score": {
+        "home": 2,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "RIV-ELM",
+      "seed": 1006,
+      "score": {
+        "home": 3,
+        "away": 2
+      }
+    },
+    {
+      "fixture": "ASH-KIN",
+      "seed": 1007,
+      "score": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    {
+      "fixture": "KIN-NGC",
+      "seed": 1008,
+      "score": {
+        "home": 0,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "WES-KIN",
+      "seed": 1009,
+      "score": {
+        "home": 1,
+        "away": 2
+      }
+    },
+    {
+      "fixture": "KIN-CRW",
+      "seed": 1010,
+      "score": {
+        "home": 1,
+        "away": 4
+      }
+    },
+    {
+      "fixture": "SAL-KIN",
+      "seed": 1011,
+      "score": {
+        "home": 1,
+        "away": 3
+      }
+    },
+    {
+      "fixture": "KIN-ELM",
+      "seed": 1012,
+      "score": {
+        "home": 5,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "NGC-ASH",
+      "seed": 1013,
+      "score": {
+        "home": 0,
+        "away": 2
+      }
+    },
+    {
+      "fixture": "ASH-WES",
+      "seed": 1014,
+      "score": {
+        "home": 1,
+        "away": 3
+      }
+    },
+    {
+      "fixture": "CRW-ASH",
+      "seed": 1015,
+      "score": {
+        "home": 2,
+        "away": 0
+      }
+    },
+    {
+      "fixture": "ASH-SAL",
+      "seed": 1016,
+      "score": {
+        "home": 4,
+        "away": 0
+      }
+    },
+    {
+      "fixture": "ELM-ASH",
+      "seed": 1017,
+      "score": {
+        "home": 2,
+        "away": 2
+      }
+    },
+    {
+      "fixture": "NGC-WES",
+      "seed": 1018,
+      "score": {
+        "home": 1,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "CRW-NGC",
+      "seed": 1019,
+      "score": {
+        "home": 4,
+        "away": 0
+      }
+    },
+    {
+      "fixture": "NGC-SAL",
+      "seed": 1020,
+      "score": {
+        "home": 1,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "ELM-NGC",
+      "seed": 1021,
+      "score": {
+        "home": 2,
+        "away": 3
+      }
+    },
+    {
+      "fixture": "WES-CRW",
+      "seed": 1022,
+      "score": {
+        "home": 3,
+        "away": 1
+      }
+    },
+    {
+      "fixture": "SAL-WES",
+      "seed": 1023,
+      "score": {
+        "home": 2,
+        "away": 1
+      }
+    }
+  ]
+}

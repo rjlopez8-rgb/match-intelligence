@@ -1,0 +1,128 @@
+{
+  "$defs": {
+    "FrameBall": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "title": "Z",
+          "type": "number"
+        },
+        "speed_ms": {
+          "title": "Speed Ms",
+          "type": "number"
+        },
+        "state": {
+          "enum": [
+            "held",
+            "flight",
+            "loose",
+            "dead"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "owner_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner Id"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z",
+        "speed_ms",
+        "state",
+        "owner_id"
+      ],
+      "title": "FrameBall",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "frame": {
+      "title": "Frame",
+      "type": "integer"
+    },
+    "period": {
+      "enum": [
+        1,
+        2
+      ],
+      "title": "Period",
+      "type": "integer"
+    },
+    "t": {
+      "title": "T",
+      "type": "number"
+    },
+    "clock": {
+      "title": "Clock",
+      "type": "string"
+    },
+    "ball": {
+      "$ref": "#/$defs/FrameBall"
+    },
+    "possession_team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Possession Team Id"
+    },
+    "players": {
+      "description": "[player_id, x, y, speed_m_per_s] for every player on the pitch",
+      "items": {
+        "maxItems": 4,
+        "minItems": 4,
+        "prefixItems": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "type": "array"
+      },
+      "title": "Players",
+      "type": "array"
+    }
+  },
+  "required": [
+    "frame",
+    "period",
+    "t",
+    "clock",
+    "ball",
+    "possession_team_id",
+    "players"
+  ],
+  "title": "TrackingFrame",
+  "type": "object"
+}

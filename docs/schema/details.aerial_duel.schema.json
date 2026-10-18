@@ -1,0 +1,33 @@
+{
+  "$defs": {
+    "Truth": {
+      "additionalProperties": true,
+      "description": "Simulator ground truth. Never display or use as a model feature.",
+      "properties": {},
+      "title": "Truth",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "opponent_id": {
+      "title": "Opponent Id",
+      "type": "string"
+    },
+    "outcome": {
+      "const": "won",
+      "title": "Outcome",
+      "type": "string"
+    },
+    "truth": {
+      "$ref": "#/$defs/Truth"
+    }
+  },
+  "required": [
+    "opponent_id",
+    "outcome",
+    "truth"
+  ],
+  "title": "AerialDetails",
+  "type": "object"
+}

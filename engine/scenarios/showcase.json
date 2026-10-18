@@ -1,0 +1,36 @@
+{
+  "name": "showcase",
+  "description": "The demo match. Riverside Athletic host Kingsport United, led by former Riverside striker Rafael Duarte. Riverside fall behind, then captain Kwame Mensah ends his goal drought in a comeback win.",
+  "home": "RIV",
+  "away": "KIN",
+  "incidents": [
+    {
+      "minute": 62,
+      "kind": "tactics",
+      "team": "away",
+      "changes": {
+        "line_height": 0.22,
+        "pressing": 0.28
+      },
+      "reason": "sitting on the lead",
+      "description": "Viktor Hale drops Kingsport into a deep block to protect the lead.",
+      "condition": "leading"
+    },
+    {
+      "minute": 66,
+      "kind": "momentum",
+      "team": "home",
+      "value": 0.25,
+      "condition": "trailing"
+    }
+  ],
+  "storyline": {
+    "result": "home_win",
+    "trailing_at": [
+      "home",
+      55
+    ],
+    "scorer": "riv-10"
+  },
+  "seed": null
+}

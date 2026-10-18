@@ -1,0 +1,11 @@
+{
+  "name": "injury_drama",
+  "description": "Riverside lose Kwame Mensah to injury after half an hour and have to reshape.",
+  "home": "RIV",
+  "away": "KIN",
+  "incidents": [
+    {"minute": 31, "kind": "injury", "team": "home", "player_id": "riv-10"}
+  ],
+  "storyline": null,
+  "seed": 7
+}

@@ -1,0 +1,171 @@
+{
+  "$defs": {
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "description": "metres along the pitch length",
+          "maximum": 110,
+          "minimum": -5,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "metres along the pitch width",
+          "maximum": 73,
+          "minimum": -5,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "Truth": {
+      "additionalProperties": true,
+      "description": "Simulator ground truth. Never display or use as a model feature.",
+      "properties": {},
+      "title": "Truth",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "recipient_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Recipient Id"
+    },
+    "recipient_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Recipient Name"
+    },
+    "end_location": {
+      "$ref": "#/$defs/Location"
+    },
+    "length_m": {
+      "title": "Length M",
+      "type": "number"
+    },
+    "angle_deg": {
+      "description": "direction of travel in pitch coordinates, degrees",
+      "title": "Angle Deg",
+      "type": "number"
+    },
+    "progression_m": {
+      "description": "metres gained towards the opponent's goal",
+      "title": "Progression M",
+      "type": "number"
+    },
+    "height": {
+      "enum": [
+        "ground",
+        "low",
+        "high"
+      ],
+      "title": "Height",
+      "type": "string"
+    },
+    "pass_kind": {
+      "description": "ground | back | through | long | switch | cross | cutback | corner | free_kick | free_kick_cross | throw_in | goal_kick | kick_off | keeper_distribution",
+      "title": "Pass Kind",
+      "type": "string"
+    },
+    "restart_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Restart Type"
+    },
+    "release_speed_kmh": {
+      "title": "Release Speed Kmh",
+      "type": "number"
+    },
+    "under_pressure": {
+      "title": "Under Pressure",
+      "type": "boolean"
+    },
+    "nearest_opponent_m": {
+      "title": "Nearest Opponent M",
+      "type": "number"
+    },
+    "outcome": {
+      "enum": [
+        "complete",
+        "incomplete",
+        "intercepted",
+        "out",
+        "offside"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "intercepted_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Intercepted By"
+    },
+    "completed_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completed By"
+    },
+    "truth": {
+      "$ref": "#/$defs/Truth"
+    }
+  },
+  "required": [
+    "recipient_id",
+    "recipient_name",
+    "end_location",
+    "length_m",
+    "angle_deg",
+    "progression_m",
+    "height",
+    "pass_kind",
+    "restart_type",
+    "release_speed_kmh",
+    "under_pressure",
+    "nearest_opponent_m",
+    "outcome",
+    "truth"
+  ],
+  "title": "PassDetails",
+  "type": "object"
+}

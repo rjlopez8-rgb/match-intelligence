@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "enum": [
+        "catch",
+        "parry"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "shot_speed_kmh": {
+      "title": "Shot Speed Kmh",
+      "type": "number"
+    },
+    "shooter_id": {
+      "title": "Shooter Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "shot_speed_kmh",
+    "shooter_id"
+  ],
+  "title": "SaveDetails",
+  "type": "object"
+}

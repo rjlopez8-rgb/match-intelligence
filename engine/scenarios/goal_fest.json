@@ -1,0 +1,9 @@
+{
+  "name": "goal_fest",
+  "description": "Two high-pressing, high-line sides: Crowmoor Wanderers v Northgate City. Expect chaos.",
+  "home": "CRW",
+  "away": "NGC",
+  "incidents": [],
+  "storyline": {"min_goals": 5},
+  "seed": null
+}

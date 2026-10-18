@@ -1,0 +1,253 @@
+{
+  "$defs": {
+    "EventType": {
+      "enum": [
+        "match_start",
+        "period_start",
+        "kick_off",
+        "pass",
+        "carry",
+        "dribble",
+        "pressure",
+        "tackle",
+        "interception",
+        "ball_recovery",
+        "miscontrol",
+        "clearance",
+        "block",
+        "aerial_duel",
+        "shot",
+        "save",
+        "keeper_claim",
+        "goal",
+        "foul",
+        "card",
+        "ball_out",
+        "offside",
+        "possession_change",
+        "substitution",
+        "tactical_change",
+        "added_time",
+        "period_end",
+        "match_end"
+      ],
+      "title": "EventType",
+      "type": "string"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "description": "metres along the pitch length",
+          "maximum": 110,
+          "minimum": -5,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "metres along the pitch width",
+          "maximum": 73,
+          "minimum": -5,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "Possession": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "team_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Team Id"
+        },
+        "play_pattern": {
+          "description": "how the possession started, e.g. regular_play, from_corner",
+          "title": "Play Pattern",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "team_id",
+        "play_pattern"
+      ],
+      "title": "Possession",
+      "type": "object"
+    },
+    "Score": {
+      "additionalProperties": false,
+      "properties": {
+        "home": {
+          "title": "Home",
+          "type": "integer"
+        },
+        "away": {
+          "title": "Away",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "event_id": {
+      "description": "unique id: <match_id>-<seq>",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "match_id": {
+      "title": "Match Id",
+      "type": "string"
+    },
+    "seq": {
+      "description": "publication order",
+      "minimum": 1,
+      "title": "Seq",
+      "type": "integer"
+    },
+    "type": {
+      "$ref": "#/$defs/EventType"
+    },
+    "period": {
+      "enum": [
+        1,
+        2
+      ],
+      "title": "Period",
+      "type": "integer"
+    },
+    "t": {
+      "description": "seconds since the start of the period when the action began",
+      "minimum": 0,
+      "title": "T",
+      "type": "number"
+    },
+    "minute": {
+      "title": "Minute",
+      "type": "integer"
+    },
+    "second": {
+      "title": "Second",
+      "type": "integer"
+    },
+    "clock": {
+      "description": "broadcast clock, e.g. '67:12' or '90:00+2:31'",
+      "title": "Clock",
+      "type": "string"
+    },
+    "minute_display": {
+      "description": "e.g. \"68'\" or \"90+3'\"",
+      "title": "Minute Display",
+      "type": "string"
+    },
+    "elapsed_s": {
+      "description": "seconds since kick-off including half-time, for real-time pacing",
+      "title": "Elapsed S",
+      "type": "number"
+    },
+    "team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Team Id"
+    },
+    "player_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Player Id"
+    },
+    "player_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Player Name"
+    },
+    "location": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Location"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "possession": {
+      "$ref": "#/$defs/Possession"
+    },
+    "score": {
+      "$ref": "#/$defs/Score"
+    },
+    "details": {
+      "additionalProperties": true,
+      "title": "Details",
+      "type": "object"
+    }
+  },
+  "required": [
+    "event_id",
+    "match_id",
+    "seq",
+    "type",
+    "period",
+    "t",
+    "minute",
+    "second",
+    "clock",
+    "minute_display",
+    "elapsed_s",
+    "team_id",
+    "player_id",
+    "player_name",
+    "location",
+    "possession",
+    "score",
+    "details"
+  ],
+  "title": "MatchEvent",
+  "type": "object"
+}

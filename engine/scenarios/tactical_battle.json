@@ -1,0 +1,9 @@
+{
+  "name": "tactical_battle",
+  "description": "Northgate's possession game against Saltmarsh's deep block: control vs. chaos.",
+  "home": "NGC",
+  "away": "SAL",
+  "incidents": [],
+  "storyline": {"max_goals": 1},
+  "seed": null
+}

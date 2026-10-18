@@ -1,0 +1,59 @@
+{
+  "$defs": {
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "description": "metres along the pitch length",
+          "maximum": 110,
+          "minimum": -5,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "metres along the pitch width",
+          "maximum": 73,
+          "minimum": -5,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Location",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "end_location": {
+      "$ref": "#/$defs/Location"
+    },
+    "body_part": {
+      "enum": [
+        "foot",
+        "head"
+      ],
+      "title": "Body Part",
+      "type": "string"
+    },
+    "height": {
+      "enum": [
+        "ground",
+        "low",
+        "high"
+      ],
+      "title": "Height",
+      "type": "string"
+    }
+  },
+  "required": [
+    "end_location",
+    "body_part",
+    "height"
+  ],
+  "title": "ClearanceDetails",
+  "type": "object"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "red_card_turnaround",
+  "description": "Kingsport captain Marcus Bell is sent off just before the hour and the game swings.",
+  "home": "RIV",
+  "away": "KIN",
+  "incidents": [
+    {"minute": 57, "kind": "red_card", "team": "away", "player_id": "kin-03"}
+  ],
+  "storyline": {"result": "home_win", "trailing_at": ["home", 55]},
+  "seed": null
+}

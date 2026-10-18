@@ -1,0 +1,48 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "line": {
+      "title": "Line",
+      "type": "string"
+    },
+    "last_touch_team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Last Touch Team Id"
+    },
+    "restart": {
+      "enum": [
+        "throw_in",
+        "goal_kick",
+        "corner"
+      ],
+      "title": "Restart",
+      "type": "string"
+    },
+    "restart_team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Restart Team Id"
+    }
+  },
+  "required": [
+    "line",
+    "last_touch_team_id",
+    "restart",
+    "restart_team_id"
+  ],
+  "title": "BallOutDetails",
+  "type": "object"
+}

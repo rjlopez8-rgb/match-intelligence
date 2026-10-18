@@ -1,0 +1,40 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "manager": {
+      "title": "Manager",
+      "type": "string"
+    },
+    "before": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Before",
+      "type": "object"
+    },
+    "after": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "After",
+      "type": "object"
+    }
+  },
+  "required": [
+    "reason",
+    "description",
+    "manager",
+    "before",
+    "after"
+  ],
+  "title": "TacticalChangeDetails",
+  "type": "object"
+}

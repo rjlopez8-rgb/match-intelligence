@@ -1,0 +1,49 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "player_out_id": {
+      "title": "Player Out Id",
+      "type": "string"
+    },
+    "player_out_name": {
+      "title": "Player Out Name",
+      "type": "string"
+    },
+    "player_in_id": {
+      "title": "Player In Id",
+      "type": "string"
+    },
+    "player_in_name": {
+      "title": "Player In Name",
+      "type": "string"
+    },
+    "position": {
+      "title": "Position",
+      "type": "string"
+    },
+    "reason": {
+      "enum": [
+        "tactical",
+        "fatigue",
+        "injury"
+      ],
+      "title": "Reason",
+      "type": "string"
+    },
+    "energy_out": {
+      "title": "Energy Out",
+      "type": "number"
+    }
+  },
+  "required": [
+    "player_out_id",
+    "player_out_name",
+    "player_in_id",
+    "player_in_name",
+    "position",
+    "reason",
+    "energy_out"
+  ],
+  "title": "SubstitutionDetails",
+  "type": "object"
+}

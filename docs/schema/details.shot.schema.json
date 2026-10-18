@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "Location3D": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "description": "metres along the pitch length",
+          "maximum": 110,
+          "minimum": -5,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "metres along the pitch width",
+          "maximum": 73,
+          "minimum": -5,
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "description": "height in metres",
+          "minimum": 0,
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "title": "Location3D",
+      "type": "object"
+    },
+    "Truth": {
+      "additionalProperties": true,
+      "description": "Simulator ground truth. Never display or use as a model feature.",
+      "properties": {},
+      "title": "Truth",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "shot_kind": {
+      "enum": [
+        "open_play",
+        "free_kick",
+        "penalty"
+      ],
+      "title": "Shot Kind",
+      "type": "string"
+    },
+    "body_part": {
+      "enum": [
+        "head",
+        "left_foot",
+        "right_foot"
+      ],
+      "title": "Body Part",
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "goal",
+        "saved",
+        "blocked",
+        "off_target",
+        "post"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "on_target": {
+      "title": "On Target",
+      "type": "boolean"
+    },
+    "end_location": {
+      "$ref": "#/$defs/Location3D"
+    },
+    "goal_mouth": {
+      "additionalProperties": true,
+      "description": "y_offset_m from goal centre (+ = shooter's left) and z_m height",
+      "title": "Goal Mouth",
+      "type": "object"
+    },
+    "distance_m": {
+      "title": "Distance M",
+      "type": "number"
+    },
+    "angle_deg": {
+      "description": "angle subtended by the goal mouth",
+      "title": "Angle Deg",
+      "type": "number"
+    },
+    "speed_kmh": {
+      "title": "Speed Kmh",
+      "type": "number"
+    },
+    "under_pressure": {
+      "title": "Under Pressure",
+      "type": "boolean"
+    },
+    "defenders_in_lane": {
+      "title": "Defenders In Lane",
+      "type": "integer"
+    },
+    "goalkeeper_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Goalkeeper Id"
+    },
+    "truth": {
+      "$ref": "#/$defs/Truth"
+    }
+  },
+  "required": [
+    "shot_kind",
+    "body_part",
+    "outcome",
+    "on_target",
+    "end_location",
+    "goal_mouth",
+    "distance_m",
+    "angle_deg",
+    "speed_kmh",
+    "under_pressure",
+    "defenders_in_lane",
+    "goalkeeper_id",
+    "truth"
+  ],
+  "title": "ShotDetails",
+  "type": "object"
+}

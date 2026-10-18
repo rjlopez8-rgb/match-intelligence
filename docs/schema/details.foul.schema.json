@@ -1,0 +1,29 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "victim_id": {
+      "title": "Victim Id",
+      "type": "string"
+    },
+    "victim_name": {
+      "title": "Victim Name",
+      "type": "string"
+    },
+    "kind": {
+      "title": "Kind",
+      "type": "string"
+    },
+    "penalty": {
+      "title": "Penalty",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "victim_id",
+    "victim_name",
+    "kind",
+    "penalty"
+  ],
+  "title": "FoulDetails",
+  "type": "object"
+}

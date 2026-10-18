@@ -1,0 +1,48 @@
+{
+  "$defs": {
+    "Truth": {
+      "additionalProperties": true,
+      "description": "Simulator ground truth. Never display or use as a model feature.",
+      "properties": {},
+      "title": "Truth",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "outcome": {
+      "enum": [
+        "won",
+        "lost"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "opponent_id": {
+      "title": "Opponent Id",
+      "type": "string"
+    },
+    "truth": {
+      "$ref": "#/$defs/Truth"
+    },
+    "ball_out": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ball Out"
+    }
+  },
+  "required": [
+    "outcome",
+    "opponent_id",
+    "truth"
+  ],
+  "title": "TackleDetails",
+  "type": "object"
+}

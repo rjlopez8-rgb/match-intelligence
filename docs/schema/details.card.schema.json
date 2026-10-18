@@ -1,0 +1,24 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "card": {
+      "enum": [
+        "yellow",
+        "second_yellow",
+        "red"
+      ],
+      "title": "Card",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "card",
+    "reason"
+  ],
+  "title": "CardDetails",
+  "type": "object"
+}
