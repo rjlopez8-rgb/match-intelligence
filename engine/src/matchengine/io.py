@@ -21,7 +21,7 @@ from .engine import MatchResult
 def write_bundle(result: MatchResult, out_dir: str | Path, tracking: bool = True) -> Path:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    (out / "meta.json").write_text(json.dumps(result.meta, indent=2, ensure_ascii=False))
+    (out / "meta.json").write_text(json.dumps(result.meta, indent=2, ensure_ascii=False), encoding="utf-8")
     with (out / "events.jsonl").open("w", encoding="utf-8") as fh:
         for e in result.events:
             fh.write(json.dumps(e, ensure_ascii=False, separators=(",", ":")) + "\n")
@@ -29,7 +29,7 @@ def write_bundle(result: MatchResult, out_dir: str | Path, tracking: bool = True
         with gzip.open(out / "tracking.jsonl.gz", "wt", encoding="utf-8") as fh:
             for f in result.frames:
                 fh.write(json.dumps(f, separators=(",", ":")) + "\n")
-    (out / "summary.json").write_text(json.dumps(result.summary, indent=2, ensure_ascii=False))
+    (out / "summary.json").write_text(json.dumps(result.summary, indent=2, ensure_ascii=False), encoding="utf-8")
     return out
 
 
