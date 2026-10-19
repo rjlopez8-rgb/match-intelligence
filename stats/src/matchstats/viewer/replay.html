@@ -1,0 +1,713 @@
+<title>__TITLE__</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: broadcast desk. Pitch is the stage (left), the analysis rail sits beside it, stacking under it on phones. */
+:root {
+  --bg: #eef2f0;
+  --surface: #ffffff;
+  --surface-2: #f5f8f6;
+  --ink: #0f1c17;
+  --muted: #5a6a63;
+  --line: #d9e2de;
+  --accent: #0f6cbd;
+  --accent-ink: #ffffff;
+  --gold: #b7860b;
+  --red: #c42b1c;
+  --display: "Barlow Semi Condensed", "Segoe UI", system-ui, sans-serif;
+  --body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(15, 28, 23, .06), 0 6px 24px rgba(15, 28, 23, .06);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a110e; --surface: #111a17; --surface-2: #16211d; --ink: #e6eeea; --muted: #8b9d95;
+    --line: #22302b; --accent: #4ba3ef; --accent-ink: #04121f; --gold: #e3b341; --red: #ff7b6b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 28px rgba(0, 0, 0, .35); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a110e; --surface: #111a17; --surface-2: #16211d; --ink: #e6eeea; --muted: #8b9d95;
+  --line: #22302b; --accent: #4ba3ef; --accent-ink: #04121f; --gold: #e3b341; --red: #ff7b6b;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 28px rgba(0, 0, 0, .35); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--bg); }
+body {
+  color: var(--ink); font-family: var(--body); font-size: 14px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 28px;
+}
+.wrap { max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.num { font-variant-numeric: tabular-nums; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+/* Scorebug */
+.bug { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 12px 18px 14px; display: flex; flex-direction: column; gap: 8px; }
+.bug-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: center; color: var(--muted);
+  font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.bug-main { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 18px; }
+.team { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.team.away { flex-direction: row-reverse; text-align: right; }
+.crest { width: 34px; height: 34px; border-radius: 8px; flex: none; display: grid; place-items: center;
+  font-family: var(--display); font-weight: 700; font-size: 13px; letter-spacing: .04em; }
+.team-name { font-family: var(--display); font-weight: 700; font-size: clamp(17px, 2.4vw, 26px); line-height: 1.05;
+  text-transform: uppercase; letter-spacing: .02em; text-wrap: balance; }
+.team-sub { color: var(--muted); font-size: 12px; }
+.team-name .short { display: none; }
+.scorers { color: var(--muted); font-size: 12.5px; min-height: 18px; }
+.score { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.score-n { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 5vw, 50px); line-height: 1;
+  letter-spacing: .02em; display: flex; gap: 14px; align-items: center; }
+.score-n .dash { color: var(--muted); font-weight: 500; }
+.clock { font-family: var(--display); font-weight: 600; font-size: 15px; background: var(--ink); color: var(--surface);
+  border-radius: 6px; padding: 2px 10px; display: flex; gap: 8px; align-items: baseline; }
+.clock .added { color: var(--gold); font-size: 13px; }
+.period { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+
+/* Main grid */
+.desk { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.stage { padding: 10px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.pitch-box { position: relative; width: 100%; aspect-ratio: 113 / 76; max-width: 100%; border-radius: 8px; overflow: hidden;
+  background: #2c7848; cursor: crosshair; touch-action: manipulation; }
+canvas#pitch { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.caption { position: absolute; left: 12px; bottom: 10px; max-width: calc(100% - 24px); background: rgba(6, 18, 12, .72);
+  color: #f2f7f4; border-radius: 6px; padding: 4px 10px; font-size: 13px; display: flex; gap: 8px; align-items: center;
+  backdrop-filter: blur(4px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.caption .chip { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.toast { position: absolute; left: 50%; top: 12px; transform: translate(-50%, -8px); opacity: 0;
+  transition: opacity .25s ease, transform .25s ease; pointer-events: none; width: min(92%, 460px);
+  background: rgba(8, 16, 13, .9); color: #f4f8f6; border-radius: 10px; padding: 10px 14px 11px;
+  border-left: 4px solid var(--tcolor, #fff); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast-kicker { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #a9bab2; display: flex;
+  justify-content: space-between; gap: 8px; }
+.toast-title { font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.15; margin-top: 2px; }
+.toast-facts { font-size: 12.5px; color: #cfdcd6; margin-top: 3px; }
+.swing { color: #ffd76a; font-weight: 600; }
+.selected { position: absolute; right: 12px; top: 12px; background: rgba(6, 18, 12, .78); color: #f2f7f4; border-radius: 8px;
+  padding: 7px 11px; font-size: 12.5px; line-height: 1.35; pointer-events: none; }
+.selected b { font-family: var(--display); font-size: 16px; font-weight: 700; }
+
+/* Controls */
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.play { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; cursor: pointer; flex: none; }
+.play svg { width: 18px; height: 18px; }
+.time { font-family: var(--display); font-weight: 600; font-size: 15px; min-width: 64px; }
+.scrub { position: relative; flex: 1 1 260px; height: 34px; min-width: 0; }
+.scrub canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scrub input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; margin: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface-2); }
+.seg button { border: 0; background: transparent; padding: 6px 10px; cursor: pointer; font-weight: 600; font-size: 13px;
+  color: var(--muted); font-variant-numeric: tabular-nums; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.btn { border: 1px solid var(--line); background: var(--surface-2); border-radius: 8px; padding: 6px 12px; cursor: pointer;
+  font-weight: 600; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+.btn:hover, .seg button:hover { color: var(--ink); }
+.hint { color: var(--muted); font-size: 12px; }
+
+/* Rail */
+.rail { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.panel { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.panel h2 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.panel h2 small { font-family: var(--body); letter-spacing: 0; text-transform: none; font-weight: 500; font-size: 11.5px; }
+.wp-bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; font-family: var(--display); font-weight: 700;
+  font-size: 14px; }
+.wp-bar div { display: flex; align-items: center; padding: 0 8px; white-space: nowrap; overflow: hidden;
+  transition: flex-basis .35s ease; min-width: 0; }
+.wp-bar .d { background: var(--surface-2); color: var(--muted); justify-content: center; }
+.wp-bar .a { justify-content: flex-end; }
+.wp-legend { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+canvas.spark { width: 100%; height: 86px; display: block; }
+.mom { position: relative; height: 10px; border-radius: 5px; background: var(--surface-2); border: 1px solid var(--line); }
+.mom .mid { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--muted); opacity: .6; }
+.mom .fill { position: absolute; top: 0; bottom: 0; border-radius: 5px; transition: all .35s ease; }
+.mom-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.stats { display: flex; flex-direction: column; gap: 8px; }
+.stat { display: grid; grid-template-columns: 52px minmax(0, 1fr) 52px; align-items: center; gap: 4px 8px; }
+.stat .v { font-family: var(--display); font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; }
+.stat .v.r { text-align: right; }
+.stat .lab { text-align: center; font-size: 12px; color: var(--muted); }
+.stat .bars { grid-column: 1 / -1; display: flex; gap: 4px; height: 4px; }
+.stat .bars span { border-radius: 2px; transition: flex-grow .35s ease; }
+.feed-tools { display: flex; gap: 8px; align-items: center; }
+.feed { display: flex; flex-direction: column-reverse; gap: 2px; max-height: 420px; overflow-y: auto; margin: 0 -6px;
+  padding: 0 6px; }
+.feed.key-only .m.minor { display: none; }
+.m { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 8px; padding: 7px 8px; border-radius: 8px;
+  cursor: pointer; border: 0; background: transparent; text-align: left; width: 100%; }
+.m:hover { background: var(--surface-2); }
+.m .min { font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--muted); padding-top: 1px;
+  display: flex; gap: 6px; align-items: flex-start; }
+.m .dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex: none; }
+.m .t { font-weight: 600; line-height: 1.3; min-width: 0; overflow-wrap: anywhere; }
+.m .f { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.m.major .t { font-family: var(--display); font-size: 16px; font-weight: 700; }
+.m .w { color: var(--gold); font-weight: 600; }
+.empty { color: var(--muted); font-size: 13px; padding: 6px 2px; }
+.foot { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: space-between; }
+kbd { font-family: var(--body); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px;
+  padding: 0 4px; background: var(--surface-2); }
+
+@media (max-width: 980px) { .desk { grid-template-columns: minmax(0, 1fr); } .feed { max-height: 360px; } }
+@media (max-width: 560px) {
+  .bug { padding: 10px 12px; }
+  .bug-main { gap: 8px; }
+  .crest { width: 26px; height: 26px; font-size: 10px; }
+  .team-sub, .hint { display: none; }
+  .team-name .full { display: none; }
+  .team-name .short { display: inline; }
+  .team-name { font-size: 16px; }
+  .toast { padding: 7px 10px 8px; }
+  .toast-facts { display: none; }
+  .toast-title { font-size: 16px; }
+  .selected { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="bug" aria-label="Scoreboard">
+    <div class="bug-meta" id="meta"></div>
+    <div class="bug-main">
+      <div class="team home">
+        <div class="crest" id="crestH"></div>
+        <div style="min-width:0">
+          <div class="team-name"><span class="full" id="nameH"></span><span class="short" id="shortH"></span></div>
+          <div class="team-sub" id="subH"></div>
+        </div>
+      </div>
+      <div class="score">
+        <div class="score-n num"><span id="goalsH">0</span><span class="dash">–</span><span id="goalsA">0</span></div>
+        <div class="clock num" aria-live="off"><span id="clock">00:00</span><span class="added" id="added"></span></div>
+        <div class="period" id="period">1st half</div>
+      </div>
+      <div class="team away">
+        <div class="crest" id="crestA"></div>
+        <div style="min-width:0">
+          <div class="team-name"><span class="full" id="nameA"></span><span class="short" id="shortA"></span></div>
+          <div class="team-sub" id="subA"></div>
+        </div>
+      </div>
+    </div>
+    <div class="bug-main">
+      <div class="scorers" id="scorersH"></div><div></div><div class="scorers" id="scorersA" style="text-align:right"></div>
+    </div>
+  </header>
+
+  <div class="desk">
+    <section class="card stage" aria-label="Match replay">
+      <div class="pitch-box" id="pitchBox">
+        <canvas id="pitch" aria-label="Pitch with live player positions" role="img"></canvas>
+        <div class="toast" id="toast" role="status" aria-live="polite">
+          <div class="toast-kicker"><span id="toastKick"></span><span class="swing" id="toastSwing"></span></div>
+          <div class="toast-title" id="toastTitle"></div>
+          <div class="toast-facts" id="toastFacts"></div>
+        </div>
+        <div class="selected" id="selected" hidden></div>
+        <div class="caption" id="caption" hidden><span class="chip" id="capChip"></span><span id="capText"></span></div>
+      </div>
+      <div class="controls">
+        <button class="play" id="play" aria-label="Play"></button>
+        <span class="time num" id="time">0'</span>
+        <div class="scrub">
+          <canvas id="scrubCanvas"></canvas>
+          <input type="range" id="scrub" min="0" max="1000" step="1" value="0" aria-label="Match timeline">
+        </div>
+        <div class="seg" role="group" aria-label="Playback speed" id="speeds"></div>
+        <button class="btn" id="nextMoment" title="Jump to the next key moment (N)">Next key moment →</button>
+      </div>
+      <div class="hint"><kbd>Space</kbd> play/pause · <kbd>←</kbd><kbd>→</kbd> 15 s · <kbd>N</kbd> next key moment · click a player to follow them</div>
+    </section>
+
+    <aside class="rail">
+      <section class="card panel" aria-label="Win probability">
+        <h2>Win probability <small id="modelNote"></small></h2>
+        <div class="wp-bar num" id="wpBar"><div class="h" id="wpH"></div><div class="d" id="wpD"></div><div class="a" id="wpA"></div></div>
+        <canvas class="spark" id="spark" aria-label="Win probability over time" role="img"></canvas>
+        <h2 style="margin-top:2px">Momentum <small>attacking threat, last few minutes</small></h2>
+        <div class="mom"><div class="mid"></div><div class="fill" id="momFill"></div></div>
+        <div class="mom-row"><span id="momH"></span><span id="momLabel"></span><span id="momA"></span></div>
+      </section>
+      <section class="card panel" aria-label="Match stats">
+        <h2>Match stats <small id="chaos"></small></h2>
+        <div class="stats" id="stats"></div>
+      </section>
+      <section class="card panel" aria-label="Key moments">
+        <h2>Key moments
+          <span class="feed-tools"><button class="btn" id="keyToggle" aria-pressed="true" style="padding:3px 9px;font-size:12px">Key only</button></span>
+        </h2>
+        <div class="feed key-only" id="feed"><div class="empty" id="feedEmpty">Moments appear here as the match unfolds.</div></div>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <span id="footNote"></span>
+    <span>Fictional clubs and players. Every number comes from the matchstats layer, the same data the AI agents use.</span>
+  </footer>
+</div>
+
+<script>
+const DATA = "__REPLAY_DATA__";
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const W = DATA.width, N = DATA.nFrames, HZ = DATA.hz, P2 = DATA.period2, ABSENT = -32768;
+  const NP = DATA.players.length, BASE = 2 * NP;
+  const raw = atob(DATA.frames);
+  const bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+  const F = new Int16Array(bytes.buffer);
+  const K = Object.fromEntries(DATA.sampleKeys.map((k, i) => [k, i]));
+  const M = DATA.match, H = M.home, A = M.away;
+  const PITCH_L = 105, PITCH_W = 68, MARGIN = 4;
+
+  // ---- colours ------------------------------------------------------------------------
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const lum = (hex) => {
+    const c = hex.replace("#", ""); const n = parseInt(c.length === 3 ? c.replace(/./g, "$&$&") : c, 16);
+    const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; });
+    return .2126 * ch[0] + .7152 * ch[1] + .0722 * ch[2];
+  };
+  const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+  function displayColour(team) {   // the team colour that reads on the current surface
+    const surface = css("--surface") || "#ffffff";
+    const p = team.colors.primary, s = team.colors.secondary;
+    return contrast(p, surface) >= 2.2 ? p : s;
+  }
+  let colH, colA;
+  function refreshColours() { colH = displayColour(H); colA = displayColour(A); }
+  refreshColours();
+
+  // ---- static header --------------------------------------------------------------------
+  const v = M.venue || {};
+  $("meta").innerHTML = [M.competition, M.season, M.matchday ? `Matchday ${M.matchday}` : "", v.stadium ? `${v.stadium}, ${v.city}` : "",
+    M.attendance ? `${M.attendance.toLocaleString()} attending` : "", M.referee ? `Referee ${M.referee}` : ""]
+    .filter(Boolean).map((s) => `<span>${s}</span>`).join("");
+  for (const [side, t] of [["H", H], ["A", A]]) {
+    $("name" + side).textContent = t.name;
+    $("short" + side).textContent = t.short;
+    $("sub" + side).textContent = `${t.formation} · ${t.manager}`;
+    const crest = $("crest" + side);
+    crest.textContent = t.code; crest.style.background = t.colors.primary; crest.style.color = t.colors.text || "#fff";
+    crest.style.boxShadow = `inset 0 0 0 2px ${t.colors.secondary}`;
+  }
+  const trained = Object.values(DATA.models).every((s) => s === "trained");
+  $("modelNote").textContent = trained ? "trained model" : "fallback model";
+  $("footNote").textContent = `${M.id} · ${N.toLocaleString()} tracking frames at ${HZ} Hz · ${DATA.moments.length} moments detected`;
+
+  // ---- time helpers ----------------------------------------------------------------------
+  const tOf = (i) => F[i * W + BASE + 5] / 10;
+  const periodOf = (i) => (i >= P2 ? 2 : 1);
+  function clockParts(i) {
+    const p = periodOf(i), t = tOf(i), regular = 2700;
+    const base = (p - 1) * 2700;
+    const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+    if (t < regular) return { clock: fmt(base + t), added: "", minute: `${Math.floor((base + t) / 60) + 1}'` };
+    const extra = t - regular;
+    return { clock: fmt(base + regular), added: `+${fmt(extra).replace(/^0/, "")}`, minute: `${45 * p}+${Math.floor(extra / 60) + 1}'` };
+  }
+
+  // ---- state -----------------------------------------------------------------------------
+  let pos = 0, playing = false, speed = 10, lastTs = 0, selected = -1, hover = -1;
+  const speeds = [1, 5, 10, 30, 60];
+
+  // ---- pitch canvas ----------------------------------------------------------------------
+  const box = $("pitchBox"), cv = $("pitch"), cx = cv.getContext("2d");
+  let scale = 1, dpr = 1;
+  const grass = document.createElement("canvas");
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = box.getBoundingClientRect();
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+    scale = cv.width / (PITCH_L + 2 * MARGIN);
+    drawGrass();
+    drawScrub();
+    drawSpark(true);
+    render();
+  }
+  const X = (x) => (x + MARGIN) * scale, Y = (y) => (PITCH_W + MARGIN - y) * scale;  // y up the screen like broadcast
+  function drawGrass() {
+    grass.width = cv.width; grass.height = cv.height;
+    const g = grass.getContext("2d");
+    g.fillStyle = "#2a7444"; g.fillRect(0, 0, grass.width, grass.height);
+    const stripes = 14, sw = PITCH_L / stripes;
+    for (let k = 0; k < stripes; k++) { g.fillStyle = k % 2 ? "#2f7c4a" : "#2b7646"; g.fillRect(X(k * sw), Y(PITCH_W), sw * scale + 1, PITCH_W * scale); }
+    const vg = g.createRadialGradient(grass.width / 2, grass.height / 2, grass.height * .2, grass.width / 2, grass.height / 2, grass.width * .7);
+    vg.addColorStop(0, "rgba(255,255,255,0.05)"); vg.addColorStop(1, "rgba(0,0,0,0.18)");
+    g.fillStyle = vg; g.fillRect(0, 0, grass.width, grass.height);
+    g.strokeStyle = "rgba(255,255,255,0.82)"; g.lineWidth = Math.max(1, .13 * scale);
+    const line = (pts) => { g.beginPath(); pts.forEach(([x, y], j) => (j ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.stroke(); };
+    g.strokeRect(X(0), Y(PITCH_W), PITCH_L * scale, PITCH_W * scale);
+    line([[52.5, 0], [52.5, 68]]);
+    g.beginPath(); g.arc(X(52.5), Y(34), 9.15 * scale, 0, Math.PI * 2); g.stroke();
+    g.fillStyle = "rgba(255,255,255,0.85)";
+    for (const sx of [52.5, 11, 94]) { g.beginPath(); g.arc(X(sx), Y(34), .3 * scale, 0, Math.PI * 2); g.fill(); }
+    for (const [x0, dir] of [[0, 1], [105, -1]]) {
+      line([[x0, 34 - 20.16], [x0 + dir * 16.5, 34 - 20.16], [x0 + dir * 16.5, 34 + 20.16], [x0, 34 + 20.16]]);
+      line([[x0, 34 - 9.16], [x0 + dir * 5.5, 34 - 9.16], [x0 + dir * 5.5, 34 + 9.16], [x0, 34 + 9.16]]);
+      const a = Math.acos(5.5 / 9.15);
+      g.beginPath();
+      if (dir === 1) g.arc(X(11), Y(34), 9.15 * scale, -a, a); else g.arc(X(94), Y(34), 9.15 * scale, Math.PI - a, Math.PI + a);
+      g.stroke();
+      g.save(); g.strokeStyle = "rgba(255,255,255,0.95)"; g.lineWidth = Math.max(1.5, .25 * scale);
+      line([[x0, 34 - 3.66], [x0 - dir * 1.6, 34 - 3.66], [x0 - dir * 1.6, 34 + 3.66], [x0, 34 + 3.66]]); g.restore();
+    }
+  }
+  function lerpSlot(i, fr, idx) {
+    const a = F[i * W + idx];
+    if (a === ABSENT) return null;
+    const j = i + 1 < N && i + 1 !== P2 ? i + 1 : i;
+    const b = F[j * W + idx];
+    return b === ABSENT ? a / 10 : (a + (b - a) * fr) / 10;
+  }
+  function playerXY(i, fr, s) {
+    const x = lerpSlot(i, fr, 2 * s); if (x === null) return null;
+    return [x, lerpSlot(i, fr, 2 * s + 1)];
+  }
+  function speedKmh(i, s) {
+    if (i < 1) return 0;
+    const a = i * W + 2 * s, b = (i - 1) * W + 2 * s;
+    if (F[a] === ABSENT || F[b] === ABSENT) return 0;
+    const d = Math.hypot(F[a] - F[b], F[a + 1] - F[b + 1]) / 10;
+    return d * HZ * 3.6;
+  }
+  function render() {
+    const i = Math.min(N - 1, Math.floor(pos)), fr = pos - i;
+    cx.setTransform(1, 0, 0, 1, 0, 0);
+    cx.drawImage(grass, 0, 0);
+    // attacking-direction labels
+    const p = periodOf(i), homeRight = p === 1;
+    cx.font = `600 ${Math.max(10, 1.55 * scale)}px ${css("--display") || "sans-serif"}`;
+    cx.fillStyle = "rgba(255,255,255,0.6)"; cx.textBaseline = "middle";
+    const yLab = Y(PITCH_W + MARGIN / 2);
+    cx.textAlign = "left"; cx.fillText(homeRight ? `${H.short.toUpperCase()} ATTACK →` : `← ${H.short.toUpperCase()} ATTACK`, X(0), yLab);
+    cx.textAlign = "right"; cx.fillText(homeRight ? `← ${A.short.toUpperCase()} ATTACK` : `${A.short.toUpperCase()} ATTACK →`, X(105), yLab);
+    // ball trail
+    cx.lineCap = "round";
+    for (let k = 10; k >= 1; k--) {
+      const a = Math.max(0, i - k), b = Math.max(0, i - k + 1);
+      if ((a < P2) !== (b < P2)) continue;
+      const ax = F[a * W + BASE], ay = F[a * W + BASE + 1], bx = F[b * W + BASE], by = F[b * W + BASE + 1];
+      cx.strokeStyle = `rgba(255,255,255,${0.05 + 0.035 * (10 - k)})`; cx.lineWidth = .35 * scale;
+      cx.beginPath(); cx.moveTo(X(ax / 10), Y(ay / 10)); cx.lineTo(X(bx / 10), Y(by / 10)); cx.stroke();
+    }
+    const owner = F[i * W + BASE + 3];
+    const r = 1.05 * scale;
+    // shadows first, then bodies
+    const drawn = [];
+    for (let s = 0; s < NP; s++) {
+      const xy = playerXY(i, fr, s); if (!xy) continue;
+      drawn.push([s, xy]);
+      cx.fillStyle = "rgba(0,0,0,0.25)"; cx.beginPath(); cx.ellipse(X(xy[0]) + .25 * scale, Y(xy[1]) + .35 * scale, r, r * .8, 0, 0, Math.PI * 2); cx.fill();
+    }
+    cx.textAlign = "center"; cx.textBaseline = "middle";
+    cx.font = `700 ${Math.max(8, 1.15 * scale)}px ${css("--display") || "sans-serif"}`;
+    for (const [s, [x, y]] of drawn) {
+      const pl = DATA.players[s], team = pl.side === "home" ? H : A;
+      let fill = team.colors.primary, ring = team.colors.secondary, txt = team.colors.text || "#fff";
+      if (pl.gk) { fill = pl.side === "home" ? "#1d2321" : "#e9ecea"; ring = team.colors.primary; txt = pl.side === "home" ? "#fff" : "#111"; }
+      const px = X(x), py = Y(y);
+      if (s === owner) { cx.strokeStyle = "rgba(255,255,255,0.95)"; cx.lineWidth = .28 * scale; cx.beginPath(); cx.arc(px, py, r * 1.55, 0, Math.PI * 2); cx.stroke(); }
+      if (s === selected) { cx.strokeStyle = "#ffd76a"; cx.lineWidth = .35 * scale; cx.beginPath(); cx.arc(px, py, r * 1.9, 0, Math.PI * 2); cx.stroke(); }
+      cx.fillStyle = fill; cx.beginPath(); cx.arc(px, py, r, 0, Math.PI * 2); cx.fill();
+      cx.strokeStyle = ring; cx.lineWidth = .22 * scale; cx.stroke();
+      cx.fillStyle = txt; cx.fillText(String(pl.shirt), px, py + .05 * scale);
+    }
+    // names for owner / hover / selected
+    cx.font = `600 ${Math.max(9, 1.2 * scale)}px ${css("--body") || "sans-serif"}`;
+    for (const s of new Set([owner, hover, selected])) {
+      if (s < 0) continue;
+      const xy = playerXY(i, fr, s); if (!xy) continue;
+      const label = DATA.players[s].short, px = X(xy[0]), py = Y(xy[1]) - r * 2.1;
+      const w = cx.measureText(label).width + .9 * scale;
+      cx.fillStyle = "rgba(6,18,12,0.72)"; roundRect(px - w / 2, py - .85 * scale, w, 1.7 * scale, .45 * scale); cx.fill();
+      cx.fillStyle = "#fff"; cx.fillText(label, px, py);
+    }
+    // ball
+    const bx = lerpSlot(i, fr, BASE), by = lerpSlot(i, fr, BASE + 1), bz = Math.max(0, lerpSlot(i, fr, BASE + 2) || 0);
+    const br = (.42 + bz * .07) * scale;
+    cx.fillStyle = "rgba(0,0,0,0.3)"; cx.beginPath(); cx.ellipse(X(bx) + bz * .35 * scale, Y(by) + bz * .45 * scale, .45 * scale, .32 * scale, 0, 0, Math.PI * 2); cx.fill();
+    cx.fillStyle = "#ffffff"; cx.strokeStyle = "#1a1a1a"; cx.lineWidth = .1 * scale;
+    cx.beginPath(); cx.arc(X(bx), Y(by) - bz * .2 * scale, br, 0, Math.PI * 2); cx.fill(); cx.stroke();
+  }
+  function roundRect(x, y, w, h, rr) { cx.beginPath(); cx.moveTo(x + rr, y); cx.arcTo(x + w, y, x + w, y + h, rr); cx.arcTo(x + w, y + h, x, y + h, rr); cx.arcTo(x, y + h, x, y, rr); cx.arcTo(x, y, x + w, y, rr); cx.closePath(); }
+
+  // ---- scrubber with markers -----------------------------------------------------------------
+  const sc = $("scrubCanvas"), scx = sc.getContext("2d"), range = $("scrub");
+  range.max = String(N - 1);
+  const markerMoments = DATA.moments.filter((m) => ["goal", "red_card", "yellow_card", "big_chance", "great_save", "penalty_awarded"].includes(m.type));
+  function drawScrub() {
+    const r = sc.getBoundingClientRect(); sc.width = Math.round(r.width * dpr); sc.height = Math.round(r.height * dpr);
+    const w = sc.width, h = sc.height, mid = h / 2;
+    scx.clearRect(0, 0, w, h);
+    const xAt = (f) => 6 * dpr + (w - 12 * dpr) * f / (N - 1);
+    scx.fillStyle = css("--line"); roundRectOn(scx, 6 * dpr, mid - 3 * dpr, w - 12 * dpr, 6 * dpr, 3 * dpr); scx.fill();
+    scx.fillStyle = css("--accent"); roundRectOn(scx, 6 * dpr, mid - 3 * dpr, Math.max(0, xAt(pos) - 6 * dpr), 6 * dpr, 3 * dpr); scx.fill();
+    scx.fillStyle = css("--muted"); scx.fillRect(xAt(P2) - 1 * dpr, mid - 9 * dpr, 2 * dpr, 18 * dpr);
+    for (const m of markerMoments) {
+      const x = xAt(m.f), c = m.side === "home" ? colH : colA;
+      if (m.type === "goal") { scx.fillStyle = c; scx.beginPath(); scx.arc(x, mid - 10 * dpr, 4.5 * dpr, 0, Math.PI * 2); scx.fill(); scx.strokeStyle = css("--surface"); scx.lineWidth = 1.5 * dpr; scx.stroke(); }
+      else if (m.type === "red_card" || m.type === "yellow_card") { scx.fillStyle = m.type === "red_card" ? "#d13438" : "#f2c230"; scx.fillRect(x - 2 * dpr, mid + 6 * dpr, 4 * dpr, 7 * dpr); }
+      else { scx.fillStyle = c; scx.globalAlpha = .65; scx.fillRect(x - 1 * dpr, mid + 6 * dpr, 2 * dpr, 6 * dpr); scx.globalAlpha = 1; }
+    }
+    scx.fillStyle = css("--surface"); scx.strokeStyle = css("--accent"); scx.lineWidth = 2.5 * dpr;
+    scx.beginPath(); scx.arc(xAt(pos), mid, 7 * dpr, 0, Math.PI * 2); scx.fill(); scx.stroke();
+  }
+  function roundRectOn(g, x, y, w, h, rr) { g.beginPath(); g.moveTo(x + rr, y); g.arcTo(x + w, y, x + w, y + h, rr); g.arcTo(x + w, y + h, x, y + h, rr); g.arcTo(x, y + h, x, y, rr); g.arcTo(x, y, x + w, y, rr); g.closePath(); }
+  range.addEventListener("input", () => { seek(+range.value); });
+
+  // ---- win probability sparkline ---------------------------------------------------------------
+  const sp = $("spark"), spx = sp.getContext("2d");
+  let sparkUpTo = -1;
+  function drawSpark(force) {
+    const si = Math.min(DATA.samples.length - 1, Math.floor(pos / DATA.sampleEvery));
+    if (!force && si === sparkUpTo) return;
+    sparkUpTo = si;
+    const r = sp.getBoundingClientRect(); sp.width = Math.round(r.width * dpr); sp.height = Math.round(r.height * dpr);
+    const w = sp.width, h = sp.height, pad = 4 * dpr, total = DATA.samples.length - 1;
+    spx.clearRect(0, 0, w, h);
+    const xAt = (k) => pad + (w - 2 * pad) * k / total, yAt = (p) => h - pad - (h - 2 * pad) * p;
+    spx.strokeStyle = css("--line"); spx.lineWidth = 1 * dpr;
+    for (const g of [0, .5, 1]) { spx.beginPath(); spx.moveTo(pad, yAt(g)); spx.lineTo(w - pad, yAt(g)); spx.stroke(); }
+    const ht = Math.floor(P2 / DATA.sampleEvery);
+    spx.setLineDash([3 * dpr, 3 * dpr]); spx.beginPath(); spx.moveTo(xAt(ht), pad); spx.lineTo(xAt(ht), h - pad); spx.stroke(); spx.setLineDash([]);
+    spx.fillStyle = css("--muted"); spx.font = `500 ${10 * dpr}px ${css("--body")}`; spx.textBaseline = "top";
+    spx.fillText("HT", xAt(ht) + 3 * dpr, pad); spx.textBaseline = "alphabetic";
+    for (const [key, col] of [["wpH", colH], ["wpA", colA]]) {
+      spx.strokeStyle = col; spx.lineWidth = 2 * dpr; spx.lineJoin = "round"; spx.beginPath();
+      for (let k = 0; k <= si; k += 2) { const y = yAt(DATA.samples[k][K[key]]); k ? spx.lineTo(xAt(k), y) : spx.moveTo(xAt(k), y); }
+      spx.lineTo(xAt(si), yAt(DATA.samples[si][K[key]])); spx.stroke();
+      spx.fillStyle = col; spx.beginPath(); spx.arc(xAt(si), yAt(DATA.samples[si][K[key]]), 3.2 * dpr, 0, Math.PI * 2); spx.fill();
+    }
+  }
+
+  // ---- stats panel ----------------------------------------------------------------------------
+  const statDefs = [
+    ["Possession", (s) => [s[K.possH], 1 - s[K.possH]], (v) => `${Math.round(v * 100)}%`],
+    ["Expected goals (xG)", (s) => [s[K.xgH], s[K.xgA]], (v) => v.toFixed(2)],
+    ["Shots", (s) => [s[K.shotsH], s[K.shotsA]], String],
+    ["Shots on target", (s) => [s[K.sotH], s[K.sotA]], String],
+    ["Passes", (s) => [s[K.passH], s[K.passA]], String],
+    ["Pass accuracy", (s) => [s[K.passH] ? s[K.cmpH] / s[K.passH] : 0, s[K.passA] ? s[K.cmpA] / s[K.passA] : 0], (v) => `${Math.round(v * 100)}%`],
+    ["Corners", (s) => [s[K.cornH], s[K.cornA]], String],
+    ["Fouls", (s) => [s[K.foulH], s[K.foulA]], String],
+    ["Cards", (s) => [s[K.yelH] + s[K.redH], s[K.yelA] + s[K.redA]], String],
+  ];
+  const statsEl = $("stats");
+  const statRows = statDefs.map(([label]) => {
+    const row = document.createElement("div"); row.className = "stat";
+    row.innerHTML = `<span class="v"></span><span class="lab">${label}</span><span class="v r"></span><div class="bars"><span></span><span></span></div>`;
+    statsEl.appendChild(row);
+    const q = row.querySelectorAll(".v"), b = row.querySelectorAll(".bars span");
+    return { h: q[0], a: q[1], bh: b[0], ba: b[1] };
+  });
+  let lastSample = -1;
+  function updatePanels(force) {
+    const si = Math.min(DATA.samples.length - 1, Math.floor(pos / DATA.sampleEvery));
+    if (!force && si === lastSample) return;
+    lastSample = si;
+    const s = DATA.samples[si];
+    statDefs.forEach(([, get, fmt], k) => {
+      const [h, a] = get(s), r = statRows[k];
+      r.h.textContent = fmt(h); r.a.textContent = fmt(a);
+      const t = h + a;
+      r.bh.style.flexGrow = t ? h / t : 1; r.ba.style.flexGrow = t ? a / t : 1;
+      r.bh.style.background = colH; r.ba.style.background = colA;
+      r.bh.style.opacity = h >= a ? 1 : .45; r.ba.style.opacity = a >= h ? 1 : .45;
+    });
+    $("goalsH").textContent = s[K.goalsH]; $("goalsA").textContent = s[K.goalsA];
+    const pct = (x) => `${Math.round(x * 100)}%`;
+    const wh = s[K.wpH], wd = s[K.wpD], wa = s[K.wpA];
+    for (const [id, val, col, lab] of [["wpH", wh, colH, H.code], ["wpD", wd, null, "Draw"], ["wpA", wa, colA, A.code]]) {
+      const el = $(id); el.style.flex = `0 0 ${Math.max(val * 100, 0.001)}%`;
+      el.textContent = val >= .12 ? `${id === "wpD" ? "" : lab + " "}${pct(val)}` : "";
+      el.title = `${lab} ${pct(val)}`;
+      if (col) { el.style.background = col; el.style.color = contrast(col, "#ffffff") > 3 ? "#fff" : "#111"; }
+    }
+    const mom = s[K.mom];
+    const fill = $("momFill");
+    fill.style.background = mom >= 0 ? colH : colA;
+    fill.style.left = mom >= 0 ? "50%" : `${50 + mom * 50}%`; fill.style.width = `${Math.abs(mom) * 50}%`;
+    $("momH").textContent = H.short; $("momA").textContent = A.short;
+    $("momLabel").textContent = Math.abs(mom) < .12 ? "Even" : `${mom > 0 ? H.short : A.short} on top`;
+    $("chaos").textContent = `chaos index ${Math.round(s[K.chaos])}/100`;
+    drawSpark(false);
+  }
+
+  // ---- moments feed, scorers and toasts ---------------------------------------------------------
+  const feed = $("feed"), feedEmpty = $("feedEmpty");
+  const LABEL = { goal: "Goal", big_chance: "Big chance", great_save: "Big save", penalty_awarded: "Penalty", red_card: "Red card",
+    yellow_card: "Yellow card", tactical_change: "Tactical change", substitution: "Substitution", period_summary: "Summary",
+    speed_alert: "Speed", top_speed: "Top speed", distance_milestone: "Distance", hard_pass: "Line-breaking pass",
+    long_sequence: "Passing move", dominance: "Dominance", pressing_surge: "Pressing surge", momentum_shift: "Momentum shift",
+    chaos_spike: "Chaos" };
+  const momentEls = DATA.moments.map((m) => {
+    const b = document.createElement("button");
+    const major = m.importance >= 0.55, minor = m.importance < 0.45;
+    b.className = `m${major ? " major" : ""}${minor ? " minor" : ""}`; b.hidden = true;
+    const c = m.side === "home" ? "var(--h)" : m.side === "away" ? "var(--a)" : "var(--muted)";
+    const facts = [...m.facts]; if (m.weight) facts.push(`<span class="w">${Math.round(m.weight)}-pt win-prob swing</span>`);
+    b.innerHTML = `<span class="min"><span class="dot" style="background:${c}"></span>${m.minute}</span><span><div class="t"></div>${facts.length ? `<div class="f">${facts.join(" · ")}</div>` : ""}</span>`;
+    b.querySelector(".t").textContent = m.title;
+    b.addEventListener("click", () => { seek(Math.max(0, m.f - 6 * HZ)); play(true); });
+    feed.appendChild(b);
+    return b;
+  });
+  function applyTeamVars() { document.documentElement.style.setProperty("--h", colH); document.documentElement.style.setProperty("--a", colA); }
+  applyTeamVars();
+  $("keyToggle").addEventListener("click", (e) => {
+    const on = feed.classList.toggle("key-only"); e.currentTarget.setAttribute("aria-pressed", String(on));
+    e.currentTarget.textContent = on ? "Key only" : "All moments";
+  });
+  let revealed = 0;
+  function updateMoments(prevPos) {
+    let count = 0;
+    for (let k = 0; k < DATA.moments.length; k++) {
+      const show = DATA.moments[k].f <= pos;
+      if (momentEls[k].hidden === show) momentEls[k].hidden = !show;
+      if (show) count++;
+    }
+    feedEmpty.hidden = count > 0;
+    if (count !== revealed) {
+      const goals = DATA.moments.filter((m) => m.type === "goal" && m.f <= pos);
+      for (const [side, el] of [["home", $("scorersH")], ["away", $("scorersA")]]) {
+        el.textContent = goals.filter((g) => g.side === side).map((g) => `${g.title.split(":")[1].split("(")[0].trim()} ${g.minute}`).join(", ");
+      }
+      // toast for a freshly crossed key moment (only when playing forward)
+      if (playing && prevPos <= pos) {
+        const fresh = DATA.moments.filter((m) => m.f > prevPos && m.f <= pos && m.importance >= 0.5);
+        if (fresh.length) showToast(fresh[fresh.length - 1]);
+      }
+      revealed = count;
+    }
+  }
+  let toastTimer = 0;
+  function showToast(m) {
+    const t = $("toast");
+    $("toastKick").textContent = `${m.minute} · ${LABEL[m.type] || m.type}`;
+    $("toastTitle").textContent = m.title.replace(/^GOAL: /, "Goal! ");
+    $("toastFacts").textContent = m.facts.join(" · ");
+    $("toastSwing").textContent = m.weight ? `${Math.round(m.weight)}-pt swing` : "";
+    t.style.setProperty("--tcolor", m.side === "home" ? colH : m.side === "away" ? colA : "#ffffff");
+    t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), m.type === "goal" ? 5200 : 3800);
+  }
+
+  // ---- caption ----------------------------------------------------------------------------
+  const caps = DATA.captions;
+  function updateCaption() {
+    let lo = 0, hi = caps.length - 1, k = -1;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (caps[mid][0] <= pos) { k = mid; lo = mid + 1; } else hi = mid - 1; }
+    const el = $("caption");
+    if (k < 0 || pos - caps[k][0] > 4 * HZ) { el.hidden = true; return; }
+    el.hidden = false;
+    $("capText").textContent = `${clockParts(caps[k][0]).minute}  ${caps[k][1]}`;
+    $("capChip").style.background = caps[k][2] === "home" ? H.colors.primary : caps[k][2] === "away" ? A.colors.secondary : "#fff";
+  }
+
+  // ---- selected player --------------------------------------------------------------------
+  function updateSelected() {
+    const el = $("selected");
+    if (selected < 0) { el.hidden = true; return; }
+    const i = Math.min(N - 1, Math.floor(pos)), pl = DATA.players[selected];
+    if (F[i * W + 2 * selected] === ABSENT) { el.hidden = false; el.innerHTML = `<b>${pl.shirt} ${esc(pl.name)}</b><br>Not on the pitch`; return; }
+    const team = pl.side === "home" ? H : A;
+    el.hidden = false;
+    el.innerHTML = `<b>${pl.shirt} ${esc(pl.name)}</b><br>${pl.pos} · ${esc(team.short)}<br><span class="num">${speedKmh(i, selected).toFixed(1)} km/h</span>`;
+  }
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function nearest(ev) {
+    const r = cv.getBoundingClientRect();
+    const mx = (ev.clientX - r.left) * dpr / scale - MARGIN, my = PITCH_W + MARGIN - (ev.clientY - r.top) * dpr / scale;
+    const i = Math.min(N - 1, Math.floor(pos)), fr = pos - i;
+    let best = -1, bd = 2.6;
+    for (let s = 0; s < NP; s++) { const xy = playerXY(i, fr, s); if (!xy) continue; const d = Math.hypot(xy[0] - mx, xy[1] - my); if (d < bd) { bd = d; best = s; } }
+    return best;
+  }
+  cv.addEventListener("mousemove", (e) => { const h = nearest(e); if (h !== hover) { hover = h; if (!playing) render(); } });
+  cv.addEventListener("mouseleave", () => { hover = -1; if (!playing) render(); });
+  cv.addEventListener("click", (e) => { const s = nearest(e); selected = s === selected ? -1 : s; updateSelected(); render(); });
+
+  // ---- playback ---------------------------------------------------------------------------
+  const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>';
+  function play(on) {
+    playing = on ?? !playing;
+    if (pos >= N - 1 && playing) seek(0);
+    $("play").innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+    $("play").setAttribute("aria-label", playing ? "Pause" : "Play");
+    lastTs = 0;
+    if (playing) requestAnimationFrame(tick);
+  }
+  function seek(f) {
+    const prev = pos;
+    pos = Math.max(0, Math.min(N - 1, f));
+    refresh(prev, true);
+  }
+  function refresh(prevPos, force) {
+    const i = Math.min(N - 1, Math.floor(pos));
+    const c = clockParts(i);
+    $("clock").textContent = c.clock; $("added").textContent = c.added;
+    $("time").textContent = c.minute;
+    $("period").textContent = pos >= N - 1 ? "Full-time" : periodOf(i) === 1 ? "1st half" : "2nd half";
+    range.value = String(i);
+    updatePanels(force); updateMoments(prevPos); updateCaption(); updateSelected();
+    drawScrub(); render();
+  }
+  function tick(ts) {
+    if (!playing) return;
+    if (lastTs) {
+      const dt = Math.min(0.1, (ts - lastTs) / 1000);
+      const prev = pos;
+      pos = Math.min(N - 1, pos + dt * HZ * speed);
+      refresh(prev, false);
+      if (pos >= N - 1) { play(false); return; }
+    }
+    lastTs = ts;
+    requestAnimationFrame(tick);
+  }
+  $("play").addEventListener("click", () => play());
+  const seg = $("speeds");
+  for (const s of speeds) {
+    const b = document.createElement("button"); b.textContent = `${s}×`; b.setAttribute("aria-pressed", String(s === speed));
+    b.title = s === 1 ? "Real time" : `${s}× real time (full match in ${Math.round(95 / s)} min)`;
+    b.addEventListener("click", () => { speed = s; for (const x of seg.children) x.setAttribute("aria-pressed", String(x === b)); });
+    seg.appendChild(b);
+  }
+  function jumpMoment(dir) {
+    const key = DATA.moments.filter((m) => m.importance >= 0.5);
+    const lead = 6 * HZ;
+    const target = dir > 0 ? key.find((m) => m.f - lead > pos + 1) : [...key].reverse().find((m) => m.f - lead < pos - 2 * HZ);
+    if (target) { seek(Math.max(0, target.f - lead)); play(true); }
+  }
+  $("nextMoment").addEventListener("click", () => jumpMoment(1));
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest && e.target.closest("input, textarea")) { if (e.key !== " ") return; }
+    if (e.key === " ") { e.preventDefault(); play(); }
+    else if (e.key === "ArrowRight") seek(pos + 15 * HZ);
+    else if (e.key === "ArrowLeft") seek(pos - 15 * HZ);
+    else if (e.key.toLowerCase() === "n") jumpMoment(1);
+    else if (e.key.toLowerCase() === "p") jumpMoment(-1);
+  });
+
+  // theme changes recolour team accents that would vanish on the new surface
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const retheme = () => { refreshColours(); applyTeamVars(); drawScrub(); drawSpark(true); updatePanels(true); };
+  mq.addEventListener?.("change", retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  new ResizeObserver(() => resize()).observe(box);
+  play(false);
+  seek(0);
+})();
+</script>

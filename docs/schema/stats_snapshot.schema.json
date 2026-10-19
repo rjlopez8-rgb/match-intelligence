@@ -1,0 +1,408 @@
+{
+  "$defs": {
+    "Clock": {
+      "properties": {
+        "period": {
+          "title": "Period",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "minute_display": {
+          "title": "Minute Display",
+          "type": "string"
+        }
+      },
+      "required": [
+        "period",
+        "clock",
+        "minute_display"
+      ],
+      "title": "Clock",
+      "type": "object"
+    },
+    "MatchHeader": {
+      "properties": {
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "competition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Competition"
+        },
+        "venue": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "stadium, city, capacity",
+          "title": "Venue"
+        },
+        "home": {
+          "$ref": "#/$defs/TeamHeader"
+        },
+        "away": {
+          "$ref": "#/$defs/TeamHeader"
+        },
+        "finished": {
+          "title": "Finished",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "match_id",
+        "competition",
+        "venue",
+        "home",
+        "away",
+        "finished"
+      ],
+      "title": "MatchHeader",
+      "type": "object"
+    },
+    "Moment": {
+      "additionalProperties": false,
+      "description": "Something worth talking about, with the numbers and event ids that back it up.",
+      "properties": {
+        "moment_id": {
+          "title": "Moment Id",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "goal",
+            "big_chance",
+            "great_save",
+            "penalty_awarded",
+            "red_card",
+            "yellow_card",
+            "tactical_change",
+            "substitution",
+            "period_summary",
+            "speed_alert",
+            "top_speed",
+            "distance_milestone",
+            "hard_pass",
+            "long_sequence",
+            "dominance",
+            "pressing_surge",
+            "momentum_shift",
+            "chaos_spike"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "period": {
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Period",
+          "type": "integer"
+        },
+        "t": {
+          "description": "seconds since the start of the period",
+          "minimum": 0,
+          "title": "T",
+          "type": "number"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "minute_display": {
+          "description": "broadcast-style minute, e.g. 45+2'",
+          "title": "Minute Display",
+          "type": "string"
+        },
+        "team_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Team Id"
+        },
+        "team_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Team Name"
+        },
+        "player_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Player Ids",
+          "type": "array"
+        },
+        "player_names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Player Names",
+          "type": "array"
+        },
+        "title": {
+          "description": "factual template; narration is the agents' job",
+          "title": "Title",
+          "type": "string"
+        },
+        "facts": {
+          "additionalProperties": true,
+          "description": "numbers behind the moment, all computed by the stats layer",
+          "title": "Facts",
+          "type": "object"
+        },
+        "evidence": {
+          "description": "event ids that prove the moment",
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "moment_weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "percentage points of win probability moved (realised for goals/red cards, expected for misses)",
+          "title": "Moment Weight"
+        },
+        "importance": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Importance",
+          "type": "number"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        },
+        "win_probability": {
+          "$ref": "#/$defs/Probabilities"
+        },
+        "momentum": {
+          "description": "+1 home fully on top, -1 away fully on top",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Momentum",
+          "type": "number"
+        }
+      },
+      "required": [
+        "moment_id",
+        "type",
+        "period",
+        "t",
+        "clock",
+        "minute_display",
+        "team_id",
+        "team_name",
+        "player_ids",
+        "player_names",
+        "title",
+        "facts",
+        "evidence",
+        "moment_weight",
+        "importance",
+        "score",
+        "win_probability",
+        "momentum"
+      ],
+      "title": "Moment",
+      "type": "object"
+    },
+    "Probabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "home": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Home",
+          "type": "number"
+        },
+        "draw": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Draw",
+          "type": "number"
+        },
+        "away": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Away",
+          "type": "number"
+        }
+      },
+      "required": [
+        "home",
+        "draw",
+        "away"
+      ],
+      "title": "Probabilities",
+      "type": "object"
+    },
+    "Score": {
+      "additionalProperties": false,
+      "properties": {
+        "home": {
+          "minimum": 0,
+          "title": "Home",
+          "type": "integer"
+        },
+        "away": {
+          "minimum": 0,
+          "title": "Away",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    },
+    "TeamHeader": {
+      "properties": {
+        "team_id": {
+          "title": "Team Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "short_name": {
+          "title": "Short Name",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "formation": {
+          "title": "Formation",
+          "type": "string"
+        },
+        "manager": {
+          "title": "Manager",
+          "type": "string"
+        },
+        "colors": {
+          "additionalProperties": true,
+          "title": "Colors",
+          "type": "object"
+        }
+      },
+      "required": [
+        "team_id",
+        "name",
+        "short_name",
+        "code",
+        "formation",
+        "manager",
+        "colors"
+      ],
+      "title": "TeamHeader",
+      "type": "object"
+    },
+    "TopMoments": {
+      "properties": {
+        "count": {
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "top": {
+          "items": {
+            "$ref": "#/$defs/Moment"
+          },
+          "title": "Top",
+          "type": "array"
+        }
+      },
+      "required": [
+        "count",
+        "top"
+      ],
+      "title": "TopMoments",
+      "type": "object"
+    }
+  },
+  "description": "Complete state of the stats layer at one instant (``MatchAnalyzer.snapshot()``).",
+  "properties": {
+    "snapshot_version": {
+      "title": "Snapshot Version",
+      "type": "string"
+    },
+    "match": {
+      "$ref": "#/$defs/MatchHeader"
+    },
+    "clock": {
+      "$ref": "#/$defs/Clock"
+    },
+    "score": {
+      "$ref": "#/$defs/Score"
+    },
+    "models": {
+      "additionalProperties": {
+        "enum": [
+          "trained",
+          "fallback"
+        ],
+        "type": "string"
+      },
+      "title": "Models",
+      "type": "object"
+    },
+    "metrics": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Metrics",
+      "type": "object"
+    },
+    "moments": {
+      "$ref": "#/$defs/TopMoments"
+    }
+  },
+  "required": [
+    "snapshot_version",
+    "match",
+    "clock",
+    "score",
+    "models",
+    "metrics",
+    "moments"
+  ],
+  "title": "Snapshot",
+  "type": "object"
+}

@@ -92,7 +92,7 @@ class Scenario:
 
     @classmethod
     def load(cls, path: str | Path) -> Scenario:
-        return cls.from_dict(json.loads(Path(path).read_text()))
+        return cls.from_dict(json.loads(Path(path).read_text(encoding="utf-8")))
 
 
 def find_seed(

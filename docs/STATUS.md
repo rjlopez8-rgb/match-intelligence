@@ -15,15 +15,20 @@ Read this first when picking the project up in a new chat.
 ## Done (Oct 18)
 - `engine/`: agent-based 10 Hz simulator, fictional 8-club league, events + tracking, scenarios, seed search, live feed, schema, CLI, 20 passing tests, calibration report (15/22 metrics in real-world range, the rest within a few percent).
 - `data/sample/riv-kin-7`: Riverside 0-1 Kingsport (Duarte 74' against his former club), 68% Riverside possession.
+- `stats/` (package `matchstats`): 9 metric plug-ins, moment detector (18 types, each with facts, evidence ids, Moment Weight and importance), 11 agent query tools with JSON-schema specs, Pydantic contracts, CLI (`analyze`, `live`, `ask`, `tools`, `train`, `schema`), trained models with an accuracy report (`docs/MODEL_REPORT.md`), 21 passing tests including truth isolation. Analyses a full match in ~1.5 s.
 - Known engine gaps: scoring slightly high (1.75 vs ≤1.65 goals per team), slightly few crosses, tackles and corners. Tune in `engine/src/matchengine/params.py` and check with `matchengine calibrate --matches 24`.
 
 ## Next (in order)
-0. Find the demo-match seed (slow, so run it in the background, ~15 s per candidate): `cd engine && matchengine find-seed scenarios/showcase.json --start 18 --tries 150`. Seeds 1-17 don't match. If it takes too long, relax the storyline in `scenarios/showcase.json` (e.g. drop `scorer`).
-1. Azure smoke test: create a Foundry project, deploy a small model, make one call from a laptop. Set a budget alert.
-2. `stats/`: stream consumer that computes pass difficulty, speeds and distance thresholds, xG, possession and momentum, and Moment Weight from a win-probability model trained on simulated matches. Expose these as MCP tools.
-3. `agents/`: analyst, explainer, narrator, fact-checker, personaliser and overlay agents (Agent Framework on Foundry).
-4. `frontend/`: 2D pitch replay from tracking frames, corner widget, mode switcher, control room.
-5. Deploy (Container Apps + Static Web Apps), then README, architecture diagram, video.
+0. Find the demo-match seed (slow, so run it in the background, ~15 s per candidate): `cd engine && matchengine find-seed scenarios/showcase.json --start 18 --tries 150`. Seeds 1-17 don't match. If it takes too long, relax the storyline in `scenarios/showcase.json` (e.g. drop `scorer`). Then record it with `matchengine simulate` and check it with `matchstats analyze`.
+1. Azure smoke test: create a Foundry project, deploy a small model (Standard deployment), make one call from a laptop with the key in an environment variable. Set budget alerts first.
+2. `agents/`: wrap `matchstats.queries.TOOLS` as MCP tools; analyst, explainer, narrator, fact-checker, personaliser and overlay agents (Agent Framework on Foundry). The fact-checker verifies claims with `explain_moment` / `event`.
+3. `frontend/`: 2D pitch replay from tracking frames, corner widget, mode switcher, control room.
+4. Deploy (Container Apps + Static Web Apps), then README, architecture diagram, video.
+
+## Stats layer notes
+- Entry point: `MatchAnalyzer().process(kind, item)` returns new moments; `MatchQueries(analyzer).call(tool, args)` answers agent questions.
+- Models never read `details.truth`; `tests/test_analyzer.py::test_models_never_see_ground_truth` enforces it.
+- Retrain: `python stats/scripts/generate_training_data.py --matches 168 --out data/training`, then `matchstats train data/training --report docs/MODEL_REPORT.md`. Changing a feature list in `models/features.py` requires retraining (loading refuses mismatched weights).
 
 ## Key IDs
 - Showcase fixture: `RIV` (Riverside Athletic, 4-3-3 high press) v `KIN` (Kingsport United, 4-2-3-1 low block).

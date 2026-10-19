@@ -7,6 +7,7 @@ venv/
 .pytest_cache/
 .ruff_cache/
 data/matches/
+data/training/
 .DS_Store
 node_modules/
 dist/

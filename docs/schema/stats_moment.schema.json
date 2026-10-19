@@ -1,0 +1,216 @@
+{
+  "$defs": {
+    "Probabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "home": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Home",
+          "type": "number"
+        },
+        "draw": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Draw",
+          "type": "number"
+        },
+        "away": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Away",
+          "type": "number"
+        }
+      },
+      "required": [
+        "home",
+        "draw",
+        "away"
+      ],
+      "title": "Probabilities",
+      "type": "object"
+    },
+    "Score": {
+      "additionalProperties": false,
+      "properties": {
+        "home": {
+          "minimum": 0,
+          "title": "Home",
+          "type": "integer"
+        },
+        "away": {
+          "minimum": 0,
+          "title": "Away",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Something worth talking about, with the numbers and event ids that back it up.",
+  "properties": {
+    "moment_id": {
+      "title": "Moment Id",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "goal",
+        "big_chance",
+        "great_save",
+        "penalty_awarded",
+        "red_card",
+        "yellow_card",
+        "tactical_change",
+        "substitution",
+        "period_summary",
+        "speed_alert",
+        "top_speed",
+        "distance_milestone",
+        "hard_pass",
+        "long_sequence",
+        "dominance",
+        "pressing_surge",
+        "momentum_shift",
+        "chaos_spike"
+      ],
+      "title": "Type",
+      "type": "string"
+    },
+    "period": {
+      "maximum": 2,
+      "minimum": 1,
+      "title": "Period",
+      "type": "integer"
+    },
+    "t": {
+      "description": "seconds since the start of the period",
+      "minimum": 0,
+      "title": "T",
+      "type": "number"
+    },
+    "clock": {
+      "title": "Clock",
+      "type": "string"
+    },
+    "minute_display": {
+      "description": "broadcast-style minute, e.g. 45+2'",
+      "title": "Minute Display",
+      "type": "string"
+    },
+    "team_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Team Id"
+    },
+    "team_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Team Name"
+    },
+    "player_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Player Ids",
+      "type": "array"
+    },
+    "player_names": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Player Names",
+      "type": "array"
+    },
+    "title": {
+      "description": "factual template; narration is the agents' job",
+      "title": "Title",
+      "type": "string"
+    },
+    "facts": {
+      "additionalProperties": true,
+      "description": "numbers behind the moment, all computed by the stats layer",
+      "title": "Facts",
+      "type": "object"
+    },
+    "evidence": {
+      "description": "event ids that prove the moment",
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "moment_weight": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "percentage points of win probability moved (realised for goals/red cards, expected for misses)",
+      "title": "Moment Weight"
+    },
+    "importance": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Importance",
+      "type": "number"
+    },
+    "score": {
+      "$ref": "#/$defs/Score"
+    },
+    "win_probability": {
+      "$ref": "#/$defs/Probabilities"
+    },
+    "momentum": {
+      "description": "+1 home fully on top, -1 away fully on top",
+      "maximum": 1,
+      "minimum": -1,
+      "title": "Momentum",
+      "type": "number"
+    }
+  },
+  "required": [
+    "moment_id",
+    "type",
+    "period",
+    "t",
+    "clock",
+    "minute_display",
+    "team_id",
+    "team_name",
+    "player_ids",
+    "player_names",
+    "title",
+    "facts",
+    "evidence",
+    "moment_weight",
+    "importance",
+    "score",
+    "win_probability",
+    "momentum"
+  ],
+  "title": "Moment",
+  "type": "object"
+}

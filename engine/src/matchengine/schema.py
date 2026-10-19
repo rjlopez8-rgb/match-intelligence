@@ -292,6 +292,6 @@ def export_json_schemas(out_dir: str | Path) -> list[Path]:
         **{f"details.{k}": v for k, v in DETAILS_BY_TYPE.items()},
     }.items():
         path = out / f"{name}.schema.json"
-        path.write_text(json.dumps(model.model_json_schema(), indent=2))
+        path.write_text(json.dumps(model.model_json_schema(), indent=2), encoding="utf-8")
         written.append(path)
     return written

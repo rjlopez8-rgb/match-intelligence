@@ -1,0 +1,168 @@
+{
+  "matches": {
+    "train": 135,
+    "test": 33
+  },
+  "xg": {
+    "train_shots": 3041,
+    "test_shots": 739,
+    "test_goals": 116,
+    "test_predicted_goals": 115.2,
+    "true_xg_sum": 113.7,
+    "mae_vs_true_xg": 0.0205,
+    "correlation_vs_true_xg": 0.994,
+    "brier": 0.0768,
+    "brier_true_xg": 0.0759,
+    "auc": 0.886,
+    "calibration": [
+      {
+        "predicted": 0.0098,
+        "observed": 0.0,
+        "n": 93
+      },
+      {
+        "predicted": 0.0216,
+        "observed": 0.0109,
+        "n": 92
+      },
+      {
+        "predicted": 0.0342,
+        "observed": 0.0326,
+        "n": 92
+      },
+      {
+        "predicted": 0.056,
+        "observed": 0.0435,
+        "n": 92
+      },
+      {
+        "predicted": 0.0889,
+        "observed": 0.1075,
+        "n": 93
+      },
+      {
+        "predicted": 0.1204,
+        "observed": 0.1196,
+        "n": 92
+      },
+      {
+        "predicted": 0.1776,
+        "observed": 0.1739,
+        "n": 92
+      },
+      {
+        "predicted": 0.7347,
+        "observed": 0.7634,
+        "n": 93
+      }
+    ]
+  },
+  "pass_completion": {
+    "train_passes": 110963,
+    "test_passes": 27217,
+    "observed_completion": 0.8486,
+    "predicted_completion": 0.8486,
+    "passes_with_engine_probability": 26568,
+    "mae_vs_true_probability": 0.0699,
+    "correlation_vs_true_probability": 0.519,
+    "auc": 0.79,
+    "auc_modelled": 0.772,
+    "auc_true_probability": 0.758,
+    "brier": 0.1005,
+    "calibration": [
+      {
+        "predicted": 0.41,
+        "observed": 0.4166,
+        "n": 2722
+      },
+      {
+        "predicted": 0.768,
+        "observed": 0.7818,
+        "n": 2722
+      },
+      {
+        "predicted": 0.8433,
+        "observed": 0.8203,
+        "n": 2721
+      },
+      {
+        "predicted": 0.8718,
+        "observed": 0.8564,
+        "n": 2722
+      },
+      {
+        "predicted": 0.8867,
+        "observed": 0.871,
+        "n": 2721
+      },
+      {
+        "predicted": 0.9077,
+        "observed": 0.8968,
+        "n": 2722
+      },
+      {
+        "predicted": 0.9321,
+        "observed": 0.9409,
+        "n": 2722
+      },
+      {
+        "predicted": 0.9454,
+        "observed": 0.9577,
+        "n": 2721
+      },
+      {
+        "predicted": 0.9548,
+        "observed": 0.9684,
+        "n": 2722
+      },
+      {
+        "predicted": 0.9661,
+        "observed": 0.9765,
+        "n": 2722
+      }
+    ]
+  },
+  "win_probability": {
+    "train_states": 16327,
+    "test_states": 3988,
+    "brier": 0.4114,
+    "brier_baseline": 0.6574,
+    "log_loss": 0.7074,
+    "by_minute": {
+      "kick-off": {
+        "brier": 0.6621,
+        "accuracy": 0.324
+      },
+      "15'": {
+        "brier": 0.6132,
+        "accuracy": 0.426
+      },
+      "45'": {
+        "brier": 0.442,
+        "accuracy": 0.632
+      },
+      "60'": {
+        "brier": 0.3311,
+        "accuracy": 0.826
+      },
+      "75'": {
+        "brier": 0.2835,
+        "accuracy": 0.795
+      },
+      "85'": {
+        "brier": 0.2056,
+        "accuracy": 0.905
+      }
+    },
+    "result_rates_train": {
+      "home": 0.422,
+      "draw": 0.197,
+      "away": 0.381
+    }
+  },
+  "control_reference": {
+    "chaos_rate_p10": 2.4,
+    "chaos_rate_p90": 7.0
+  },
+  "generated_from": "/home/claude/training_matches"
+}

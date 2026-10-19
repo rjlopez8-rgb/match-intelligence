@@ -1,0 +1,6046 @@
+{
+  "snapshot_version": "1.0.0",
+  "match": {
+    "match_id": "riv-kin-7",
+    "competition": "Meridian League",
+    "venue": {
+      "stadium": "The Wharf Ground",
+      "city": "Riverside",
+      "capacity": 41200
+    },
+    "home": {
+      "team_id": "riverside-athletic",
+      "name": "Riverside Athletic",
+      "short_name": "Riverside",
+      "code": "RIV",
+      "formation": "4-3-3",
+      "manager": "Elena Marsh",
+      "colors": {
+        "primary": "#C8102E",
+        "secondary": "#FFFFFF",
+        "text": "#FFFFFF"
+      }
+    },
+    "away": {
+      "team_id": "kingsport-united",
+      "name": "Kingsport United",
+      "short_name": "Kingsport",
+      "code": "KIN",
+      "formation": "4-2-3-1",
+      "manager": "Viktor Hale",
+      "colors": {
+        "primary": "#0B2D6B",
+        "secondary": "#F2C230",
+        "text": "#FFFFFF"
+      }
+    },
+    "finished": true
+  },
+  "clock": {
+    "period": 2,
+    "clock": "90:00+6:14",
+    "minute_display": "90+7'"
+  },
+  "score": {
+    "home": 0,
+    "away": 1
+  },
+  "models": {
+    "xg": "trained",
+    "pass_completion": "trained",
+    "win_probability": "trained"
+  },
+  "metrics": {
+    "physical": {
+      "available": true,
+      "teams": {
+        "riverside-athletic": {
+          "distance_km": 107.0,
+          "high_speed_km": 11.61,
+          "sprints": 236
+        },
+        "kingsport-united": {
+          "distance_km": 110.58,
+          "high_speed_km": 11.85,
+          "sprints": 229
+        }
+      },
+      "players": {
+        "riv-01": {
+          "distance_km": 2.9,
+          "high_speed_m": 6,
+          "sprints": 0,
+          "top_speed_kmh": 23.3,
+          "speed_kmh_now": 0.0
+        },
+        "riv-02": {
+          "distance_km": 6.42,
+          "high_speed_m": 741,
+          "sprints": 19,
+          "top_speed_kmh": 33.3,
+          "speed_kmh_now": 14.4
+        },
+        "riv-03": {
+          "distance_km": 9.75,
+          "high_speed_m": 630,
+          "sprints": 12,
+          "top_speed_kmh": 28.4,
+          "speed_kmh_now": 4.7
+        },
+        "riv-04": {
+          "distance_km": 9.72,
+          "high_speed_m": 708,
+          "sprints": 13,
+          "top_speed_kmh": 32.1,
+          "speed_kmh_now": 4.8
+        },
+        "riv-05": {
+          "distance_km": 10.44,
+          "high_speed_m": 1215,
+          "sprints": 30,
+          "top_speed_kmh": 33.5,
+          "speed_kmh_now": 0.0
+        },
+        "riv-06": {
+          "distance_km": 6.75,
+          "high_speed_m": 432,
+          "sprints": 7,
+          "top_speed_kmh": 27.5,
+          "speed_kmh_now": 15.9
+        },
+        "riv-07": {
+          "distance_km": 10.38,
+          "high_speed_m": 888,
+          "sprints": 13,
+          "top_speed_kmh": 31.9,
+          "speed_kmh_now": 4.4
+        },
+        "riv-08": {
+          "distance_km": 10.72,
+          "high_speed_m": 1192,
+          "sprints": 27,
+          "top_speed_kmh": 32.8,
+          "speed_kmh_now": 4.0
+        },
+        "riv-09": {
+          "distance_km": 8.04,
+          "high_speed_m": 1372,
+          "sprints": 26,
+          "top_speed_kmh": 33.1,
+          "speed_kmh_now": 7.2
+        },
+        "riv-10": {
+          "distance_km": 6.75,
+          "high_speed_m": 990,
+          "sprints": 26,
+          "top_speed_kmh": 32.8,
+          "speed_kmh_now": 17.6
+        },
+        "riv-11": {
+          "distance_km": 7.03,
+          "high_speed_m": 1511,
+          "sprints": 33,
+          "top_speed_kmh": 34.4,
+          "speed_kmh_now": 11.3
+        },
+        "kin-01": {
+          "distance_km": 2.61,
+          "high_speed_m": 2,
+          "sprints": 0,
+          "top_speed_kmh": 20.7,
+          "speed_kmh_now": 0.0
+        },
+        "kin-02": {
+          "distance_km": 10.22,
+          "high_speed_m": 889,
+          "sprints": 18,
+          "top_speed_kmh": 32.9,
+          "speed_kmh_now": 1.7
+        },
+        "kin-03": {
+          "distance_km": 9.8,
+          "high_speed_m": 460,
+          "sprints": 9,
+          "top_speed_kmh": 26.6,
+          "speed_kmh_now": 0.3
+        },
+        "kin-04": {
+          "distance_km": 9.83,
+          "high_speed_m": 554,
+          "sprints": 11,
+          "top_speed_kmh": 31.4,
+          "speed_kmh_now": 1.9
+        },
+        "kin-05": {
+          "distance_km": 9.21,
+          "high_speed_m": 1075,
+          "sprints": 19,
+          "top_speed_kmh": 33.7,
+          "speed_kmh_now": 4.1
+        },
+        "kin-06": {
+          "distance_km": 10.28,
+          "high_speed_m": 491,
+          "sprints": 5,
+          "top_speed_kmh": 29.1,
+          "speed_kmh_now": 1.6
+        },
+        "kin-07": {
+          "distance_km": 10.26,
+          "high_speed_m": 542,
+          "sprints": 8,
+          "top_speed_kmh": 27.0,
+          "speed_kmh_now": 1.7
+        },
+        "kin-08": {
+          "distance_km": 9.41,
+          "high_speed_m": 1736,
+          "sprints": 40,
+          "top_speed_kmh": 34.2,
+          "speed_kmh_now": 5.1
+        },
+        "kin-09": {
+          "distance_km": 8.63,
+          "high_speed_m": 911,
+          "sprints": 14,
+          "top_speed_kmh": 32.9,
+          "speed_kmh_now": 4.3
+        },
+        "kin-10": {
+          "distance_km": 9.49,
+          "high_speed_m": 1894,
+          "sprints": 50,
+          "top_speed_kmh": 33.0,
+          "speed_kmh_now": 5.1
+        },
+        "kin-11": {
+          "distance_km": 9.88,
+          "high_speed_m": 1530,
+          "sprints": 24,
+          "top_speed_kmh": 32.0,
+          "speed_kmh_now": 7.6
+        },
+        "riv-16": {
+          "distance_km": 4.0,
+          "high_speed_m": 234,
+          "sprints": 3,
+          "top_speed_kmh": 26.8,
+          "speed_kmh_now": 3.0
+        },
+        "riv-20": {
+          "distance_km": 4.04,
+          "high_speed_m": 483,
+          "sprints": 7,
+          "top_speed_kmh": 32.2,
+          "speed_kmh_now": 5.5
+        },
+        "riv-14": {
+          "distance_km": 3.88,
+          "high_speed_m": 321,
+          "sprints": 6,
+          "top_speed_kmh": 32.8,
+          "speed_kmh_now": 3.1
+        },
+        "riv-18": {
+          "distance_km": 3.77,
+          "high_speed_m": 546,
+          "sprints": 10,
+          "top_speed_kmh": 32.5,
+          "speed_kmh_now": 0.0
+        },
+        "riv-19": {
+          "distance_km": 2.41,
+          "high_speed_m": 341,
+          "sprints": 4,
+          "top_speed_kmh": 28.5,
+          "speed_kmh_now": 4.5
+        },
+        "kin-18": {
+          "distance_km": 2.56,
+          "high_speed_m": 541,
+          "sprints": 11,
+          "top_speed_kmh": 33.3,
+          "speed_kmh_now": 0.0
+        },
+        "kin-20": {
+          "distance_km": 2.66,
+          "high_speed_m": 367,
+          "sprints": 6,
+          "top_speed_kmh": 31.9,
+          "speed_kmh_now": 0.0
+        },
+        "kin-19": {
+          "distance_km": 2.32,
+          "high_speed_m": 375,
+          "sprints": 6,
+          "top_speed_kmh": 32.2,
+          "speed_kmh_now": 0.0
+        },
+        "kin-17": {
+          "distance_km": 2.18,
+          "high_speed_m": 367,
+          "sprints": 6,
+          "top_speed_kmh": 32.8,
+          "speed_kmh_now": 0.0
+        },
+        "kin-14": {
+          "distance_km": 1.23,
+          "high_speed_m": 116,
+          "sprints": 2,
+          "top_speed_kmh": 28.0,
+          "speed_kmh_now": 0.1
+        }
+      },
+      "leaders": {
+        "distance": [
+          {
+            "player_id": "riv-08",
+            "distance_km": 10.72
+          },
+          {
+            "player_id": "riv-05",
+            "distance_km": 10.44
+          },
+          {
+            "player_id": "riv-07",
+            "distance_km": 10.38
+          },
+          {
+            "player_id": "kin-06",
+            "distance_km": 10.28
+          },
+          {
+            "player_id": "kin-07",
+            "distance_km": 10.26
+          }
+        ],
+        "top_speed": [
+          {
+            "player_id": "riv-11",
+            "top_speed_kmh": 34.4
+          },
+          {
+            "player_id": "kin-08",
+            "top_speed_kmh": 34.2
+          },
+          {
+            "player_id": "kin-05",
+            "top_speed_kmh": 33.7
+          },
+          {
+            "player_id": "riv-05",
+            "top_speed_kmh": 33.5
+          },
+          {
+            "player_id": "riv-02",
+            "top_speed_kmh": 33.3
+          }
+        ]
+      },
+      "records": {
+        "fastest_player_kmh": 34.4,
+        "fastest_player_id": "riv-11",
+        "fastest_ball_kmh": 110.6
+      }
+    },
+    "shooting": {
+      "teams": {
+        "riverside-athletic": {
+          "shots": 14,
+          "on_target": 5,
+          "goals": 0,
+          "xg": 1.143,
+          "big_chances": 0,
+          "blocked": 1,
+          "off_target": 8,
+          "headers": 4,
+          "fastest_shot_kmh": 108.6,
+          "xg_per_shot": 0.082,
+          "avg_shot_speed_kmh": 82.2
+        },
+        "kingsport-united": {
+          "shots": 15,
+          "on_target": 4,
+          "goals": 1,
+          "xg": 2.888,
+          "big_chances": 2,
+          "blocked": 1,
+          "off_target": 10,
+          "headers": 0,
+          "fastest_shot_kmh": 110.6,
+          "xg_per_shot": 0.193,
+          "avg_shot_speed_kmh": 95.9
+        }
+      },
+      "players": {
+        "kin-11": {
+          "shots": 10,
+          "on_target": 3,
+          "goals": 1,
+          "xg": 2.124
+        },
+        "kin-10": {
+          "shots": 2,
+          "on_target": 0,
+          "goals": 0,
+          "xg": 0.208
+        },
+        "riv-11": {
+          "shots": 1,
+          "on_target": 0,
+          "goals": 0,
+          "xg": 0.172
+        },
+        "riv-08": {
+          "shots": 1,
+          "on_target": 1,
+          "goals": 0,
+          "xg": 0.201
+        },
+        "riv-10": {
+          "shots": 5,
+          "on_target": 2,
+          "goals": 0,
+          "xg": 0.275
+        },
+        "kin-08": {
+          "shots": 1,
+          "on_target": 1,
+          "goals": 0,
+          "xg": 0.175
+        },
+        "riv-04": {
+          "shots": 2,
+          "on_target": 1,
+          "goals": 0,
+          "xg": 0.091
+        },
+        "riv-20": {
+          "shots": 5,
+          "on_target": 1,
+          "goals": 0,
+          "xg": 0.405
+        },
+        "kin-20": {
+          "shots": 2,
+          "on_target": 0,
+          "goals": 0,
+          "xg": 0.381
+        }
+      },
+      "goalkeepers": {
+        "riv-01": {
+          "saves": 3,
+          "xg_on_target_faced": 1.115,
+          "goals_conceded": 1,
+          "goals_prevented": 0.115
+        },
+        "kin-01": {
+          "saves": 5,
+          "xg_on_target_faced": 0.396,
+          "goals_conceded": 0,
+          "goals_prevented": 0.396
+        }
+      },
+      "xg_timeline": [
+        {
+          "minute": 2,
+          "team_id": "kingsport-united",
+          "xg": 0.178,
+          "cumulative": 0.178,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-00071"
+        },
+        {
+          "minute": 3,
+          "team_id": "kingsport-united",
+          "xg": 0.163,
+          "cumulative": 0.342,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00105"
+        },
+        {
+          "minute": 7,
+          "team_id": "kingsport-united",
+          "xg": 0.738,
+          "cumulative": 1.08,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00171"
+        },
+        {
+          "minute": 15,
+          "team_id": "kingsport-united",
+          "xg": 0.1,
+          "cumulative": 1.18,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00332"
+        },
+        {
+          "minute": 16,
+          "team_id": "riverside-athletic",
+          "xg": 0.172,
+          "cumulative": 0.172,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00339"
+        },
+        {
+          "minute": 17,
+          "team_id": "kingsport-united",
+          "xg": 0.108,
+          "cumulative": 1.288,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00368"
+        },
+        {
+          "minute": 19,
+          "team_id": "kingsport-united",
+          "xg": 0.062,
+          "cumulative": 1.35,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00384"
+        },
+        {
+          "minute": 23,
+          "team_id": "riverside-athletic",
+          "xg": 0.201,
+          "cumulative": 0.373,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-00447"
+        },
+        {
+          "minute": 24,
+          "team_id": "riverside-athletic",
+          "xg": 0.053,
+          "cumulative": 0.426,
+          "outcome": "blocked",
+          "event_id": "riv-kin-7-00451"
+        },
+        {
+          "minute": 26,
+          "team_id": "kingsport-united",
+          "xg": 0.152,
+          "cumulative": 1.502,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00509"
+        },
+        {
+          "minute": 32,
+          "team_id": "kingsport-united",
+          "xg": 0.175,
+          "cumulative": 1.677,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-00627"
+        },
+        {
+          "minute": 42,
+          "team_id": "riverside-athletic",
+          "xg": 0.013,
+          "cumulative": 0.439,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-00859"
+        },
+        {
+          "minute": 42,
+          "team_id": "riverside-athletic",
+          "xg": 0.049,
+          "cumulative": 0.488,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-00864"
+        },
+        {
+          "minute": 43,
+          "team_id": "riverside-athletic",
+          "xg": 0.073,
+          "cumulative": 0.561,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00898"
+        },
+        {
+          "minute": 45,
+          "team_id": "riverside-athletic",
+          "xg": 0.095,
+          "cumulative": 0.656,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-00928"
+        },
+        {
+          "minute": 46,
+          "team_id": "riverside-athletic",
+          "xg": 0.042,
+          "cumulative": 0.698,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00933"
+        },
+        {
+          "minute": 45,
+          "team_id": "riverside-athletic",
+          "xg": 0.041,
+          "cumulative": 0.739,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00973"
+        },
+        {
+          "minute": 46,
+          "team_id": "kingsport-united",
+          "xg": 0.026,
+          "cumulative": 1.703,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-00996"
+        },
+        {
+          "minute": 51,
+          "team_id": "kingsport-united",
+          "xg": 0.013,
+          "cumulative": 1.716,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01103"
+        },
+        {
+          "minute": 54,
+          "team_id": "kingsport-united",
+          "xg": 0.023,
+          "cumulative": 1.739,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-01171"
+        },
+        {
+          "minute": 55,
+          "team_id": "kingsport-united",
+          "xg": 0.029,
+          "cumulative": 1.769,
+          "outcome": "blocked",
+          "event_id": "riv-kin-7-01199"
+        },
+        {
+          "minute": 62,
+          "team_id": "riverside-athletic",
+          "xg": 0.025,
+          "cumulative": 0.764,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01312"
+        },
+        {
+          "minute": 64,
+          "team_id": "riverside-athletic",
+          "xg": 0.177,
+          "cumulative": 0.941,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01363"
+        },
+        {
+          "minute": 73,
+          "team_id": "kingsport-united",
+          "xg": 0.738,
+          "cumulative": 2.507,
+          "outcome": "goal",
+          "event_id": "riv-kin-7-01533"
+        },
+        {
+          "minute": 75,
+          "team_id": "riverside-athletic",
+          "xg": 0.088,
+          "cumulative": 1.029,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01570"
+        },
+        {
+          "minute": 85,
+          "team_id": "riverside-athletic",
+          "xg": 0.038,
+          "cumulative": 1.067,
+          "outcome": "saved",
+          "event_id": "riv-kin-7-01764"
+        },
+        {
+          "minute": 89,
+          "team_id": "kingsport-united",
+          "xg": 0.242,
+          "cumulative": 2.749,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01825"
+        },
+        {
+          "minute": 90,
+          "team_id": "kingsport-united",
+          "xg": 0.139,
+          "cumulative": 2.888,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01841"
+        },
+        {
+          "minute": 92,
+          "team_id": "riverside-athletic",
+          "xg": 0.076,
+          "cumulative": 1.143,
+          "outcome": "off_target",
+          "event_id": "riv-kin-7-01868"
+        }
+      ],
+      "records": {
+        "best_chance_xg": 0.738,
+        "best_chance_event_id": "riv-kin-7-00171",
+        "fastest_shot_kmh": 110.6,
+        "fastest_shot_event_id": "riv-kin-7-01103"
+      }
+    },
+    "passing": {
+      "teams": {
+        "riverside-athletic": {
+          "passes": 620,
+          "completed": 546,
+          "progressive": 88,
+          "passes_into_final_third": 10,
+          "passes_into_box": 7,
+          "crosses": 17,
+          "crosses_completed": 6,
+          "long_balls": 81,
+          "long_balls_completed": 67,
+          "through_balls": 22,
+          "under_pressure": 76,
+          "under_pressure_completed": 59,
+          "key_passes": 8,
+          "assists": 0,
+          "lines_broken": 357,
+          "fastest_kmh": 79.3,
+          "accuracy": 0.881,
+          "under_pressure_accuracy": 0.776,
+          "avg_length_m": 22.0,
+          "avg_difficulty": 1.41,
+          "avg_completed_difficulty": 1.12
+        },
+        "kingsport-united": {
+          "passes": 241,
+          "completed": 189,
+          "progressive": 37,
+          "passes_into_final_third": 8,
+          "passes_into_box": 8,
+          "crosses": 9,
+          "crosses_completed": 1,
+          "long_balls": 29,
+          "long_balls_completed": 15,
+          "through_balls": 18,
+          "under_pressure": 79,
+          "under_pressure_completed": 60,
+          "key_passes": 9,
+          "assists": 0,
+          "lines_broken": 213,
+          "fastest_kmh": 80.9,
+          "accuracy": 0.784,
+          "under_pressure_accuracy": 0.759,
+          "avg_length_m": 21.3,
+          "avg_difficulty": 2.19,
+          "avg_completed_difficulty": 1.63
+        }
+      },
+      "players": {
+        "riv-07": {
+          "passes": 65,
+          "completed": 54,
+          "progressive": 18,
+          "passes_into_final_third": 2,
+          "passes_into_box": 0,
+          "crosses": 3,
+          "crosses_completed": 0,
+          "long_balls": 1,
+          "long_balls_completed": 1,
+          "through_balls": 3,
+          "under_pressure": 12,
+          "under_pressure_completed": 8,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 55,
+          "fastest_kmh": 68.5,
+          "accuracy": 0.831,
+          "under_pressure_accuracy": 0.667,
+          "avg_length_m": 21.5,
+          "avg_difficulty": 1.64,
+          "avg_completed_difficulty": 1.18
+        },
+        "riv-08": {
+          "passes": 64,
+          "completed": 58,
+          "progressive": 17,
+          "passes_into_final_third": 3,
+          "passes_into_box": 1,
+          "crosses": 2,
+          "crosses_completed": 1,
+          "long_balls": 5,
+          "long_balls_completed": 4,
+          "through_balls": 1,
+          "under_pressure": 8,
+          "under_pressure_completed": 6,
+          "key_passes": 1,
+          "assists": 0,
+          "lines_broken": 61,
+          "fastest_kmh": 69.3,
+          "accuracy": 0.906,
+          "under_pressure_accuracy": 0.75,
+          "avg_length_m": 21.5,
+          "avg_difficulty": 1.56,
+          "avg_completed_difficulty": 1.24
+        },
+        "riv-11": {
+          "passes": 26,
+          "completed": 19,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 2,
+          "crosses": 5,
+          "crosses_completed": 2,
+          "long_balls": 8,
+          "long_balls_completed": 4,
+          "through_balls": 4,
+          "under_pressure": 10,
+          "under_pressure_completed": 5,
+          "key_passes": 2,
+          "assists": 0,
+          "lines_broken": 5,
+          "fastest_kmh": 72.0,
+          "accuracy": 0.731,
+          "under_pressure_accuracy": 0.5,
+          "avg_length_m": 26.6,
+          "avg_difficulty": 3.33,
+          "avg_completed_difficulty": 1.77
+        },
+        "riv-06": {
+          "passes": 31,
+          "completed": 29,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 5,
+          "long_balls_completed": 5,
+          "through_balls": 0,
+          "under_pressure": 0,
+          "under_pressure_completed": 0,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 7,
+          "fastest_kmh": 53.7,
+          "accuracy": 0.935,
+          "under_pressure_accuracy": 0.0,
+          "avg_length_m": 21.9,
+          "avg_difficulty": 0.77,
+          "avg_completed_difficulty": 0.72
+        },
+        "kin-06": {
+          "passes": 20,
+          "completed": 16,
+          "progressive": 4,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 1,
+          "crosses_completed": 0,
+          "long_balls": 2,
+          "long_balls_completed": 1,
+          "through_balls": 3,
+          "under_pressure": 10,
+          "under_pressure_completed": 9,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 17,
+          "fastest_kmh": 69.8,
+          "accuracy": 0.8,
+          "under_pressure_accuracy": 0.9,
+          "avg_length_m": 21.4,
+          "avg_difficulty": 1.93,
+          "avg_completed_difficulty": 1.12
+        },
+        "kin-08": {
+          "passes": 24,
+          "completed": 15,
+          "progressive": 2,
+          "passes_into_final_third": 1,
+          "passes_into_box": 1,
+          "crosses": 2,
+          "crosses_completed": 0,
+          "long_balls": 4,
+          "long_balls_completed": 2,
+          "through_balls": 3,
+          "under_pressure": 11,
+          "under_pressure_completed": 6,
+          "key_passes": 1,
+          "assists": 0,
+          "lines_broken": 10,
+          "fastest_kmh": 68.9,
+          "accuracy": 0.625,
+          "under_pressure_accuracy": 0.545,
+          "avg_length_m": 22.1,
+          "avg_difficulty": 2.7,
+          "avg_completed_difficulty": 1.56
+        },
+        "kin-05": {
+          "passes": 24,
+          "completed": 20,
+          "progressive": 6,
+          "passes_into_final_third": 0,
+          "passes_into_box": 1,
+          "crosses": 3,
+          "crosses_completed": 1,
+          "long_balls": 4,
+          "long_balls_completed": 3,
+          "through_balls": 0,
+          "under_pressure": 3,
+          "under_pressure_completed": 2,
+          "key_passes": 2,
+          "assists": 0,
+          "lines_broken": 29,
+          "fastest_kmh": 72.0,
+          "accuracy": 0.833,
+          "under_pressure_accuracy": 0.667,
+          "avg_length_m": 22.8,
+          "avg_difficulty": 2.21,
+          "avg_completed_difficulty": 1.88
+        },
+        "kin-03": {
+          "passes": 13,
+          "completed": 13,
+          "progressive": 1,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 0,
+          "under_pressure": 3,
+          "under_pressure_completed": 3,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 11,
+          "fastest_kmh": 47.1,
+          "accuracy": 1.0,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 16.7,
+          "avg_difficulty": 1.04,
+          "avg_completed_difficulty": 1.04
+        },
+        "kin-04": {
+          "passes": 21,
+          "completed": 18,
+          "progressive": 2,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 2,
+          "long_balls_completed": 1,
+          "through_balls": 0,
+          "under_pressure": 3,
+          "under_pressure_completed": 3,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 9,
+          "fastest_kmh": 63.3,
+          "accuracy": 0.857,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 18.8,
+          "avg_difficulty": 1.03,
+          "avg_completed_difficulty": 0.83
+        },
+        "kin-09": {
+          "passes": 21,
+          "completed": 13,
+          "progressive": 4,
+          "passes_into_final_third": 3,
+          "passes_into_box": 2,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 4,
+          "under_pressure": 9,
+          "under_pressure_completed": 4,
+          "key_passes": 2,
+          "assists": 0,
+          "lines_broken": 22,
+          "fastest_kmh": 50.6,
+          "accuracy": 0.619,
+          "under_pressure_accuracy": 0.444,
+          "avg_length_m": 17.0,
+          "avg_difficulty": 2.79,
+          "avg_completed_difficulty": 2.61
+        },
+        "kin-02": {
+          "passes": 18,
+          "completed": 15,
+          "progressive": 5,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 0,
+          "under_pressure": 2,
+          "under_pressure_completed": 1,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 22,
+          "fastest_kmh": 46.6,
+          "accuracy": 0.833,
+          "under_pressure_accuracy": 0.5,
+          "avg_length_m": 15.9,
+          "avg_difficulty": 1.48,
+          "avg_completed_difficulty": 1.31
+        },
+        "riv-01": {
+          "passes": 14,
+          "completed": 11,
+          "progressive": 4,
+          "passes_into_final_third": 1,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 7,
+          "long_balls_completed": 4,
+          "through_balls": 1,
+          "under_pressure": 0,
+          "under_pressure_completed": 0,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 30,
+          "fastest_kmh": 79.3,
+          "accuracy": 0.786,
+          "under_pressure_accuracy": 0.0,
+          "avg_length_m": 41.1,
+          "avg_difficulty": 3.31,
+          "avg_completed_difficulty": 2.61
+        },
+        "riv-04": {
+          "passes": 84,
+          "completed": 83,
+          "progressive": 12,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 11,
+          "long_balls_completed": 11,
+          "through_balls": 1,
+          "under_pressure": 7,
+          "under_pressure_completed": 7,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 44,
+          "fastest_kmh": 68.9,
+          "accuracy": 0.988,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 21.9,
+          "avg_difficulty": 0.9,
+          "avg_completed_difficulty": 0.89
+        },
+        "riv-05": {
+          "passes": 70,
+          "completed": 61,
+          "progressive": 10,
+          "passes_into_final_third": 2,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 14,
+          "long_balls_completed": 12,
+          "through_balls": 0,
+          "under_pressure": 5,
+          "under_pressure_completed": 4,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 42,
+          "fastest_kmh": 72.5,
+          "accuracy": 0.871,
+          "under_pressure_accuracy": 0.8,
+          "avg_length_m": 22.0,
+          "avg_difficulty": 1.18,
+          "avg_completed_difficulty": 1.06
+        },
+        "riv-03": {
+          "passes": 92,
+          "completed": 87,
+          "progressive": 9,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 9,
+          "long_balls_completed": 9,
+          "through_balls": 0,
+          "under_pressure": 6,
+          "under_pressure_completed": 5,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 28,
+          "fastest_kmh": 72.0,
+          "accuracy": 0.946,
+          "under_pressure_accuracy": 0.833,
+          "avg_length_m": 20.6,
+          "avg_difficulty": 0.89,
+          "avg_completed_difficulty": 0.87
+        },
+        "riv-02": {
+          "passes": 63,
+          "completed": 49,
+          "progressive": 6,
+          "passes_into_final_third": 1,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 6,
+          "long_balls_completed": 6,
+          "through_balls": 0,
+          "under_pressure": 5,
+          "under_pressure_completed": 3,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 29,
+          "fastest_kmh": 65.4,
+          "accuracy": 0.778,
+          "under_pressure_accuracy": 0.6,
+          "avg_length_m": 19.1,
+          "avg_difficulty": 1.03,
+          "avg_completed_difficulty": 1.0
+        },
+        "riv-09": {
+          "passes": 26,
+          "completed": 18,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 3,
+          "crosses_completed": 0,
+          "long_balls": 4,
+          "long_balls_completed": 1,
+          "through_balls": 1,
+          "under_pressure": 8,
+          "under_pressure_completed": 7,
+          "key_passes": 1,
+          "assists": 0,
+          "lines_broken": 5,
+          "fastest_kmh": 70.9,
+          "accuracy": 0.692,
+          "under_pressure_accuracy": 0.875,
+          "avg_length_m": 23.1,
+          "avg_difficulty": 2.71,
+          "avg_completed_difficulty": 1.13
+        },
+        "riv-10": {
+          "passes": 9,
+          "completed": 8,
+          "progressive": 3,
+          "passes_into_final_third": 0,
+          "passes_into_box": 1,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 1,
+          "long_balls_completed": 1,
+          "through_balls": 4,
+          "under_pressure": 5,
+          "under_pressure_completed": 5,
+          "key_passes": 1,
+          "assists": 0,
+          "lines_broken": 11,
+          "fastest_kmh": 56.0,
+          "accuracy": 0.889,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 19.5,
+          "avg_difficulty": 2.66,
+          "avg_completed_difficulty": 2.81
+        },
+        "kin-11": {
+          "passes": 12,
+          "completed": 10,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 1,
+          "crosses": 1,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 2,
+          "under_pressure": 7,
+          "under_pressure_completed": 6,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 8,
+          "fastest_kmh": 67.7,
+          "accuracy": 0.833,
+          "under_pressure_accuracy": 0.857,
+          "avg_length_m": 14.9,
+          "avg_difficulty": 3.06,
+          "avg_completed_difficulty": 2.48
+        },
+        "kin-10": {
+          "passes": 22,
+          "completed": 18,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 1,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 4,
+          "long_balls_completed": 3,
+          "through_balls": 1,
+          "under_pressure": 13,
+          "under_pressure_completed": 10,
+          "key_passes": 2,
+          "assists": 0,
+          "lines_broken": 6,
+          "fastest_kmh": 58.3,
+          "accuracy": 0.818,
+          "under_pressure_accuracy": 0.769,
+          "avg_length_m": 21.5,
+          "avg_difficulty": 1.81,
+          "avg_completed_difficulty": 1.52
+        },
+        "kin-07": {
+          "passes": 23,
+          "completed": 23,
+          "progressive": 7,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 1,
+          "under_pressure": 8,
+          "under_pressure_completed": 8,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 31,
+          "fastest_kmh": 50.2,
+          "accuracy": 1.0,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 20.4,
+          "avg_difficulty": 1.26,
+          "avg_completed_difficulty": 1.26
+        },
+        "kin-01": {
+          "passes": 13,
+          "completed": 6,
+          "progressive": 3,
+          "passes_into_final_third": 1,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 11,
+          "long_balls_completed": 5,
+          "through_balls": 0,
+          "under_pressure": 0,
+          "under_pressure_completed": 0,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 30,
+          "fastest_kmh": 80.9,
+          "accuracy": 0.462,
+          "under_pressure_accuracy": 0.0,
+          "avg_length_m": 52.3,
+          "avg_difficulty": 4.77,
+          "avg_completed_difficulty": 3.7
+        },
+        "riv-18": {
+          "passes": 13,
+          "completed": 11,
+          "progressive": 1,
+          "passes_into_final_third": 0,
+          "passes_into_box": 3,
+          "crosses": 3,
+          "crosses_completed": 3,
+          "long_balls": 2,
+          "long_balls_completed": 2,
+          "through_balls": 4,
+          "under_pressure": 4,
+          "under_pressure_completed": 3,
+          "key_passes": 3,
+          "assists": 0,
+          "lines_broken": 8,
+          "fastest_kmh": 71.1,
+          "accuracy": 0.846,
+          "under_pressure_accuracy": 0.75,
+          "avg_length_m": 22.7,
+          "avg_difficulty": 2.7,
+          "avg_completed_difficulty": 2.82
+        },
+        "riv-16": {
+          "passes": 26,
+          "completed": 25,
+          "progressive": 2,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 3,
+          "long_balls_completed": 3,
+          "through_balls": 1,
+          "under_pressure": 4,
+          "under_pressure_completed": 4,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 16,
+          "fastest_kmh": 55.6,
+          "accuracy": 0.962,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 21.2,
+          "avg_difficulty": 0.93,
+          "avg_completed_difficulty": 0.9
+        },
+        "riv-14": {
+          "passes": 28,
+          "completed": 25,
+          "progressive": 5,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 3,
+          "long_balls_completed": 2,
+          "through_balls": 0,
+          "under_pressure": 0,
+          "under_pressure_completed": 0,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 12,
+          "fastest_kmh": 68.2,
+          "accuracy": 0.893,
+          "under_pressure_accuracy": 0.0,
+          "avg_length_m": 20.7,
+          "avg_difficulty": 1.11,
+          "avg_completed_difficulty": 0.83
+        },
+        "riv-20": {
+          "passes": 3,
+          "completed": 3,
+          "progressive": 1,
+          "passes_into_final_third": 1,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 1,
+          "long_balls_completed": 1,
+          "through_balls": 1,
+          "under_pressure": 1,
+          "under_pressure_completed": 1,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 4,
+          "fastest_kmh": 53.8,
+          "accuracy": 1.0,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 30.1,
+          "avg_difficulty": 1.95,
+          "avg_completed_difficulty": 1.95
+        },
+        "riv-19": {
+          "passes": 6,
+          "completed": 5,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 1,
+          "crosses_completed": 0,
+          "long_balls": 1,
+          "long_balls_completed": 1,
+          "through_balls": 1,
+          "under_pressure": 1,
+          "under_pressure_completed": 1,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 0,
+          "fastest_kmh": 68.7,
+          "accuracy": 0.833,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 20.9,
+          "avg_difficulty": 2.41,
+          "avg_completed_difficulty": 1.41
+        },
+        "kin-19": {
+          "passes": 8,
+          "completed": 7,
+          "progressive": 1,
+          "passes_into_final_third": 1,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 0,
+          "under_pressure": 1,
+          "under_pressure_completed": 1,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 4,
+          "fastest_kmh": 49.3,
+          "accuracy": 0.875,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 17.0,
+          "avg_difficulty": 1.69,
+          "avg_completed_difficulty": 1.51
+        },
+        "kin-17": {
+          "passes": 7,
+          "completed": 4,
+          "progressive": 0,
+          "passes_into_final_third": 1,
+          "passes_into_box": 1,
+          "crosses": 1,
+          "crosses_completed": 0,
+          "long_balls": 1,
+          "long_balls_completed": 0,
+          "through_balls": 0,
+          "under_pressure": 1,
+          "under_pressure_completed": 1,
+          "key_passes": 1,
+          "assists": 0,
+          "lines_broken": 5,
+          "fastest_kmh": 68.5,
+          "accuracy": 0.571,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 21.4,
+          "avg_difficulty": 3.63,
+          "avg_completed_difficulty": 2.39
+        },
+        "kin-18": {
+          "passes": 7,
+          "completed": 5,
+          "progressive": 2,
+          "passes_into_final_third": 1,
+          "passes_into_box": 1,
+          "crosses": 1,
+          "crosses_completed": 0,
+          "long_balls": 1,
+          "long_balls_completed": 0,
+          "through_balls": 2,
+          "under_pressure": 3,
+          "under_pressure_completed": 3,
+          "key_passes": 1,
+          "assists": 0,
+          "lines_broken": 9,
+          "fastest_kmh": 72.7,
+          "accuracy": 0.714,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 21.4,
+          "avg_difficulty": 3.7,
+          "avg_completed_difficulty": 3.13
+        },
+        "kin-20": {
+          "passes": 5,
+          "completed": 3,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 2,
+          "under_pressure": 4,
+          "under_pressure_completed": 2,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 0,
+          "fastest_kmh": 48.2,
+          "accuracy": 0.6,
+          "under_pressure_accuracy": 0.5,
+          "avg_length_m": 17.2,
+          "avg_difficulty": 3.08,
+          "avg_completed_difficulty": 1.9
+        },
+        "kin-14": {
+          "passes": 3,
+          "completed": 3,
+          "progressive": 0,
+          "passes_into_final_third": 0,
+          "passes_into_box": 0,
+          "crosses": 0,
+          "crosses_completed": 0,
+          "long_balls": 0,
+          "long_balls_completed": 0,
+          "through_balls": 0,
+          "under_pressure": 1,
+          "under_pressure_completed": 1,
+          "key_passes": 0,
+          "assists": 0,
+          "lines_broken": 0,
+          "fastest_kmh": 41.7,
+          "accuracy": 1.0,
+          "under_pressure_accuracy": 1.0,
+          "avg_length_m": 14.5,
+          "avg_difficulty": 0.7,
+          "avg_completed_difficulty": 0.7
+        }
+      },
+      "networks": {
+        "riverside-athletic": {
+          "nodes": [
+            {
+              "player_id": "riv-07",
+              "x": 41.1,
+              "y": 20.4,
+              "passes": 65
+            },
+            {
+              "player_id": "riv-08",
+              "x": 41.9,
+              "y": 48.3,
+              "passes": 64
+            },
+            {
+              "player_id": "riv-11",
+              "x": 65.6,
+              "y": 53.8,
+              "passes": 26
+            },
+            {
+              "player_id": "riv-06",
+              "x": 30.9,
+              "y": 34.9,
+              "passes": 31
+            },
+            {
+              "player_id": "riv-01",
+              "x": 5.4,
+              "y": 35.1,
+              "passes": 14
+            },
+            {
+              "player_id": "riv-04",
+              "x": 17.5,
+              "y": 43.5,
+              "passes": 84
+            },
+            {
+              "player_id": "riv-05",
+              "x": 23.7,
+              "y": 61.0,
+              "passes": 70
+            },
+            {
+              "player_id": "riv-03",
+              "x": 17.1,
+              "y": 23.7,
+              "passes": 92
+            },
+            {
+              "player_id": "riv-02",
+              "x": 23.3,
+              "y": 7.2,
+              "passes": 63
+            },
+            {
+              "player_id": "riv-09",
+              "x": 63.9,
+              "y": 9.3,
+              "passes": 26
+            },
+            {
+              "player_id": "riv-10",
+              "x": 57.5,
+              "y": 31.9,
+              "passes": 9
+            },
+            {
+              "player_id": "riv-18",
+              "x": 69.8,
+              "y": 62.3,
+              "passes": 13
+            },
+            {
+              "player_id": "riv-16",
+              "x": 29.8,
+              "y": 33.6,
+              "passes": 26
+            },
+            {
+              "player_id": "riv-14",
+              "x": 22.3,
+              "y": 7.0,
+              "passes": 28
+            },
+            {
+              "player_id": "riv-20",
+              "x": 54.1,
+              "y": 31.6,
+              "passes": 3
+            },
+            {
+              "player_id": "riv-19",
+              "x": 71.3,
+              "y": 4.3,
+              "passes": 6
+            }
+          ],
+          "edges": [
+            {
+              "from": "riv-04",
+              "to": "riv-05",
+              "count": 25
+            },
+            {
+              "from": "riv-03",
+              "to": "riv-02",
+              "count": 24
+            },
+            {
+              "from": "riv-05",
+              "to": "riv-04",
+              "count": 22
+            },
+            {
+              "from": "riv-03",
+              "to": "riv-04",
+              "count": 20
+            },
+            {
+              "from": "riv-04",
+              "to": "riv-03",
+              "count": 19
+            },
+            {
+              "from": "riv-02",
+              "to": "riv-03",
+              "count": 19
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-11",
+              "count": 14
+            },
+            {
+              "from": "riv-02",
+              "to": "riv-07",
+              "count": 14
+            },
+            {
+              "from": "riv-03",
+              "to": "riv-07",
+              "count": 13
+            },
+            {
+              "from": "riv-04",
+              "to": "riv-02",
+              "count": 13
+            },
+            {
+              "from": "riv-05",
+              "to": "riv-08",
+              "count": 12
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-09",
+              "count": 12
+            },
+            {
+              "from": "riv-05",
+              "to": "riv-03",
+              "count": 12
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-03",
+              "count": 10
+            },
+            {
+              "from": "riv-03",
+              "to": "riv-05",
+              "count": 10
+            },
+            {
+              "from": "riv-14",
+              "to": "riv-07",
+              "count": 10
+            },
+            {
+              "from": "riv-03",
+              "to": "riv-14",
+              "count": 9
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-08",
+              "count": 8
+            },
+            {
+              "from": "riv-04",
+              "to": "riv-08",
+              "count": 8
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-06",
+              "count": 7
+            },
+            {
+              "from": "riv-06",
+              "to": "riv-05",
+              "count": 7
+            },
+            {
+              "from": "riv-02",
+              "to": "riv-04",
+              "count": 7
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-04",
+              "count": 7
+            },
+            {
+              "from": "riv-04",
+              "to": "riv-06",
+              "count": 7
+            },
+            {
+              "from": "riv-14",
+              "to": "riv-03",
+              "count": 7
+            },
+            {
+              "from": "riv-06",
+              "to": "riv-08",
+              "count": 6
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-02",
+              "count": 6
+            },
+            {
+              "from": "riv-06",
+              "to": "riv-02",
+              "count": 6
+            },
+            {
+              "from": "riv-09",
+              "to": "riv-02",
+              "count": 6
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-05",
+              "count": 6
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-16",
+              "count": 6
+            },
+            {
+              "from": "riv-16",
+              "to": "riv-08",
+              "count": 6
+            },
+            {
+              "from": "riv-03",
+              "to": "riv-06",
+              "count": 5
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-03",
+              "count": 5
+            },
+            {
+              "from": "riv-10",
+              "to": "riv-11",
+              "count": 5
+            },
+            {
+              "from": "riv-11",
+              "to": "riv-05",
+              "count": 5
+            },
+            {
+              "from": "riv-09",
+              "to": "riv-07",
+              "count": 5
+            },
+            {
+              "from": "riv-11",
+              "to": "riv-04",
+              "count": 5
+            },
+            {
+              "from": "riv-05",
+              "to": "riv-16",
+              "count": 5
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-18",
+              "count": 5
+            },
+            {
+              "from": "riv-16",
+              "to": "riv-14",
+              "count": 5
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-19",
+              "count": 5
+            },
+            {
+              "from": "riv-11",
+              "to": "riv-08",
+              "count": 4
+            },
+            {
+              "from": "riv-08",
+              "to": "riv-04",
+              "count": 4
+            },
+            {
+              "from": "riv-06",
+              "to": "riv-07",
+              "count": 4
+            },
+            {
+              "from": "riv-01",
+              "to": "riv-05",
+              "count": 4
+            },
+            {
+              "from": "riv-02",
+              "to": "riv-06",
+              "count": 4
+            },
+            {
+              "from": "riv-06",
+              "to": "riv-03",
+              "count": 4
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-06",
+              "count": 4
+            },
+            {
+              "from": "riv-18",
+              "to": "riv-05",
+              "count": 4
+            },
+            {
+              "from": "riv-16",
+              "to": "riv-03",
+              "count": 4
+            },
+            {
+              "from": "riv-14",
+              "to": "riv-04",
+              "count": 4
+            },
+            {
+              "from": "riv-14",
+              "to": "riv-16",
+              "count": 4
+            },
+            {
+              "from": "riv-04",
+              "to": "riv-14",
+              "count": 4
+            },
+            {
+              "from": "riv-07",
+              "to": "riv-16",
+              "count": 4
+            },
+            {
+              "from": "riv-05",
+              "to": "riv-06",
+              "count": 3
+            },
+            {
+              "from": "riv-09",
+              "to": "riv-03",
+              "count": 3
+            },
+            {
+              "from": "riv-02",
+              "to": "riv-09",
+              "count": 3
+            },
+            {
+              "from": "riv-05",
+              "to": "riv-11",
+              "count": 3
+            },
+            {
+              "from": "riv-01",
+              "to": "riv-10",
+              "count": 3
+            },
+            {
+              "from": "riv-18",
+              "to": "riv-20",
+              "count": 3
+            },
+            {
+              "from": "riv-18",
+              "to": "riv-08",
+              "count": 3
+            },
+            {
+              "from": "riv-16",
+              "to": "riv-07",
+              "count": 3
+            },
+            {
+              "from": "riv-16",
+              "to": "riv-04",
+              "count": 3
+            },
+            {
+              "from": "riv-04",
+              "to": "riv-16",
+              "count": 3
+            }
+          ],
+          "orientation": "drawn in the team's own attacking direction (towards x = 105)"
+        },
+        "kingsport-united": {
+          "nodes": [
+            {
+              "player_id": "kin-06",
+              "x": 33.3,
+              "y": 24.7,
+              "passes": 20
+            },
+            {
+              "player_id": "kin-08",
+              "x": 60.3,
+              "y": 10.9,
+              "passes": 24
+            },
+            {
+              "player_id": "kin-05",
+              "x": 34.4,
+              "y": 58.4,
+              "passes": 24
+            },
+            {
+              "player_id": "kin-03",
+              "x": 19.3,
+              "y": 27.1,
+              "passes": 13
+            },
+            {
+              "player_id": "kin-04",
+              "x": 15.6,
+              "y": 44.7,
+              "passes": 21
+            },
+            {
+              "player_id": "kin-09",
+              "x": 58.9,
+              "y": 34.0,
+              "passes": 21
+            },
+            {
+              "player_id": "kin-02",
+              "x": 28.7,
+              "y": 6.6,
+              "passes": 18
+            },
+            {
+              "player_id": "kin-11",
+              "x": 70.3,
+              "y": 40.1,
+              "passes": 12
+            },
+            {
+              "player_id": "kin-10",
+              "x": 55.9,
+              "y": 58.7,
+              "passes": 22
+            },
+            {
+              "player_id": "kin-07",
+              "x": 31.8,
+              "y": 44.0,
+              "passes": 23
+            },
+            {
+              "player_id": "kin-01",
+              "x": 5.5,
+              "y": 34.2,
+              "passes": 13
+            },
+            {
+              "player_id": "kin-19",
+              "x": 56.5,
+              "y": 13.4,
+              "passes": 8
+            },
+            {
+              "player_id": "kin-17",
+              "x": 58.4,
+              "y": 35.5,
+              "passes": 7
+            },
+            {
+              "player_id": "kin-18",
+              "x": 68.6,
+              "y": 56.3,
+              "passes": 7
+            },
+            {
+              "player_id": "kin-20",
+              "x": 68.7,
+              "y": 34.0,
+              "passes": 5
+            },
+            {
+              "player_id": "kin-14",
+              "x": 14.9,
+              "y": 62.0,
+              "passes": 3
+            }
+          ],
+          "edges": [
+            {
+              "from": "kin-04",
+              "to": "kin-05",
+              "count": 8
+            },
+            {
+              "from": "kin-02",
+              "to": "kin-08",
+              "count": 7
+            },
+            {
+              "from": "kin-10",
+              "to": "kin-07",
+              "count": 6
+            },
+            {
+              "from": "kin-05",
+              "to": "kin-04",
+              "count": 6
+            },
+            {
+              "from": "kin-08",
+              "to": "kin-09",
+              "count": 5
+            },
+            {
+              "from": "kin-07",
+              "to": "kin-10",
+              "count": 5
+            },
+            {
+              "from": "kin-10",
+              "to": "kin-05",
+              "count": 5
+            },
+            {
+              "from": "kin-06",
+              "to": "kin-08",
+              "count": 4
+            },
+            {
+              "from": "kin-09",
+              "to": "kin-11",
+              "count": 4
+            },
+            {
+              "from": "kin-09",
+              "to": "kin-08",
+              "count": 4
+            },
+            {
+              "from": "kin-08",
+              "to": "kin-02",
+              "count": 4
+            },
+            {
+              "from": "kin-11",
+              "to": "kin-10",
+              "count": 4
+            },
+            {
+              "from": "kin-09",
+              "to": "kin-10",
+              "count": 4
+            },
+            {
+              "from": "kin-03",
+              "to": "kin-02",
+              "count": 4
+            },
+            {
+              "from": "kin-02",
+              "to": "kin-06",
+              "count": 4
+            },
+            {
+              "from": "kin-05",
+              "to": "kin-07",
+              "count": 4
+            },
+            {
+              "from": "kin-03",
+              "to": "kin-04",
+              "count": 3
+            },
+            {
+              "from": "kin-05",
+              "to": "kin-11",
+              "count": 3
+            },
+            {
+              "from": "kin-11",
+              "to": "kin-08",
+              "count": 3
+            },
+            {
+              "from": "kin-05",
+              "to": "kin-10",
+              "count": 3
+            },
+            {
+              "from": "kin-08",
+              "to": "kin-11",
+              "count": 3
+            },
+            {
+              "from": "kin-10",
+              "to": "kin-09",
+              "count": 3
+            },
+            {
+              "from": "kin-11",
+              "to": "kin-09",
+              "count": 3
+            },
+            {
+              "from": "kin-07",
+              "to": "kin-09",
+              "count": 3
+            },
+            {
+              "from": "kin-06",
+              "to": "kin-02",
+              "count": 3
+            },
+            {
+              "from": "kin-08",
+              "to": "kin-06",
+              "count": 3
+            },
+            {
+              "from": "kin-07",
+              "to": "kin-05",
+              "count": 3
+            },
+            {
+              "from": "kin-04",
+              "to": "kin-03",
+              "count": 3
+            },
+            {
+              "from": "kin-02",
+              "to": "kin-03",
+              "count": 3
+            },
+            {
+              "from": "kin-06",
+              "to": "kin-07",
+              "count": 3
+            },
+            {
+              "from": "kin-19",
+              "to": "kin-02",
+              "count": 3
+            },
+            {
+              "from": "kin-14",
+              "to": "kin-04",
+              "count": 3
+            }
+          ],
+          "orientation": "drawn in the team's own attacking direction (towards x = 105)"
+        }
+      },
+      "records": {
+        "hardest_completed": [
+          {
+            "event_id": "riv-kin-7-01864",
+            "difficulty": 7.95
+          },
+          {
+            "event_id": "riv-kin-7-01197",
+            "difficulty": 7.71
+          },
+          {
+            "event_id": "riv-kin-7-01763",
+            "difficulty": 7.64
+          },
+          {
+            "event_id": "riv-kin-7-01568",
+            "difficulty": 7.16
+          },
+          {
+            "event_id": "riv-kin-7-00335",
+            "difficulty": 7.15
+          }
+        ]
+      }
+    },
+    "possession": {
+      "teams": {
+        "riverside-athletic": {
+          "possession": 0.678,
+          "possession_last_10": 0.567,
+          "field_tilt": 0.419,
+          "final_third_entries": 17,
+          "box_entries": 8,
+          "possessions": 68,
+          "avg_passes_per_possession": 8.03,
+          "possessions_reaching_final_third": 14,
+          "possessions_reaching_box": 7,
+          "possessions_ending_in_shot": 11,
+          "longest_sequence_passes": 44,
+          "zone_touches": [
+            88,
+            108,
+            45,
+            31,
+            18,
+            5,
+            125,
+            89,
+            61,
+            10,
+            16,
+            17,
+            62,
+            87,
+            49,
+            59,
+            16,
+            3
+          ]
+        },
+        "kingsport-united": {
+          "possession": 0.322,
+          "possession_last_10": 0.433,
+          "field_tilt": 0.581,
+          "final_third_entries": 21,
+          "box_entries": 9,
+          "possessions": 67,
+          "avg_passes_per_possession": 2.82,
+          "possessions_reaching_final_third": 19,
+          "possessions_reaching_box": 9,
+          "possessions_ending_in_shot": 15,
+          "longest_sequence_passes": 16,
+          "zone_touches": [
+            14,
+            30,
+            33,
+            22,
+            11,
+            2,
+            54,
+            29,
+            26,
+            23,
+            31,
+            22,
+            35,
+            22,
+            25,
+            14,
+            26,
+            5
+          ]
+        }
+      },
+      "per_minute": [
+        {
+          "minute": 0,
+          "riverside-athletic": 0.657,
+          "kingsport-united": 0.343
+        },
+        {
+          "minute": 1,
+          "riverside-athletic": 0.284,
+          "kingsport-united": 0.716
+        },
+        {
+          "minute": 2,
+          "riverside-athletic": 0.865,
+          "kingsport-united": 0.135
+        },
+        {
+          "minute": 3,
+          "riverside-athletic": 0.96,
+          "kingsport-united": 0.04
+        },
+        {
+          "minute": 4,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 5,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 6,
+          "riverside-athletic": 0.301,
+          "kingsport-united": 0.699
+        },
+        {
+          "minute": 7,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 8,
+          "riverside-athletic": 0.928,
+          "kingsport-united": 0.072
+        },
+        {
+          "minute": 9,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 10,
+          "riverside-athletic": 0.905,
+          "kingsport-united": 0.095
+        },
+        {
+          "minute": 11,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 12,
+          "riverside-athletic": 0.293,
+          "kingsport-united": 0.707
+        },
+        {
+          "minute": 13,
+          "riverside-athletic": 0.538,
+          "kingsport-united": 0.462
+        },
+        {
+          "minute": 14,
+          "riverside-athletic": 0.139,
+          "kingsport-united": 0.861
+        },
+        {
+          "minute": 15,
+          "riverside-athletic": 0.634,
+          "kingsport-united": 0.366
+        },
+        {
+          "minute": 16,
+          "riverside-athletic": 0.857,
+          "kingsport-united": 0.143
+        },
+        {
+          "minute": 17,
+          "riverside-athletic": 0.707,
+          "kingsport-united": 0.293
+        },
+        {
+          "minute": 18,
+          "riverside-athletic": 0.213,
+          "kingsport-united": 0.787
+        },
+        {
+          "minute": 19,
+          "riverside-athletic": 0.697,
+          "kingsport-united": 0.303
+        },
+        {
+          "minute": 20,
+          "riverside-athletic": 0.538,
+          "kingsport-united": 0.462
+        },
+        {
+          "minute": 21,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 22,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 23,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 24,
+          "riverside-athletic": 0.547,
+          "kingsport-united": 0.453
+        },
+        {
+          "minute": 25,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 26,
+          "riverside-athletic": 0.596,
+          "kingsport-united": 0.404
+        },
+        {
+          "minute": 27,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 28,
+          "riverside-athletic": 0.171,
+          "kingsport-united": 0.829
+        },
+        {
+          "minute": 29,
+          "riverside-athletic": 0.51,
+          "kingsport-united": 0.49
+        },
+        {
+          "minute": 30,
+          "riverside-athletic": 0.647,
+          "kingsport-united": 0.353
+        },
+        {
+          "minute": 31,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 32,
+          "riverside-athletic": 0.63,
+          "kingsport-united": 0.37
+        },
+        {
+          "minute": 33,
+          "riverside-athletic": 0.888,
+          "kingsport-united": 0.112
+        },
+        {
+          "minute": 34,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 35,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 36,
+          "riverside-athletic": 0.846,
+          "kingsport-united": 0.154
+        },
+        {
+          "minute": 37,
+          "riverside-athletic": 0.835,
+          "kingsport-united": 0.165
+        },
+        {
+          "minute": 38,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 39,
+          "riverside-athletic": 0.903,
+          "kingsport-united": 0.097
+        },
+        {
+          "minute": 40,
+          "riverside-athletic": 0.314,
+          "kingsport-united": 0.686
+        },
+        {
+          "minute": 41,
+          "riverside-athletic": 0.947,
+          "kingsport-united": 0.053
+        },
+        {
+          "minute": 42,
+          "riverside-athletic": 0.571,
+          "kingsport-united": 0.429
+        },
+        {
+          "minute": 43,
+          "riverside-athletic": 0.313,
+          "kingsport-united": 0.687
+        },
+        {
+          "minute": 44,
+          "riverside-athletic": 0.7,
+          "kingsport-united": 0.3
+        },
+        {
+          "minute": 45,
+          "riverside-athletic": 0.621,
+          "kingsport-united": 0.379
+        },
+        {
+          "minute": 46,
+          "riverside-athletic": 0.729,
+          "kingsport-united": 0.271
+        },
+        {
+          "minute": 47,
+          "riverside-athletic": 0.974,
+          "kingsport-united": 0.026
+        },
+        {
+          "minute": 48,
+          "riverside-athletic": 0.84,
+          "kingsport-united": 0.16
+        },
+        {
+          "minute": 49,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 50,
+          "riverside-athletic": 0.106,
+          "kingsport-united": 0.894
+        },
+        {
+          "minute": 51,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 52,
+          "riverside-athletic": 0.945,
+          "kingsport-united": 0.055
+        },
+        {
+          "minute": 53,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 54,
+          "riverside-athletic": 0.67,
+          "kingsport-united": 0.33
+        },
+        {
+          "minute": 55,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 56,
+          "riverside-athletic": 0.942,
+          "kingsport-united": 0.058
+        },
+        {
+          "minute": 57,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 58,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 59,
+          "riverside-athletic": 0.52,
+          "kingsport-united": 0.48
+        },
+        {
+          "minute": 60,
+          "riverside-athletic": 0.26,
+          "kingsport-united": 0.74
+        },
+        {
+          "minute": 61,
+          "riverside-athletic": 0.466,
+          "kingsport-united": 0.534
+        },
+        {
+          "minute": 62,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 63,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 64,
+          "riverside-athletic": 0.764,
+          "kingsport-united": 0.236
+        },
+        {
+          "minute": 65,
+          "riverside-athletic": 0.418,
+          "kingsport-united": 0.582
+        },
+        {
+          "minute": 66,
+          "riverside-athletic": 0.974,
+          "kingsport-united": 0.026
+        },
+        {
+          "minute": 67,
+          "riverside-athletic": 0.9,
+          "kingsport-united": 0.1
+        },
+        {
+          "minute": 68,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 69,
+          "riverside-athletic": 0.74,
+          "kingsport-united": 0.26
+        },
+        {
+          "minute": 70,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 71,
+          "riverside-athletic": 0.613,
+          "kingsport-united": 0.387
+        },
+        {
+          "minute": 72,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 73,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 74,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 75,
+          "riverside-athletic": 0.876,
+          "kingsport-united": 0.124
+        },
+        {
+          "minute": 76,
+          "riverside-athletic": 0.405,
+          "kingsport-united": 0.595
+        },
+        {
+          "minute": 77,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 78,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 79,
+          "riverside-athletic": 0.267,
+          "kingsport-united": 0.733
+        },
+        {
+          "minute": 80,
+          "riverside-athletic": 0.605,
+          "kingsport-united": 0.395
+        },
+        {
+          "minute": 81,
+          "riverside-athletic": 0.351,
+          "kingsport-united": 0.649
+        },
+        {
+          "minute": 82,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 83,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 84,
+          "riverside-athletic": 0.853,
+          "kingsport-united": 0.147
+        },
+        {
+          "minute": 85,
+          "riverside-athletic": 0.493,
+          "kingsport-united": 0.507
+        },
+        {
+          "minute": 86,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 87,
+          "riverside-athletic": 1.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 88,
+          "riverside-athletic": 0.247,
+          "kingsport-united": 0.753
+        },
+        {
+          "minute": 89,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 1.0
+        },
+        {
+          "minute": 90,
+          "riverside-athletic": 0.386,
+          "kingsport-united": 0.614
+        },
+        {
+          "minute": 91,
+          "riverside-athletic": 0.444,
+          "kingsport-united": 0.556
+        },
+        {
+          "minute": 92,
+          "riverside-athletic": 0.097,
+          "kingsport-united": 0.903
+        },
+        {
+          "minute": 93,
+          "riverside-athletic": 0.43,
+          "kingsport-united": 0.57
+        },
+        {
+          "minute": 94,
+          "riverside-athletic": 0.953,
+          "kingsport-united": 0.047
+        },
+        {
+          "minute": 95,
+          "riverside-athletic": 0.808,
+          "kingsport-united": 0.192
+        }
+      ],
+      "zone_grid": "6 columns (own goal -> opponent goal) x 3 rows; index = row * 6 + column"
+    },
+    "pressing": {
+      "teams": {
+        "riverside-athletic": {
+          "pressures": 140,
+          "pressures_by_third": {
+            "defensive": 39,
+            "middle": 66,
+            "attacking": 35
+          },
+          "high_press_share": 0.25,
+          "ppda": 6.93,
+          "high_turnovers": 14
+        },
+        "kingsport-united": {
+          "pressures": 118,
+          "pressures_by_third": {
+            "defensive": 22,
+            "middle": 73,
+            "attacking": 23
+          },
+          "high_press_share": 0.195,
+          "ppda": 14.3,
+          "high_turnovers": 22
+        }
+      },
+      "pressure_pulse": [
+        {
+          "minute": 0,
+          "riverside-athletic": 2,
+          "kingsport-united": 4
+        },
+        {
+          "minute": 1,
+          "riverside-athletic": 3,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 2,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 3,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 4,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 5,
+          "riverside-athletic": 0,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 6,
+          "riverside-athletic": 4,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 7,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 8,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 9,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 10,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 11,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 12,
+          "riverside-athletic": 2,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 13,
+          "riverside-athletic": 3,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 14,
+          "riverside-athletic": 4,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 15,
+          "riverside-athletic": 2,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 16,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 17,
+          "riverside-athletic": 3,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 18,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 19,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 20,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 21,
+          "riverside-athletic": 2,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 22,
+          "riverside-athletic": 2,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 23,
+          "riverside-athletic": 0,
+          "kingsport-united": 4
+        },
+        {
+          "minute": 24,
+          "riverside-athletic": 4,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 25,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 26,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 27,
+          "riverside-athletic": 6,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 28,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 29,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 30,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 31,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 32,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 33,
+          "riverside-athletic": 1,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 34,
+          "riverside-athletic": 0,
+          "kingsport-united": 5
+        },
+        {
+          "minute": 35,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 36,
+          "riverside-athletic": 2,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 37,
+          "riverside-athletic": 1,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 38,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 39,
+          "riverside-athletic": 1,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 40,
+          "riverside-athletic": 3,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 41,
+          "riverside-athletic": 1,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 42,
+          "riverside-athletic": 0,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 43,
+          "riverside-athletic": 5,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 44,
+          "riverside-athletic": 1,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 45,
+          "riverside-athletic": 2,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 46,
+          "riverside-athletic": 3,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 47,
+          "riverside-athletic": 0,
+          "kingsport-united": 5
+        },
+        {
+          "minute": 48,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 49,
+          "riverside-athletic": 2,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 50,
+          "riverside-athletic": 3,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 51,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 52,
+          "riverside-athletic": 0,
+          "kingsport-united": 5
+        },
+        {
+          "minute": 53,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 54,
+          "riverside-athletic": 3,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 55,
+          "riverside-athletic": 2,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 56,
+          "riverside-athletic": 0,
+          "kingsport-united": 4
+        },
+        {
+          "minute": 57,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 58,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 59,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 60,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 61,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 62,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 63,
+          "riverside-athletic": 4,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 64,
+          "riverside-athletic": 2,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 65,
+          "riverside-athletic": 4,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 66,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 67,
+          "riverside-athletic": 1,
+          "kingsport-united": 3
+        },
+        {
+          "minute": 68,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 69,
+          "riverside-athletic": 2,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 70,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 71,
+          "riverside-athletic": 2,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 72,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 73,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 74,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 75,
+          "riverside-athletic": 0,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 76,
+          "riverside-athletic": 2,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 77,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 78,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 79,
+          "riverside-athletic": 4,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 80,
+          "riverside-athletic": 2,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 81,
+          "riverside-athletic": 5,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 82,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 83,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 84,
+          "riverside-athletic": 0,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 85,
+          "riverside-athletic": 1,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 86,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 87,
+          "riverside-athletic": 0,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 88,
+          "riverside-athletic": 3,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 89,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 90,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 91,
+          "riverside-athletic": 2,
+          "kingsport-united": 2
+        },
+        {
+          "minute": 92,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        },
+        {
+          "minute": 93,
+          "riverside-athletic": 3,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 94,
+          "riverside-athletic": 1,
+          "kingsport-united": 0
+        },
+        {
+          "minute": 95,
+          "riverside-athletic": 1,
+          "kingsport-united": 1
+        }
+      ],
+      "notes": {
+        "ppda": "opponent passes allowed per defensive action in their build-up zone; lower = more intense press"
+      }
+    },
+    "momentum": {
+      "momentum": -0.274,
+      "threat_level": {
+        "riverside-athletic": 0.1468,
+        "kingsport-united": 0.2689
+      },
+      "series": [
+        {
+          "minute": 0,
+          "momentum": 0.0,
+          "riverside-athletic": 0.0,
+          "kingsport-united": 0.0
+        },
+        {
+          "minute": 1,
+          "momentum": 0.085,
+          "riverside-athletic": 0.0081,
+          "kingsport-united": 0.0045
+        },
+        {
+          "minute": 2,
+          "momentum": -0.113,
+          "riverside-athletic": 0.0068,
+          "kingsport-united": 0.0124
+        },
+        {
+          "minute": 3,
+          "momentum": -0.86,
+          "riverside-athletic": 0.0122,
+          "kingsport-united": 0.3461
+        },
+        {
+          "minute": 4,
+          "momentum": -0.887,
+          "riverside-athletic": 0.0147,
+          "kingsport-united": 0.4786
+        },
+        {
+          "minute": 5,
+          "momentum": -0.849,
+          "riverside-athletic": 0.0227,
+          "kingsport-united": 0.4475
+        },
+        {
+          "minute": 6,
+          "momentum": -0.764,
+          "riverside-athletic": 0.0374,
+          "kingsport-united": 0.3764
+        },
+        {
+          "minute": 7,
+          "momentum": -0.923,
+          "riverside-athletic": 0.0296,
+          "kingsport-united": 1.0932
+        },
+        {
+          "minute": 8,
+          "momentum": -0.92,
+          "riverside-athletic": 0.0264,
+          "kingsport-united": 0.9759
+        },
+        {
+          "minute": 9,
+          "momentum": -0.903,
+          "riverside-athletic": 0.0276,
+          "kingsport-united": 0.8194
+        },
+        {
+          "minute": 10,
+          "momentum": -0.882,
+          "riverside-athletic": 0.0292,
+          "kingsport-united": 0.6911
+        },
+        {
+          "minute": 11,
+          "momentum": -0.851,
+          "riverside-athletic": 0.0312,
+          "kingsport-united": 0.5588
+        },
+        {
+          "minute": 12,
+          "momentum": -0.807,
+          "riverside-athletic": 0.0389,
+          "kingsport-united": 0.4906
+        },
+        {
+          "minute": 13,
+          "momentum": -0.789,
+          "riverside-athletic": 0.035,
+          "kingsport-united": 0.4088
+        },
+        {
+          "minute": 14,
+          "momentum": -0.751,
+          "riverside-athletic": 0.0382,
+          "kingsport-united": 0.3594
+        },
+        {
+          "minute": 15,
+          "momentum": -0.746,
+          "riverside-athletic": 0.0321,
+          "kingsport-united": 0.309
+        },
+        {
+          "minute": 16,
+          "momentum": -0.817,
+          "riverside-athletic": 0.0316,
+          "kingsport-united": 0.4472
+        },
+        {
+          "minute": 17,
+          "momentum": -0.167,
+          "riverside-athletic": 0.265,
+          "kingsport-united": 0.3775
+        },
+        {
+          "minute": 18,
+          "momentum": -0.369,
+          "riverside-athletic": 0.2252,
+          "kingsport-united": 0.506
+        },
+        {
+          "minute": 19,
+          "momentum": -0.371,
+          "riverside-athletic": 0.1921,
+          "kingsport-united": 0.437
+        },
+        {
+          "minute": 20,
+          "momentum": -0.421,
+          "riverside-athletic": 0.1648,
+          "kingsport-united": 0.4264
+        },
+        {
+          "minute": 21,
+          "momentum": -0.41,
+          "riverside-athletic": 0.1437,
+          "kingsport-united": 0.3642
+        },
+        {
+          "minute": 22,
+          "momentum": -0.405,
+          "riverside-athletic": 0.1093,
+          "kingsport-united": 0.2784
+        },
+        {
+          "minute": 23,
+          "momentum": -0.406,
+          "riverside-athletic": 0.101,
+          "kingsport-united": 0.2596
+        },
+        {
+          "minute": 24,
+          "momentum": 0.398,
+          "riverside-athletic": 0.5317,
+          "kingsport-united": 0.2204
+        },
+        {
+          "minute": 25,
+          "momentum": 0.381,
+          "riverside-athletic": 0.4501,
+          "kingsport-united": 0.1934
+        },
+        {
+          "minute": 26,
+          "momentum": 0.383,
+          "riverside-athletic": 0.3791,
+          "kingsport-united": 0.1609
+        },
+        {
+          "minute": 27,
+          "momentum": -0.009,
+          "riverside-athletic": 0.3298,
+          "kingsport-united": 0.3363
+        },
+        {
+          "minute": 28,
+          "momentum": -0.014,
+          "riverside-athletic": 0.2784,
+          "kingsport-united": 0.2868
+        },
+        {
+          "minute": 29,
+          "momentum": -0.017,
+          "riverside-athletic": 0.2332,
+          "kingsport-united": 0.2418
+        },
+        {
+          "minute": 30,
+          "momentum": -0.014,
+          "riverside-athletic": 0.1992,
+          "kingsport-united": 0.2052
+        },
+        {
+          "minute": 31,
+          "momentum": 0.005,
+          "riverside-athletic": 0.1772,
+          "kingsport-united": 0.1753
+        },
+        {
+          "minute": 32,
+          "momentum": 0.031,
+          "riverside-athletic": 0.1568,
+          "kingsport-united": 0.1467
+        },
+        {
+          "minute": 33,
+          "momentum": -0.44,
+          "riverside-athletic": 0.1314,
+          "kingsport-united": 0.3613
+        },
+        {
+          "minute": 34,
+          "momentum": -0.417,
+          "riverside-athletic": 0.1182,
+          "kingsport-united": 0.3089
+        },
+        {
+          "minute": 35,
+          "momentum": -0.356,
+          "riverside-athletic": 0.1095,
+          "kingsport-united": 0.2471
+        },
+        {
+          "minute": 36,
+          "momentum": -0.326,
+          "riverside-athletic": 0.0968,
+          "kingsport-united": 0.2051
+        },
+        {
+          "minute": 37,
+          "momentum": -0.318,
+          "riverside-athletic": 0.0879,
+          "kingsport-united": 0.1839
+        },
+        {
+          "minute": 38,
+          "momentum": -0.355,
+          "riverside-athletic": 0.0794,
+          "kingsport-united": 0.1831
+        },
+        {
+          "minute": 39,
+          "momentum": -0.319,
+          "riverside-athletic": 0.0749,
+          "kingsport-united": 0.159
+        },
+        {
+          "minute": 40,
+          "momentum": -0.265,
+          "riverside-athletic": 0.0766,
+          "kingsport-united": 0.1426
+        },
+        {
+          "minute": 41,
+          "momentum": -0.237,
+          "riverside-athletic": 0.0725,
+          "kingsport-united": 0.1268
+        },
+        {
+          "minute": 42,
+          "momentum": -0.157,
+          "riverside-athletic": 0.0752,
+          "kingsport-united": 0.1088
+        },
+        {
+          "minute": 43,
+          "momentum": 0.465,
+          "riverside-athletic": 0.2764,
+          "kingsport-united": 0.0914
+        },
+        {
+          "minute": 44,
+          "momentum": 0.536,
+          "riverside-athletic": 0.2919,
+          "kingsport-united": 0.0778
+        },
+        {
+          "minute": 45,
+          "momentum": 0.534,
+          "riverside-athletic": 0.2609,
+          "kingsport-united": 0.0688
+        },
+        {
+          "minute": 46,
+          "momentum": 0.736,
+          "riverside-athletic": 0.4261,
+          "kingsport-united": 0.0521
+        },
+        {
+          "minute": 47,
+          "momentum": 0.753,
+          "riverside-athletic": 0.4313,
+          "kingsport-united": 0.048
+        },
+        {
+          "minute": 48,
+          "momentum": 0.746,
+          "riverside-athletic": 0.3555,
+          "kingsport-united": 0.0389
+        },
+        {
+          "minute": 45,
+          "momentum": 0.745,
+          "riverside-athletic": 0.3463,
+          "kingsport-united": 0.0379
+        },
+        {
+          "minute": 46,
+          "momentum": 0.72,
+          "riverside-athletic": 0.4115,
+          "kingsport-united": 0.0544
+        },
+        {
+          "minute": 47,
+          "momentum": 0.545,
+          "riverside-athletic": 0.4142,
+          "kingsport-united": 0.1113
+        },
+        {
+          "minute": 48,
+          "momentum": 0.563,
+          "riverside-athletic": 0.4365,
+          "kingsport-united": 0.1113
+        },
+        {
+          "minute": 49,
+          "momentum": 0.57,
+          "riverside-athletic": 0.3988,
+          "kingsport-united": 0.0984
+        },
+        {
+          "minute": 50,
+          "momentum": 0.557,
+          "riverside-athletic": 0.3411,
+          "kingsport-united": 0.0862
+        },
+        {
+          "minute": 51,
+          "momentum": 0.516,
+          "riverside-athletic": 0.2898,
+          "kingsport-united": 0.0823
+        },
+        {
+          "minute": 52,
+          "momentum": 0.42,
+          "riverside-athletic": 0.2423,
+          "kingsport-united": 0.09
+        },
+        {
+          "minute": 53,
+          "momentum": 0.437,
+          "riverside-athletic": 0.2169,
+          "kingsport-united": 0.076
+        },
+        {
+          "minute": 54,
+          "momentum": 0.443,
+          "riverside-athletic": 0.1899,
+          "kingsport-united": 0.0641
+        },
+        {
+          "minute": 55,
+          "momentum": 0.315,
+          "riverside-athletic": 0.1683,
+          "kingsport-united": 0.0805
+        },
+        {
+          "minute": 56,
+          "momentum": -0.049,
+          "riverside-athletic": 0.1379,
+          "kingsport-united": 0.1537
+        },
+        {
+          "minute": 57,
+          "momentum": -0.019,
+          "riverside-athletic": 0.1278,
+          "kingsport-united": 0.1335
+        },
+        {
+          "minute": 58,
+          "momentum": 0.007,
+          "riverside-athletic": 0.1086,
+          "kingsport-united": 0.1069
+        },
+        {
+          "minute": 59,
+          "momentum": 0.011,
+          "riverside-athletic": 0.097,
+          "kingsport-united": 0.0945
+        },
+        {
+          "minute": 60,
+          "momentum": 0.015,
+          "riverside-athletic": 0.0859,
+          "kingsport-united": 0.0829
+        },
+        {
+          "minute": 61,
+          "momentum": -0.017,
+          "riverside-athletic": 0.075,
+          "kingsport-united": 0.0781
+        },
+        {
+          "minute": 62,
+          "momentum": 0.314,
+          "riverside-athletic": 0.1393,
+          "kingsport-united": 0.0656
+        },
+        {
+          "minute": 63,
+          "momentum": 0.376,
+          "riverside-athletic": 0.1465,
+          "kingsport-united": 0.0583
+        },
+        {
+          "minute": 64,
+          "momentum": 0.284,
+          "riverside-athletic": 0.1233,
+          "kingsport-united": 0.0621
+        },
+        {
+          "minute": 65,
+          "momentum": 0.624,
+          "riverside-athletic": 0.2745,
+          "kingsport-united": 0.0521
+        },
+        {
+          "minute": 66,
+          "momentum": 0.571,
+          "riverside-athletic": 0.2377,
+          "kingsport-united": 0.0539
+        },
+        {
+          "minute": 67,
+          "momentum": 0.578,
+          "riverside-athletic": 0.2135,
+          "kingsport-united": 0.0461
+        },
+        {
+          "minute": 68,
+          "momentum": 0.576,
+          "riverside-athletic": 0.1899,
+          "kingsport-united": 0.0401
+        },
+        {
+          "minute": 69,
+          "momentum": 0.588,
+          "riverside-athletic": 0.1726,
+          "kingsport-united": 0.0336
+        },
+        {
+          "minute": 70,
+          "momentum": 0.56,
+          "riverside-athletic": 0.1602,
+          "kingsport-united": 0.0345
+        },
+        {
+          "minute": 71,
+          "momentum": 0.556,
+          "riverside-athletic": 0.1383,
+          "kingsport-united": 0.0288
+        },
+        {
+          "minute": 72,
+          "momentum": 0.029,
+          "riverside-athletic": 0.122,
+          "kingsport-united": 0.1142
+        },
+        {
+          "minute": 73,
+          "momentum": -0.757,
+          "riverside-athletic": 0.1028,
+          "kingsport-united": 0.8347
+        },
+        {
+          "minute": 74,
+          "momentum": -0.752,
+          "riverside-athletic": 0.0867,
+          "kingsport-united": 0.7039
+        },
+        {
+          "minute": 75,
+          "momentum": -0.728,
+          "riverside-athletic": 0.0804,
+          "kingsport-united": 0.5917
+        },
+        {
+          "minute": 76,
+          "momentum": -0.364,
+          "riverside-athletic": 0.2209,
+          "kingsport-united": 0.4913
+        },
+        {
+          "minute": 77,
+          "momentum": -0.368,
+          "riverside-athletic": 0.1934,
+          "kingsport-united": 0.4364
+        },
+        {
+          "minute": 78,
+          "momentum": -0.341,
+          "riverside-athletic": 0.1728,
+          "kingsport-united": 0.3676
+        },
+        {
+          "minute": 79,
+          "momentum": -0.327,
+          "riverside-athletic": 0.1476,
+          "kingsport-united": 0.3054
+        },
+        {
+          "minute": 80,
+          "momentum": -0.342,
+          "riverside-athletic": 0.1253,
+          "kingsport-united": 0.2712
+        },
+        {
+          "minute": 81,
+          "momentum": -0.316,
+          "riverside-athletic": 0.1139,
+          "kingsport-united": 0.2327
+        },
+        {
+          "minute": 82,
+          "momentum": -0.289,
+          "riverside-athletic": 0.0984,
+          "kingsport-united": 0.1904
+        },
+        {
+          "minute": 83,
+          "momentum": -0.285,
+          "riverside-athletic": 0.0865,
+          "kingsport-united": 0.1674
+        },
+        {
+          "minute": 84,
+          "momentum": -0.318,
+          "riverside-athletic": 0.0678,
+          "kingsport-united": 0.1449
+        },
+        {
+          "minute": 85,
+          "momentum": -0.27,
+          "riverside-athletic": 0.0692,
+          "kingsport-united": 0.1313
+        },
+        {
+          "minute": 86,
+          "momentum": 0.214,
+          "riverside-athletic": 0.1957,
+          "kingsport-united": 0.1215
+        },
+        {
+          "minute": 87,
+          "momentum": 0.212,
+          "riverside-athletic": 0.1728,
+          "kingsport-united": 0.1069
+        },
+        {
+          "minute": 88,
+          "momentum": 0.242,
+          "riverside-athletic": 0.1613,
+          "kingsport-united": 0.0925
+        },
+        {
+          "minute": 89,
+          "momentum": 0.203,
+          "riverside-athletic": 0.1354,
+          "kingsport-united": 0.0847
+        },
+        {
+          "minute": 90,
+          "momentum": -0.59,
+          "riverside-athletic": 0.1152,
+          "kingsport-united": 0.4897
+        },
+        {
+          "minute": 91,
+          "momentum": -0.699,
+          "riverside-athletic": 0.0937,
+          "kingsport-united": 0.5985
+        },
+        {
+          "minute": 92,
+          "momentum": -0.456,
+          "riverside-athletic": 0.1886,
+          "kingsport-united": 0.5293
+        },
+        {
+          "minute": 93,
+          "momentum": -0.322,
+          "riverside-athletic": 0.223,
+          "kingsport-united": 0.4488
+        },
+        {
+          "minute": 94,
+          "momentum": -0.321,
+          "riverside-athletic": 0.1882,
+          "kingsport-united": 0.3804
+        },
+        {
+          "minute": 95,
+          "momentum": -0.315,
+          "riverside-athletic": 0.1578,
+          "kingsport-united": 0.317
+        },
+        {
+          "minute": 96,
+          "momentum": -0.274,
+          "riverside-athletic": 0.1468,
+          "kingsport-united": 0.2689
+        }
+      ],
+      "notes": "+1 = home team fully on top, -1 = away team fully on top; threat half-life 4 minutes"
+    },
+    "control": {
+      "chaos_index": 49.0,
+      "tempo_passes_per_min": 8.3,
+      "control": {
+        "riverside-athletic": 46.3,
+        "kingsport-united": 25.7
+      },
+      "state": "balanced",
+      "stoppages_per_10_min": 10.1,
+      "series": [
+        {
+          "minute": 0,
+          "chaos_index": 0.0,
+          "tempo_passes_per_min": 0.0,
+          "control": {
+            "riverside-athletic": 0.0,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 1,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 9.9,
+          "control": {
+            "riverside-athletic": 83.5,
+            "kingsport-united": 8.5
+          }
+        },
+        {
+          "minute": 2,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 8.9,
+          "control": {
+            "riverside-athletic": 47.6,
+            "kingsport-united": 24.4
+          }
+        },
+        {
+          "minute": 3,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 8.3,
+          "control": {
+            "riverside-athletic": 56.2,
+            "kingsport-united": 11.8
+          }
+        },
+        {
+          "minute": 4,
+          "chaos_index": 84.5,
+          "tempo_passes_per_min": 8.6,
+          "control": {
+            "riverside-athletic": 63.9,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 5,
+          "chaos_index": 84.4,
+          "tempo_passes_per_min": 9.3,
+          "control": {
+            "riverside-athletic": 66.1,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 6,
+          "chaos_index": 48.5,
+          "tempo_passes_per_min": 10.8,
+          "control": {
+            "riverside-athletic": 75.3,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 7,
+          "chaos_index": 32.5,
+          "tempo_passes_per_min": 11.1,
+          "control": {
+            "riverside-athletic": 77.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 8,
+          "chaos_index": 27.6,
+          "tempo_passes_per_min": 9.4,
+          "control": {
+            "riverside-athletic": 78.0,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 9,
+          "chaos_index": 31.4,
+          "tempo_passes_per_min": 9.5,
+          "control": {
+            "riverside-athletic": 76.9,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 10,
+          "chaos_index": 35.0,
+          "tempo_passes_per_min": 10.1,
+          "control": {
+            "riverside-athletic": 78.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 11,
+          "chaos_index": 27.5,
+          "tempo_passes_per_min": 6.8,
+          "control": {
+            "riverside-athletic": 80.9,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 12,
+          "chaos_index": 28.3,
+          "tempo_passes_per_min": 9.3,
+          "control": {
+            "riverside-athletic": 89.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 13,
+          "chaos_index": 41.4,
+          "tempo_passes_per_min": 9.4,
+          "control": {
+            "riverside-athletic": 74.2,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 14,
+          "chaos_index": 41.7,
+          "tempo_passes_per_min": 9.7,
+          "control": {
+            "riverside-athletic": 73.7,
+            "kingsport-united": 2.3
+          }
+        },
+        {
+          "minute": 15,
+          "chaos_index": 41.4,
+          "tempo_passes_per_min": 8.8,
+          "control": {
+            "riverside-athletic": 45.5,
+            "kingsport-united": 22.5
+          }
+        },
+        {
+          "minute": 16,
+          "chaos_index": 54.7,
+          "tempo_passes_per_min": 9.5,
+          "control": {
+            "riverside-athletic": 44.0,
+            "kingsport-united": 20.0
+          }
+        },
+        {
+          "minute": 17,
+          "chaos_index": 34.5,
+          "tempo_passes_per_min": 8.0,
+          "control": {
+            "riverside-athletic": 36.9,
+            "kingsport-united": 27.1
+          }
+        },
+        {
+          "minute": 18,
+          "chaos_index": 42.2,
+          "tempo_passes_per_min": 8.5,
+          "control": {
+            "riverside-athletic": 43.5,
+            "kingsport-united": 20.5
+          }
+        },
+        {
+          "minute": 19,
+          "chaos_index": 48.4,
+          "tempo_passes_per_min": 7.6,
+          "control": {
+            "riverside-athletic": 34.8,
+            "kingsport-united": 29.2
+          }
+        },
+        {
+          "minute": 20,
+          "chaos_index": 48.3,
+          "tempo_passes_per_min": 7.6,
+          "control": {
+            "riverside-athletic": 56.7,
+            "kingsport-united": 3.3
+          }
+        },
+        {
+          "minute": 21,
+          "chaos_index": 38.7,
+          "tempo_passes_per_min": 8.1,
+          "control": {
+            "riverside-athletic": 43.6,
+            "kingsport-united": 16.4
+          }
+        },
+        {
+          "minute": 22,
+          "chaos_index": 14.5,
+          "tempo_passes_per_min": 5.5,
+          "control": {
+            "riverside-athletic": 38.0,
+            "kingsport-united": 38.0
+          }
+        },
+        {
+          "minute": 23,
+          "chaos_index": 13.8,
+          "tempo_passes_per_min": 5.4,
+          "control": {
+            "riverside-athletic": 33.5,
+            "kingsport-united": 38.5
+          }
+        },
+        {
+          "minute": 24,
+          "chaos_index": 13.5,
+          "tempo_passes_per_min": 5.4,
+          "control": {
+            "riverside-athletic": 44.2,
+            "kingsport-united": 35.8
+          }
+        },
+        {
+          "minute": 25,
+          "chaos_index": 38.1,
+          "tempo_passes_per_min": 6.4,
+          "control": {
+            "riverside-athletic": 36.1,
+            "kingsport-united": 39.9
+          }
+        },
+        {
+          "minute": 26,
+          "chaos_index": 38.3,
+          "tempo_passes_per_min": 6.2,
+          "control": {
+            "riverside-athletic": 64.0,
+            "kingsport-united": 16.0
+          }
+        },
+        {
+          "minute": 27,
+          "chaos_index": 70.6,
+          "tempo_passes_per_min": 8.1,
+          "control": {
+            "riverside-athletic": 53.0,
+            "kingsport-united": 15.0
+          }
+        },
+        {
+          "minute": 28,
+          "chaos_index": 73.8,
+          "tempo_passes_per_min": 8.3,
+          "control": {
+            "riverside-athletic": 42.8,
+            "kingsport-united": 25.2
+          }
+        },
+        {
+          "minute": 29,
+          "chaos_index": 38.2,
+          "tempo_passes_per_min": 8.0,
+          "control": {
+            "riverside-athletic": 35.4,
+            "kingsport-united": 36.6
+          }
+        },
+        {
+          "minute": 30,
+          "chaos_index": 27.5,
+          "tempo_passes_per_min": 5.8,
+          "control": {
+            "riverside-athletic": 28.0,
+            "kingsport-united": 44.0
+          }
+        },
+        {
+          "minute": 31,
+          "chaos_index": 52.6,
+          "tempo_passes_per_min": 5.9,
+          "control": {
+            "riverside-athletic": 25.7,
+            "kingsport-united": 42.3
+          }
+        },
+        {
+          "minute": 32,
+          "chaos_index": 52.1,
+          "tempo_passes_per_min": 8.2,
+          "control": {
+            "riverside-athletic": 62.3,
+            "kingsport-united": 17.7
+          }
+        },
+        {
+          "minute": 33,
+          "chaos_index": 55.4,
+          "tempo_passes_per_min": 8.0,
+          "control": {
+            "riverside-athletic": 72.8,
+            "kingsport-united": 3.2
+          }
+        },
+        {
+          "minute": 34,
+          "chaos_index": 81.5,
+          "tempo_passes_per_min": 10.6,
+          "control": {
+            "riverside-athletic": 78.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 35,
+          "chaos_index": 61.9,
+          "tempo_passes_per_min": 13.3,
+          "control": {
+            "riverside-athletic": 92.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 36,
+          "chaos_index": 48.4,
+          "tempo_passes_per_min": 12.2,
+          "control": {
+            "riverside-athletic": 92.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 37,
+          "chaos_index": 45.4,
+          "tempo_passes_per_min": 11.9,
+          "control": {
+            "riverside-athletic": 86.1,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 38,
+          "chaos_index": 17.3,
+          "tempo_passes_per_min": 12.5,
+          "control": {
+            "riverside-athletic": 86.6,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 39,
+          "chaos_index": 13.5,
+          "tempo_passes_per_min": 12.6,
+          "control": {
+            "riverside-athletic": 86.8,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 40,
+          "chaos_index": 45.6,
+          "tempo_passes_per_min": 13.3,
+          "control": {
+            "riverside-athletic": 76.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 41,
+          "chaos_index": 59.9,
+          "tempo_passes_per_min": 12.0,
+          "control": {
+            "riverside-athletic": 73.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 42,
+          "chaos_index": 69.2,
+          "tempo_passes_per_min": 11.6,
+          "control": {
+            "riverside-athletic": 75.8,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 43,
+          "chaos_index": 88.8,
+          "tempo_passes_per_min": 10.7,
+          "control": {
+            "riverside-athletic": 75.1,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 44,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 8.8,
+          "control": {
+            "riverside-athletic": 46.2,
+            "kingsport-united": 1.8
+          }
+        },
+        {
+          "minute": 45,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 7.2,
+          "control": {
+            "riverside-athletic": 46.8,
+            "kingsport-united": 5.2
+          }
+        },
+        {
+          "minute": 46,
+          "chaos_index": 65.9,
+          "tempo_passes_per_min": 5.6,
+          "control": {
+            "riverside-athletic": 48.4,
+            "kingsport-united": 11.6
+          }
+        },
+        {
+          "minute": 47,
+          "chaos_index": 72.9,
+          "tempo_passes_per_min": 4.4,
+          "control": {
+            "riverside-athletic": 29.8,
+            "kingsport-united": 26.2
+          }
+        },
+        {
+          "minute": 48,
+          "chaos_index": 35.0,
+          "tempo_passes_per_min": 5.5,
+          "control": {
+            "riverside-athletic": 73.0,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 45,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 17.1,
+          "control": {
+            "riverside-athletic": 82.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 46,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 11.9,
+          "control": {
+            "riverside-athletic": 70.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 47,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 10.8,
+          "control": {
+            "riverside-athletic": 65.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 48,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 11.7,
+          "control": {
+            "riverside-athletic": 70.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 49,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 12.1,
+          "control": {
+            "riverside-athletic": 65.6,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 50,
+          "chaos_index": 97.6,
+          "tempo_passes_per_min": 13.1,
+          "control": {
+            "riverside-athletic": 56.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 51,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 16.4,
+          "control": {
+            "riverside-athletic": 42.7,
+            "kingsport-united": 9.3
+          }
+        },
+        {
+          "minute": 52,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 15.1,
+          "control": {
+            "riverside-athletic": 39.1,
+            "kingsport-united": 8.9
+          }
+        },
+        {
+          "minute": 53,
+          "chaos_index": 100.0,
+          "tempo_passes_per_min": 16.7,
+          "control": {
+            "riverside-athletic": 40.7,
+            "kingsport-united": 7.3
+          }
+        },
+        {
+          "minute": 54,
+          "chaos_index": 29.3,
+          "tempo_passes_per_min": 11.8,
+          "control": {
+            "riverside-athletic": 48.4,
+            "kingsport-united": 27.6
+          }
+        },
+        {
+          "minute": 55,
+          "chaos_index": 52.1,
+          "tempo_passes_per_min": 12.3,
+          "control": {
+            "riverside-athletic": 53.6,
+            "kingsport-united": 14.4
+          }
+        },
+        {
+          "minute": 56,
+          "chaos_index": 48.3,
+          "tempo_passes_per_min": 10.8,
+          "control": {
+            "riverside-athletic": 67.2,
+            "kingsport-united": 8.8
+          }
+        },
+        {
+          "minute": 57,
+          "chaos_index": 62.7,
+          "tempo_passes_per_min": 12.1,
+          "control": {
+            "riverside-athletic": 69.8,
+            "kingsport-united": 2.2
+          }
+        },
+        {
+          "minute": 58,
+          "chaos_index": 41.4,
+          "tempo_passes_per_min": 8.6,
+          "control": {
+            "riverside-athletic": 67.6,
+            "kingsport-united": 16.4
+          }
+        },
+        {
+          "minute": 59,
+          "chaos_index": 41.3,
+          "tempo_passes_per_min": 7.2,
+          "control": {
+            "riverside-athletic": 62.6,
+            "kingsport-united": 21.4
+          }
+        },
+        {
+          "minute": 60,
+          "chaos_index": 27.6,
+          "tempo_passes_per_min": 6.8,
+          "control": {
+            "riverside-athletic": 67.0,
+            "kingsport-united": 21.0
+          }
+        },
+        {
+          "minute": 61,
+          "chaos_index": 58.3,
+          "tempo_passes_per_min": 8.5,
+          "control": {
+            "riverside-athletic": 59.6,
+            "kingsport-united": 24.4
+          }
+        },
+        {
+          "minute": 62,
+          "chaos_index": 34.5,
+          "tempo_passes_per_min": 6.2,
+          "control": {
+            "riverside-athletic": 44.0,
+            "kingsport-united": 40.0
+          }
+        },
+        {
+          "minute": 63,
+          "chaos_index": 45.7,
+          "tempo_passes_per_min": 6.6,
+          "control": {
+            "riverside-athletic": 40.0,
+            "kingsport-united": 40.0
+          }
+        },
+        {
+          "minute": 64,
+          "chaos_index": 49.2,
+          "tempo_passes_per_min": 8.7,
+          "control": {
+            "riverside-athletic": 12.3,
+            "kingsport-united": 67.7
+          }
+        },
+        {
+          "minute": 65,
+          "chaos_index": 62.3,
+          "tempo_passes_per_min": 6.8,
+          "control": {
+            "riverside-athletic": 5.9,
+            "kingsport-united": 74.1
+          }
+        },
+        {
+          "minute": 66,
+          "chaos_index": 48.6,
+          "tempo_passes_per_min": 6.6,
+          "control": {
+            "riverside-athletic": 16.6,
+            "kingsport-united": 59.4
+          }
+        },
+        {
+          "minute": 67,
+          "chaos_index": 68.7,
+          "tempo_passes_per_min": 9.8,
+          "control": {
+            "riverside-athletic": 39.3,
+            "kingsport-united": 36.7
+          }
+        },
+        {
+          "minute": 68,
+          "chaos_index": 73.9,
+          "tempo_passes_per_min": 12.4,
+          "control": {
+            "riverside-athletic": 54.0,
+            "kingsport-united": 18.0
+          }
+        },
+        {
+          "minute": 69,
+          "chaos_index": 65.7,
+          "tempo_passes_per_min": 12.4,
+          "control": {
+            "riverside-athletic": 82.4,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 70,
+          "chaos_index": 67.4,
+          "tempo_passes_per_min": 14.1,
+          "control": {
+            "riverside-athletic": 77.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 71,
+          "chaos_index": 45.6,
+          "tempo_passes_per_min": 14.3,
+          "control": {
+            "riverside-athletic": 90.5,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 72,
+          "chaos_index": 45.3,
+          "tempo_passes_per_min": 13.5,
+          "control": {
+            "riverside-athletic": 83.2,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 73,
+          "chaos_index": 27.5,
+          "tempo_passes_per_min": 10.2,
+          "control": {
+            "riverside-athletic": 85.6,
+            "kingsport-united": 2.4
+          }
+        },
+        {
+          "minute": 74,
+          "chaos_index": 20.8,
+          "tempo_passes_per_min": 7.0,
+          "control": {
+            "riverside-athletic": 82.3,
+            "kingsport-united": 5.7
+          }
+        },
+        {
+          "minute": 75,
+          "chaos_index": 0.0,
+          "tempo_passes_per_min": 6.6,
+          "control": {
+            "riverside-athletic": 89.3,
+            "kingsport-united": 2.7
+          }
+        },
+        {
+          "minute": 76,
+          "chaos_index": 20.7,
+          "tempo_passes_per_min": 5.4,
+          "control": {
+            "riverside-athletic": 79.3,
+            "kingsport-united": 0.7
+          }
+        },
+        {
+          "minute": 77,
+          "chaos_index": 24.1,
+          "tempo_passes_per_min": 4.6,
+          "control": {
+            "riverside-athletic": 73.0,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 78,
+          "chaos_index": 31.1,
+          "tempo_passes_per_min": 8.0,
+          "control": {
+            "riverside-athletic": 79.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 79,
+          "chaos_index": 44.2,
+          "tempo_passes_per_min": 10.5,
+          "control": {
+            "riverside-athletic": 81.0,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 80,
+          "chaos_index": 45.2,
+          "tempo_passes_per_min": 8.4,
+          "control": {
+            "riverside-athletic": 66.9,
+            "kingsport-united": 5.1
+          }
+        },
+        {
+          "minute": 81,
+          "chaos_index": 56.2,
+          "tempo_passes_per_min": 10.1,
+          "control": {
+            "riverside-athletic": 69.7,
+            "kingsport-united": 0.0
+          }
+        },
+        {
+          "minute": 82,
+          "chaos_index": 55.2,
+          "tempo_passes_per_min": 9.0,
+          "control": {
+            "riverside-athletic": 65.8,
+            "kingsport-united": 14.2
+          }
+        },
+        {
+          "minute": 83,
+          "chaos_index": 55.5,
+          "tempo_passes_per_min": 6.8,
+          "control": {
+            "riverside-athletic": 47.3,
+            "kingsport-united": 32.7
+          }
+        },
+        {
+          "minute": 84,
+          "chaos_index": 41.9,
+          "tempo_passes_per_min": 6.8,
+          "control": {
+            "riverside-athletic": 26.6,
+            "kingsport-united": 57.4
+          }
+        },
+        {
+          "minute": 85,
+          "chaos_index": 48.5,
+          "tempo_passes_per_min": 6.4,
+          "control": {
+            "riverside-athletic": 38.2,
+            "kingsport-united": 41.8
+          }
+        },
+        {
+          "minute": 86,
+          "chaos_index": 48.8,
+          "tempo_passes_per_min": 6.2,
+          "control": {
+            "riverside-athletic": 18.8,
+            "kingsport-united": 57.2
+          }
+        },
+        {
+          "minute": 87,
+          "chaos_index": 53.4,
+          "tempo_passes_per_min": 5.9,
+          "control": {
+            "riverside-athletic": 25.5,
+            "kingsport-united": 46.5
+          }
+        },
+        {
+          "minute": 88,
+          "chaos_index": 44.8,
+          "tempo_passes_per_min": 8.6,
+          "control": {
+            "riverside-athletic": 56.4,
+            "kingsport-united": 15.6
+          }
+        },
+        {
+          "minute": 89,
+          "chaos_index": 58.3,
+          "tempo_passes_per_min": 9.3,
+          "control": {
+            "riverside-athletic": 59.0,
+            "kingsport-united": 9.0
+          }
+        },
+        {
+          "minute": 90,
+          "chaos_index": 51.7,
+          "tempo_passes_per_min": 8.4,
+          "control": {
+            "riverside-athletic": 55.4,
+            "kingsport-united": 16.6
+          }
+        },
+        {
+          "minute": 91,
+          "chaos_index": 15.0,
+          "tempo_passes_per_min": 7.4,
+          "control": {
+            "riverside-athletic": 59.7,
+            "kingsport-united": 20.3
+          }
+        },
+        {
+          "minute": 92,
+          "chaos_index": 40.3,
+          "tempo_passes_per_min": 8.3,
+          "control": {
+            "riverside-athletic": 52.7,
+            "kingsport-united": 23.3
+          }
+        },
+        {
+          "minute": 93,
+          "chaos_index": 48.4,
+          "tempo_passes_per_min": 6.0,
+          "control": {
+            "riverside-athletic": 4.8,
+            "kingsport-united": 67.2
+          }
+        },
+        {
+          "minute": 94,
+          "chaos_index": 41.7,
+          "tempo_passes_per_min": 6.4,
+          "control": {
+            "riverside-athletic": 17.6,
+            "kingsport-united": 54.4
+          }
+        },
+        {
+          "minute": 95,
+          "chaos_index": 39.2,
+          "tempo_passes_per_min": 8.2,
+          "control": {
+            "riverside-athletic": 29.7,
+            "kingsport-united": 38.3
+          }
+        },
+        {
+          "minute": 96,
+          "chaos_index": 49.0,
+          "tempo_passes_per_min": 8.3,
+          "control": {
+            "riverside-athletic": 46.3,
+            "kingsport-united": 25.7
+          }
+        }
+      ]
+    },
+    "summary": {
+      "teams": {
+        "riverside-athletic": {
+          "goals": 0,
+          "fouls": 18,
+          "yellow_cards": 3,
+          "red_cards": 0,
+          "corners": 3,
+          "offsides": 0,
+          "free_kicks_won": 7,
+          "substitutions": 5,
+          "tackles": 18,
+          "tackles_won": 8,
+          "interceptions": 9,
+          "clearances": 11,
+          "blocks": 11,
+          "aerials_won": 24,
+          "dribbles": 10,
+          "dribbles_completed": 8,
+          "saves": 3,
+          "ball_recoveries": 68,
+          "tackle_success": 0.444,
+          "dribble_success": 0.8
+        },
+        "kingsport-united": {
+          "goals": 1,
+          "fouls": 7,
+          "yellow_cards": 3,
+          "red_cards": 0,
+          "corners": 3,
+          "offsides": 1,
+          "free_kicks_won": 18,
+          "substitutions": 5,
+          "tackles": 16,
+          "tackles_won": 8,
+          "interceptions": 11,
+          "clearances": 18,
+          "blocks": 27,
+          "aerials_won": 14,
+          "dribbles": 4,
+          "dribbles_completed": 4,
+          "saves": 5,
+          "ball_recoveries": 58,
+          "tackle_success": 0.5,
+          "dribble_success": 1.0
+        }
+      },
+      "goals": [
+        {
+          "minute_display": "74'",
+          "team_id": "kingsport-united",
+          "scorer_id": "kin-11",
+          "assist_id": null,
+          "event_id": "riv-kin-7-01534",
+          "score": {
+            "home": 0,
+            "away": 1
+          }
+        }
+      ],
+      "cards": [
+        {
+          "minute_display": "2'",
+          "team_id": "riverside-athletic",
+          "player_id": "riv-06",
+          "card": "yellow",
+          "event_id": "riv-kin-7-00051"
+        },
+        {
+          "minute_display": "7'",
+          "team_id": "riverside-athletic",
+          "player_id": "riv-03",
+          "card": "yellow",
+          "event_id": "riv-kin-7-00170"
+        },
+        {
+          "minute_display": "28'",
+          "team_id": "riverside-athletic",
+          "player_id": "riv-11",
+          "card": "yellow",
+          "event_id": "riv-kin-7-00529"
+        },
+        {
+          "minute_display": "30'",
+          "team_id": "kingsport-united",
+          "player_id": "kin-05",
+          "card": "yellow",
+          "event_id": "riv-kin-7-00555"
+        },
+        {
+          "minute_display": "62'",
+          "team_id": "kingsport-united",
+          "player_id": "kin-08",
+          "card": "yellow",
+          "event_id": "riv-kin-7-01309"
+        },
+        {
+          "minute_display": "87'",
+          "team_id": "kingsport-united",
+          "player_id": "kin-19",
+          "card": "yellow",
+          "event_id": "riv-kin-7-01778"
+        }
+      ],
+      "substitutions": [
+        {
+          "minute_display": "58'",
+          "team_id": "riverside-athletic",
+          "out": "riv-10",
+          "in": "riv-20",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "58'",
+          "team_id": "riverside-athletic",
+          "out": "riv-06",
+          "in": "riv-16",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "58'",
+          "team_id": "riverside-athletic",
+          "out": "riv-02",
+          "in": "riv-14",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "58'",
+          "team_id": "riverside-athletic",
+          "out": "riv-11",
+          "in": "riv-18",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "74'",
+          "team_id": "riverside-athletic",
+          "out": "riv-09",
+          "in": "riv-19",
+          "reason": "tactical"
+        },
+        {
+          "minute_display": "74'",
+          "team_id": "kingsport-united",
+          "out": "kin-10",
+          "in": "kin-18",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "74'",
+          "team_id": "kingsport-united",
+          "out": "kin-11",
+          "in": "kin-20",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "76'",
+          "team_id": "kingsport-united",
+          "out": "kin-08",
+          "in": "kin-19",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "76'",
+          "team_id": "kingsport-united",
+          "out": "kin-09",
+          "in": "kin-17",
+          "reason": "fatigue"
+        },
+        {
+          "minute_display": "85'",
+          "team_id": "kingsport-united",
+          "out": "kin-05",
+          "in": "kin-14",
+          "reason": "fatigue"
+        }
+      ],
+      "tactical_changes": [
+        {
+          "minute_display": "75'",
+          "team_id": "riverside-athletic",
+          "reason": "chasing the game",
+          "description": "Pushing higher and pressing harder to find a goal."
+        },
+        {
+          "minute_display": "75'",
+          "team_id": "kingsport-united",
+          "reason": "protecting the lead",
+          "description": "Dropping deeper and slowing the game down."
+        },
+        {
+          "minute_display": "79'",
+          "team_id": "riverside-athletic",
+          "reason": "all-out attack",
+          "description": "Throwing bodies forward; long balls into the box."
+        }
+      ]
+    },
+    "win_probability": {
+      "current": {
+        "home": 0.0,
+        "draw": 0.0,
+        "away": 1.0
+      },
+      "series": [
+        {
+          "minute": 0,
+          "home": 0.4181,
+          "draw": 0.1959,
+          "away": 0.386
+        },
+        {
+          "minute": 1,
+          "home": 0.4172,
+          "draw": 0.1977,
+          "away": 0.385,
+          "event_id": null
+        },
+        {
+          "minute": 2,
+          "home": 0.4164,
+          "draw": 0.1995,
+          "away": 0.3841,
+          "event_id": null
+        },
+        {
+          "minute": 3,
+          "home": 0.4384,
+          "draw": 0.1759,
+          "away": 0.3857,
+          "event_id": null
+        },
+        {
+          "minute": 4,
+          "home": 0.4572,
+          "draw": 0.1578,
+          "away": 0.385,
+          "event_id": null
+        },
+        {
+          "minute": 5,
+          "home": 0.4569,
+          "draw": 0.1585,
+          "away": 0.3846,
+          "event_id": null
+        },
+        {
+          "minute": 6,
+          "home": 0.4559,
+          "draw": 0.1603,
+          "away": 0.3837,
+          "event_id": null
+        },
+        {
+          "minute": 7,
+          "home": 0.5376,
+          "draw": 0.0903,
+          "away": 0.3721,
+          "event_id": null
+        },
+        {
+          "minute": 8,
+          "home": 0.5371,
+          "draw": 0.0913,
+          "away": 0.3716,
+          "event_id": null
+        },
+        {
+          "minute": 9,
+          "home": 0.5362,
+          "draw": 0.0929,
+          "away": 0.3709,
+          "event_id": null
+        },
+        {
+          "minute": 10,
+          "home": 0.5354,
+          "draw": 0.0945,
+          "away": 0.3701,
+          "event_id": null
+        },
+        {
+          "minute": 11,
+          "home": 0.5343,
+          "draw": 0.0966,
+          "away": 0.3691,
+          "event_id": null
+        },
+        {
+          "minute": 12,
+          "home": 0.5336,
+          "draw": 0.0978,
+          "away": 0.3685,
+          "event_id": null
+        },
+        {
+          "minute": 13,
+          "home": 0.5326,
+          "draw": 0.0998,
+          "away": 0.3676,
+          "event_id": null
+        },
+        {
+          "minute": 14,
+          "home": 0.5318,
+          "draw": 0.1013,
+          "away": 0.3669,
+          "event_id": null
+        },
+        {
+          "minute": 15,
+          "home": 0.5308,
+          "draw": 0.1031,
+          "away": 0.366,
+          "event_id": null
+        },
+        {
+          "minute": 16,
+          "home": 0.5401,
+          "draw": 0.0973,
+          "away": 0.3626,
+          "event_id": null
+        },
+        {
+          "minute": 17,
+          "home": 0.5212,
+          "draw": 0.1129,
+          "away": 0.366,
+          "event_id": null
+        },
+        {
+          "minute": 18,
+          "home": 0.5315,
+          "draw": 0.1059,
+          "away": 0.3625,
+          "event_id": null
+        },
+        {
+          "minute": 19,
+          "home": 0.5306,
+          "draw": 0.1077,
+          "away": 0.3617,
+          "event_id": null
+        },
+        {
+          "minute": 20,
+          "home": 0.536,
+          "draw": 0.1047,
+          "away": 0.3593,
+          "event_id": null
+        },
+        {
+          "minute": 21,
+          "home": 0.535,
+          "draw": 0.1066,
+          "away": 0.3584,
+          "event_id": null
+        },
+        {
+          "minute": 22,
+          "home": 0.5333,
+          "draw": 0.1097,
+          "away": 0.357,
+          "event_id": null
+        },
+        {
+          "minute": 23,
+          "home": 0.5328,
+          "draw": 0.1107,
+          "away": 0.3566,
+          "event_id": null
+        },
+        {
+          "minute": 24,
+          "home": 0.5044,
+          "draw": 0.1346,
+          "away": 0.361,
+          "event_id": null
+        },
+        {
+          "minute": 25,
+          "home": 0.5032,
+          "draw": 0.1368,
+          "away": 0.36,
+          "event_id": null
+        },
+        {
+          "minute": 26,
+          "home": 0.502,
+          "draw": 0.1392,
+          "away": 0.3589,
+          "event_id": null
+        },
+        {
+          "minute": 27,
+          "home": 0.5173,
+          "draw": 0.1276,
+          "away": 0.3551,
+          "event_id": null
+        },
+        {
+          "minute": 28,
+          "home": 0.5161,
+          "draw": 0.1298,
+          "away": 0.3541,
+          "event_id": null
+        },
+        {
+          "minute": 29,
+          "home": 0.5147,
+          "draw": 0.1323,
+          "away": 0.353,
+          "event_id": null
+        },
+        {
+          "minute": 30,
+          "home": 0.5134,
+          "draw": 0.1347,
+          "away": 0.3519,
+          "event_id": null
+        },
+        {
+          "minute": 31,
+          "home": 0.5122,
+          "draw": 0.1369,
+          "away": 0.3509,
+          "event_id": null
+        },
+        {
+          "minute": 32,
+          "home": 0.5108,
+          "draw": 0.1394,
+          "away": 0.3498,
+          "event_id": null
+        },
+        {
+          "minute": 33,
+          "home": 0.528,
+          "draw": 0.127,
+          "away": 0.345,
+          "event_id": null
+        },
+        {
+          "minute": 34,
+          "home": 0.5268,
+          "draw": 0.1292,
+          "away": 0.344,
+          "event_id": null
+        },
+        {
+          "minute": 35,
+          "home": 0.5249,
+          "draw": 0.1324,
+          "away": 0.3426,
+          "event_id": null
+        },
+        {
+          "minute": 36,
+          "home": 0.5234,
+          "draw": 0.1352,
+          "away": 0.3414,
+          "event_id": null
+        },
+        {
+          "minute": 37,
+          "home": 0.5224,
+          "draw": 0.1368,
+          "away": 0.3407,
+          "event_id": null
+        },
+        {
+          "minute": 38,
+          "home": 0.5206,
+          "draw": 0.1401,
+          "away": 0.3393,
+          "event_id": null
+        },
+        {
+          "minute": 39,
+          "home": 0.5193,
+          "draw": 0.1423,
+          "away": 0.3384,
+          "event_id": null
+        },
+        {
+          "minute": 40,
+          "home": 0.5178,
+          "draw": 0.145,
+          "away": 0.3372,
+          "event_id": null
+        },
+        {
+          "minute": 41,
+          "home": 0.516,
+          "draw": 0.1481,
+          "away": 0.3359,
+          "event_id": null
+        },
+        {
+          "minute": 42,
+          "home": 0.5145,
+          "draw": 0.1506,
+          "away": 0.3348,
+          "event_id": null
+        },
+        {
+          "minute": 43,
+          "home": 0.5062,
+          "draw": 0.159,
+          "away": 0.3347,
+          "event_id": null
+        },
+        {
+          "minute": 44,
+          "home": 0.4961,
+          "draw": 0.1696,
+          "away": 0.3343,
+          "event_id": null
+        },
+        {
+          "minute": 45,
+          "home": 0.4949,
+          "draw": 0.1718,
+          "away": 0.3334,
+          "event_id": null
+        },
+        {
+          "minute": 46,
+          "home": 0.4735,
+          "draw": 0.1921,
+          "away": 0.3344,
+          "event_id": null
+        },
+        {
+          "minute": 47,
+          "home": 0.4745,
+          "draw": 0.1928,
+          "away": 0.3326,
+          "event_id": null
+        },
+        {
+          "minute": 48,
+          "home": 0.4725,
+          "draw": 0.1965,
+          "away": 0.331,
+          "event_id": null
+        },
+        {
+          "minute": 49,
+          "home": 0.4704,
+          "draw": 0.2002,
+          "away": 0.3295,
+          "event_id": null
+        },
+        {
+          "minute": 50,
+          "home": 0.4686,
+          "draw": 0.2033,
+          "away": 0.3281,
+          "event_id": null
+        },
+        {
+          "minute": 51,
+          "home": 0.4667,
+          "draw": 0.2067,
+          "away": 0.3266,
+          "event_id": null
+        },
+        {
+          "minute": 52,
+          "home": 0.4659,
+          "draw": 0.2093,
+          "away": 0.3249,
+          "event_id": null
+        },
+        {
+          "minute": 53,
+          "home": 0.4638,
+          "draw": 0.2129,
+          "away": 0.3233,
+          "event_id": null
+        },
+        {
+          "minute": 54,
+          "home": 0.4616,
+          "draw": 0.2167,
+          "away": 0.3217,
+          "event_id": null
+        },
+        {
+          "minute": 55,
+          "home": 0.4618,
+          "draw": 0.2185,
+          "away": 0.3197,
+          "event_id": null
+        },
+        {
+          "minute": 56,
+          "home": 0.4623,
+          "draw": 0.2203,
+          "away": 0.3174,
+          "event_id": null
+        },
+        {
+          "minute": 57,
+          "home": 0.4603,
+          "draw": 0.2237,
+          "away": 0.316,
+          "event_id": null
+        },
+        {
+          "minute": 58,
+          "home": 0.4572,
+          "draw": 0.2292,
+          "away": 0.3137,
+          "event_id": null
+        },
+        {
+          "minute": 59,
+          "home": 0.4554,
+          "draw": 0.2322,
+          "away": 0.3124,
+          "event_id": null
+        },
+        {
+          "minute": 60,
+          "home": 0.4526,
+          "draw": 0.237,
+          "away": 0.3104,
+          "event_id": null
+        },
+        {
+          "minute": 61,
+          "home": 0.45,
+          "draw": 0.2414,
+          "away": 0.3086,
+          "event_id": null
+        },
+        {
+          "minute": 62,
+          "home": 0.4464,
+          "draw": 0.2476,
+          "away": 0.306,
+          "event_id": null
+        },
+        {
+          "minute": 63,
+          "home": 0.4418,
+          "draw": 0.2534,
+          "away": 0.3048,
+          "event_id": null
+        },
+        {
+          "minute": 64,
+          "home": 0.4389,
+          "draw": 0.2584,
+          "away": 0.3027,
+          "event_id": null
+        },
+        {
+          "minute": 65,
+          "home": 0.4168,
+          "draw": 0.2817,
+          "away": 0.3014,
+          "event_id": null
+        },
+        {
+          "minute": 66,
+          "home": 0.4138,
+          "draw": 0.2871,
+          "away": 0.2992,
+          "event_id": null
+        },
+        {
+          "minute": 67,
+          "home": 0.4109,
+          "draw": 0.292,
+          "away": 0.2971,
+          "event_id": null
+        },
+        {
+          "minute": 68,
+          "home": 0.4076,
+          "draw": 0.2978,
+          "away": 0.2946,
+          "event_id": null
+        },
+        {
+          "minute": 69,
+          "home": 0.4042,
+          "draw": 0.3037,
+          "away": 0.2921,
+          "event_id": null
+        },
+        {
+          "minute": 70,
+          "home": 0.4007,
+          "draw": 0.3097,
+          "away": 0.2896,
+          "event_id": null
+        },
+        {
+          "minute": 71,
+          "home": 0.3969,
+          "draw": 0.3163,
+          "away": 0.2868,
+          "event_id": null
+        },
+        {
+          "minute": 72,
+          "home": 0.3931,
+          "draw": 0.3228,
+          "away": 0.2841,
+          "event_id": null
+        },
+        {
+          "minute": 73,
+          "home": 0.4644,
+          "draw": 0.2605,
+          "away": 0.2751,
+          "event_id": null
+        },
+        {
+          "minute": 73,
+          "home": 0.0815,
+          "draw": 0.1677,
+          "away": 0.7508,
+          "event_id": "riv-kin-7-01534"
+        },
+        {
+          "minute": 74,
+          "home": 0.0782,
+          "draw": 0.1671,
+          "away": 0.7547,
+          "event_id": null
+        },
+        {
+          "minute": 75,
+          "home": 0.0748,
+          "draw": 0.1663,
+          "away": 0.759,
+          "event_id": null
+        },
+        {
+          "minute": 76,
+          "home": 0.0691,
+          "draw": 0.1685,
+          "away": 0.7624,
+          "event_id": null
+        },
+        {
+          "minute": 77,
+          "home": 0.0658,
+          "draw": 0.167,
+          "away": 0.7673,
+          "event_id": null
+        },
+        {
+          "minute": 78,
+          "home": 0.0621,
+          "draw": 0.1649,
+          "away": 0.773,
+          "event_id": null
+        },
+        {
+          "minute": 79,
+          "home": 0.0581,
+          "draw": 0.1622,
+          "away": 0.7798,
+          "event_id": null
+        },
+        {
+          "minute": 80,
+          "home": 0.0544,
+          "draw": 0.1593,
+          "away": 0.7864,
+          "event_id": null
+        },
+        {
+          "minute": 81,
+          "home": 0.0503,
+          "draw": 0.1556,
+          "away": 0.7941,
+          "event_id": null
+        },
+        {
+          "minute": 82,
+          "home": 0.0451,
+          "draw": 0.1499,
+          "away": 0.805,
+          "event_id": null
+        },
+        {
+          "minute": 83,
+          "home": 0.0419,
+          "draw": 0.146,
+          "away": 0.8121,
+          "event_id": null
+        },
+        {
+          "minute": 84,
+          "home": 0.0357,
+          "draw": 0.1371,
+          "away": 0.8272,
+          "event_id": null
+        },
+        {
+          "minute": 85,
+          "home": 0.0332,
+          "draw": 0.1329,
+          "away": 0.8339,
+          "event_id": null
+        },
+        {
+          "minute": 86,
+          "home": 0.0262,
+          "draw": 0.1212,
+          "away": 0.8526,
+          "event_id": null
+        },
+        {
+          "minute": 87,
+          "home": 0.0229,
+          "draw": 0.1135,
+          "away": 0.8636,
+          "event_id": null
+        },
+        {
+          "minute": 88,
+          "home": 0.019,
+          "draw": 0.1038,
+          "away": 0.8772,
+          "event_id": null
+        },
+        {
+          "minute": 89,
+          "home": 0.0143,
+          "draw": 0.0896,
+          "away": 0.8961,
+          "event_id": null
+        },
+        {
+          "minute": 90,
+          "home": 0.011,
+          "draw": 0.0724,
+          "away": 0.9167,
+          "event_id": null
+        },
+        {
+          "minute": 95,
+          "home": 0.0001,
+          "draw": 0.0034,
+          "away": 0.9966,
+          "event_id": null
+        },
+        {
+          "minute": 90,
+          "home": 0.0,
+          "draw": 0.0,
+          "away": 1.0,
+          "event_id": null
+        }
+      ],
+      "model": "trained"
+    }
+  },
+  "moments": {
+    "count": 60,
+    "top": [
+      {
+        "moment_id": "riv-kin-7-m042",
+        "type": "goal",
+        "period": 2,
+        "t": 1681.5,
+        "clock": "73:01",
+        "minute_display": "74'",
+        "team_id": "kingsport-united",
+        "team_name": "Kingsport",
+        "player_ids": [
+          "kin-11"
+        ],
+        "player_names": [
+          "Duarte"
+        ],
+        "title": "GOAL: Duarte (Kingsport) 74', 0-1",
+        "facts": {
+          "scorer": "Rafael Duarte",
+          "assist": null,
+          "xg": 0.7385,
+          "shot_kind": "penalty",
+          "body_part": "foot",
+          "distance_m": 11.0,
+          "shot_speed_kmh": 107.6,
+          "new_score": {
+            "home": 0,
+            "away": 1
+          },
+          "win_prob_before": {
+            "home": 0.4644,
+            "draw": 0.2605,
+            "away": 0.2751
+          },
+          "win_prob_after": {
+            "home": 0.0815,
+            "draw": 0.1677,
+            "away": 0.7508
+          }
+        },
+        "evidence": [
+          "riv-kin-7-01532",
+          "riv-kin-7-01533",
+          "riv-kin-7-01534"
+        ],
+        "moment_weight": 47.6,
+        "importance": 1.0,
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "win_probability": {
+          "home": 0.0815,
+          "draw": 0.1677,
+          "away": 0.7508
+        },
+        "momentum": -0.757
+      },
+      {
+        "moment_id": "riv-kin-7-m007",
+        "type": "big_chance",
+        "period": 1,
+        "t": 442.9,
+        "clock": "07:22",
+        "minute_display": "8'",
+        "team_id": "kingsport-united",
+        "team_name": "Kingsport",
+        "player_ids": [
+          "kin-11"
+        ],
+        "player_names": [
+          "Duarte"
+        ],
+        "title": "Penalty missed: Duarte (Kingsport)",
+        "facts": {
+          "xg": 0.7385,
+          "outcome": "off_target",
+          "penalty": true,
+          "potential_swing_pts": 33.8
+        },
+        "evidence": [
+          "riv-kin-7-00169",
+          "riv-kin-7-00171"
+        ],
+        "moment_weight": 24.9,
+        "importance": 0.899,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.5376,
+          "draw": 0.0903,
+          "away": 0.3721
+        },
+        "momentum": -0.923
+      },
+      {
+        "moment_id": "riv-kin-7-m005",
+        "type": "penalty_awarded",
+        "period": 1,
+        "t": 391.2,
+        "clock": "06:31",
+        "minute_display": "7'",
+        "team_id": "kingsport-united",
+        "team_name": "Kingsport",
+        "player_ids": [
+          "kin-08",
+          "riv-03"
+        ],
+        "player_names": [
+          "Sarr",
+          "Lemaire"
+        ],
+        "title": "Penalty to Kingsport: Ibrahima Sarr fouled",
+        "facts": {
+          "fouled": "Ibrahima Sarr",
+          "fouled_by": "Lemaire"
+        },
+        "evidence": [
+          "riv-kin-7-00169"
+        ],
+        "moment_weight": null,
+        "importance": 0.75,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.4555,
+          "draw": 0.1613,
+          "away": 0.3832
+        },
+        "momentum": -0.793
+      },
+      {
+        "moment_id": "riv-kin-7-m040",
+        "type": "penalty_awarded",
+        "period": 2,
+        "t": 1621.6,
+        "clock": "72:01",
+        "minute_display": "73'",
+        "team_id": "kingsport-united",
+        "team_name": "Kingsport",
+        "player_ids": [
+          "kin-09",
+          "riv-16"
+        ],
+        "player_names": [
+          "Arakawa",
+          "Barišić"
+        ],
+        "title": "Penalty to Kingsport: Yuto Arakawa fouled",
+        "facts": {
+          "fouled": "Yuto Arakawa",
+          "fouled_by": "Barišić"
+        },
+        "evidence": [
+          "riv-kin-7-01532"
+        ],
+        "moment_weight": null,
+        "importance": 0.75,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.3931,
+          "draw": 0.3228,
+          "away": 0.2841
+        },
+        "momentum": 0.029
+      },
+      {
+        "moment_id": "riv-kin-7-m026",
+        "type": "period_summary",
+        "period": 1,
+        "t": 2906.9,
+        "clock": "45:00+3:26",
+        "minute_display": "45+4'",
+        "team_id": null,
+        "team_name": null,
+        "player_ids": [],
+        "player_names": [],
+        "title": "Half-time: Riverside 0-0 Kingsport",
+        "facts": {
+          "home": {
+            "team": "Riverside",
+            "possession": 0.735,
+            "shots": 8,
+            "on_target": 4,
+            "xg": 0.7,
+            "pass_accuracy": 0.866
+          },
+          "away": {
+            "team": "Kingsport",
+            "possession": 0.265,
+            "shots": 8,
+            "on_target": 2,
+            "xg": 1.68,
+            "pass_accuracy": 0.735
+          }
+        },
+        "evidence": [
+          "riv-kin-7-00960"
+        ],
+        "moment_weight": null,
+        "importance": 0.7,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.4799,
+          "draw": 0.1848,
+          "away": 0.3353
+        },
+        "momentum": 0.745
+      },
+      {
+        "moment_id": "riv-kin-7-m060",
+        "type": "period_summary",
+        "period": 2,
+        "t": 3074.6,
+        "clock": "90:00+6:14",
+        "minute_display": "90+7'",
+        "team_id": null,
+        "team_name": null,
+        "player_ids": [],
+        "player_names": [],
+        "title": "Full-time: Riverside 0-1 Kingsport",
+        "facts": {
+          "home": {
+            "team": "Riverside",
+            "possession": 0.678,
+            "shots": 14,
+            "on_target": 5,
+            "xg": 1.14,
+            "pass_accuracy": 0.881
+          },
+          "away": {
+            "team": "Kingsport",
+            "possession": 0.322,
+            "shots": 15,
+            "on_target": 4,
+            "xg": 2.89,
+            "pass_accuracy": 0.784
+          }
+        },
+        "evidence": [
+          "riv-kin-7-01934"
+        ],
+        "moment_weight": null,
+        "importance": 0.7,
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "win_probability": {
+          "home": 0.0001,
+          "draw": 0.0034,
+          "away": 0.9966
+        },
+        "momentum": -0.274
+      },
+      {
+        "moment_id": "riv-kin-7-m011",
+        "type": "momentum_shift",
+        "period": 1,
+        "t": 1437.2,
+        "clock": "23:57",
+        "minute_display": "24'",
+        "team_id": "riverside-athletic",
+        "team_name": "Riverside",
+        "player_ids": [],
+        "player_names": [],
+        "title": "Momentum swings to Riverside",
+        "facts": {
+          "momentum_before": -0.431,
+          "momentum_after": 0.354
+        },
+        "evidence": [],
+        "moment_weight": null,
+        "importance": 0.5,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.5103,
+          "draw": 0.1296,
+          "away": 0.3601
+        },
+        "momentum": 0.354
+      },
+      {
+        "moment_id": "riv-kin-7-m016",
+        "type": "momentum_shift",
+        "period": 1,
+        "t": 1950.3,
+        "clock": "32:30",
+        "minute_display": "33'",
+        "team_id": "kingsport-united",
+        "team_name": "Kingsport",
+        "player_ids": [],
+        "player_names": [],
+        "title": "Momentum swings to Kingsport",
+        "facts": {
+          "momentum_before": 0.398,
+          "momentum_after": -0.42
+        },
+        "evidence": [],
+        "moment_weight": null,
+        "importance": 0.5,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.5288,
+          "draw": 0.1256,
+          "away": 0.3456
+        },
+        "momentum": -0.42
+      },
+      {
+        "moment_id": "riv-kin-7-m023",
+        "type": "momentum_shift",
+        "period": 1,
+        "t": 2569.2,
+        "clock": "42:49",
+        "minute_display": "43'",
+        "team_id": "riverside-athletic",
+        "team_name": "Riverside",
+        "player_ids": [],
+        "player_names": [],
+        "title": "Momentum swings to Riverside",
+        "facts": {
+          "momentum_before": -0.44,
+          "momentum_after": 0.393
+        },
+        "evidence": [],
+        "moment_weight": null,
+        "importance": 0.5,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.5118,
+          "draw": 0.1542,
+          "away": 0.3341
+        },
+        "momentum": 0.393
+      },
+      {
+        "moment_id": "riv-kin-7-m041",
+        "type": "momentum_shift",
+        "period": 2,
+        "t": 1681.1,
+        "clock": "73:01",
+        "minute_display": "74'",
+        "team_id": "kingsport-united",
+        "team_name": "Kingsport",
+        "player_ids": [],
+        "player_names": [],
+        "title": "Momentum swings to Kingsport",
+        "facts": {
+          "momentum_before": 0.63,
+          "momentum_after": -0.757
+        },
+        "evidence": [],
+        "moment_weight": null,
+        "importance": 0.5,
+        "score": {
+          "home": 0,
+          "away": 0
+        },
+        "win_probability": {
+          "home": 0.4644,
+          "draw": 0.2605,
+          "away": 0.2751
+        },
+        "momentum": -0.757
+      }
+    ]
+  }
+}

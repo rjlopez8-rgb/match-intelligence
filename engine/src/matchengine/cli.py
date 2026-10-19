@@ -95,7 +95,7 @@ def cmd_calibrate(args: argparse.Namespace) -> None:
     report = run_calibration(args.matches, workers=args.workers)
     print(format_table(report))
     if args.json:
-        Path(args.json).write_text(json.dumps(report, indent=2))
+        Path(args.json).write_text(json.dumps(report, indent=2), encoding="utf-8")
 
 
 def cmd_schema(args: argparse.Namespace) -> None:
