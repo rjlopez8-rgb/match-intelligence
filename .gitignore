@@ -11,3 +11,6 @@ data/training/
 .DS_Store
 node_modules/
 dist/
+
+# generated replay pages (rebuild with matchstats replay)
+*-replay.html
