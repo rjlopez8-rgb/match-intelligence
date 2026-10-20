@@ -5,9 +5,17 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "matchagents"
 version = "0.1.0"
-description = "The agent crew: Producer, Director, Analyst, Scenario agent, Telestrator, Commentator, Fact-checker"
+description = "The AI broadcast desk: seven agents on Microsoft Agent Framework and Foundry"
 requires-python = ">=3.11"
-dependencies = ["openai>=1.60", "matchstats"]
+dependencies = [
+    "matchstats",
+    "openai>=2.0",
+    "agent-framework-core>=1.22,<2",
+    "agent-framework-openai>=1.17,<2",
+]
+
+[project.scripts]
+matchagents = "matchagents.cli:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5"]

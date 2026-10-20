@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import sys
 import time
+from urllib.parse import urlsplit
 
 from openai import OpenAI
 
@@ -20,11 +21,10 @@ from matchagents import BudgetExceeded, BudgetGuard
 
 
 def main(deployments: list[str]) -> int:
-    endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT", "").strip().rstrip("/")
-    # accept the endpoint however it was copied from the portal
-    for suffix in ("/openai/v1", "/openai"):
-        if endpoint.endswith(suffix):
-            endpoint = endpoint[: -len(suffix)]
+    raw = os.environ.get("AZURE_OPENAI_ENDPOINT", "").strip()
+    # accept the endpoint however it was copied from the portal: only the host matters
+    parts = urlsplit(raw if "://" in raw else f"https://{raw}")
+    endpoint = f"https://{parts.netloc}" if parts.netloc else ""
     key = os.environ.get("AZURE_OPENAI_API_KEY", "")
     if not endpoint or not key:
         print("Set AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY first (see the walkthrough).")
@@ -61,4 +61,4 @@ def main(deployments: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1:] or ["gpt-6-luna-1"]))
+    raise SystemExit(main(sys.argv[1:] or ["gpt-5-mini-1"]))
