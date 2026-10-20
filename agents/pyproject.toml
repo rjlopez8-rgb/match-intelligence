@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matchagents"
+version = "0.1.0"
+description = "The agent crew: Producer, Director, Analyst, Scenario agent, Telestrator, Commentator, Fact-checker"
+requires-python = ">=3.11"
+dependencies = ["openai>=1.60", "matchstats"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
