@@ -24,6 +24,7 @@ BASE_IMPORTANCE = {
     "red_card": 0.8,
     "big_chance": 0.55,
     "great_save": 0.5,
+    "woodwork": 0.5,
     "momentum_shift": 0.5,
     "dominance": 0.4,
     "pressing_surge": 0.35,
@@ -172,8 +173,37 @@ class MomentDetector:
             )
         elif t == "shot" and d.get("outcome") != "goal":
             xg = ann.get("xg", 0.0)
-            if xg >= 0.28 and d.get("outcome") == "saved":
+            if d.get("outcome") == "post" and d.get("shot_kind") != "penalty":
+                # off the woodwork: a whisker from a goal, so it matters as much as the goal would have
+                potential = ann.get("potential_swing_pts") or 0.0
+                self._add(
+                    "woodwork",
+                    e,
+                    f"Off the woodwork: {name} ({team}) from {d.get('distance_m', 0):.0f} m",
+                    tid,
+                    [e["player_id"]],
+                    {
+                        "xg": xg,
+                        "distance_m": d.get("distance_m"),
+                        "shot_speed_kmh": d.get("speed_kmh"),
+                        "body_part": d.get("body_part"),
+                        "potential_swing_pts": potential,
+                    },
+                    self._possession_trail(e) + [e["event_id"]],
+                    ann.get("moment_weight"),
+                    bonus=min(0.3, potential / 100.0),
+                )
+            elif d.get("outcome") == "saved" and (
+                xg >= 0.28
+                or (
+                    (d.get("distance_m") or 0) >= 16
+                    and (d.get("speed_kmh") or 0) >= 95
+                    and (ann.get("potential_swing_pts") or 0) >= 25  # only when a goal would have mattered
+                )
+            ):
+                # a big chance denied, or a spectacular long-range strike tipped away
                 gk = d.get("goalkeeper_id")
+                long_range = xg < 0.28
                 facts = {
                     "xg": xg,
                     "shooter": name,
@@ -182,15 +212,23 @@ class MomentDetector:
                     "distance_m": d.get("distance_m"),
                     "expected_swing_pts": ann.get("expected_swing_pts"),
                 }
+                facts["potential_swing_pts"] = ann.get("potential_swing_pts")
+                title = (
+                    f"Great save: {ctx.player_name(gk)} denies {name}'s {d.get('distance_m', 0):.0f} m "
+                    + ("free kick" if d.get("shot_kind") == "free_kick" else "strike")
+                    if long_range
+                    else f"Big save: {ctx.player_name(gk)} denies {name} (xG {xg:.2f})"
+                )
                 self._add(
                     "great_save",
                     e,
-                    f"Big save: {ctx.player_name(gk)} denies {name} (xG {xg:.2f})",
+                    title,
                     ctx.opponent(tid),
                     [gk, e["player_id"]],
                     facts,
                     self._possession_trail(e) + [e["event_id"]],
                     ann.get("moment_weight"),
+                    bonus=min(0.3, (ann.get("potential_swing_pts") or 0) / 100.0) if long_range else 0.0,
                 )
             elif d.get("shot_kind") == "penalty":
                 self._add(

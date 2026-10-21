@@ -13,7 +13,7 @@ import json
 
 from agent_framework import Message
 
-SHOT_TYPES = {"goal", "big_chance", "great_save"}
+SHOT_TYPES = {"goal", "big_chance", "great_save", "woodwork"}
 
 
 def payload(messages: list[Message]) -> dict:
@@ -44,11 +44,11 @@ def _producer(p: dict) -> dict:
     typ, imp = m["type"], m["importance"]
     aired_what_if = any(r.get("segment") == "what_if" and r.get("period") == m["period"] for r in p.get("rundown", []))
     what_if = None
-    if typ in ("goal", "big_chance") and not aired_what_if and (m.get("moment_weight") or 0) >= 20:
+    swing = max(m.get("moment_weight") or 0, (m.get("facts") or {}).get("potential_swing_pts") or 0)
+    if typ in ("goal", "big_chance", "great_save", "woodwork") and not aired_what_if and swing >= 20:
         verb = "had not scored" if typ == "goal" else "had scored"
-        what_if = (
-            f"What if {m['player_names'][0] if m['player_names'] else m['team_name']} {verb} at {m['minute_display']}?"
-        )
+        who = (m.get("facts") or {}).get("shooter") or (m["player_names"][0] if m["player_names"] else m["team_name"])
+        what_if = f"What if {who} {verb} at {m['minute_display']}?"
     segment = (
         "what_if"
         if what_if

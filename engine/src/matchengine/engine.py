@@ -989,6 +989,8 @@ class MatchEngine:
         )
         p_foul = p.foul_base + p.foul_aggression * (D.aggression / 100.0) - (D.tackling - 60) / 450.0
         p_foul += 0.05 * (1 - self.energy[j])
+        if self.in_own_box(D_ps.side, self.pos[c]):
+            p_foul *= getattr(p, "box_foul_factor", 1.0)  # older saved states predate this setting
         r = self.rng.random()
         loc = (self.pos[j] + self.pos[c]) / 2
         if r < p_foul:
@@ -1072,7 +1074,10 @@ class MatchEngine:
             P.decide_at = self.t + float(self.rng.uniform(0.6, 1.1))
             return
         # Failed take-on: defender tackles or fouls.
-        if self.rng.random() < 0.16 + 0.1 * D.a.aggression / 100:
+        p_foul = 0.16 + 0.1 * D.a.aggression / 100
+        if self.in_own_box(self.pl[j].side, self.pos[c]):
+            p_foul *= getattr(self.p, "box_foul_factor", 1.0)
+        if self.rng.random() < p_foul:
             self._foul(j, c, "challenge")
             return
         self._release(c)

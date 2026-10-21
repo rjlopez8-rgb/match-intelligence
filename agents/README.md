@@ -22,7 +22,7 @@ flowchart LR
 | **Producer** | Decides whether the moment airs, the angle, and which specialists to call. Keeps a rundown so it does not repeat itself (one "what if" per half). | `ProducerPlan` |
 | **Analyst** | Researches the moment with the stats layer's 11 tools. Never calculates a number itself. | `AnalystBrief`: facts with values, source tool and evidence event ids |
 | **Telestrator** | Chooses what to draw on the replay (rings, arrows, runs, zones). Code pins each shape to where players really were, from tracking data. | `Telestration` plus pitch coordinates |
-| **Scenario agent** | Turns a "what if" into one precise intervention for the match simulator. | `ScenarioSpec` (simulation runner: next step) |
+| **Scenario agent** | Turns a "what if" into one precise intervention, which the match engine then simulates: paired ghost futures ("what if it had gone in / been saved?") or Ghost Scout (the same chance taken by every attacker in the league). | `ScenarioSpec` plus simulated results |
 | **Director** | Calls the live camera, the replay sequence (with slow motion) and the on-screen graphic for the 3D viewer. | `DirectorCue` |
 | **Commentator** | Writes 1-3 lines for the viewer's style (fan, tactician, analyst, academy), favourite team and language, using only the Analyst's facts. | `Commentary` |
 | **Fact-checker** | The gate. First code: every number, percentage, minute and score must exist in the stats layer's results. Then a model review of every claim. One rewrite is allowed; after that the stats layer's own factual title airs instead. | `Verdict` |
@@ -48,11 +48,13 @@ The cap is `MATCH_DAILY_CAP_USD` (default $5). With gpt-5-mini a moment costs ab
 
 ```powershell
 pip install -e ../engine -e ../stats -e ".[dev]"
-python -m pytest                                                     # 15 tests, no network, $0
+python -m pytest                                                     # no network, $0
 
 matchagents match ../data/sample/riv-kin-7 --offline                 # whole match with rule-based agents, $0
-matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m042   # the 74' goal with real models (a few cents)
+matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m044   # the 74' goal with real models (a few cents)
 matchagents match ../data/sample/riv-kin-7 --limit 3 --style academy --out segments.json
+matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m044 --futures 40   # with 40 ghost futures
+matchagents render ../data/sample/riv-kin-7 segments.json            # 3D broadcast that plays the desk's segments
 matchagents spend                                                    # today's spending
 matchagents diagram                                                  # the workflow as Mermaid
 ```
@@ -81,6 +83,7 @@ src/matchagents/
   checks.py    code-side number check and telestration coordinates
   session.py   replays a match as if live (no future knowledge)
   llm.py       Foundry client, budget middleware, trace, scripted client
+  ghost.py     runs the Scenario agent's plan through the engine (ghost futures, Ghost Scout)
   offline.py   rule-based agents for $0 runs and tests
   budget.py    the spending guard
   config.py    model per agent

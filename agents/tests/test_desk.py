@@ -33,7 +33,9 @@ def test_goal_segment_is_complete(segments):
     assert g["director"]["replay"] and g["director"]["shots"]
     shapes = g["telestration"]["shapes"]
     assert shapes and all(0 <= s["x"] <= 105 and 0 <= s["y"] <= 68 for s in shapes)
-    assert g["scenario"]["spec"]["intervention"] == "shot_misses"
+    if g["scenario"]["spec"]:  # one what-if per half: an earlier moment may already have used it
+        assert g["scenario"]["spec"]["intervention"] == "shot_misses"
+    assert any(s["scenario"]["spec"] for s in segments.values() if s["period"] == g["period"])
     tools = [r["tool"] for r in g["receipts"] if r["agent"] == "analyst"]
     assert "explain_moment" in tools  # the analyst really called the stats tools
 

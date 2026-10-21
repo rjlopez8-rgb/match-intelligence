@@ -16,6 +16,7 @@ MomentType = Literal[
     "goal",
     "big_chance",
     "great_save",
+    "woodwork",
     "penalty_awarded",
     "red_card",
     "yellow_card",

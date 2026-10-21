@@ -43,6 +43,61 @@ CAPTION_TYPES = {
     "kick_off",
     "ball_out",
 }
+# Shot flights for the 3D view: the tracking feed keeps the ball on the ground during shots,
+# so the viewer rebuilds each flight from the event's start, true end point (with height),
+# speed and outcome. Codes: 0 goal, 1 saved, 2 off target, 3 blocked, 4 post.
+SHOT_CODES = {"goal": 0, "saved": 1, "off_target": 2, "blocked": 3, "post": 4}
+
+
+SHOT_KINDS = {"open_play": 0, "header": 1, "free_kick": 2, "penalty": 3}
+FEET = {"right_foot": 0, "left_foot": 1, "head": 2}
+SAVE_KINDS = {"catch": 0, "parry": 1}
+
+
+def _shot_row(f: float, e: dict, slot_of: dict, save_kind: str | None = None) -> list:
+    """[frame, start x, y, end x, y, z, outcome, speed m/s, keeper slot, shooter slot, kind, foot, save kind]"""
+    d = e.get("details") or {}
+    start, end = e["location"], d.get("end_location") or e["location"]
+    return [
+        f,
+        round(start["x"], 2),
+        round(start["y"], 2),
+        round(end["x"], 2),
+        round(end["y"], 2),
+        round(float(end.get("z") or 0.0), 2),
+        SHOT_CODES.get(d.get("outcome"), 2),
+        round(float(d.get("speed_kmh") or 80.0) / 3.6, 1),
+        slot_of.get(d.get("goalkeeper_id"), -1),
+        slot_of.get(e.get("player_id"), -1),
+        SHOT_KINDS.get(d.get("shot_kind"), 0),
+        FEET.get(d.get("body_part"), 0),
+        SAVE_KINDS.get(save_kind, -1),
+    ]
+
+
+def _frac_frame(keys: list[tuple], period: int, t: float) -> float:
+    """The event's time as a fractional frame index, so kicks and shots line up to the hundredth of a second."""
+    i = bisect.bisect_left(keys, (period, t))
+    if i <= 0:
+        return 0.0
+    if i >= len(keys):
+        return float(len(keys) - 1)
+    (p0, t0), (p1, t1) = keys[i - 1], keys[i]
+    if p0 != period or p1 != period or t1 <= t0:
+        return float(i)
+    return round(i - 1 + (t - t0) / (t1 - t0), 2)
+
+
+def _touch_code(e: dict) -> int:
+    if e["type"] == "pass" and (e.get("details") or {}).get("pass_kind") == "throw_in":
+        return 4
+    if e["type"] == "shot" and (e.get("details") or {}).get("body_part") == "head":
+        return 5
+    return TOUCH_CODES[e["type"]]
+
+
+# body animations in the 3D view: 1 = kick (pass, clearance), 2 = shot, 3 = goalkeeper save, 4 = throw-in, 5 = header
+TOUCH_CODES = {"pass": 1, "clearance": 1, "shot": 2, "save": 3, "keeper_claim": 3}
 MARKER_TYPES = {"goal", "red_card", "yellow_card", "big_chance", "great_save", "penalty_awarded"}
 
 
@@ -95,14 +150,22 @@ def _caption(e: dict, ctx) -> str | None:
     return f"{who}: {t.replace('_', ' ')}" if who else None
 
 
-def build_replay(bundle: str | Path) -> dict:
-    """Run the stats layer over a bundle and collect everything the viewer needs."""
+def build_replay(bundle: str | Path, segments: list[dict] | None = None) -> dict:
+    """Run the stats layer over a bundle and collect everything the viewer needs.
+
+    ``segments`` are the AI desk's outputs (``matchagents ... --out``); when given, the 3D
+    view plays each one when its moment happens: commentary, cameras, drawings, ghost futures.
+    """
     bundle = Path(bundle)
     meta = json.loads((bundle / "meta.json").read_text(encoding="utf-8"))
     a = MatchAnalyzer()
     frames: list[dict] = []
     samples: list[list[float]] = []
     captions: list[tuple[int, str, str]] = []
+    raw_touches: list[dict] = []
+    raw_shots: list[dict] = []
+    save_kind: dict[str, str] = {}
+    last_shot: dict | None = None
     possession_s = [0.0, 0.0]
 
     ctx = None
@@ -110,6 +173,13 @@ def build_replay(bundle: str | Path) -> dict:
         a.process(kind, item)
         ctx = a.ctx
         if kind == "event":
+            if item["type"] == "shot":
+                raw_shots.append(item)
+                last_shot = item
+            elif item["type"] == "save" and last_shot is not None:
+                save_kind[last_shot["event_id"]] = (item.get("details") or {}).get("kind")
+            if item["type"] in TOUCH_CODES and item.get("player_id"):
+                raw_touches.append(item)
             if item["type"] in CAPTION_TYPES and frames:
                 text = _caption(item, ctx)
                 if text:
@@ -223,9 +293,18 @@ def build_replay(bundle: str | Path) -> dict:
         "sampleKeys": SAMPLE_KEYS,
         "samples": samples,
         "captions": captions,
+        "touches": [
+            [_frac_frame(keys, e["period"], e["t"]), slot_of[e["player_id"]], _touch_code(e)]
+            for e in raw_touches
+            if e["player_id"] in slot_of
+        ],
+        "shots": [
+            _shot_row(_frac_frame(keys, e["period"], e["t"]), e, slot_of, save_kind.get(e["event_id"])) for e in raw_shots
+        ],
         "moments": moments,
         "models": a.models.status(),
         "final": {"score": dict(ctx.score)},
+        "segments": _viewer_segments(segments or [], frame_of, slot_of, ctx),
     }
 
 
@@ -328,11 +407,13 @@ def _brief_facts(m: dict) -> list[str]:
     return out[:3]
 
 
-def render_html(data: dict, standalone: bool = True) -> str:
-    """The viewer page with the data embedded. ``standalone`` adds the document skeleton."""
-    template = resources.files("matchstats").joinpath("viewer/replay.html").read_text(encoding="utf-8")
+def render_html(data: dict, standalone: bool = True, view: str = "replay") -> str:
+    """A viewer page with the data embedded: ``view`` is "replay" (2D) or "broadcast" (3D).
+    ``standalone`` adds the document skeleton."""
+    template = resources.files("matchstats").joinpath(f"viewer/{view}.html").read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":"), ensure_ascii=False).replace("</", "<\\/")
-    title = f"{data['match']['home']['short']} v {data['match']['away']['short']} Replay"
+    suffix = "Broadcast" if view == "broadcast" else "Replay"
+    title = f"{data['match']['home']['short']} v {data['match']['away']['short']} {suffix}"
     page = template.replace('"__REPLAY_DATA__"', payload).replace("__TITLE__", html.escape(title))
     if not standalone:
         return page
@@ -341,3 +422,200 @@ def render_html(data: dict, standalone: bool = True) -> str:
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         "</head>\n<body>\n" + page + "\n</body>\n</html>\n"
     )
+
+
+# ------------------------------------------------------------------- AI desk segments
+def _fan_line(curve: list[list], frame_of) -> list[int]:
+    """One future's win-probability swing as [frame, home-minus-away in points, ...] for the fan chart."""
+    out: list[int] = []
+    for period, t, h, a in curve:
+        out += [frame_of(period, t), round((h - a) * 100)]
+    return out
+
+
+def _pack_clip(clip: dict, slot_of: dict, ctx) -> dict:
+    """A moment of a simulated future in the main frame layout, with its shots, touches and goals,
+    so the 3D view animates it exactly like the real match."""
+    frames = clip["frames"]
+    n_slots = len(slot_of)
+    arr = np.full((len(frames), 2 * n_slots + 6), ABSENT, dtype=np.int16)
+    keys = []
+    for i, f in enumerate(frames):
+        for pid, x, y, *_ in f["players"]:
+            s = slot_of.get(pid)
+            if s is not None:
+                arr[i, 2 * s] = round(x * 10)
+                arr[i, 2 * s + 1] = round(y * 10)
+        b = f["ball"]
+        base = 2 * n_slots
+        arr[i, base] = round(b["x"] * 10)
+        arr[i, base + 1] = round(b["y"] * 10)
+        arr[i, base + 2] = round(min(b.get("z", 0.0), 30) * 10)
+        arr[i, base + 3] = slot_of.get(b.get("owner_id"), -1)
+        poss = f.get("possession_team_id")
+        arr[i, base + 4] = -1 if not poss else (0 if poss == ctx.home_id else 1)
+        arr[i, base + 5] = min(32000, round(f["t"] * 10))
+        keys.append((f["period"], f["t"]))
+
+    def local(e: dict) -> float:
+        return _frac_frame(keys, e["period"], e["t"])
+
+    events = clip.get("events") or []
+    saves: dict[int, str] = {}
+    last = None
+    for e in events:
+        if e["type"] == "shot":
+            last = e
+        elif e["type"] == "save" and last is not None:
+            saves[id(last)] = (e.get("details") or {}).get("kind")
+    return {
+        "kind": clip["kind"],
+        "minute": clip.get("minute"),
+        "scorer": clip.get("scorer"),
+        "side": clip.get("side"),
+        "score0": clip.get("score0") or {"home": 0, "away": 0},
+        "n": len(frames),
+        "p2": 0 if frames[0]["period"] == 2 else len(frames),
+        "frames": base64.b64encode(arr.astype("<i2").tobytes()).decode("ascii"),
+        "shots": [_shot_row(local(e), e, slot_of, saves.get(id(e))) for e in events if e["type"] == "shot"],
+        "touches": [
+            [local(e), slot_of[e["player_id"]], _touch_code(e)]
+            for e in events
+            if e["type"] in TOUCH_CODES and e.get("player_id") in slot_of
+        ],
+        "goals": [
+            [local(e), 0 if ctx.side(e["team_id"]) == "home" else 1] for e in events if e["type"] == "goal"
+        ],
+    }
+
+
+def _viewer_segments(segments: list[dict], frame_of, slot_of: dict, ctx) -> list[dict]:
+    names: dict[str, str] = {}
+    for pid, p in ctx.players.items():
+        for alias in (p.name, p.short_name, p.name.split()[-1]):
+            names.setdefault(alias.lower(), pid)
+
+    def slot(ref: str | None) -> int:
+        if not ref:
+            return -1
+        pid = ref if ref in slot_of else names.get(ref.lower())
+        return slot_of.get(pid, -1) if pid else -1
+
+    def frame_of_event(eid: str | None) -> int | None:
+        e = ctx.by_id.get(eid) if eid else None
+        return frame_of(e["period"], e["t"]) if e else None
+
+    out = []
+    for s in segments:
+        if not s.get("aired"):
+            continue
+        plan, d = s.get("plan") or {}, s.get("director") or {}
+        brief, checks = s.get("brief") or {}, s.get("factcheck") or []
+        seg = {
+            "id": s["moment_id"],
+            "f": frame_of(s["period"], s["t"]),
+            "type": s["type"],
+            "minute": s["minute"],
+            "title": s["title"],
+            "plan": {k: plan.get(k) for k in ("segment", "angle", "priority", "what_if")},
+            "lines": s["commentary"]["lines"],
+            "fallback": s["commentary"]["fallback"],
+            "check": {
+                "attempts": len(checks),
+                "approved": bool(checks and checks[-1].get("approved")),
+                "codeIssues": sum(len(c.get("code_issues") or []) for c in checks),
+            },
+            "facts": [
+                {"s": f["statement"], "tool": f["source_tool"], "ev": len(f.get("evidence") or [])}
+                for f in (brief.get("facts") or [])[:5]
+            ],
+            "insight": brief.get("insight"),
+            "director": {
+                "live": d.get("live_camera"),
+                "replay": bool(d.get("replay")),
+                "fromF": frame_of_event(d.get("replay_from_event_id")),
+                "graphic": d.get("graphic"),
+                "shots": [
+                    {
+                        "cam": x["camera"],
+                        "sec": x["seconds"],
+                        "slow": x["slow_motion"],
+                        "focus": slot(x.get("focus_player")),
+                        "purpose": x["purpose"],
+                    }
+                    for x in (d.get("shots") or [])[:4]
+                ],
+            }
+            if d
+            else None,
+            "desk": {
+                "usd": s["cost"]["usd"],
+                "calls": s["cost"]["model_calls"],
+                "seconds": s["cost"]["seconds"],
+                "agents": s["cost"]["by_agent"],
+                "receipts": len(s.get("receipts") or []),
+                "tools": sorted(
+                    {r["tool"] for r in (s.get("receipts") or []) if r.get("agent") == "analyst"}
+                ),
+            },
+        }
+        tele = s.get("telestration")
+        if tele and tele.get("shapes"):
+            fz = tele.get("freeze") or {}
+            seg["tele"] = {
+                "f": frame_of(fz.get("period", s["period"]), fz.get("t", s["t"])),
+                "caption": tele.get("caption"),
+                "shapes": [
+                    {
+                        "kind": sh["kind"],
+                        "color": sh["color"],
+                        "label": sh.get("label"),
+                        "slot": slot_of.get(sh.get("player_id"), -1),
+                        **{k: round(sh[k], 2) for k in ("x", "y", "x2", "y2", "r") if sh.get(k) is not None},
+                    }
+                    for sh in tele["shapes"]
+                ],
+            }
+        sc = s.get("scenario") or {}
+        spec, res = sc.get("spec"), sc.get("result") or {}
+        if spec:
+            ghost = {
+                "question": spec["question"],
+                "intervention": spec["intervention"],
+                "status": res.get("status"),
+            }
+            if res.get("status") == "ok":
+                ghost["shotF"] = frame_of_event(res.get("event_id"))
+                ghost["teamSide"] = res.get("team_side")
+                if spec["intervention"] == "player_swap":
+                    ghost["scout"] = {
+                        k: res.get(k)
+                        for k in (
+                            "taker",
+                            "best",
+                            "candidates_evaluated",
+                            "win_probability_if_scored",
+                            "win_probability_if_missed",
+                        )
+                    }
+                else:
+                    ghost["actual"], ghost["changed"] = res.get("actual_outcome"), res.get("changed_outcome")
+                    ghost["withChange"], ghost["asItHappened"] = (
+                        res.get("with_change"),
+                        res.get("as_it_happened"),
+                    )
+                    curves = res.get("curves") or {}
+                    ghost["fan"] = [_fan_line(c, frame_of) for c in curves.get("with_change") or []]
+                    ghost["featured"] = [
+                        {
+                            "final": fe["final"],
+                            "goalsAfter": fe["goals_after"],
+                            "clips": [_pack_clip(c, slot_of, ctx) for c in fe["clips"] if c.get("frames")],
+                        }
+                        for fe in res.get("featured") or []
+                    ]
+            else:
+                ghost["reason"] = res.get("reason")
+            seg["ghost"] = ghost
+        out.append(seg)
+    return sorted(out, key=lambda x: x["f"])

@@ -140,8 +140,9 @@ def cmd_ask(args) -> int:
 def cmd_replay(args) -> int:
     from .replay import build_replay, render_html
 
-    out = Path(args.out or Path(args.bundle).name + "-replay.html")
-    out.write_text(render_html(build_replay(args.bundle)), encoding="utf-8")
+    view = "broadcast" if args.view_3d else "replay"
+    out = Path(args.out or f"{Path(args.bundle).name}-{'broadcast' if args.view_3d else 'replay'}.html")
+    out.write_text(render_html(build_replay(args.bundle), view=view), encoding="utf-8")
     print(f"replay -> {out} ({out.stat().st_size / 1e6:.1f} MB). Open it in any browser; no server needed.")
     return 0
 
@@ -210,6 +211,9 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("replay", help="build a self-contained 2D replay page for a recorded match")
     s.add_argument("bundle")
     s.add_argument("--out", help="output .html (default: <bundle>-replay.html)")
+    s.add_argument(
+        "--3d", dest="view_3d", action="store_true", help="3D broadcast view with the auto director"
+    )
     s.set_defaults(fn=cmd_replay)
 
     s = sub.add_parser("tools", help="list the agent queries")

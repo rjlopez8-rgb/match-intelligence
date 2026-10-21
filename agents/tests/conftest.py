@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 SAMPLE = Path(__file__).resolve().parents[2] / "data" / "sample" / "riv-kin-7"
-GOAL = "riv-kin-7-m042"
+GOAL = "riv-kin-7-m044"  # Duarte 74'
 MISSED_PENALTY = "riv-kin-7-m007"
 
 

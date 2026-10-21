@@ -88,6 +88,9 @@ class EngineParams:
     tackle_win_base: float = 0.0  # logit offset
     foul_base: float = 0.42
     foul_aggression: float = 0.12
+    # Defenders are far more careful inside their own box (a foul there is a penalty): real football has
+    # roughly 0.3 penalties per match against about 22 fouls, so box challenges foul much less often.
+    box_foul_factor: float = 0.09
     pressure_radius: float = 2.7
     dribble_attempt_bias: float = 0.0
     dribble_utility_scale: float = 0.8

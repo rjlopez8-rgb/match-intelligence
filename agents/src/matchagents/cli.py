@@ -1,6 +1,6 @@
 """``matchagents``: run the broadcast desk from the command line.
 
-matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m042      # one moment, live models
+matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m044      # one moment, live models
 matchagents match ../data/sample/riv-kin-7 --offline                     # whole match, $0
 matchagents match ../data/sample/riv-kin-7 --limit 3                     # first 3 big moments, live
 matchagents diagram                                                      # the workflow as Mermaid
@@ -109,7 +109,7 @@ async def _run(args, moments_filter) -> list[dict]:
     if args.futures:
         import os
 
-        os.environ["MATCH_GHOST_FUTURES_MAX"] = str(args.futures)
+        os.environ["MATCH_GHOST_FUTURES"] = str(args.futures)
     desk = Desk(session, profile, offline_mode=args.offline, scenario_runner=runner)
     out = []
     for m in session.moments(args.min_importance):
@@ -154,7 +154,7 @@ def main(argv: list[str] | None = None) -> int:
         sp.add_argument("--out", type=Path, default=None, help="save segments as JSON")
         sp.add_argument("--yes", action="store_true", help="skip the cost confirmation")
         sp.add_argument("--no-ghosts", action="store_true", help="skip ghost-future simulations (faster)")
-        sp.add_argument("--futures", type=int, default=0, help="cap ghost futures per what-if (default 40)")
+        sp.add_argument("--futures", type=int, default=0, help="exact ghost futures per what-if")
 
     c = sub.add_parser("cover", help="cover one moment")
     common(c)
@@ -163,10 +163,23 @@ def main(argv: list[str] | None = None) -> int:
     common(m)
     m.add_argument("--min-importance", type=float, default=0.6)
     m.add_argument("--limit", type=int, default=0)
+    r = sub.add_parser("render", help="build the 3D broadcast page with the desk's segments")
+    r.add_argument("bundle", type=Path)
+    r.add_argument("segments", type=Path, help="JSON saved with --out")
+    r.add_argument("--out", type=Path, default=None)
     sub.add_parser("diagram", help="print the desk workflow as Mermaid")
     sub.add_parser("spend", help="today's model spending")
     args = p.parse_args(argv)
 
+    if args.cmd == "render":
+        from matchstats.replay import build_replay, render_html
+
+        segs = json.loads(args.segments.read_text(encoding="utf-8"))
+        data = build_replay(args.bundle, segs)
+        out = args.out or Path(f"{data['match']['id']}-desk-broadcast.html")
+        out.write_text(render_html(data, view="broadcast"), encoding="utf-8")
+        print(f"{len(data['segments'])} desk segments -> {out}  (open it in a browser)")
+        return 0
     if args.cmd == "spend":
         print(BudgetGuard().report())
         return 0

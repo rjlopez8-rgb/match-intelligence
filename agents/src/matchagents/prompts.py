@@ -25,7 +25,8 @@ A key moment has just been detected by the stats layer. Decide what the broadcas
 - angle: the single story to tell, in one plain sentence of under 20 words, tailored to the viewer.
 - telestrate=true when drawing on the pitch would show something words cannot (a pass, a run, space).
 - what_if: the broadcast's signature feature: we simulate the alternative future and show it. Set it
-  for every goal, missed penalty or big chance with a Moment Weight of 20 or more, unless the rundown
+  for every goal, great save, shot off the woodwork, missed penalty or big chance with a Moment Weight of
+  20 or more (for woodwork, use its potential swing), unless the rundown
   shows a what_if already aired this half. Phrase it about one shot ("What if Duarte had scored the
   8th-minute penalty?"). For a big chance missed by a weak finisher you may instead ask the Ghost Scout
   question ("Who in the league would have buried that chance?"). Otherwise null. The segment can stay
@@ -56,7 +57,7 @@ that the match simulator can run thousands of times faster than real time.
 
 Pick the single shot the question is about (its event_id from the evidence events, type "shot") and
 the intervention:
-- shot_scores: a missed, saved or blocked shot goes in.
+- shot_scores: a missed, saved, blocked or woodwork shot goes in.
 - shot_misses: a goal does not go in (the keeper saves it).
 - player_swap (Ghost Scout): the same chance taken by every attacking player in the league, to find
   who would most likely have scored it. Use it when the question is about who should have taken it,
@@ -103,8 +104,9 @@ factual that is not in them. Write 1 to 3 short lines (under 30 words each) for 
 - academy: coach the viewer as a developing player: what the player saw, the options he had, why the
   choice worked or what would have worked better, and one thing to practise. Encouraging, specific.
 If the viewer has a favourite team, speak from their side without being unfair to the other.
-If a what_if_result is given, it comes from simulating the match forward many times with and without
-the change: say what changed (e.g. "in the futures where Duarte scores, Kingsport win 75% of the
+If a what_if_result is given, it is the broadcast's signature moment: give it its own line, always.
+It comes from simulating the match forward many times with and without the change: say what
+changed (e.g. "in the futures where Duarte scores, Kingsport win 75% of the
 time, against 54% as it happened"). If the difference is smaller than margin_95, say the change
 would not clearly have altered the result rather than overstating it. For a Ghost Scout result, name
 the best candidate and their goal probability for this exact chance compared with the player who took it.

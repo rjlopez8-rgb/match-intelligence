@@ -35,7 +35,8 @@ pip install -e ../engine -e ".[dev]"
 matchstats analyze ../data/sample/riv-kin-7              # full-time report
 matchstats live --home RIV --away KIN --seed 7           # moments as they happen
 matchstats replay ../data/sample/riv-kin-7               # 2D replay page you can open in a browser
-matchstats ask ../data/sample/riv-kin-7 explain_moment --args '{"moment_id": "riv-kin-7-m071"}'
+matchstats replay ../data/sample/riv-kin-7 --3d          # 3D broadcast with the auto director
+matchstats ask ../data/sample/riv-kin-7 explain_moment --args '{"moment_id": "riv-kin-7-m044"}'
 matchstats tools                                         # the agent tool catalogue
 pytest
 ```
@@ -135,7 +136,7 @@ src/matchstats/
   schema.py       Pydantic contracts and JSON Schema export
   models/         features, NumPy logistic/softmax, trained weights
   training.py     dataset building, training, evaluation, accuracy report
-  replay.py       self-contained 2D replay page (viewer/replay.html)
+  replay.py       self-contained replay pages: 2D (viewer/replay.html) and 3D broadcast (viewer/broadcast.html)
   cli.py          `matchstats` command
 tests/            truth isolation, evidence integrity, live = replay, schemas, queries, models
 ```

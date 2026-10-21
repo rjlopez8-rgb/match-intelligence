@@ -67,7 +67,7 @@ def test_live_replay_matches_where_the_platform_allows(recorded):
     try:
         f = fork_at_shot(meta, shot, league_candidates(("ST",))[:3])
     except ValueError:
-        pytest.skip("this machine's floating point differs from the recording machine (checkpoints cover it)")
+        pytest.skip("this machine or engine version does not reproduce the recorded match exactly (checkpoints cover it)")
     assert f.actual == "goal"
 
 
@@ -89,3 +89,19 @@ def test_summary_adds_up():
     s = summarise(futures)
     assert s["home_win"] + s["draw"] + s["away_win"] == pytest.approx(1.0)
     assert s["away_win"] == 0.5
+
+
+def test_featured_future_keeps_its_goals_as_clips(fork):
+    from matchengine.ghost import FORK_CLIP_S, pick_featured
+
+    futures = play_futures(fork, MISSED, n=4, seed=900, parallel=False)
+    assert all(f["states"] and f["states"][0][:2] <= f["states"][-1][:2] for f in futures)
+    chosen = pick_featured(futures)[0]
+    again = play_futures(
+        fork, MISSED, seeds=[chosen["seed"]], record=1, record_s=FORK_CLIP_S, clips=True, parallel=False
+    )[0]
+    assert again["final"] == chosen["final"]  # the same seed replays the same future
+    kinds = [c["kind"] for c in again["clips"]]
+    assert kinds[0] == "fork" and kinds.count("goal") == len(again["goals_after"])
+    fork_clip = again["clips"][0]
+    assert any(e["type"] == "shot" for e in fork_clip["events"])  # the changed shot itself

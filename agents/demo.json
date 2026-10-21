@@ -1,0 +1,319 @@
+[
+ {
+  "moment_id": "riv-kin-1119-m048",
+  "minute": "82'",
+  "period": 2,
+  "t": 2219.0,
+  "type": "great_save",
+  "title": "Great save: Fairclough denies Varga's 24 m free kick",
+  "aired": true,
+  "plan": {
+   "cover": true,
+   "segment": "replay_breakdown",
+   "angle": "Fairclough's superb save from Varga's 24 m free kick keeps the game level.",
+   "priority": "normal",
+   "telestrate": true,
+   "what_if": null
+  },
+  "commentary": {
+   "lines": [
+    "What a stop! Varga’s left‑foot blast from 24 m on target at 97 km/h — Fairclough threw himself and palmed it away.",
+    "That tiny 0.01 xG was still dangerous; Fairclough denied a potential 63.4‑point swing with that parry.",
+    "He’s up to four saves and keeps it level; before the stop the home win chance was about 27%."
+   ],
+   "fallback": false,
+   "drafts": [
+    {
+     "lines": [
+      {
+       "text": "What a stop! Varga’s left‑foot blast from 24 metres on target at 97 km/h — Fairclough threw himself and palmed it away.",
+       "facts_used": [
+        0,
+        1,
+        4
+       ]
+      },
+      {
+       "text": "That tiny 0.01 xG was still dangerous; Fairclough denied a potential 63.4‑point momentum swing with that parry.",
+       "facts_used": [
+        2,
+        3
+       ]
+      },
+      {
+       "text": "He’s up to four saves and keeps it 1‑1; match chances before the moment were about 27%/49%/24%.",
+       "facts_used": [
+        4,
+        5
+       ]
+      }
+     ]
+    },
+    {
+     "lines": [
+      {
+       "text": "What a stop! Varga’s left‑foot blast from 24 m on target at 97 km/h — Fairclough threw himself and palmed it away.",
+       "facts_used": [
+        0,
+        1
+       ]
+      },
+      {
+       "text": "That tiny 0.01 xG was still dangerous; Fairclough denied a potential 63.4‑point swing with that parry.",
+       "facts_used": [
+        2,
+        3
+       ]
+      },
+      {
+       "text": "He’s up to four saves and keeps it level; before the stop the home win chance was about 27%.",
+       "facts_used": [
+        4,
+        5
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "brief": {
+   "headline": "Fairclough palms away Varga’s 24 m free kick to keep it 1-1",
+   "facts": [
+    {
+     "statement": "Varga struck a left‑foot free kick from 24.05 metres that was on target.",
+     "value": "24.05",
+     "source_tool": "explain_moment",
+     "evidence": [
+      "riv-kin-1119-01771"
+     ]
+    },
+    {
+     "statement": "The shot left the boot at 96.9 km/h.",
+     "value": "96.9",
+     "source_tool": "explain_moment",
+     "evidence": [
+      "riv-kin-1119-01771"
+     ]
+    },
+    {
+     "statement": "The chance had an xG of 0.0096.",
+     "value": "0.0096",
+     "source_tool": "explain_moment",
+     "evidence": [
+      "riv-kin-1119-01771"
+     ]
+    },
+    {
+     "statement": "The moment carried a potential swing labelled 63.4 points.",
+     "value": "63.4",
+     "source_tool": "explain_moment",
+     "evidence": [
+      "riv-kin-1119-01771"
+     ]
+    },
+    {
+     "statement": "Fairclough has four saves in the match including this one.",
+     "value": "4",
+     "source_tool": "player_stats",
+     "evidence": [
+      "riv-kin-1119-01771",
+      "riv-kin-1119-01770"
+     ]
+    },
+    {
+     "statement": "Match win probabilities before/after the moment were 26.53% home, 49.23% draw, 24.24% away.",
+     "value": "{\"home\":0.2653,\"draw\":0.4923,\"away\":0.2424}",
+     "source_tool": "explain_moment",
+     "evidence": [
+      "riv-kin-1119-01771"
+     ]
+    }
+   ],
+   "insight": "Varga chose a powerful, on‑target left‑foot free kick from distance; Fairclough read the flight and made a high‑quality save to parry it away. That decision to hit powerfully rather than curl wide forced the keeper into a decisive, game‑leveling intervention and prevented a large expected momentum swing. "
+  },
+  "factcheck": [
+   {
+    "attempt": 1,
+    "code_issues": [
+     {
+      "line": 2,
+      "claim": "He’s up to four saves and keeps it 1‑1; ",
+      "problem": "too many numbers in one line"
+     }
+    ],
+    "model_verdict": null,
+    "approved": false
+   },
+   {
+    "attempt": 2,
+    "code_issues": [],
+    "model_verdict": {
+     "approved": true,
+     "issues": []
+    },
+    "approved": true
+   }
+  ],
+  "director": {
+   "live_camera": "behind",
+   "replay": true,
+   "replay_from_event_id": "riv-kin-1119-01770",
+   "shots": [
+    {
+     "camera": "tactical",
+     "focus_player": null,
+     "seconds": 3.0,
+     "slow_motion": false,
+     "purpose": "Setup: show wall, Varga over the ball and defensive shape before the kick"
+    },
+    {
+     "camera": "behind",
+     "focus_player": "Fairclough",
+     "seconds": 4.0,
+     "slow_motion": true,
+     "purpose": "The strike and decisive save — slow motion on Fairclough's fingertip/impact to emphasize technique and power"
+    },
+    {
+     "camera": "skycam",
+     "focus_player": "Varga",
+     "seconds": 3.0,
+     "slow_motion": false,
+     "purpose": "Low, close angle to capture flight of the ball and the scorer's reaction, plus crowd/bench response"
+    },
+    {
+     "camera": "sweep",
+     "focus_player": "Fairclough",
+     "seconds": 2.0,
+     "slow_motion": false,
+     "purpose": "Pitch-side orbit to capture drama, Fairclough's celebration and teammates converging"
+    }
+   ],
+   "show_telestration": true,
+   "graphic": "player_card"
+  },
+  "telestration": {
+   "freeze": {
+    "event_id": "riv-kin-1119-01771",
+    "period": 2,
+    "t": 2219.0
+   },
+   "caption": "Fairclough keeps it out from Varga's 24 m free kick.",
+   "shapes": [
+    {
+     "kind": "ring",
+     "color": "highlight",
+     "label": "Varga (24 m)",
+     "player_id": "riv-11",
+     "x": 23.89,
+     "y": 31.56,
+     "r": 1.6
+    },
+    {
+     "kind": "ring",
+     "color": "home",
+     "label": "Fairclough",
+     "player_id": "kin-01",
+     "x": 4.9,
+     "y": 33.96,
+     "r": 1.6
+    },
+    {
+     "kind": "zone",
+     "color": "warning",
+     "label": "Free kick spot",
+     "player_id": "riv-11",
+     "x": 23.93,
+     "y": 31.6,
+     "r": 6.0
+    }
+   ],
+   "dropped": [
+    {
+     "kind": "arrow",
+     "player": null,
+     "event_id": "riv-kin-1119-01771",
+     "to_player": null,
+     "to_event_id": "riv-kin-1119-01771",
+     "label": "97 km/h",
+     "color": "highlight"
+    }
+   ]
+  },
+  "scenario": {
+   "spec": null,
+   "result": null
+  },
+  "receipts": [
+   {
+    "agent": "desk",
+    "tool": "explain_moment",
+    "args": {
+     "moment_id": "riv-kin-1119-m048"
+    },
+    "ok": true
+   },
+   {
+    "agent": "analyst",
+    "tool": "explain_moment",
+    "args": {
+     "moment_id": "riv-kin-1119-m048"
+    },
+    "ok": true
+   },
+   {
+    "agent": "analyst",
+    "tool": "player_stats",
+    "args": {
+     "player": "Fairclough"
+    },
+    "ok": true
+   }
+  ],
+  "cost": {
+   "usd": 0.017277,
+   "model_calls": 9,
+   "input_tokens": 13731,
+   "output_tokens": 5263,
+   "seconds": 38.43,
+   "by_agent": {
+    "producer": {
+     "model": "gpt-5-mini-1",
+     "calls": 1,
+     "usd": 0.001419,
+     "seconds": 4.667
+    },
+    "analyst": {
+     "model": "gpt-5-mini-1",
+     "calls": 3,
+     "usd": 0.00511,
+     "seconds": 13.506
+    },
+    "telestrator": {
+     "model": "gpt-5-mini-1",
+     "calls": 1,
+     "usd": 0.002213,
+     "seconds": 6.666
+    },
+    "director": {
+     "model": "gpt-5-mini-1",
+     "calls": 1,
+     "usd": 0.001806,
+     "seconds": 6.055
+    },
+    "commentator": {
+     "model": "gpt-5-mini-1",
+     "calls": 2,
+     "usd": 0.005129,
+     "seconds": 15.999
+    },
+    "factchecker": {
+     "model": "gpt-5-mini-1",
+     "calls": 1,
+     "usd": 0.0016,
+     "seconds": 4.197
+    }
+   }
+  },
+  "errors": []
+ }
+]

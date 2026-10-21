@@ -1,8 +1,10 @@
 # Match Intelligence (working title)
 
-AI match intelligence for the Microsoft x Premier League hackathon: a multi-agent system that turns a live football data feed into **explainable, fact-checked, personalised** match narratives and on-screen overlays, so a data-hungry analyst and a first-time viewer each get the match made for them.
+AI match intelligence for the Microsoft x Premier League hackathon: a 3D virtual broadcast run by seven AI agents on **Microsoft Foundry**. They explain every key moment with fact-checked commentary, call the cameras, draw on the replay, and **settle the "what if" arguments by simulating the alternative futures**.
 
-> Status: the synthetic match engine (Ingest) and the stats layer (Interpret) are complete. Agents, frontend and Azure deployment come next. See [`docs/STATUS.md`](docs/STATUS.md).
+> Other tools tell you what happened. Ours shows you what could have happened, and proves it.
+
+Status: engine, stats layer, seven-agent desk, ghost futures and the 3D broadcast all work end to end. Deployment and the demo video come next. See [`docs/STATUS.md`](docs/STATUS.md).
 
 ## Pipeline
 
@@ -17,16 +19,19 @@ AI match intelligence for the Microsoft x Premier League hackathon: a multi-agen
 |---|---|---|
 | Ingest synthetic match events as they happen | [`engine/`](engine/): agent-based 10 Hz match simulator + live feed | Done |
 | Interpret into stats, patterns, context | [`stats/`](stats/): live metrics, trained xG / pass-difficulty / win-probability models, key moments with evidence, 11 agent tools | Done |
-| Explain why moments matter | `agents/` (Microsoft Foundry + Agent Framework) | Planned |
-| Render on screen alongside the match | `frontend/` + overlay spec | Planned |
-| Personalise for different fans | `agents/` personaliser + `frontend/` modes | Planned |
+| Explain why moments matter | [`agents/`](agents/): seven agents as a Microsoft Agent Framework workflow on Foundry models, fact-checked, budget-guarded | Done (v1) |
+| Simulate the alternatives | [`engine/`](engine/) ghost futures + Ghost Scout, driven by the Scenario agent | Done (v1) |
+| Render on screen alongside the match | 3D broadcast (`stats/.../viewer/broadcast.html`): AI director, replays, telestration, ghost players, control room | Done (v1) |
+| Personalise for different fans | Commentator styles (fan, tactician, analyst, academy), favourite team, any language | Done (v1) |
 
 ## Repository layout
 
 ```
-engine/      synthetic match engine (Python package `matchengine`)
-stats/       live statistics, models, key moments and agent tools (Python package `matchstats`)
-data/sample/ one complete simulated match (events, 5 Hz tracking, metadata, summary)
+engine/      synthetic match engine and ghost futures (Python package `matchengine`)
+stats/       live statistics, models, key moments, agent tools and the 3D viewer (Python package `matchstats`)
+agents/      the seven-agent broadcast desk on Microsoft Foundry (Python package `matchagents`)
+data/sample/ one complete simulated match (events, 5 Hz tracking, metadata, summary), used by the tests
+data/demo/   the demo match (Riverside 1-2 Kingsport, seed 1119) with its ghost checkpoints
 docs/        event schema, JSON Schemas, engine calibration, model accuracy report, project status
 ```
 
@@ -44,6 +49,12 @@ cd ../stats
 pip install -e ".[dev]"
 matchstats analyze ../data/sample/riv-kin-7
 matchstats live --home RIV --away KIN --seed 7
+pytest
+
+cd ../agents
+pip install -e ".[dev]"
+matchagents match ../data/sample/riv-kin-7 --offline --out segments.json   # $0, rule-based agents
+matchagents render ../data/sample/riv-kin-7 segments.json                   # 3D broadcast with the AI desk
 pytest
 ```
 
