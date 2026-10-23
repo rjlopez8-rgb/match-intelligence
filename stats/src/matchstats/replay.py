@@ -14,6 +14,7 @@ import base64
 import bisect
 import html
 import json
+import re
 from importlib import resources
 from pathlib import Path
 
@@ -315,7 +316,34 @@ def build_replay(bundle: str | Path, segments: list[dict] | None = None) -> dict
         "final": {"score": dict(ctx.score)},
         "segments": _viewer_segments(segments or [], frame_of, slot_of, ctx),
         "club": _viewer_club(bundle, slot_of, ctx),
+        **_match_logs(raw_shots, raw_actions, slot_of, ctx),
     }
+
+
+def _match_logs(shots: list[dict], actions: list[dict], slot_of: dict, ctx) -> dict:
+    """What the analyst graphics draw (shot map, xG race, pass network), stamped with match time (period, t) rather
+    than frames, so a highlights reel can show the whole match so far. The page only ever reads entries up to the
+    current moment: no future knowledge, as everywhere else in the broadcast.
+
+    shotLog: [period, t, x, y, xg, outcome code, side 0/1, shooter slot]
+    passLog: [period, t, passer slot, receiver slot, x, y] for completed passes between players on the pitch
+    """
+    shot_log = []
+    for e in shots:
+        d = e.get("details") or {}
+        shot_log.append([e["period"], round(e["t"], 1), round(e["location"]["x"], 1), round(e["location"]["y"], 1),
+                         _xg(ctx, e) or 0.0, SHOT_CODES.get(d.get("outcome"), 2), 0 if ctx.side(e["team_id"]) == "home" else 1,
+                         slot_of.get(e.get("player_id"), -1)])
+    pass_log = []
+    for e in actions:
+        d = e.get("details") or {}
+        if e["type"] != "pass" or d.get("outcome") != "complete":
+            continue
+        a, b = slot_of.get(e.get("player_id")), slot_of.get(d.get("recipient_id"))
+        if a is None or b is None:
+            continue
+        pass_log.append([e["period"], round(e["t"], 1), a, b, round(e["location"]["x"], 1), round(e["location"]["y"], 1)])
+    return {"shotLog": shot_log, "passLog": pass_log}
 
 
 ACTION_TYPES = {"pass", "shot", "tackle", "interception", "dribble", "foul", "save", "aerial_duel", "ball_recovery",
@@ -780,6 +808,119 @@ def _pack_director(d: dict, slot, frame_of_event) -> dict:
     }
 
 
+_RX_NUM = re.compile(r"(?<![\w.])(\d+(?:[.,]\d+)?)")
+_RX_SCORE = re.compile(r"(?<!\d)(\d{1,2})\s?[-–]\s?(\d{1,2})(?!\d)")
+
+
+def _leaves(obj, path: str = ""):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            yield from _leaves(v, f"{path}.{k}" if path else str(k))
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj[:40]):
+            yield from _leaves(v, f"{path}[{i}]")
+    else:
+        yield path, obj
+
+
+def _same_value(a, b) -> bool:
+    try:
+        return abs(float(a) - float(b)) < 1e-6
+    except (TypeError, ValueError):
+        return str(a) == str(b)
+
+
+def _fmt_args(args: dict) -> str:
+    return ", ".join(f"{k}={v}" for k, v in (args or {}).items())
+
+
+def _receipts(s: dict, frame_of_event, ctx) -> dict:
+    """Where every fact on air came from: the facts, the tool call and result field that produced each one, the match
+    events it cites; plus the simulation numbers when there was a what-if."""
+    brief = s.get("brief") or {}
+    results = s.get("tool_results") or []
+    calls = [{"tool": r["tool"], "args": _fmt_args(r.get("args")), "keys": []} for r in results]
+    facts = []
+    for f in brief.get("facts") or []:
+        found = None
+        for ci, r in enumerate(results):
+            if r["tool"] != f.get("source_tool"):
+                continue
+            for path, val in _leaves(r.get("result")):
+                if isinstance(val, (int, float, str)) and not isinstance(val, bool) and _same_value(val, f.get("value")):
+                    found = (ci, path)
+                    break
+            if found:
+                break
+        if found and [found[1], f.get("value")] not in calls[found[0]]["keys"]:
+            calls[found[0]]["keys"].append([found[1], f.get("value")])
+        ev = []
+        for eid in (f.get("evidence") or [])[:4]:
+            e = ctx.by_id.get(eid)
+            if e:
+                who = ctx.player_name(e["player_id"]) if e.get("player_id") else ""
+                ev.append([frame_of_event(eid), f"{e['minute_display']} {e['type'].replace('_', ' ')}{' · ' + who if who else ''}"])
+        facts.append({"s": f["statement"], "v": f.get("value"), "tool": f.get("source_tool"),
+                      "call": found[0] if found else None, "at": found[1] if found else None, "ev": ev})
+    res = ((s.get("scenario") or {}).get("result") or {})
+    sim = None
+    if res.get("status") == "ok" and res.get("with_change"):
+        sim = {"n": res["with_change"].get("futures"), "with": {k: res["with_change"].get(k) for k in ("home_win", "draw", "away_win")},
+               "as": {k: (res.get("as_it_happened") or {}).get(k) for k in ("home_win", "draw", "away_win")},
+               "margin": res["with_change"].get("margin_95")}
+    return {"facts": facts, "calls": calls, "sim": sim}
+
+
+def _numbers_in(line: str, facts: list[dict], sim: dict | None, score: tuple | None) -> list[list]:
+    """Each number in an on-air line, matched to its source: a fact index, "sim", "score", or None (unmatched)."""
+    text = line.replace("\u00a0", " ").replace("\u202f", " ")
+    out, taken = [], set()
+    for a, b in _RX_SCORE.findall(text):
+        out.append([f"{a}-{b}", "score" if score and (int(a), int(b)) in (score, score[::-1]) else None])
+        taken.update((a, b))
+    text = _RX_SCORE.sub(" ", text)
+    sim_vals = []
+    if sim:
+        sim_vals = [sim["n"], sim.get("margin")] + list(sim["with"].values()) + list(sim["as"].values())
+    for raw in _RX_NUM.findall(text):
+        x = float(raw.replace(",", "."))
+        dec = len(raw.replace(",", ".").split(".")[1]) if ("." in raw or "," in raw) else 0
+        tol = max(0.5 * 10 ** -dec, 0.5 if dec == 0 else 0)
+
+        def close(v) -> bool:
+            try:
+                v = abs(float(v))
+            except (TypeError, ValueError):
+                return False
+            return any(abs(c - x) <= tol + 1e-9 for c in ((v, v * 100) if v <= 1 else (v,)))
+        src = next((i for i, f in enumerate(facts) if close(f.get("v")) or any(close(n) for n in _RX_NUM.findall(f["s"] or ""))), None)
+        if src is None and any(close(v) for v in sim_vals if v is not None):
+            src = "sim"
+        out.append([raw, src])
+    return out
+
+
+def _checks(checks: list[dict]) -> list[dict]:
+    out = []
+    for c in checks or []:
+        mv = c.get("model_verdict")
+        out.append({"a": c.get("attempt"), "code": [[i.get("claim"), i.get("problem")] for i in (c.get("code_issues") or [])],
+                    "model": None if mv is None else bool(mv.get("approved")),
+                    "mi": [[i.get("line"), i.get("claim"), i.get("problem")] for i in ((mv or {}).get("issues") or [])],
+                    "ok": bool(c.get("approved"))})
+    return out
+
+
+def _line_receipts(lines: list[str], drafts: list[dict], checks: list[dict], rx: dict, score, fallback: bool = False) -> dict:
+    """Per edition: which facts each line used, its numbers matched to sources, every check, and rejected drafts."""
+    last = (drafts or [{}])[-1].get("lines") or []
+    fu = [[i for i in (last[k].get("facts_used") or []) if 0 <= i < len(rx["facts"])] if k < len(last) and isinstance(last[k], dict) else []
+          for k in range(len(lines))]
+    return {"fu": fu, "nm": [_numbers_in(t, rx["facts"], rx["sim"], score) for t in lines], "chk": _checks(checks),
+            "rej": [[(x.get("text") if isinstance(x, dict) else x) for x in (d.get("lines") or [])]
+                    for d in ((drafts or []) if fallback else (drafts or [])[:-1])]}
+
+
 def _viewer_segments(segments: list[dict], frame_of, slot_of: dict, ctx) -> list[dict]:
     names: dict[str, str] = {}
     for pid, p in ctx.players.items():
@@ -850,12 +991,20 @@ def _viewer_segments(segments: list[dict], frame_of, slot_of: dict, ctx) -> list
                 ),
             },
         }
+        rx = _receipts(s, frame_of_event, ctx)
+        m_score = _RX_SCORE.search(s.get("title") or "")       # the score at the moment, from its own title
+        score = (int(m_score.group(1)), int(m_score.group(2))) if m_score else None
+        seg["rx"] = rx
+        com = s.get("commentary") or {}
+        seg["lrx"] = _line_receipts([x if isinstance(x, str) else x.get("text") for x in com.get("lines") or []],
+                                    com.get("drafts") or [], checks, rx, score, bool(com.get("fallback")))
         if s.get("editions"):
             seg["ed"] = {
                 k: {"l": v["lines"], "h": v.get("headline"), "c": v.get("caption"), "q": v.get("question"),
                     "fb": v["fallback"], "att": len(v.get("checks") or []),
                     "ok": bool(v.get("checks") and v["checks"][-1].get("approved")),
-                    "code": sum(len(c.get("code_issues") or []) for c in (v.get("checks") or []))}
+                    "code": sum(len(c.get("code_issues") or []) for c in (v.get("checks") or [])),
+                    "rx": _line_receipts(v["lines"], v.get("drafts") or [], v.get("checks") or [], rx, score, bool(v["fallback"]))}
                 for k, v in s["editions"].items()
             }
             seg["dirs"] = {st: _pack_director(dd, slot, frame_of_event) for st, dd in (s.get("directors") or {}).items() if dd}

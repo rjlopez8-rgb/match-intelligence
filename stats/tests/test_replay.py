@@ -191,7 +191,10 @@ def test_personal_edition_data_is_packed():
     }
     data = build_replay(SAMPLE, [seg])
     s = data["segments"][0]
-    assert s["ed"]["fan.home.es"] == {"l": ["¡Gol!"], "h": "¡GOL!", "c": "La definición", "q": None, "fb": False, "att": 1, "ok": True, "code": 0}
+    ed = dict(s["ed"]["fan.home.es"])
+    rx = ed.pop("rx")
+    assert ed == {"l": ["¡Gol!"], "h": "¡GOL!", "c": "La definición", "q": None, "fb": False, "att": 1, "ok": True, "code": 0}
+    assert rx["nm"] == [[]] and rx["chk"][0]["ok"]           # receipts: no numbers in "¡Gol!", approved first time
     assert s["dirs"]["academy"]["shots"][0]["cam"] == "player" and s["dirs"]["academy"]["shots"][0]["focus"] >= 0
     assert s["decision"]["best"]["name"] == "Sarr" and s["decision"]["from"] == [94.0, 34.0] and not s["decision"]["better"]
     assert len(data["shotXg"]) == len(data["shots"]) and all(x is None or 0 <= x <= 1 for x in data["shotXg"])
@@ -242,3 +245,38 @@ def test_viewer_shell_loads_its_match_from_the_url():
     page = render_viewer_shell()
     assert page.startswith("<!doctype html>") and '"__REPLAY_DATA__"' in page and "__TITLE__" not in page
     assert "matches/${id}.${v}.json" in page
+
+
+def test_receipts_trace_every_fact_and_number_on_air():
+    """Every fact names the exact tool result field it came from, and every number in every edition's lines matches
+    a source (a fact, the simulation or the score): the page can show a receipt for anything said on air."""
+    demo = Path(__file__).resolve().parents[2] / "data" / "demo" / "riv-kin-1119"
+    segs = json.loads((demo / "editions-offline.json").read_text(encoding="utf-8"))
+    data = build_replay(demo, segs)
+    seen = 0
+    for sg, src in zip(data["segments"], [s for s in segs if s.get("aired")]):
+        results = src.get("tool_results") or []
+        for f in sg["rx"]["facts"]:
+            if f["call"] is None:
+                continue
+            node = results[f["call"]]["result"]
+            for part in f["at"].replace("]", "").replace("[", ".").split("."):
+                node = node[int(part)] if isinstance(node, list) else node[part]
+            assert abs(float(node) - float(f["v"])) < 1e-6           # the receipt points at the real value
+        for ed in sg["ed"].values():
+            assert len(ed["rx"]["nm"]) == len(ed["l"]) and ed["rx"]["chk"]
+            for line in ed["rx"]["nm"]:
+                for _num, source in line:
+                    assert source is not None
+                    seen += 1
+    assert seen > 50
+
+
+def test_match_logs_for_the_analyst_boards():
+    data = build_replay(SAMPLE)
+    shots, passes = data["shotLog"], data["passLog"]
+    assert len(shots) == len(data["shots"])
+    assert [(r[0], r[1]) for r in shots] == sorted((r[0], r[1]) for r in shots)
+    assert all(r[6] in (0, 1) for r in shots) and all(0 <= r[4] <= 1 for r in shots)
+    sides = {i: p["side"] for i, p in enumerate(data["players"])}
+    assert passes and all(sides[a] == sides[b] for _p, _t, a, b, _x, _y in passes)   # completed passes stay in the team

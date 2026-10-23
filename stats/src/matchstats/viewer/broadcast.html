@@ -186,6 +186,35 @@ body.replay .deskp { top: calc(7vh + 82px); max-height: calc(100vh - 14vh - 82px
 .agent .nm small { font-weight: 600; color: var(--faint); font-size: 11px; white-space: nowrap; }
 .agent .wh { grid-column: 2; font-size: 11.5px; color: #c4cede; line-height: 1.3; overflow-wrap: anywhere; }
 .deskp .foot { font-size: 11.5px; color: var(--muted); border-top: 1px solid var(--edge); padding-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+/* receipts: where every fact in a line on air came from */
+.caption .who .rbtn, .deskp .ln .rb { pointer-events: auto; cursor: pointer; font: inherit; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 800; color: #0a0f1a; background: #3ddc97; border: 0; border-radius: 5px; padding: 2px 7px; }
+.caption .who .rbtn:hover, .deskp .ln .rb:hover { background: #7dffc4; }
+.deskp .onair { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--edge); padding-top: 8px; }
+.deskp .onair h4, .rcpt h4 { margin: 0 0 2px; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.deskp .ln { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: start; font-size: 12.5px; line-height: 1.35; color: #dfe6f1; }
+.rcpt { position: fixed; z-index: 8; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(92px + env(safe-area-inset-top, 0px)); width: 396px;
+  max-height: calc(100vh - 92px - var(--ctrl-h, 110px) - 40px); overflow-y: auto; padding: 14px 15px; display: flex; flex-direction: column; gap: 12px;
+  background: var(--glass-strong); border-color: rgba(61, 220, 151, 0.35); }
+.rcpt .rh { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #3ddc97; font-weight: 800; }
+.rcpt .rh button { background: none; border: 0; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; padding: 0 2px; }
+.rcpt blockquote { margin: 0; padding: 9px 12px; border-left: 3px solid #7c5cff; background: rgba(255,255,255,0.04); border-radius: 6px; font-weight: 600; font-size: 15px; line-height: 1.35; }
+.rcpt .nums { display: flex; flex-wrap: wrap; gap: 5px; }
+.rcpt .num { font-size: 11.5px; padding: 3px 7px; border-radius: 6px; background: rgba(61, 220, 151, 0.12); border: 1px solid rgba(61, 220, 151, 0.35); }
+.rcpt .num.bad { background: rgba(255, 209, 102, 0.12); border-color: rgba(255, 209, 102, 0.45); }
+.rcpt .fact { padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--edge); display: flex; flex-direction: column; gap: 4px; }
+.rcpt .fact b { font-size: 13px; }
+.rcpt .src { font-size: 11.5px; color: #c4cede; overflow-wrap: anywhere; line-height: 1.45; }
+.rcpt code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; background: rgba(255,255,255,0.07); padding: 1px 5px; border-radius: 4px; }
+.rcpt .evs { display: flex; flex-wrap: wrap; gap: 4px; }
+.rcpt .evs button { font: inherit; font-size: 11px; cursor: pointer; color: var(--ink); background: rgba(124, 92, 255, 0.18); border: 1px solid rgba(124, 92, 255, 0.4); border-radius: 6px; padding: 2px 7px; }
+.rcpt .chk { font-size: 12px; line-height: 1.5; }
+.rcpt .chk .ok { color: #3ddc97; font-weight: 700; } .rcpt .chk .no { color: #ff7b7b; font-weight: 700; }
+.rcpt .chk ul { margin: 2px 0 4px 16px; padding: 0; color: #c4cede; }
+.rcpt .rej { text-decoration: line-through; text-decoration-color: rgba(255, 123, 123, 0.7); color: var(--muted); font-size: 12px; }
+.rcpt details { font-size: 12px; } .rcpt summary { cursor: pointer; color: var(--muted); }
+.rcpt .foot { font-size: 11px; color: var(--faint); border-top: 1px solid var(--edge); padding-top: 8px; line-height: 1.45; }
+body.rcptopen .deskp { display: none; }
 /* ghost futures card */
 .ghostcard { position: fixed; z-index: 5; left: 50%; top: calc(16px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -12px); opacity: 0;
   width: min(560px, calc(100vw - 32px)); padding: 13px 16px 14px; transition: opacity .4s, transform .45s cubic-bezier(.2,.8,.2,1); pointer-events: none;
@@ -395,6 +424,13 @@ body.replay .gfx { top: calc(7vh + 122px); }
 .gfx td.r { text-align: right; font-weight: 800; font-stretch: 85%; }
 .gfx .gverdict { margin-top: 8px; font-weight: 800; font-size: 14px; }
 .gfx .gverdict.good { color: #3ddc97; } .gfx .gverdict.better { color: var(--gold); }
+/* analyst boards: shot map, xG race, pass network (match data up to this moment only) */
+.gfx.wide { width: min(470px, calc(100vw - 32px)); }
+.gfx svg { display: block; width: 100%; height: auto; margin-top: 4px; }
+.gfx .gleg { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.gfx .gleg b { color: var(--ink); font-weight: 800; }
+.gfx .gnets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gfx .gnets h5 { margin: 0; font-size: 11.5px; font-weight: 800; }
 body.hasfocus .gfx { top: calc(262px + env(safe-area-inset-top, 0px)); }
 body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
 .pop { position: absolute; transform: translate(-50%, -150%); padding: 2px 7px; border-radius: 5px; background: var(--s-analyst); color: #04121f; font-size: 12px; font-weight: 800;
@@ -415,7 +451,8 @@ body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
 
 @media (max-width: 760px) { .clubp { left: max(16px, env(safe-area-inset-left, 0px)); width: auto; top: auto; bottom: calc(150px + env(safe-area-inset-bottom, 0px)); max-height: 52vh; } }
 @media (max-width: 760px) {
-  .caption .text { font-size: 16px; } .deskp { display: none; } .ghostcard .q { font-size: 18px; }
+  .caption .text { font-size: 16px; } .deskp { display: none; }
+  .rcpt { left: 8px; right: 8px; width: auto; top: auto; bottom: calc(var(--ctrl-h, 110px) + 12px); max-height: 62vh; } .ghostcard .q { font-size: 18px; }
 }
 @media (max-width: 760px) {
   .bug { min-width: 0; padding: 6px 8px; }
@@ -504,6 +541,7 @@ body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
 <div class="ghost-tint"></div>
 <div class="caption" id="caption" aria-live="polite"><div class="who" id="capWho"></div><div class="text" id="capText"></div></div>
 <aside class="deskp glass" id="deskp" hidden aria-label="AI broadcast desk"></aside>
+<aside class="rcpt glass" id="rcpt" hidden aria-label="Receipts"></aside>
 <div class="ghostcard glass" id="ghostcard" aria-live="polite"></div>
 <div class="skip" id="skip" aria-live="polite"></div>
 <div class="ffchip glass" id="ffchip" aria-live="polite"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M3 6v12l8.5-6zM12.5 6v12L21 12z"/></svg><span data-i18n="ff">Stoppage · skipping ahead</span></div>
@@ -577,6 +615,17 @@ const I18N = {
     rp_sweep: "Pitch-side, half speed", rp_behind_ss: "Behind the goal, super slow", rp_sky: "Skycam", rp_behind: "Behind the goal, half speed",
     rp_tactical: "Tactical, the shape", rp_player: "Player cam, slow motion", rp_replay: "replay", replayOf: "Replay: {t}",
     agentP: "Producer", agentA: "Analyst", agentT: "Telestrator", agentS: "Scenario agent", agentD: "Director", agentC: "Commentator", agentF: "Fact-checker",
+    g_shotmap: "Shot map", g_shotsXg: "{n} shots · {x} xG", g_shotXg1: "1 shot · {x} xG", g_shotKey: "Size = chance quality (xG) · filled = goal · thick ring = on target",
+    g_xgrace: "Expected goals race", g_goalDot: "○ goal", g_network: "Pass network", g_passesN: "{n} passes",
+    g_networkKey: "Each player at the average spot of his passes, attacking right · thicker line = more passes between two players (G: next board)",
+    rcpt: "Receipts", rcptT: "Where every fact in this line came from (R)", rcptLine: "On air", rcptNums: "Numbers in this line",
+    rcptFacts: "Facts behind it", rcptFactN: "Fact {n}", rcptScore: "the score", rcptSim: "Simulation", rcptNoSrc: "no source found",
+    rcptNoNums: "No numbers in this line.", rcptNoFacts: "No stats claim in this line: the Fact-checker checked it against the match events.",
+    rcptSimTxt: "{n} simulated futures each way from the instant of the shot (as it happened → with the change):",
+    rcptCheck: "Fact-check", rcptAttempt: "Draft {n}", rcptCodeOk: "code check: every number in the evidence", rcptCodeBad: "code check: {n} problem(s)",
+    rcptModelOk: "model review: approved", rcptModelBad: "model review: rejected", rcptNoCheck: "Not checked.", rcptRejected: "Rejected drafts",
+    rcptFallback: "Every AI draft for this moment was rejected, so the stats layer's own title aired. The drafts and the reasons are below.",
+    rcptCalls: "Tool calls ({n})", rcptWatch: "Watch this event", rcptFoot: "{n} tool calls on the receipts ledger · {c} model calls · ${u} for this moment. The code check reads numbers from the ledger only; the model review checks names, teams and direction.",
     deskH: "AI broadcast desk", deskNone: "This page has no AI desk segments. Build it with <b>matchagents render</b>.",
     seg_live_call: "live call", seg_replay_breakdown: "replay breakdown", seg_what_if: "what if", seg_stat_drop: "stat drop",
     pri_low: "low", pri_normal: "normal", pri_high: "high", pri_breaking: "breaking", priority: "{p} priority", askedWhatIf: "asked a what-if",
@@ -666,6 +715,17 @@ const I18N = {
     rp_sweep: "Pie de campo, media velocidad", rp_behind_ss: "Tras la portería, súper lenta", rp_sky: "Skycam", rp_behind: "Tras la portería, media velocidad",
     rp_tactical: "Táctica, el dibujo", rp_player: "Cámara jugador, cámara lenta", rp_replay: "repetición", replayOf: "Repetición: {t}",
     agentP: "Productor", agentA: "Analista", agentT: "Telestrador", agentS: "Agente de escenarios", agentD: "Realizador", agentC: "Comentarista", agentF: "Verificador",
+    g_shotmap: "Mapa de tiros", g_shotsXg: "{n} tiros · {x} xG", g_shotXg1: "1 tiro · {x} xG", g_shotKey: "Tamaño = calidad de la ocasión (xG) · relleno = gol · anillo grueso = a puerta",
+    g_xgrace: "Carrera de goles esperados", g_goalDot: "○ gol", g_network: "Red de pases", g_passesN: "{n} pases",
+    g_networkKey: "Cada jugador en el punto medio de sus pases, atacando a la derecha · línea más gruesa = más pases entre los dos (G: siguiente)",
+    rcpt: "Pruebas", rcptT: "De dónde sale cada dato de esta frase (R)", rcptLine: "En antena", rcptNums: "Números de esta frase",
+    rcptFacts: "Los datos detrás", rcptFactN: "Dato {n}", rcptScore: "el marcador", rcptSim: "Simulación", rcptNoSrc: "sin fuente",
+    rcptNoNums: "Esta frase no tiene números.", rcptNoFacts: "Ninguna estadística en esta frase: el verificador la comprobó con los eventos del partido.",
+    rcptSimTxt: "{n} futuros simulados en cada sentido desde el instante del disparo (como ocurrió → con el cambio):",
+    rcptCheck: "Verificación", rcptAttempt: "Borrador {n}", rcptCodeOk: "control de código: cada número está en las pruebas", rcptCodeBad: "control de código: {n} problema(s)",
+    rcptModelOk: "revisión del modelo: aprobado", rcptModelBad: "revisión del modelo: rechazado", rcptNoCheck: "Sin verificar.", rcptRejected: "Borradores rechazados",
+    rcptFallback: "Todos los borradores de la IA para este momento se rechazaron, así que salió el título de la capa de estadísticas. Abajo, los borradores y los motivos.",
+    rcptCalls: "Llamadas a herramientas ({n})", rcptWatch: "Ver este evento", rcptFoot: "{n} llamadas en el registro de pruebas · {c} llamadas al modelo · ${u} por este momento. El control de código solo acepta números del registro; la revisión del modelo comprueba nombres, equipos y sentido.",
     deskH: "Mesa de retransmisión IA", deskNone: "Esta página no tiene segmentos de la mesa IA. Créalos con <b>matchagents render</b>.",
     seg_live_call: "en directo", seg_replay_breakdown: "análisis de la repetición", seg_what_if: "¿y si…?", seg_stat_drop: "dato",
     pri_low: "baja", pri_normal: "normal", pri_high: "alta", pri_breaking: "última hora", priority: "prioridad {p}", askedWhatIf: "pidió un ¿y si…?",
@@ -751,6 +811,17 @@ const I18N = {
     rp_sweep: "Bord terrain, demi-vitesse", rp_behind_ss: "Derrière le but, super ralenti", rp_sky: "Skycam", rp_behind: "Derrière le but, demi-vitesse",
     rp_tactical: "Tactique, le bloc", rp_player: "Caméra joueur, ralenti", rp_replay: "ralenti", replayOf: "Ralenti : {t}",
     agentP: "Producteur", agentA: "Analyste", agentT: "Palette", agentS: "Agent scénarios", agentD: "Réalisateur", agentC: "Commentateur", agentF: "Vérificateur",
+    g_shotmap: "Carte des tirs", g_shotsXg: "{n} tirs · {x} xG", g_shotXg1: "1 tir · {x} xG", g_shotKey: "Taille = qualité de l'occasion (xG) · plein = but · anneau épais = cadré",
+    g_xgrace: "Course aux buts attendus", g_goalDot: "○ but", g_network: "Réseau de passes", g_passesN: "{n} passes",
+    g_networkKey: "Chaque joueur au point moyen de ses passes, attaque vers la droite · trait plus épais = plus de passes entre les deux (G : suivant)",
+    rcpt: "Preuves", rcptT: "D'où vient chaque donnée de cette phrase (R)", rcptLine: "À l'antenne", rcptNums: "Les chiffres de cette phrase",
+    rcptFacts: "Les faits derrière", rcptFactN: "Fait {n}", rcptScore: "le score", rcptSim: "Simulation", rcptNoSrc: "aucune source",
+    rcptNoNums: "Aucun chiffre dans cette phrase.", rcptNoFacts: "Aucune statistique dans cette phrase : le vérificateur l'a contrôlée avec les événements du match.",
+    rcptSimTxt: "{n} futurs simulés dans chaque sens depuis l'instant du tir (tel que joué → avec le changement) :",
+    rcptCheck: "Vérification", rcptAttempt: "Brouillon {n}", rcptCodeOk: "contrôle du code : chaque chiffre est dans les preuves", rcptCodeBad: "contrôle du code : {n} problème(s)",
+    rcptModelOk: "relecture du modèle : approuvé", rcptModelBad: "relecture du modèle : rejeté", rcptNoCheck: "Non vérifié.", rcptRejected: "Brouillons rejetés",
+    rcptFallback: "Tous les brouillons de l'IA pour ce moment ont été rejetés : c'est le titre de la couche statistique qui est passé. Les brouillons et les raisons sont ci-dessous.",
+    rcptCalls: "Appels d'outils ({n})", rcptWatch: "Voir cet événement", rcptFoot: "{n} appels au registre des preuves · {c} appels au modèle · {u} $ pour ce moment. Le contrôle du code n'accepte que les chiffres du registre ; la relecture du modèle vérifie noms, équipes et sens.",
     deskH: "Plateau de diffusion IA", deskNone: "Cette page n'a pas de segments du plateau IA. Générez-les avec <b>matchagents render</b>.",
     seg_live_call: "à chaud", seg_replay_breakdown: "décryptage du ralenti", seg_what_if: "et si… ?", seg_stat_drop: "stat",
     pri_low: "basse", pri_normal: "normale", pri_high: "haute", pri_breaking: "urgente", priority: "priorité {p}", askedWhatIf: "a demandé un « et si »",
@@ -2252,6 +2323,9 @@ document.addEventListener("keydown", (e) => {
   else if (k === "c") $("clubBtn").click();
   else if (k === "y") $("ybBtn").click();
   else if (k === "escape" && !$("ybp").hidden) showYB(false);
+  else if (k === "escape" && !$("rcpt").hidden) showReceiptsPanel(false);
+  else if (k === "r" && capRef) showReceipts(capRef.sg, capRef.text);
+  else if (k === "g") nextBoard();
   else if (k === "f") $("fsBtn").click();
   else if (/^[0-7]$/.test(k)) $("cams").children[+k].click();
 });
@@ -2417,11 +2491,14 @@ function updateTele() {
 
 // ---- captions, control room, ghost card
 let capType = 0;
+let capRef = null;   // the AI line on screen, so its receipts are one click (or R) away
 function showCaption(text, sg, who) {
   if (!text) return;
   const V = sg.ed ? variantOf(sg) : { fb: sg.fallback };
+  capRef = !who && sg.rx ? { sg, text } : null;
   $("capWho").innerHTML = who || (`<span>${esc(tr("aiComm", { m: sg.minute }))}</span>` +
-    (V.fb ? `<span class="warn">${tr("verified")}</span>` : `<span class="ok">${tr("factChecked")}</span>`) + (V.foreign ? `<span class="warn">${tr("inLang")}</span>` : ""));
+    (V.fb ? `<span class="warn">${tr("verified")}</span>` : `<span class="ok">${tr("factChecked")}</span>`) + (V.foreign ? `<span class="warn">${tr("inLang")}</span>` : "")
+    + (capRef ? `<button class="rbtn" type="button" title="${esc(tr("rcptT"))}">${tr("rcpt")}</button>` : ""));
   const el = $("capText"); el.textContent = ""; $("caption").classList.add("show");
   clearInterval(capType);
   let k = 0;
@@ -2449,7 +2526,55 @@ function renderDeskPanel(sg) {
   $("deskp").innerHTML = `<h3><span>${tr("deskH")}</span><span>${esc(sg.minute)}</span></h3><div class="angle"></div>${rows}` +
     `<div class="foot"><span>${tr("modelCalls", { n: sg.desk.calls })}</span><span>$${sg.desk.usd.toFixed(4)}</span>${sg.desk.editions ? `<span>${tr("editions", { n: sg.desk.editions })}</span>` : ""}<span>${tr("receipts", { n: sg.desk.receipts })}</span><span>${tr("toAir", { s: sg.desk.seconds.toFixed(0) })}</span></div>`;
   $("deskp").querySelector(".angle").textContent = V.headline || sg.plan.angle || sg.title;
+  if (sg.rx) {
+    const box = document.createElement("div"); box.className = "onair";
+    box.innerHTML = `<h4>${tr("rcptLine")}</h4>` + V.lines.map((l, k) => `<div class="ln"><span></span><button class="rb" type="button" data-k="${k}" title="${esc(tr("rcptT"))}">${tr("rcpt")}</button></div>`).join("");
+    box.querySelectorAll(".ln span").forEach((el, k) => { el.textContent = V.lines[k]; });
+    box.addEventListener("click", (e) => { const b = e.target.closest(".rb"); if (b) showReceipts(sg, V.lines[+b.dataset.k]); });
+    $("deskp").querySelector(".foot").before(box);
+  }
 }
+// ---- receipts: for one line on air, the facts behind it, the tool call and result field each came from, the match
+// events they cite, every number matched to its source, and every fact-check attempt (with any rejected draft)
+function lineReceipts(sg, text) {
+  const V = variantOf(sg), rx = V.key ? sg.ed[V.key].rx : sg.lrx;
+  return { V, rx, k: V.lines.indexOf(text) };
+}
+function showReceipts(sg, text) {
+  const { V, rx, k } = lineReceipts(sg, text), R = sg.rx;
+  if (!R || !rx) return;
+  const facts = R.facts, nm = (k >= 0 && rx.nm[k]) || [], used = new Set((k >= 0 && rx.fu[k]) || []);
+  for (const [, src] of nm) if (typeof src === "number") used.add(src);
+  const srcLabel = (src) => (src === "score" ? tr("rcptScore") : src === "sim" ? tr("rcptSim") : typeof src === "number" ? tr("rcptFactN", { n: src + 1 }) : tr("rcptNoSrc"));
+  const nums = nm.length ? `<div class="nums">${nm.map(([n, src]) => `<span class="num${src == null ? " bad" : ""}">${esc(n)} → ${srcLabel(src)}${src == null ? "" : " ✓"}</span>`).join("")}</div>` : `<div class="src">${tr("rcptNoNums")}</div>`;
+  const factHtml = [...used].sort((a, b) => a - b).map((i) => {
+    const f = facts[i]; if (!f) return "";
+    const call = f.call != null ? R.calls[f.call] : null;
+    const src = call ? `<code>${esc(call.tool)}(${esc(call.args)})</code> → <code>${esc(f.at)}</code> = <b>${esc(f.v)}</b>`
+      : `<code>${esc(f.tool || "stats")}</code> = <b>${esc(f.v ?? "")}</b>`;
+    const ev = f.ev.length ? `<div class="evs">${f.ev.map(([fr, label]) => fr == null ? "" : `<button type="button" data-f="${fr}" title="${esc(tr("rcptWatch"))}">▸ ${esc(label)}</button>`).join("")}</div>` : "";
+    return `<div class="fact"><b>${tr("rcptFactN", { n: i + 1 })} · ${esc(f.s)}</b><div class="src">${src}</div>${ev}</div>`;
+  }).join("");
+  const simUsed = nm.some(([, src]) => src === "sim") && R.sim;
+  const sim = simUsed ? `<div class="fact"><b>${tr("rcptSim")}</b><div class="src">${tr("rcptSimTxt", { n: R.sim.n })}<br>${esc(HOME.code)} ${fmtPct(R.sim.as.home_win)} → ${fmtPct(R.sim.with.home_win)} · ${tr("draw")} ${fmtPct(R.sim.as.draw)} → ${fmtPct(R.sim.with.draw)} · ${esc(AWAY.code)} ${fmtPct(R.sim.as.away_win)} → ${fmtPct(R.sim.with.away_win)} · ±${fmtPct(R.sim.margin)}</div></div>` : "";
+  const checks = rx.chk.map((c) => `<div class="chk"><b>${tr("rcptAttempt", { n: c.a })}</b> · ${c.code.length ? `<span class="no">${tr("rcptCodeBad", { n: c.code.length })}</span>` : `<span class="ok">${tr("rcptCodeOk")}</span>`}${c.model == null ? "" : ` · ${c.model ? `<span class="ok">${tr("rcptModelOk")}</span>` : `<span class="no">${tr("rcptModelBad")}</span>`}`}
+      ${c.code.length || c.mi.length ? `<ul>${c.code.map(([cl, pr]) => `<li>“${esc(cl)}”: ${esc(pr)}</li>`).join("")}${c.mi.map(([, cl, pr]) => `<li>“${esc(cl)}”: ${esc(pr)}</li>`).join("")}</ul>` : ""}</div>`).join("");
+  const rej = rx.rej.length ? `<div><h4>${tr("rcptRejected")}</h4>${rx.rej.map((d) => d.map((l) => `<div class="rej">${esc(l)}</div>`).join("")).join("<br>")}</div>` : "";
+  const intro = V.fb ? `<div class="src">${tr("rcptFallback")}</div>` : "";
+  const calls = `<details><summary>${tr("rcptCalls", { n: R.calls.length })}</summary>${R.calls.map((c) => `<div class="src"><code>${esc(c.tool)}(${esc(c.args)})</code>${c.keys.length ? "<br>" + c.keys.map(([p, v]) => `→ <code>${esc(p)}</code> = ${esc(v)}`).join("<br>") : ""}</div>`).join("")}</details>`;
+  $("rcpt").innerHTML = `<div class="rh"><span>${tr("rcpt")} · ${esc(sg.minute)}</span><button type="button" aria-label="${esc(tr("close"))}">×</button></div>
+    <blockquote></blockquote>${intro}
+    <div><h4>${tr("rcptNums")}</h4>${nums}</div>
+    ${factHtml || sim ? `<div style="display:flex;flex-direction:column;gap:6px"><h4>${tr("rcptFacts")}</h4>${factHtml}${sim}</div>` : (V.fb ? "" : `<div class="src">${tr("rcptNoFacts")}</div>`)}
+    <div><h4>${tr("rcptCheck")}</h4>${checks || `<div class="src">${tr("rcptNoCheck")}</div>`}</div>${rej}${calls}
+    <div class="foot">${tr("rcptFoot", { n: sg.desk?.receipts ?? R.calls.length, c: sg.desk?.calls ?? 0, u: (sg.desk?.usd ?? 0).toFixed(4) })}</div>`;
+  $("rcpt").querySelector("blockquote").textContent = text;
+  $("rcpt").querySelector(".rh button").onclick = () => showReceiptsPanel(false);
+  $("rcpt").querySelectorAll(".evs button").forEach((b) => { b.onclick = () => { cancelReplay(); seek(Math.max(0, +b.dataset.f - 3 * HZ)); play(true); }; });
+  showReceiptsPanel(true); play(false);
+}
+function showReceiptsPanel(on) { $("rcpt").hidden = !on; document.body.classList.toggle("rcptopen", on); }
+$("caption").addEventListener("click", (e) => { if (e.target.closest(".rbtn") && capRef) showReceipts(capRef.sg, capRef.text); });
 function setDeskNow(...ids) { for (const el of $("deskp").querySelectorAll(".agent")) el.classList.toggle("now", ids.includes(el.dataset.agent)); }
 function showDeskPanel(on) {
   $("deskp").hidden = !on; $("deskBtn").setAttribute("aria-pressed", String(on));
@@ -3268,6 +3393,8 @@ function playerSummary(slot, f) {
 }
 function showGraphic(kind, sg) {
   const el = $("gfx"), m = momentById[sg.id] || {}, x = m.x || {};
+  if (BOARDS[kind] && (kind !== "pass_network" || PASS_LOG.length)) { showBoard(kind, sg.f, 12000); return; }
+  el.classList.remove("wide");
   let html = "";
   if (kind === "xg" && x.xg != null) {
     html = `<div class="gk">${tr("g_xg")}</div><div class="gbig">${fmtNum(x.xg)}</div><div class="gsub">${tr("g_xgOf")}${x.distance_m ? " · " + tr("f_dist", { v: Math.round(x.distance_m) }) : ""}</div><div class="gbar"><span style="width:${Math.min(100, x.xg * 100).toFixed(0)}%"></span></div>`;
@@ -3278,7 +3405,7 @@ function showGraphic(kind, sg) {
   } else if (kind === "player_card" && m.who?.length) {
     const p = DATA.players.find((q) => q.short === m.who[0] || q.name.endsWith(m.who[0]));
     if (p) html = `<div class="gk">${tr("g_card")} · ${esc(p.name)}</div><table>${playerSummary(slotById[p.id], sg.f).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="r">${v}</td></tr>`).join("")}</table>`;
-  } else if (kind === "momentum" || kind === "pass_network") {
+  } else if (kind === "momentum" || kind === "pass_network") {      // a page built before the pass log existed
     const s = sampleAt(sg.f), mom = clamp(s[K.mom] / 100, -1, 1);
     html = `<div class="gk">${tr("g_mom")}</div><div class="gbig" style="color:${mom >= 0 ? colH : colA}">${mom >= 0 ? HOME.code : AWAY.code}</div><div class="gbar"><span style="width:${(50 + mom * 50).toFixed(0)}%;background:${colH}"></span></div>`;
   } else if (kind === "scoreboard") {
@@ -3288,6 +3415,96 @@ function showGraphic(kind, sg) {
   if (!html) return;
   el.innerHTML = html; el.classList.add("show");
   clearTimeout(gfxTimer); gfxTimer = setTimeout(hideGraphic, 12000);
+}
+// ---- analyst boards. Every one reads the match logs up to the current moment only (no future knowledge), by match
+// time rather than frame, so they work in highlights reels too.
+const SHOT_LOG = DATA.shotLog || [], PASS_LOG = DATA.passLog || [];
+function matchNow(f) {   // the real match's clock at frame f, even while a ghost timeline is on screen
+  const i = clamp(Math.floor(f), 0, MAIN.N - 1);
+  return [MAIN.SP[spanIn(MAIN.SB, i)], MAIN.F[i * W + BASE + 5] / 10];
+}
+const upTo = (log, [p, t]) => log.filter((r) => r[0] < p || (r[0] === p && r[1] <= t));
+const towards = (side, period) => (side === 0 ? 1 : -1) * (period === 1 ? 1 : -1);     // +1: attacking x = 105
+const attackRight = (x, y, side, period) => (towards(side, period) > 0 ? [x, y] : [105 - x, 68 - y]);
+const pitchSvg = (w, h, inner) => `<svg viewBox="-14 -10 ${w + 28} ${h + 20}" role="img"><rect x="0" y="0" width="${w}" height="${h}" rx="3" fill="rgba(61,220,151,0.06)" stroke="rgba(255,255,255,0.28)"/>
+  <line x1="${w / 2}" y1="0" x2="${w / 2}" y2="${h}" stroke="rgba(255,255,255,0.2)"/><circle cx="${w / 2}" cy="${h / 2}" r="${h * 0.13}" fill="none" stroke="rgba(255,255,255,0.2)"/>
+  <rect x="0" y="${h * 0.21}" width="${w * 0.157}" height="${h * 0.58}" fill="none" stroke="rgba(255,255,255,0.2)"/><rect x="${w * 0.843}" y="${h * 0.21}" width="${w * 0.157}" height="${h * 0.58}" fill="none" stroke="rgba(255,255,255,0.2)"/>${inner}</svg>`;
+function boardShotMap(f) {
+  const now = matchNow(f), shots = upTo(SHOT_LOG, now), W = 300, H = 194, sx = W / 105, sy = H / 68;
+  const dots = shots.map(([p, , x, y, xg, oc, side]) => {
+    let [nx, ny] = attackRight(x, y, side, p);
+    if (side === 1) { nx = 105 - nx; ny = 68 - ny; }                     // home attack right, away attack left
+    const r = 2.6 + 11 * Math.sqrt(Math.max(0, xg)), c = side === 0 ? colH : colA;
+    return `<circle cx="${(nx * sx).toFixed(1)}" cy="${(ny * sy).toFixed(1)}" r="${r.toFixed(1)}" fill="${oc === 0 ? c : "none"}" fill-opacity="${oc === 0 ? 0.95 : 0}" stroke="${c}" stroke-width="${oc === 1 || oc === 0 ? 2 : 1.2}" opacity="${oc === 3 ? 0.55 : 0.95}"/>`;
+  }).join("");
+  const sum = (side) => shots.filter((r) => r[6] === side);
+  const xgOf = (side) => sum(side).reduce((a, r) => a + (r[4] || 0), 0);
+  return `<div class="gk">${tr("g_shotmap")}</div>${pitchSvg(W, H, dots)}
+    <div class="gleg"><span>← <b>${esc(AWAY.code)}</b> ${tr(sum(1).length === 1 ? "g_shotXg1" : "g_shotsXg", { n: sum(1).length, x: fmtNum(xgOf(1)) })}</span><span><b>${esc(HOME.code)}</b> ${tr(sum(0).length === 1 ? "g_shotXg1" : "g_shotsXg", { n: sum(0).length, x: fmtNum(xgOf(0)) })} →</span></div>
+    <div class="gsub">${tr("g_shotKey")}</div>`;
+}
+function boardXgRace(f) {
+  const now = matchNow(f), shots = upTo(SHOT_LOG, now), W = 300, H = 130, padL = 26, padB = 16;
+  const minOf = (p, t) => Math.min(t / 60, 49) + (p === 2 ? 45 : 0), endMin = Math.max(45, minOf(...now));
+  const xMax = Math.max(90, endMin), cum = [0, 0], pts = [[[0, 0]], [[0, 0]]], goals = [];
+  for (const [p, t, , , xg, oc, side] of shots) {
+    const m = minOf(p, t); pts[side].push([m, cum[side]]); cum[side] += xg || 0; pts[side].push([m, cum[side]]);
+    if (oc === 0) goals.push([m, cum[side], side]);
+  }
+  pts[0].push([endMin, cum[0]]); pts[1].push([endMin, cum[1]]);
+  const yMax = Math.max(1, Math.ceil(Math.max(cum[0], cum[1]) * 2) / 2);
+  const X = (m) => padL + (W - padL - 4) * m / xMax, Y = (v) => (H - padB) - (H - padB - 6) * v / yMax;
+  const path = (a) => a.map(([m, v], k) => `${k ? "L" : "M"}${X(m).toFixed(1)},${Y(v).toFixed(1)}`).join("");
+  const ticks = []; for (let v = 0; v <= yMax + 1e-9; v += yMax > 2 ? 1 : 0.5) ticks.push(v);
+  const grid = ticks.map((v) => `<line x1="${padL}" x2="${W - 4}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(255,255,255,0.1)"/><text x="${padL - 4}" y="${Y(v) + 3}" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="end">${fmtNum(v, 1)}</text>`).join("")
+    + [0, 45, 90].map((m) => `<text x="${X(m)}" y="${H - 3}" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="middle">${m}'</text>`).join("")
+    + `<line x1="${X(45)}" x2="${X(45)}" y1="6" y2="${H - padB}" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>`;
+  const lines = [0, 1].map((side) => `<path d="${path(pts[side])}" fill="none" stroke="${side === 0 ? colH : colA}" stroke-width="2.4"/>`).join("");
+  const dots = goals.map(([m, v, side]) => `<circle cx="${X(m)}" cy="${Y(v)}" r="4" fill="#fff" stroke="${side === 0 ? colH : colA}" stroke-width="2"/>`).join("");
+  return `<div class="gk">${tr("g_xgrace")}</div><svg viewBox="0 0 ${W} ${H}" role="img">${grid}${lines}${dots}</svg>
+    <div class="gleg"><span><b style="color:${colH}">${esc(HOME.code)}</b> ${fmtNum(cum[0])} xG</span><span>${tr("g_goalDot")}</span><span><b style="color:${colA}">${esc(AWAY.code)}</b> ${fmtNum(cum[1])} xG</span></div>`;
+}
+function boardPassNetwork(f) {
+  const now = matchNow(f), passes = upTo(PASS_LOG, now), W = 210, H = 136, sx = W / 105, sy = H / 68;
+  const net = (side) => {
+    const loc = {}, links = {};
+    for (const [p, , a, b, x, y] of passes) {
+      if ((DATA.players[a]?.side === "home" ? 0 : 1) !== side) continue;
+      const [nx, ny] = attackRight(x, y, side, p);
+      (loc[a] ||= [0, 0, 0]); loc[a][0] += nx; loc[a][1] += ny; loc[a][2]++;
+      const key = a < b ? `${a}-${b}` : `${b}-${a}`; links[key] = (links[key] || 0) + 1;
+    }
+    const top = Object.entries(loc).sort((u, v) => v[1][2] - u[1][2]).slice(0, 11), on = new Set(top.map(([sl]) => +sl));
+    const pos = Object.fromEntries(top.map(([sl, [x, y, n]]) => [sl, [x / n * sx, y / n * sy, n]]));
+    const most = Math.max(1, ...Object.values(links));
+    const edges = Object.entries(links).filter(([k, n]) => n >= 3 && k.split("-").every((v) => on.has(+v))).map(([k, n]) => {
+      const [a, b] = k.split("-"); const A = pos[a], B = pos[b];
+      return `<line x1="${A[0].toFixed(1)}" y1="${A[1].toFixed(1)}" x2="${B[0].toFixed(1)}" y2="${B[1].toFixed(1)}" stroke="#fff" stroke-opacity="${(0.18 + 0.6 * n / most).toFixed(2)}" stroke-width="${(0.6 + 4.2 * n / most).toFixed(1)}"/>`;
+    }).join("");
+    const nodes = top.map(([sl]) => { const [x, y, n] = pos[sl], p = DATA.players[sl];
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(3.5 + Math.sqrt(n) * 0.9).toFixed(1)}" fill="${side === 0 ? colH : colA}" stroke="#fff" stroke-width="1"/><text x="${x.toFixed(1)}" y="${(y + 3).toFixed(1)}" font-size="8" font-weight="800" fill="#fff" text-anchor="middle">${p.shirt}</text>`; }).join("");
+    const total = Object.values(loc).reduce((a, v) => a + v[2], 0);
+    return `<div><h5 style="color:${side === 0 ? colH : colA}">${esc(side === 0 ? HOME.code : AWAY.code)} · ${tr("g_passesN", { n: total })}</h5>${pitchSvg(W, H, edges + nodes)}</div>`;
+  };
+  return `<div class="gk">${tr("g_network")}</div><div class="gnets">${net(0)}${net(1)}</div><div class="gsub">${tr("g_networkKey")}</div>`;
+}
+const BOARDS = { shot_map: boardShotMap, xg_race: boardXgRace, pass_network: boardPassNetwork };
+function showBoard(kind, f, ms = 11000) {
+  const html = BOARDS[kind](f), el = $("gfx");
+  el.innerHTML = html; el.classList.add("show", "wide");
+  clearTimeout(gfxTimer); gfxTimer = setTimeout(hideGraphic, ms);
+}
+let boardCycle = -1;
+function nextBoard() { boardCycle = (boardCycle + 1) % 3; showBoard(["shot_map", "xg_race", "pass_network"][boardCycle], liveFrame()); }
+// the Analyst edition brings the boards up at natural breaks: half-time, full time, and the shot map after a goal
+let boardsShown = new Set();
+function analystBoards(prev, now) {
+  if (prefs.style !== "analyst" || desk || replay || !auto || now <= prev || now - prev > 3 * HZ) return;
+  const atEnd = now >= MAIN.N - 2;
+  // half-time: as soon as play is live again after the break (an AI desk segment there keeps its own graphic first)
+  if (!CLIPS && now >= MAIN.P2 + 8 * HZ && now < MAIN.P2 + 120 * HZ && !boardsShown.has("ht")) { boardsShown.add("ht"); showBoard("xg_race", MAIN.P2 - 1, 9000); }
+  if (atEnd && !boardsShown.has("ft")) { boardsShown.add("ft"); showBoard("xg_race", MAIN.N - 1, 14000); }
+  for (const m of DATA.moments) if (m.type === "goal" && m.f + 11 * HZ > prev && m.f + 11 * HZ <= now) showBoard("shot_map", now, 8000);
 }
 // Academy: the decision, drawn from the stats layer's options tool (teammates' space, pass odds, xG from their spot)
 function decisionShapes(dec) {
@@ -3301,7 +3518,7 @@ function decisionShapes(dec) {
   ];
 }
 function showDecisionCard(dec) {
-  const el = $("gfx"), b = dec.best;
+  const el = $("gfx"), b = dec.best; el.classList.remove("wide");
   el.innerHTML = `<div class="gk">${tr("coaching")} · ${tr("dec_h")}</div><table>
     <tr><td>${esc(dec.player)}</td><td class="r">${tr("dec_shot", { x: fmtNum(dec.choice.xg ?? 0) })}</td></tr>
     <tr><td>${esc(b.name)}</td><td class="r">${fmtPct(b.p_complete)} · ${fmtNum(b.xg_from_there)} xG</td></tr></table>
@@ -3468,7 +3685,7 @@ function frame(ts) {
       if (auto && speed <= 5 && (m.type === "goal" || ((m.type === "big_chance" || m.type === "great_save") && m.importance >= 0.6))) setTimeout(() => startReplay(m), m.type === "goal" ? 2600 : 1400);
     }
   }
-  if (playing && !replay && !desk && !snapNext) { focusAlerts(prev, pos); shotPops(prev, pos); }
+  if (playing && !replay && !desk && !snapNext) { focusAlerts(prev, pos); shotPops(prev, pos); analystBoards(prev, pos); }
   excite = Math.max(0, excite - dt * 0.12);
   crowd.uniforms.uTime.value = realTime; crowd.uniforms.uExcite.value = excite;
   for (const t of ledBoards) t.offset.x = (t.offset.x + dt * 0.03) % 1;

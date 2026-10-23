@@ -4,6 +4,11 @@ AI match intelligence for the Microsoft x Premier League hackathon: a 3D virtual
 
 **Your broadcast.** Every viewer gets their own cut of the same match. Pick a style (Fan, Analyst, Tactician, Academy), a language (English, Spanish, French), your club and your player: the live cameras, the replays, the graphics and the AI commentary all change. Commentary is written natively in each language and fact-checked in that language; a club's fans get their own channel; the Academy edition coaches the decision with the stats layer's options at the key moment; and player focus keeps your player in shot with his live stat line, alerts and every action marked on the timeline.
 
+**Commentary with receipts.** Click any line the AI says (or press R) and see where every fact in it came from: each number
+matched to its source, the tool call and result field behind each fact, the match events it cites (one click jumps the 3D
+view there), and the fact-check history, rejected drafts included. Analysts also get a shot map, an xG race and a pass
+network that only ever use the match so far (key G).
+
 **One engine, two audiences.** For fans, the what-if engine replays a moment that could have gone the other way. For clubs, **Club mode** tries any player in the league in any position: the fixture is played many times with him and many times with the player who really starts there, and the recruitment board ranks who would actually make the team better.
 
 > Other tools tell you what happened. Ours shows you what could have happened, and proves it.
