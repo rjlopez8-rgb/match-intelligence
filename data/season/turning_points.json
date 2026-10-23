@@ -1,0 +1,4641 @@
+{
+ "matches": {
+  "md01-riv-elm": {
+   "match_id": "md01-riv-elm",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md01-riv-elm-m024",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 72', 2-1",
+    "weight_pts": 55.3,
+    "event_id": "md01-riv-elm-01489",
+    "minute": "72'",
+    "period": 2,
+    "t": 1582.0,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.05,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 211.9,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.6,
+    "away_win": 0.2,
+    "most_common_scores": [
+     [
+      "1-1",
+      9
+     ],
+     [
+      "2-1",
+      3
+     ],
+     [
+      "2-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.85,
+    "draw": 0.15,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-1",
+      16
+     ],
+     [
+      "2-2",
+      3
+     ],
+     [
+      "3-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 2,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "73'",
+      "side": "away",
+      "scorer": "Lewis Whitcombe"
+     },
+     {
+      "minute": "88'",
+      "side": "home",
+      "scorer": "Kwame Mensah"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md04-crw-ngc": {
+   "match_id": "md04-crw-ngc",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md04-crw-ngc-m019",
+    "type": "goal",
+    "title": "GOAL: Carbajosa (Crowmoor) 69', 2-1",
+    "weight_pts": 56.0,
+    "event_id": "md04-crw-ngc-01346",
+    "minute": "69'",
+    "period": 2,
+    "t": 1413.0,
+    "player_id": "crw-10",
+    "player": "Mikel Carbajosa",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.09,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 262.4,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.75,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "1-1",
+      15
+     ],
+     [
+      "2-1",
+      3
+     ],
+     [
+      "1-2",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.75,
+    "draw": 0.25,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-1",
+      10
+     ],
+     [
+      "2-2",
+      5
+     ],
+     [
+      "3-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md05-ash-wes": {
+   "match_id": "md05-ash-wes",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md05-ash-wes-m028",
+    "type": "goal",
+    "title": "GOAL: Babić (Westmere) 81', 0-1",
+    "weight_pts": 51.2,
+    "event_id": "md05-ash-wes-01705",
+    "minute": "81'",
+    "period": 2,
+    "t": 2127.6,
+    "player_id": "wes-20",
+    "player": "Ante Babić",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.1,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 148.4,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.4,
+    "draw": 0.6,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "0-0",
+      12
+     ],
+     [
+      "1-0",
+      8
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.05,
+    "away_win": 0.95,
+    "most_common_scores": [
+     [
+      "0-1",
+      18
+     ],
+     [
+      "1-1",
+      1
+     ],
+     [
+      "0-2",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 0
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md01-ash-crw": {
+   "match_id": "md01-ash-crw",
+   "final": {
+    "home": 1,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md01-ash-crw-m010",
+    "type": "goal",
+    "title": "GOAL: Carbajosa (Crowmoor) 45+3', 0-1",
+    "weight_pts": 32.5,
+    "event_id": "md01-ash-crw-00874",
+    "minute": "45+3'",
+    "period": 1,
+    "t": 2835.3,
+    "player_id": "crw-10",
+    "player": "Mikel Carbajosa",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.16,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 485.1,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.3,
+    "away_win": 0.6,
+    "most_common_scores": [
+     [
+      "0-1",
+      10
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "0-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.1,
+    "away_win": 0.9,
+    "most_common_scores": [
+     [
+      "0-1",
+      8
+     ],
+     [
+      "1-2",
+      4
+     ],
+     [
+      "0-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "54'",
+      "side": "away",
+      "scorer": "Mikel Carbajosa"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md05-crw-kin": {
+   "match_id": "md05-crw-kin",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md05-crw-kin-m023",
+    "type": "woodwork",
+    "title": "Off the woodwork: Arakawa (Kingsport) from 6 m",
+    "weight_pts": 7.0,
+    "event_id": "md05-crw-kin-01482",
+    "minute": "68'",
+    "period": 2,
+    "t": 1323.7,
+    "player_id": "kin-09",
+    "player": "Yuto Arakawa",
+    "side": "away",
+    "outcome": "post",
+    "shot_kind": "open_play",
+    "xg": 0.17,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 270.9,
+   "futures": 20,
+   "actual_outcome": "post",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.15,
+    "away_win": 0.85,
+    "most_common_scores": [
+     [
+      "0-1",
+      12
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "0-2",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.3,
+    "draw": 0.4,
+    "away_win": 0.3,
+    "most_common_scores": [
+     [
+      "0-0",
+      7
+     ],
+     [
+      "1-0",
+      6
+     ],
+     [
+      "0-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "90+1'",
+      "side": "away",
+      "scorer": "Yuto Arakawa"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md02-ash-ngc": {
+   "match_id": "md02-ash-ngc",
+   "final": {
+    "home": 0,
+    "away": 3
+   },
+   "turning_point": {
+    "moment_id": "md02-ash-ngc-m012",
+    "type": "goal",
+    "title": "GOAL: Delaunay (Northgate) 25', 0-1",
+    "weight_pts": 30.6,
+    "event_id": "md02-ash-ngc-00515",
+    "minute": "25'",
+    "period": 1,
+    "t": 1476.8,
+    "player_id": "ngc-10",
+    "player": "Mathis Delaunay",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.11,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 733.2,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.5,
+    "away_win": 0.25,
+    "most_common_scores": [
+     [
+      "0-0",
+      5
+     ],
+     [
+      "1-1",
+      5
+     ],
+     [
+      "1-0",
+      5
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.2,
+    "away_win": 0.8,
+    "most_common_scores": [
+     [
+      "0-1",
+      10
+     ],
+     [
+      "0-2",
+      4
+     ],
+     [
+      "1-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "28'",
+      "side": "away",
+      "scorer": "Mathis Delaunay"
+     },
+     {
+      "minute": "70'",
+      "side": "home",
+      "scorer": "Thijs van Rijn"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md02-wes-kin": {
+   "match_id": "md02-wes-kin",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md02-wes-kin-m006",
+    "type": "great_save",
+    "title": "Great save: Brierley denies Duarte's 26 m strike",
+    "weight_pts": 0.4,
+    "event_id": "md02-wes-kin-00457",
+    "minute": "24'",
+    "period": 1,
+    "t": 1422.8,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "away",
+    "outcome": "saved",
+    "shot_kind": "open_play",
+    "xg": 0.02,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 754.6,
+   "futures": 20,
+   "actual_outcome": "saved",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.15,
+    "away_win": 0.85,
+    "most_common_scores": [
+     [
+      "0-2",
+      7
+     ],
+     [
+      "1-2",
+      3
+     ],
+     [
+      "0-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.35,
+    "away_win": 0.5,
+    "most_common_scores": [
+     [
+      "0-0",
+      5
+     ],
+     [
+      "0-1",
+      5
+     ],
+     [
+      "0-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "44'",
+      "side": "away",
+      "scorer": "Rafael Duarte"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md01-wes-ngc": {
+   "match_id": "md01-wes-ngc",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md01-wes-ngc-m006",
+    "type": "great_save",
+    "title": "Great save: Brierley denies Escudero's 23 m free kick",
+    "weight_pts": 0.3,
+    "event_id": "md01-wes-ngc-00407",
+    "minute": "20'",
+    "period": 1,
+    "t": 1198.8,
+    "player_id": "ngc-09",
+    "player": "Unai Escudero",
+    "side": "away",
+    "outcome": "saved",
+    "shot_kind": "free_kick",
+    "xg": 0.01,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 798.2,
+   "futures": 20,
+   "actual_outcome": "saved",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.2,
+    "away_win": 0.7,
+    "most_common_scores": [
+     [
+      "0-1",
+      6
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "0-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.65,
+    "away_win": 0.15,
+    "most_common_scores": [
+     [
+      "0-0",
+      11
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "0-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "54'",
+      "side": "away",
+      "scorer": "Mathis Delaunay"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md03-ash-kin": {
+   "match_id": "md03-ash-kin",
+   "final": {
+    "home": 0,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md03-ash-kin-m008",
+    "type": "goal",
+    "title": "GOAL: Duarte (Kingsport) 37', 0-1",
+    "weight_pts": 30.2,
+    "event_id": "md03-ash-kin-00841",
+    "minute": "37'",
+    "period": 1,
+    "t": 2201.0,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.01,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 652.8,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.45,
+    "away_win": 0.35,
+    "most_common_scores": [
+     [
+      "0-0",
+      8
+     ],
+     [
+      "0-1",
+      5
+     ],
+     [
+      "1-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.1,
+    "away_win": 0.9,
+    "most_common_scores": [
+     [
+      "0-1",
+      9
+     ],
+     [
+      "0-2",
+      6
+     ],
+     [
+      "1-2",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "74'",
+      "side": "away",
+      "scorer": "Cian Brennan"
+     },
+     {
+      "minute": "88'",
+      "side": "home",
+      "scorer": "Cole Whitaker"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md01-sal-kin": {
+   "match_id": "md01-sal-kin",
+   "final": {
+    "home": 0,
+    "away": 3
+   },
+   "turning_point": {
+    "moment_id": "md01-sal-kin-m005",
+    "type": "goal",
+    "title": "GOAL: Duarte (Kingsport) 12', 0-1",
+    "weight_pts": 31.2,
+    "event_id": "md01-sal-kin-00231",
+    "minute": "12'",
+    "period": 1,
+    "t": 701.5,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 873.9,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.25,
+    "away_win": 0.6,
+    "most_common_scores": [
+     [
+      "0-1",
+      8
+     ],
+     [
+      "0-0",
+      3
+     ],
+     [
+      "1-0",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.2,
+    "away_win": 0.75,
+    "most_common_scores": [
+     [
+      "0-2",
+      8
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "0-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "27'",
+      "side": "away",
+      "scorer": "Rafael Duarte"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md02-elm-crw": {
+   "match_id": "md02-elm-crw",
+   "final": {
+    "home": 0,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md02-elm-crw-m002",
+    "type": "goal",
+    "title": "GOAL: Carbajosa (Crowmoor) 4', 0-1",
+    "weight_pts": 27.4,
+    "event_id": "md02-elm-crw-00093",
+    "minute": "4'",
+    "period": 1,
+    "t": 228.9,
+    "player_id": "crw-10",
+    "player": "Mikel Carbajosa",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.08,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 950.7,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.2,
+    "away_win": 0.65,
+    "most_common_scores": [
+     [
+      "0-1",
+      7
+     ],
+     [
+      "1-2",
+      3
+     ],
+     [
+      "0-2",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.2,
+    "away_win": 0.75,
+    "most_common_scores": [
+     [
+      "1-2",
+      4
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "0-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "90+3'",
+      "side": "away",
+      "scorer": "Iker Valdivieso"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md02-sal-riv": {
+   "match_id": "md02-sal-riv",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md02-sal-riv-m001",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 4', 0-1",
+    "weight_pts": 27.2,
+    "event_id": "md02-sal-riv-00075",
+    "minute": "4'",
+    "period": 1,
+    "t": 205.6,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.06,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 969.9,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.3,
+    "away_win": 0.45,
+    "most_common_scores": [
+     [
+      "0-1",
+      4
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "1-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.25,
+    "away_win": 0.6,
+    "most_common_scores": [
+     [
+      "0-1",
+      4
+     ],
+     [
+      "2-2",
+      3
+     ],
+     [
+      "1-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "43'",
+      "side": "away",
+      "scorer": "Kwame Mensah"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md03-elm-ngc": {
+   "match_id": "md03-elm-ngc",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md03-elm-ngc-m005",
+    "type": "woodwork",
+    "title": "Off the woodwork: Marchetti (Northgate) from 7 m",
+    "weight_pts": 3.2,
+    "event_id": "md03-elm-ngc-00771",
+    "minute": "35'",
+    "period": 1,
+    "t": 2088.8,
+    "player_id": "ngc-11",
+    "player": "Rayan Marchetti",
+    "side": "away",
+    "outcome": "post",
+    "shot_kind": "open_play",
+    "xg": 0.1,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 655.4,
+   "futures": 20,
+   "actual_outcome": "post",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.3,
+    "away_win": 0.6,
+    "most_common_scores": [
+     [
+      "0-1",
+      7
+     ],
+     [
+      "1-1",
+      5
+     ],
+     [
+      "1-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.3,
+    "away_win": 0.5,
+    "most_common_scores": [
+     [
+      "0-1",
+      7
+     ],
+     [
+      "0-0",
+      5
+     ],
+     [
+      "1-0",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "62'",
+      "side": "home",
+      "scorer": "Domagoj Babić"
+     },
+     {
+      "minute": "90'",
+      "side": "away",
+      "scorer": "Yanis Morvan"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md03-riv-crw": {
+   "match_id": "md03-riv-crw",
+   "final": {
+    "home": 2,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md03-riv-crw-m007",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 30', 1-0",
+    "weight_pts": 44.5,
+    "event_id": "md03-riv-crw-00556",
+    "minute": "30'",
+    "period": 1,
+    "t": 1773.1,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 699.0,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.5,
+    "away_win": 0.25,
+    "most_common_scores": [
+     [
+      "0-0",
+      6
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "1-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.55,
+    "draw": 0.4,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "2-0",
+      6
+     ],
+     [
+      "2-2",
+      5
+     ],
+     [
+      "1-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "31'",
+      "side": "home",
+      "scorer": "Kwame Mensah"
+     },
+     {
+      "minute": "49'",
+      "side": "away",
+      "scorer": "Mikel Carbajosa"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md03-wes-sal": {
+   "match_id": "md03-wes-sal",
+   "final": {
+    "home": 1,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md03-wes-sal-m007",
+    "type": "goal",
+    "title": "GOAL: Vuković (Westmere) 23', 1-0",
+    "weight_pts": 40.8,
+    "event_id": "md03-wes-sal-00457",
+    "minute": "23'",
+    "period": 1,
+    "t": 1326.3,
+    "player_id": "wes-11",
+    "player": "Ivan Vuković",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.02,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 770.6,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.4,
+    "away_win": 0.35,
+    "most_common_scores": [
+     [
+      "0-1",
+      6
+     ],
+     [
+      "0-0",
+      5
+     ],
+     [
+      "1-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.75,
+    "draw": 0.25,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      11
+     ],
+     [
+      "1-1",
+      5
+     ],
+     [
+      "3-0",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "33'",
+      "side": "home",
+      "scorer": "Marin Radošević"
+     },
+     {
+      "minute": "54'",
+      "side": "away",
+      "scorer": "Jude Brierley"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md04-wes-riv": {
+   "match_id": "md04-wes-riv",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md04-wes-riv-m010",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 31', 0-1",
+    "weight_pts": 21.7,
+    "event_id": "md04-wes-riv-00560",
+    "minute": "31'",
+    "period": 1,
+    "t": 1855.7,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.07,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 689.1,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.45,
+    "away_win": 0.35,
+    "most_common_scores": [
+     [
+      "0-0",
+      9
+     ],
+     [
+      "0-1",
+      5
+     ],
+     [
+      "1-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.2,
+    "away_win": 0.8,
+    "most_common_scores": [
+     [
+      "0-1",
+      8
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "0-2",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 0
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md06-crw-sal": {
+   "match_id": "md06-crw-sal",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md06-crw-sal-m044",
+    "type": "goal",
+    "title": "GOAL: Valdivieso (Crowmoor) 90+1', 2-1",
+    "weight_pts": 80.3,
+    "event_id": "md06-crw-sal-01788",
+    "minute": "90+1'",
+    "period": 2,
+    "t": 2737.0,
+    "player_id": "crw-20",
+    "player": "Iker Valdivieso",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.09,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 52.2,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.9,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-1",
+      18
+     ],
+     [
+      "2-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 1.0,
+    "draw": 0.0,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-1",
+      18
+     ],
+     [
+      "3-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md04-ash-sal": {
+   "match_id": "md04-ash-sal",
+   "final": {
+    "home": 1,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md04-ash-sal-m001",
+    "type": "goal",
+    "title": "GOAL: Brierley (Saltmarsh) 15', 0-1",
+    "weight_pts": 26.5,
+    "event_id": "md04-ash-sal-00287",
+    "minute": "15'",
+    "period": 1,
+    "t": 864.0,
+    "player_id": "sal-11",
+    "player": "Jude Brierley",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.17,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 846.6,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.45,
+    "away_win": 0.3,
+    "most_common_scores": [
+     [
+      "0-0",
+      7
+     ],
+     [
+      "0-1",
+      5
+     ],
+     [
+      "1-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.2,
+    "away_win": 0.75,
+    "most_common_scores": [
+     [
+      "0-2",
+      5
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "0-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "74'",
+      "side": "away",
+      "scorer": "Sam Thornbury"
+     },
+     {
+      "minute": "84'",
+      "side": "home",
+      "scorer": "Oisín Mulcahy"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md07-crw-wes": {
+   "match_id": "md07-crw-wes",
+   "final": {
+    "home": 1,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md07-crw-wes-m039",
+    "type": "goal",
+    "title": "GOAL: Olvera (Westmere) 82', 1-2",
+    "weight_pts": 47.7,
+    "event_id": "md07-crw-wes-01779",
+    "minute": "82'",
+    "period": 2,
+    "t": 2180.0,
+    "player_id": "wes-18",
+    "player": "Rodrigo Olvera",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.2,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 152.6,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.85,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "1-1",
+      17
+     ],
+     [
+      "2-1",
+      2
+     ],
+     [
+      "1-2",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.2,
+    "away_win": 0.8,
+    "most_common_scores": [
+     [
+      "1-2",
+      15
+     ],
+     [
+      "2-2",
+      4
+     ],
+     [
+      "1-3",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "riv-kin-1119": {
+   "match_id": "riv-kin-1119",
+   "final": {
+    "home": 1,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "riv-kin-1119-m045",
+    "type": "goal",
+    "title": "GOAL: Gilmartin (Kingsport) 90+6', 1-2",
+    "weight_pts": 73.3,
+    "event_id": "riv-kin-1119-02014",
+    "minute": "90+6'",
+    "period": 2,
+    "t": 3025.4,
+    "player_id": "kin-17",
+    "player": "Darragh Gilmartin",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 1.4,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 1.0,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-1",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.0,
+    "away_win": 1.0,
+    "most_common_scores": [
+     [
+      "1-2",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md04-elm-kin": {
+   "match_id": "md04-elm-kin",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md04-elm-kin-m005",
+    "type": "goal",
+    "title": "GOAL: Duarte (Kingsport) 9', 0-1",
+    "weight_pts": 26.3,
+    "event_id": "md04-elm-kin-00230",
+    "minute": "9'",
+    "period": 1,
+    "t": 535.5,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.1,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 909.0,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.4,
+    "draw": 0.25,
+    "away_win": 0.35,
+    "most_common_scores": [
+     [
+      "1-0",
+      5
+     ],
+     [
+      "0-1",
+      4
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.15,
+    "away_win": 0.8,
+    "most_common_scores": [
+     [
+      "0-1",
+      6
+     ],
+     [
+      "0-2",
+      5
+     ],
+     [
+      "0-3",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "33'",
+      "side": "home",
+      "scorer": "Domagoj Babić"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md06-elm-wes": {
+   "match_id": "md06-elm-wes",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md06-elm-wes-m011",
+    "type": "goal",
+    "title": "GOAL: Pruitt (Elmhurst) 54', 1-0",
+    "weight_pts": 48.3,
+    "event_id": "md06-elm-wes-00549",
+    "minute": "54'",
+    "period": 2,
+    "t": 518.6,
+    "player_id": "elm-10",
+    "player": "Mason Pruitt",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.16,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 446.3,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.55,
+    "away_win": 0.25,
+    "most_common_scores": [
+     [
+      "0-0",
+      11
+     ],
+     [
+      "0-1",
+      4
+     ],
+     [
+      "1-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.9,
+    "draw": 0.1,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      12
+     ],
+     [
+      "2-0",
+      5
+     ],
+     [
+      "1-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 0
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md07-elm-ash": {
+   "match_id": "md07-elm-ash",
+   "final": {
+    "home": 1,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md07-elm-ash-m020",
+    "type": "goal",
+    "title": "GOAL: Pollitt (Elmhurst) 65', 1-0",
+    "weight_pts": 54.2,
+    "event_id": "md07-elm-ash-01387",
+    "minute": "65'",
+    "period": 2,
+    "t": 1196.7,
+    "player_id": "elm-08",
+    "player": "Kieran Pollitt",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 318.5,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.3,
+    "draw": 0.55,
+    "away_win": 0.15,
+    "most_common_scores": [
+     [
+      "0-0",
+      10
+     ],
+     [
+      "1-0",
+      6
+     ],
+     [
+      "0-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.85,
+    "draw": 0.15,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      13
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "2-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "69'",
+      "side": "home",
+      "scorer": "Domagoj Babić"
+     },
+     {
+      "minute": "87'",
+      "side": "away",
+      "scorer": "Cian Doherty"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md07-ngc-sal": {
+   "match_id": "md07-ngc-sal",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md07-ngc-sal-m029",
+    "type": "woodwork",
+    "title": "Off the woodwork: Morvan (Northgate) from 9 m",
+    "weight_pts": 4.5,
+    "event_id": "md07-ngc-sal-01368",
+    "minute": "65'",
+    "period": 2,
+    "t": 1192.2,
+    "player_id": "ngc-20",
+    "player": "Yanis Morvan",
+    "side": "home",
+    "outcome": "post",
+    "shot_kind": "open_play",
+    "xg": 0.09,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 325.7,
+   "futures": 20,
+   "actual_outcome": "post",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.95,
+    "draw": 0.05,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      14
+     ],
+     [
+      "2-0",
+      4
+     ],
+     [
+      "1-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.3,
+    "draw": 0.45,
+    "away_win": 0.25,
+    "most_common_scores": [
+     [
+      "0-0",
+      6
+     ],
+     [
+      "1-0",
+      6
+     ],
+     [
+      "0-1",
+      5
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 2,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "70'",
+      "side": "home",
+      "scorer": "Yanis Morvan"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md08-elm-riv": {
+   "match_id": "md08-elm-riv",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md08-elm-riv-m034",
+    "type": "woodwork",
+    "title": "Off the woodwork: Brekke (Riverside) from 17 m",
+    "weight_pts": 5.3,
+    "event_id": "md08-elm-riv-01972",
+    "minute": "90+3'",
+    "period": 2,
+    "t": 2876.3,
+    "player_id": "riv-20",
+    "player": "Vegard Brekke",
+    "side": "away",
+    "outcome": "post",
+    "shot_kind": "open_play",
+    "xg": 0.07,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 22.8,
+   "futures": 20,
+   "actual_outcome": "post",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.0,
+    "away_win": 1.0,
+    "most_common_scores": [
+     [
+      "0-1",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.95,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "0-0",
+      19
+     ],
+     [
+      "0-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md05-riv-ngc": {
+   "match_id": "md05-riv-ngc",
+   "final": {
+    "home": 2,
+    "away": 4
+   },
+   "turning_point": {
+    "moment_id": "md05-riv-ngc-m003",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 3', 1-0",
+    "weight_pts": 38.0,
+    "event_id": "md05-riv-ngc-00077",
+    "minute": "3'",
+    "period": 1,
+    "t": 136.8,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.03,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 982.2,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.5,
+    "draw": 0.2,
+    "away_win": 0.3,
+    "most_common_scores": [
+     [
+      "1-0",
+      5
+     ],
+     [
+      "0-1",
+      3
+     ],
+     [
+      "2-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.65,
+    "draw": 0.25,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "3-1",
+      3
+     ],
+     [
+      "2-0",
+      3
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "3'",
+      "side": "home",
+      "scorer": "Kwame Mensah"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md05-elm-sal": {
+   "match_id": "md05-elm-sal",
+   "final": {
+    "home": 2,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md05-elm-sal-m002",
+    "type": "goal",
+    "title": "GOAL: Babić (Elmhurst) 5', 1-0",
+    "weight_pts": 38.3,
+    "event_id": "md05-elm-sal-00133",
+    "minute": "5'",
+    "period": 1,
+    "t": 298.7,
+    "player_id": "elm-11",
+    "player": "Domagoj Babić",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.09,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 967.4,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.6,
+    "draw": 0.3,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "0-0",
+      4
+     ],
+     [
+      "2-0",
+      4
+     ],
+     [
+      "3-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.85,
+    "draw": 0.05,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "1-0",
+      7
+     ],
+     [
+      "2-1",
+      4
+     ],
+     [
+      "3-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "66'",
+      "side": "home",
+      "scorer": "Domagoj Babić"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md09-crw-elm": {
+   "match_id": "md09-crw-elm",
+   "final": {
+    "home": 1,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md09-crw-elm-m032",
+    "type": "goal",
+    "title": "GOAL: Valdivieso (Crowmoor) 90', 1-0",
+    "weight_pts": 78.0,
+    "event_id": "md09-crw-elm-01844",
+    "minute": "90'",
+    "period": 2,
+    "t": 2673.1,
+    "player_id": "crw-17",
+    "player": "Kaito Kubota",
+    "side": "home",
+    "outcome": "blocked",
+    "shot_kind": "open_play",
+    "xg": 0.18,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 63.3,
+   "futures": 20,
+   "actual_outcome": "blocked",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.95,
+    "draw": 0.05,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      18
+     ],
+     [
+      "2-0",
+      1
+     ],
+     [
+      "1-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.85,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "0-0",
+      17
+     ],
+     [
+      "1-0",
+      2
+     ],
+     [
+      "0-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 2,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "90+4'",
+      "side": "home",
+      "scorer": "Iker Valdivieso"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md08-crw-ash": {
+   "match_id": "md08-crw-ash",
+   "final": {
+    "home": 1,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md08-crw-ash-m009",
+    "type": "goal",
+    "title": "GOAL: Carbajosa (Crowmoor) 49', 1-0",
+    "weight_pts": 47.3,
+    "event_id": "md08-crw-ash-01045",
+    "minute": "49'",
+    "period": 2,
+    "t": 229.7,
+    "player_id": "crw-10",
+    "player": "Mikel Carbajosa",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.14,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 489.8,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.6,
+    "draw": 0.35,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "0-0",
+      7
+     ],
+     [
+      "1-0",
+      6
+     ],
+     [
+      "2-0",
+      6
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.9,
+    "draw": 0.1,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-0",
+      9
+     ],
+     [
+      "1-0",
+      6
+     ],
+     [
+      "2-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "74'",
+      "side": "home",
+      "scorer": "Borja Olabarri"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md06-ngc-kin": {
+   "match_id": "md06-ngc-kin",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md06-ngc-kin-m012",
+    "type": "great_save",
+    "title": "Big save: Fairclough denies Delaunay (xG 0.37)",
+    "weight_pts": 13.4,
+    "event_id": "md06-ngc-kin-00596",
+    "minute": "29'",
+    "period": 1,
+    "t": 1719.9,
+    "player_id": "ngc-10",
+    "player": "Mathis Delaunay",
+    "side": "home",
+    "outcome": "saved",
+    "shot_kind": "open_play",
+    "xg": 0.37,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 737.8,
+   "futures": 20,
+   "actual_outcome": "saved",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.95,
+    "draw": 0.05,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "3-0",
+      5
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "2-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.4,
+    "draw": 0.45,
+    "away_win": 0.15,
+    "most_common_scores": [
+     [
+      "0-0",
+      5
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "2-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 2,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "34'",
+      "side": "home",
+      "scorer": "Mathis Delaunay"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md09-ngc-ash": {
+   "match_id": "md09-ngc-ash",
+   "final": {
+    "home": 1,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md09-ngc-ash-m038",
+    "type": "goal",
+    "title": "GOAL: Delaunay (Northgate) 84', 1-0",
+    "weight_pts": 64.5,
+    "event_id": "md09-ngc-ash-01646",
+    "minute": "84'",
+    "period": 2,
+    "t": 2301.1,
+    "player_id": "ngc-10",
+    "player": "Mathis Delaunay",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.18,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 128.6,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.8,
+    "away_win": 0.15,
+    "most_common_scores": [
+     [
+      "0-0",
+      16
+     ],
+     [
+      "0-1",
+      3
+     ],
+     [
+      "1-0",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.9,
+    "draw": 0.1,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      17
+     ],
+     [
+      "1-1",
+      2
+     ],
+     [
+      "2-0",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 0
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md10-ngc-elm": {
+   "match_id": "md10-ngc-elm",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md10-ngc-elm-m038",
+    "type": "goal",
+    "title": "GOAL: Delaunay (Northgate) 90+4', 2-1",
+    "weight_pts": 74.2,
+    "event_id": "md10-ngc-elm-01793",
+    "minute": "90+4'",
+    "period": 2,
+    "t": 2904.2,
+    "player_id": "ngc-10",
+    "player": "Mathis Delaunay",
+    "side": "home",
+    "outcome": "blocked",
+    "shot_kind": "open_play",
+    "xg": 0.09,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 32.3,
+   "futures": 20,
+   "actual_outcome": "blocked",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 1.0,
+    "draw": 0.0,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-1",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.9,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-1",
+      18
+     ],
+     [
+      "2-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 2,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md06-ash-riv": {
+   "match_id": "md06-ash-riv",
+   "final": {
+    "home": 0,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md06-ash-riv-m002",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 8', 0-1",
+    "weight_pts": 31.0,
+    "event_id": "md06-ash-riv-00166",
+    "minute": "8'",
+    "period": 1,
+    "t": 478.8,
+    "player_id": "riv-11",
+    "player": "Lucas Varga",
+    "side": "away",
+    "outcome": "blocked",
+    "shot_kind": "open_play",
+    "xg": 0.22,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 964.9,
+   "futures": 20,
+   "actual_outcome": "blocked",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.3,
+    "away_win": 0.6,
+    "most_common_scores": [
+     [
+      "0-1",
+      6
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "2-2",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.45,
+    "away_win": 0.35,
+    "most_common_scores": [
+     [
+      "1-1",
+      5
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "0-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "48'",
+      "side": "away",
+      "scorer": "Kwame Mensah"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md10-sal-wes": {
+   "match_id": "md10-sal-wes",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": null,
+    "type": "chance",
+    "title": null,
+    "weight_pts": null,
+    "event_id": "md10-sal-wes-01925",
+    "minute": "90+4'",
+    "period": 2,
+    "t": 2894.6,
+    "player_id": "wes-18",
+    "player": "Rodrigo Olvera",
+    "side": "away",
+    "outcome": "off_target",
+    "shot_kind": "open_play",
+    "xg": 0.25,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 10.1,
+   "futures": 20,
+   "actual_outcome": "off_target",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.0,
+    "away_win": 1.0,
+    "most_common_scores": [
+     [
+      "0-1",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 1.0,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "0-0",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md10-crw-riv": {
+   "match_id": "md10-crw-riv",
+   "final": {
+    "home": 0,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md10-crw-riv-m031",
+    "type": "goal",
+    "title": "GOAL: Lunde (Riverside) 90+1', 0-1",
+    "weight_pts": 73.1,
+    "event_id": "md10-crw-riv-01972",
+    "minute": "90+1'",
+    "period": 2,
+    "t": 2756.5,
+    "player_id": "riv-08",
+    "player": "Sindre Lunde",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.12,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 67.9,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.9,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "0-0",
+      18
+     ],
+     [
+      "1-0",
+      1
+     ],
+     [
+      "0-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.15,
+    "away_win": 0.85,
+    "most_common_scores": [
+     [
+      "0-1",
+      16
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "0-2",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 0
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md11-ngc-crw": {
+   "match_id": "md11-ngc-crw",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md11-ngc-crw-m029",
+    "type": "big_chance",
+    "title": "Penalty missed: Valdivieso (Crowmoor)",
+    "weight_pts": 54.2,
+    "event_id": "md11-ngc-crw-01757",
+    "minute": "90+2'",
+    "period": 2,
+    "t": 2803.6,
+    "player_id": "crw-20",
+    "player": "Iker Valdivieso",
+    "side": "away",
+    "outcome": "off_target",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 41.2,
+   "futures": 20,
+   "actual_outcome": "off_target",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.0,
+    "away_win": 1.0,
+    "most_common_scores": [
+     [
+      "0-1",
+      20
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.95,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "0-0",
+      19
+     ],
+     [
+      "1-0",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md08-ngc-wes": {
+   "match_id": "md08-ngc-wes",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": null,
+    "type": "chance",
+    "title": null,
+    "weight_pts": null,
+    "event_id": "md08-ngc-wes-01043",
+    "minute": "49'",
+    "period": 2,
+    "t": 201.0,
+    "player_id": "ngc-08",
+    "player": "Sergi Carbajosa",
+    "side": "home",
+    "outcome": "off_target",
+    "shot_kind": "open_play",
+    "xg": 0.12,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 501.8,
+   "futures": 20,
+   "actual_outcome": "off_target",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.8,
+    "draw": 0.1,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "1-0",
+      8
+     ],
+     [
+      "2-0",
+      6
+     ],
+     [
+      "1-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.75,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "0-0",
+      14
+     ],
+     [
+      "2-0",
+      2
+     ],
+     [
+      "1-0",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 2,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "56'",
+      "side": "home",
+      "scorer": "Mathis Delaunay"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md09-riv-sal": {
+   "match_id": "md09-riv-sal",
+   "final": {
+    "home": 0,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md09-riv-sal-m021",
+    "type": "goal",
+    "title": "GOAL: Brierley (Saltmarsh) 52', 0-1",
+    "weight_pts": 34.6,
+    "event_id": "md09-riv-sal-01135",
+    "minute": "52'",
+    "period": 2,
+    "t": 414.8,
+    "player_id": "sal-11",
+    "player": "Jude Brierley",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 446.3,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.7,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "0-0",
+      13
+     ],
+     [
+      "1-0",
+      5
+     ],
+     [
+      "0-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.2,
+    "away_win": 0.75,
+    "most_common_scores": [
+     [
+      "0-1",
+      12
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "0-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "79'",
+      "side": "home",
+      "scorer": "Kwame Mensah"
+     },
+     {
+      "minute": "84'",
+      "side": "away",
+      "scorer": "Niels Kuipers"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md08-kin-sal": {
+   "match_id": "md08-kin-sal",
+   "final": {
+    "home": 4,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md08-kin-sal-m002",
+    "type": "goal",
+    "title": "GOAL: Duarte (Kingsport) 10', 1-0",
+    "weight_pts": 39.3,
+    "event_id": "md08-kin-sal-00186",
+    "minute": "10'",
+    "period": 1,
+    "t": 544.0,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.09,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 923.1,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.55,
+    "draw": 0.35,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "0-0",
+      6
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "2-0",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.95,
+    "draw": 0.0,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "2-0",
+      4
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "3-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "51'",
+      "side": "home",
+      "scorer": "Yuto Arakawa"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md11-riv-wes": {
+   "match_id": "md11-riv-wes",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": null,
+    "type": "chance",
+    "title": null,
+    "weight_pts": null,
+    "event_id": "md11-riv-wes-01085",
+    "minute": "48'",
+    "period": 2,
+    "t": 159.9,
+    "player_id": "wes-10",
+    "player": "Marin Radošević",
+    "side": "away",
+    "outcome": "off_target",
+    "shot_kind": "open_play",
+    "xg": 0.15,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 488.1,
+   "futures": 20,
+   "actual_outcome": "off_target",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.2,
+    "away_win": 0.65,
+    "most_common_scores": [
+     [
+      "0-1",
+      6
+     ],
+     [
+      "2-1",
+      3
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.6,
+    "away_win": 0.2,
+    "most_common_scores": [
+     [
+      "0-0",
+      10
+     ],
+     [
+      "1-0",
+      3
+     ],
+     [
+      "0-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "83'",
+      "side": "away",
+      "scorer": "Ante Babić"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md12-ngc-riv": {
+   "match_id": "md12-ngc-riv",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md12-ngc-riv-m013",
+    "type": "goal",
+    "title": "GOAL: Mensah (Riverside) 49', 0-1",
+    "weight_pts": 32.2,
+    "event_id": "md12-ngc-riv-01039",
+    "minute": "49'",
+    "period": 2,
+    "t": 227.0,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.19,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 461.4,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.2,
+    "draw": 0.5,
+    "away_win": 0.3,
+    "most_common_scores": [
+     [
+      "0-0",
+      8
+     ],
+     [
+      "0-1",
+      3
+     ],
+     [
+      "1-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.25,
+    "away_win": 0.7,
+    "most_common_scores": [
+     [
+      "0-1",
+      8
+     ],
+     [
+      "1-1",
+      4
+     ],
+     [
+      "0-2",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "58'",
+      "side": "away",
+      "scorer": "Kwame Mensah"
+     },
+     {
+      "minute": "84'",
+      "side": "home",
+      "scorer": "Mathis Delaunay"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md11-sal-ash": {
+   "match_id": "md11-sal-ash",
+   "final": {
+    "home": 1,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md11-sal-ash-m012",
+    "type": "goal",
+    "title": "GOAL: Brierley (Saltmarsh) 58', 1-1",
+    "weight_pts": 28.5,
+    "event_id": "md11-sal-ash-00753",
+    "minute": "58'",
+    "period": 2,
+    "t": 735.7,
+    "player_id": "sal-11",
+    "player": "Jude Brierley",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.02,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 380.3,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.15,
+    "away_win": 0.8,
+    "most_common_scores": [
+     [
+      "0-1",
+      12
+     ],
+     [
+      "0-2",
+      3
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.65,
+    "away_win": 0.2,
+    "most_common_scores": [
+     [
+      "1-1",
+      13
+     ],
+     [
+      "1-2",
+      4
+     ],
+     [
+      "2-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "74'",
+      "side": "away",
+      "scorer": "Cian Doherty"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md12-sal-elm": {
+   "match_id": "md12-sal-elm",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md12-sal-elm-m039",
+    "type": "goal",
+    "title": "GOAL: Hwang (Elmhurst) 86', 0-1",
+    "weight_pts": 60.0,
+    "event_id": "md12-sal-elm-01861",
+    "minute": "86'",
+    "period": 2,
+    "t": 2425.1,
+    "player_id": "elm-20",
+    "player": "Tae-yang Hwang",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.06,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 100.9,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.9,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "0-0",
+      18
+     ],
+     [
+      "0-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.05,
+    "away_win": 0.95,
+    "most_common_scores": [
+     [
+      "0-1",
+      19
+     ],
+     [
+      "1-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 0
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md13-riv-ash": {
+   "match_id": "md13-riv-ash",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md13-riv-ash-m050",
+    "type": "goal",
+    "title": "GOAL: Brekke (Riverside) 90+4', 2-1",
+    "weight_pts": 78.1,
+    "event_id": "md13-riv-ash-01996",
+    "minute": "90+4'",
+    "period": 2,
+    "t": 2882.1,
+    "player_id": "riv-20",
+    "player": "Vegard Brekke",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "penalty",
+    "xg": 0.74,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 27.7,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.9,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-1",
+      18
+     ],
+     [
+      "2-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.95,
+    "draw": 0.05,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-1",
+      19
+     ],
+     [
+      "2-2",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md10-kin-ash": {
+   "match_id": "md10-kin-ash",
+   "final": {
+    "home": 3,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md10-kin-ash-m004",
+    "type": "goal",
+    "title": "GOAL: Nwosu (Kingsport) 18', 1-0",
+    "weight_pts": 42.4,
+    "event_id": "md10-kin-ash-00354",
+    "minute": "18'",
+    "period": 1,
+    "t": 1022.6,
+    "player_id": "kin-10",
+    "player": "Kelechi Nwosu",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.39,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 825.0,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.4,
+    "draw": 0.45,
+    "away_win": 0.15,
+    "most_common_scores": [
+     [
+      "0-0",
+      7
+     ],
+     [
+      "1-0",
+      6
+     ],
+     [
+      "0-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.8,
+    "draw": 0.15,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "2-0",
+      7
+     ],
+     [
+      "1-1",
+      3
+     ],
+     [
+      "2-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "45'",
+      "side": "home",
+      "scorer": "Yuto Arakawa"
+     },
+     {
+      "minute": "90+1'",
+      "side": "away",
+      "scorer": "Grady Kimbrough"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md09-kin-wes": {
+   "match_id": "md09-kin-wes",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md09-kin-wes-m001",
+    "type": "goal",
+    "title": "GOAL: Arakawa (Kingsport) 4', 1-0",
+    "weight_pts": 38.6,
+    "event_id": "md09-kin-wes-00075",
+    "minute": "4'",
+    "period": 1,
+    "t": 209.0,
+    "player_id": "kin-09",
+    "player": "Yuto Arakawa",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.11,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 983.5,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.4,
+    "draw": 0.45,
+    "away_win": 0.15,
+    "most_common_scores": [
+     [
+      "0-0",
+      5
+     ],
+     [
+      "1-0",
+      3
+     ],
+     [
+      "2-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.95,
+    "draw": 0.05,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "2-0",
+      6
+     ],
+     [
+      "3-0",
+      5
+     ],
+     [
+      "1-0",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "41'",
+      "side": "away",
+      "scorer": "Ivan Vuković"
+     },
+     {
+      "minute": "45'",
+      "side": "home",
+      "scorer": "Rafael Duarte"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md13-sal-crw": {
+   "match_id": "md13-sal-crw",
+   "final": {
+    "home": 1,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md13-sal-crw-m028",
+    "type": "goal",
+    "title": "GOAL: Valdivieso (Crowmoor) 83', 1-2",
+    "weight_pts": 54.8,
+    "event_id": "md13-sal-crw-01688",
+    "minute": "83'",
+    "period": 2,
+    "t": 2231.4,
+    "player_id": "crw-20",
+    "player": "Iker Valdivieso",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.11,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 120.8,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.85,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "1-1",
+      17
+     ],
+     [
+      "2-1",
+      2
+     ],
+     [
+      "1-2",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.15,
+    "away_win": 0.85,
+    "most_common_scores": [
+     [
+      "1-2",
+      13
+     ],
+     [
+      "2-2",
+      3
+     ],
+     [
+      "1-3",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md11-kin-elm": {
+   "match_id": "md11-kin-elm",
+   "final": {
+    "home": 2,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md11-kin-elm-m001",
+    "type": "goal",
+    "title": "GOAL: Duarte (Kingsport) 1', 1-0",
+    "weight_pts": 37.9,
+    "event_id": "md11-kin-elm-00026",
+    "minute": "1'",
+    "period": 1,
+    "t": 39.8,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.1,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 973.7,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.5,
+    "draw": 0.25,
+    "away_win": 0.25,
+    "most_common_scores": [
+     [
+      "1-0",
+      5
+     ],
+     [
+      "0-2",
+      3
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.8,
+    "draw": 0.15,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "1-0",
+      5
+     ],
+     [
+      "2-1",
+      3
+     ],
+     [
+      "3-0",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 0
+    },
+    "goals_after": [
+     {
+      "minute": "7'",
+      "side": "home",
+      "scorer": "Rafael Duarte"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md14-sal-ngc": {
+   "match_id": "md14-sal-ngc",
+   "final": {
+    "home": 0,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md14-sal-ngc-m028",
+    "type": "goal",
+    "title": "GOAL: Delaunay (Northgate) 72', 0-1",
+    "weight_pts": 42.1,
+    "event_id": "md14-sal-ngc-01440",
+    "minute": "72'",
+    "period": 2,
+    "t": 1605.2,
+    "player_id": "ngc-10",
+    "player": "Mathis Delaunay",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.17,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 232.1,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.9,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "0-0",
+      17
+     ],
+     [
+      "0-1",
+      2
+     ],
+     [
+      "1-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.05,
+    "away_win": 0.95,
+    "most_common_scores": [
+     [
+      "0-1",
+      17
+     ],
+     [
+      "0-2",
+      2
+     ],
+     [
+      "1-1",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "77'",
+      "side": "home",
+      "scorer": "Sam Thornbury"
+     },
+     {
+      "minute": "87'",
+      "side": "away",
+      "scorer": "Mathis Delaunay"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md12-kin-crw": {
+   "match_id": "md12-kin-crw",
+   "final": {
+    "home": 0,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md12-kin-crw-m001",
+    "type": "goal",
+    "title": "GOAL: Boakye (Crowmoor) 1', 0-1",
+    "weight_pts": 28.3,
+    "event_id": "md12-kin-crw-00028",
+    "minute": "1'",
+    "period": 1,
+    "t": 47.2,
+    "player_id": "crw-09",
+    "player": "Nana Boakye",
+    "side": "away",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.23,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 977.9,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.35,
+    "away_win": 0.4,
+    "most_common_scores": [
+     [
+      "1-0",
+      3
+     ],
+     [
+      "0-0",
+      3
+     ],
+     [
+      "1-2",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.15,
+    "away_win": 0.7,
+    "most_common_scores": [
+     [
+      "0-1",
+      4
+     ],
+     [
+      "1-2",
+      4
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "21'",
+      "side": "away",
+      "scorer": "Mikel Carbajosa"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md12-wes-ash": {
+   "match_id": "md12-wes-ash",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": null,
+    "type": "chance",
+    "title": null,
+    "weight_pts": null,
+    "event_id": "md12-wes-ash-00707",
+    "minute": "39'",
+    "period": 1,
+    "t": 2300.1,
+    "player_id": "ash-10",
+    "player": "Oisín Mulcahy",
+    "side": "away",
+    "outcome": "off_target",
+    "shot_kind": "open_play",
+    "xg": 0.25,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 592.2,
+   "futures": 20,
+   "actual_outcome": "off_target",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.0,
+    "draw": 0.2,
+    "away_win": 0.8,
+    "most_common_scores": [
+     [
+      "0-1",
+      7
+     ],
+     [
+      "0-2",
+      6
+     ],
+     [
+      "1-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.25,
+    "draw": 0.3,
+    "away_win": 0.45,
+    "most_common_scores": [
+     [
+      "0-1",
+      8
+     ],
+     [
+      "0-0",
+      6
+     ],
+     [
+      "1-0",
+      5
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "58'",
+      "side": "away",
+      "scorer": "Oisín Mulcahy"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md13-kin-ngc": {
+   "match_id": "md13-kin-ngc",
+   "final": {
+    "home": 2,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md13-kin-ngc-m010",
+    "type": "goal",
+    "title": "GOAL: Duarte (Kingsport) 37', 1-0",
+    "weight_pts": 44.0,
+    "event_id": "md13-kin-ngc-00817",
+    "minute": "37'",
+    "period": 1,
+    "t": 2210.0,
+    "player_id": "kin-11",
+    "player": "Rafael Duarte",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.02,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 588.5,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.3,
+    "draw": 0.6,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "0-0",
+      9
+     ],
+     [
+      "1-0",
+      5
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.75,
+    "draw": 0.25,
+    "away_win": 0.0,
+    "most_common_scores": [
+     [
+      "1-0",
+      6
+     ],
+     [
+      "1-1",
+      5
+     ],
+     [
+      "2-0",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "75'",
+      "side": "home",
+      "scorer": "Cian Brennan"
+     },
+     {
+      "minute": "83'",
+      "side": "away",
+      "scorer": "Mathis Delaunay"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md14-wes-crw": {
+   "match_id": "md14-wes-crw",
+   "final": {
+    "home": 2,
+    "away": 2
+   },
+   "turning_point": {
+    "moment_id": "md14-wes-crw-m026",
+    "type": "goal",
+    "title": "GOAL: Radošević (Westmere) 69', 2-1",
+    "weight_pts": 55.8,
+    "event_id": "md14-wes-crw-01433",
+    "minute": "69'",
+    "period": 2,
+    "t": 1426.6,
+    "player_id": "wes-10",
+    "player": "Marin Radošević",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.22,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 210.7,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.05,
+    "draw": 0.9,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "1-1",
+      18
+     ],
+     [
+      "2-1",
+      1
+     ],
+     [
+      "1-2",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.75,
+    "draw": 0.2,
+    "away_win": 0.05,
+    "most_common_scores": [
+     [
+      "2-1",
+      14
+     ],
+     [
+      "2-2",
+      4
+     ],
+     [
+      "2-3",
+      1
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": []
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md14-ash-elm": {
+   "match_id": "md14-ash-elm",
+   "final": {
+    "home": 4,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md14-ash-elm-m014",
+    "type": "goal",
+    "title": "GOAL: Mulcahy (Ashvale) 43', 1-0",
+    "weight_pts": 44.7,
+    "event_id": "md14-ash-elm-00866",
+    "minute": "43'",
+    "period": 1,
+    "t": 2533.3,
+    "player_id": "ash-10",
+    "player": "Oisín Mulcahy",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.06,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 474.0,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.3,
+    "draw": 0.5,
+    "away_win": 0.2,
+    "most_common_scores": [
+     [
+      "0-0",
+      8
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "0-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.8,
+    "draw": 0.1,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "1-0",
+      10
+     ],
+     [
+      "2-1",
+      4
+     ],
+     [
+      "1-1",
+      2
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 1,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "55'",
+      "side": "home",
+      "scorer": "Oisín Mulcahy"
+     },
+     {
+      "minute": "67'",
+      "side": "away",
+      "scorer": "Tyler Calloway"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md13-wes-elm": {
+   "match_id": "md13-wes-elm",
+   "final": {
+    "home": 3,
+    "away": 1
+   },
+   "turning_point": {
+    "moment_id": "md13-wes-elm-m005",
+    "type": "goal",
+    "title": "GOAL: Radošević (Westmere) 11', 1-0",
+    "weight_pts": 38.2,
+    "event_id": "md13-wes-elm-00229",
+    "minute": "11'",
+    "period": 1,
+    "t": 619.3,
+    "player_id": "wes-10",
+    "player": "Marin Radošević",
+    "side": "home",
+    "outcome": "goal",
+    "shot_kind": "open_play",
+    "xg": 0.17,
+    "change": "shot_misses"
+   },
+   "status": "ok",
+   "seconds": 705.6,
+   "futures": 20,
+   "actual_outcome": "goal",
+   "changed_outcome": "saved",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.15,
+    "draw": 0.3,
+    "away_win": 0.55,
+    "most_common_scores": [
+     [
+      "0-0",
+      5
+     ],
+     [
+      "0-2",
+      5
+     ],
+     [
+      "0-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.65,
+    "draw": 0.25,
+    "away_win": 0.1,
+    "most_common_scores": [
+     [
+      "1-0",
+      5
+     ],
+     [
+      "2-1",
+      4
+     ],
+     [
+      "1-1",
+      4
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 1
+    },
+    "goals_after": [
+     {
+      "minute": "87'",
+      "side": "away",
+      "scorer": "Tae-yang Hwang"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  },
+  "md14-kin-riv": {
+   "match_id": "md14-kin-riv",
+   "final": {
+    "home": 0,
+    "away": 0
+   },
+   "turning_point": {
+    "moment_id": "md14-kin-riv-m002",
+    "type": "woodwork",
+    "title": "Off the woodwork: Mensah (Riverside) from 9 m",
+    "weight_pts": 2.7,
+    "event_id": "md14-kin-riv-00183",
+    "minute": "9'",
+    "period": 1,
+    "t": 501.6,
+    "player_id": "riv-10",
+    "player": "Kwame Mensah",
+    "side": "away",
+    "outcome": "post",
+    "shot_kind": "open_play",
+    "xg": 0.1,
+    "change": "shot_scores"
+   },
+   "status": "ok",
+   "seconds": 718.7,
+   "futures": 20,
+   "actual_outcome": "post",
+   "changed_outcome": "goal",
+   "with_change": {
+    "futures": 20,
+    "home_win": 0.1,
+    "draw": 0.3,
+    "away_win": 0.6,
+    "most_common_scores": [
+     [
+      "1-1",
+      4
+     ],
+     [
+      "1-2",
+      3
+     ],
+     [
+      "0-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "as_it_happened": {
+    "futures": 20,
+    "home_win": 0.35,
+    "draw": 0.4,
+    "away_win": 0.25,
+    "most_common_scores": [
+     [
+      "0-0",
+      4
+     ],
+     [
+      "1-0",
+      4
+     ],
+     [
+      "1-1",
+      3
+     ]
+    ],
+    "margin_95": 0.219
+   },
+   "featured": {
+    "final": {
+     "home": 0,
+     "away": 2
+    },
+    "goals_after": [
+     {
+      "minute": "69'",
+      "side": "away",
+      "scorer": "Kwame Mensah"
+     }
+    ]
+   },
+   "method": "20 paired futures from the instant of the shot (same random streams with and without the change)"
+  }
+ }
+}
