@@ -13,10 +13,12 @@ engine; Copilot's own model only plans the tool calls and writes the answer.
    pip install -e "./stats[mcp]"
    ```
 2. Open the repo folder in VS Code (File > Open Folder) with GitHub Copilot signed in.
-3. VS Code finds `.vscode/mcp.json`. Start the server from the `Start` link that appears above the server entry in
-   that file, or from the MCP servers view, and trust it when asked. Its output log should show 19 tools.
-   On macOS or Linux, change `command` to `${workspaceFolder}/.venv/bin/python`.
-4. Open Chat, switch to **Agent**, and check the tools picker: the `match-intelligence` tools should be listed.
+3. Trust the folder when VS Code asks (servers in `.vscode/mcp.json` cannot start in Restricted Mode). Start the
+   server: Command Palette > **MCP: List Servers** > match-intelligence > **Start Server** (or Chat > Open
+   Customizations > MCP Servers > ... > Start Server). VS Code also starts new workspace servers by itself on your first
+   chat message. If it fails, the same menu's **Show Output** shows why (usually the Python path in `.vscode/mcp.json`,
+   or `mcp` not installed). On macOS or Linux, change `command` to `${workspaceFolder}/.venv/bin/python`.
+4. Open Chat, switch to **Agent**, and open the tools picker: a `match-intelligence` group with the 19 tools should be listed.
    `AGENTS.md` tells Copilot about the project and to quote only numbers the tools return.
 
 Check it outside VS Code: `matchstats mcp --help`, and `pytest stats/tests/test_mcp.py`.

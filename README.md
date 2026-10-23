@@ -13,7 +13,16 @@ network that only ever use the match so far (key G).
 
 > Other tools tell you what happened. Ours shows you what could have happened, and proves it.
 
-Status: engine, stats layer, seven-agent desk, ghost futures and the 3D broadcast all work end to end. Deployment and the demo video come next. See [`docs/STATUS.md`](docs/STATUS.md).
+Status: engine, stats layer, the AI desk, ghost futures, the 3D broadcast for the whole season, recaps, receipts, the MCP server and the deployment pipeline are built. The demo video comes next. See [`docs/STATUS.md`](docs/STATUS.md).
+
+## Architecture
+
+![Match Intelligence architecture](docs/img/architecture.svg)
+
+The site is static (Azure Static Web Apps); Club mode's live try-outs run on the match engine in Azure Container Apps
+(scale to zero); the AI desk runs on Microsoft Foundry from a laptop and its fact-checked results are committed, so the
+public site never calls a model. GitHub Actions tests every push and rebuilds the site on Linux, re-playing the season
+and checking it event for event. Deploying: [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 ## Pipeline
 

@@ -120,8 +120,15 @@ Read this first when picking the project up in a new chat.
 - Tested here over real stdio with the SDK client: every tool, a fresh try-out (Schuurman at ST, 2 matches each way, 20 s), bad ids refused. `stats/tests/test_mcp.py` (skips without the SDK).
 - Copilot: `.vscode/mcp.json` (Windows venv path; `bin/python` on macOS/Linux), `AGENTS.md` (read by default), prompt files `/scout` and `/matchday-report` in `.github/prompts/`. Demo script with real answers in `docs/COPILOT_DEMO.md`. Not yet tried in VS Code itself (no VS Code in the sandbox).
 
+## Done (Oct 23): deployment pipeline, architecture diagram
+- `.github/workflows/ci.yml`: all three packages' tests on every push/PR (ubuntu-24.04, Python 3.13, numpy 2.5.3, scripted models: $0).
+- `.github/workflows/site.yml`: on push to main (code changes) or by hand: re-play the season with tracking (cached by season + engine source hash; the event-for-event check stops the build on any difference), build the site with the live editions/recaps when committed (else the offline ones / stats-written recaps), keep it as a run artifact, deploy to Static Web Apps when the `AZURE_STATIC_WEB_APPS_API_TOKEN` secret exists. Repo variable `TRYOUT_API_URL` puts the hosted try-out server into the demo's Club mode (`matchagents site --tryout-api` / `MATCH_TRYOUT_API`). The build writes `staticwebapp.config.json` (match files cached 1 h, nosniff). Site: 98.2 MB, 74 files (Free plan: 250 MB, 15,000 files).
+- `.github/workflows/tryout-image.yml` + `deploy/tryout-server/Dockerfile` (+ `.dockerignore`): engine-only image to GHCR (free), non-root, health check, daily cap 150, CORS to the site's origin. The container's command was run here against a copy of the try-outs (health, CORS preflight, cached try-out streamed). Docker, Actions and Azure could not be run from the sandbox: first real runs happen on GitHub.
+- `docs/DEPLOY.md`: every command with its cost; Container Apps scale to zero, 1 replica, no Log Analytics; at the cap, at most ~135k vCPU-s and ~270k GiB-s a month, inside the free grant (180k / 360k). Caveat: the cap counter resets when the container restarts; budget alerts are the backstop; off switch documented.
+- `docs/img/architecture.svg` (+ `.png` at 2x for the video), in the README.
+
 ## Next
 1. Real-model editions run on the laptop (`matchagents editions ... --futures 40 --out editions-live.json`, ~$1.5-2.5, asks first), then `matchagents site` with it.
 2. Paid recap run on Ryan's laptop (`matchagents recaps ../data/season --out recaps-live.json`, ~$0.45, asks first), commit recaps-live.json. The research is done and committed (20 futures each way, all 56 matches).
-3. Try the Copilot demo in VS Code (docs/COPILOT_DEMO.md); deploy (Static Web Apps + Container Apps), CI (the site build must run `matchengine season --tracking` first), architecture diagram.
+3. Deploy: Ryan follows docs/DEPLOY.md (resource group, Static Web App + secret, Container App + variable); check the first CI and Site runs.
 4. Video, README polish, pitch; submit early.

@@ -1,0 +1,6 @@
+# The try-out image only needs the engine and the pre-simulated try-outs.
+*
+!engine/
+!data/demo/riv-kin-1119/tryouts/
+engine/**/__pycache__
+engine/**/*.egg-info

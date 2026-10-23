@@ -1,0 +1,85 @@
+# Builds the website on Linux and deploys it to Azure Static Web Apps.
+#
+# Linux matters: the season was generated on Linux (Ubuntu 24.04, numpy 2.5.3), and the 3D needs every match
+# re-played with tracking on its seed. `matchengine season --tracking` checks every re-played match event for
+# event against the committed season and stops the build on any difference, so the site can never show a
+# different game from the table. The re-played bundles are cached, so only the first build pays the ~15 min.
+#
+# Deploy needs the repository secret AZURE_STATIC_WEB_APPS_API_TOKEN (see docs/DEPLOY.md). Without it the job
+# still builds the site and attaches it to the run as an artifact. Optional repository variable TRYOUT_API_URL:
+# the hosted try-out server, for Club mode's live try-outs.
+name: Site
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md", "docs/**", ".vscode/**", ".github/prompts/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      MATCH_WORKERS: "4"
+      SWA_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}   # empty when the secret is not set: build only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: "*/pyproject.toml"
+      - name: Install (numpy pinned to the version the season re-plays exactly with)
+        run: |
+          python -m pip install --upgrade pip
+          pip install "numpy==2.5.3" -e ./engine -e ./stats -e ./agents
+
+      - name: Restore re-played season (tracking)
+        uses: actions/cache@v4
+        with:
+          path: data/matches/season
+          key: tracking-${{ hashFiles('data/season/season.json', 'engine/src/**/*.py') }}
+
+      - name: Re-play the season with tracking (checked against the committed season)
+        working-directory: engine
+        run: matchengine season --out ../data/season --demo ../data/demo/riv-kin-1119 --tracking ../data/matches/season
+
+      - name: Build the site
+        working-directory: agents
+        env:
+          MATCH_TRYOUT_API: ${{ vars.TRYOUT_API_URL }}
+        run: |
+          # the AI desk for the demo match: the live editions when they are committed, else the free offline ones
+          SEG=../data/demo/riv-kin-1119/editions-offline.json
+          for f in editions-live.json editions.json; do if [ -f "$f" ]; then SEG="$f"; break; fi; done
+          REC=""
+          if [ -f recaps-live.json ]; then REC="--recaps recaps-live.json"; fi
+          echo "AI desk segments: $SEG   recaps: ${REC:-written from the stats}"
+          matchagents site --season ../data/season --demo ../data/demo/riv-kin-1119 --segments "$SEG" \
+            --tracking ../data/matches/season $REC --out ../site
+          du -sh ../site
+
+      - name: Keep the built site with the run
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site
+          retention-days: 7
+
+      - name: Deploy to Azure Static Web Apps
+        if: ${{ env.SWA_TOKEN != '' }}
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: site
+          skip_app_build: true
+          skip_api_build: true

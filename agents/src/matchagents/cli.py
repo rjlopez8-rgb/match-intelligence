@@ -13,6 +13,7 @@ import argparse
 import asyncio
 import contextlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -442,6 +443,7 @@ def main(argv: list[str] | None = None) -> int:
                          "and each matchday's match of the week the full match")
     st.add_argument("--workers", type=int, default=None)
     st.add_argument("--recaps", type=Path, default=None, help="recaps JSON from `matchagents recaps`")
+    st.add_argument("--tryout-api", default=None, help="URL of the hosted try-out server (or MATCH_TRYOUT_API)")
     sub.add_parser("diagram", help="print the desk workflow as Mermaid")
     sub.add_parser("spend", help="today's model spending")
     args = p.parse_args(argv)
@@ -458,7 +460,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "site":
         from .site import build_site
 
-        r = build_site(args.season, args.demo, args.out, args.segments, args.tracking, args.workers, args.recaps)
+        r = build_site(args.season, args.demo, args.out, args.segments, args.tracking, args.workers, args.recaps,
+                       args.tryout_api or os.environ.get("MATCH_TRYOUT_API") or None)
         print(f"site -> {args.out}: index.html (season hub), watch.html (3D), {r['matches']} matches in 3D "
               f"({len(r['full'])} full, highlights for all), {r['mb']} MB "
               f"(highlights {r['hl_mb']} MB, full matches {r['full_mb']} MB).")

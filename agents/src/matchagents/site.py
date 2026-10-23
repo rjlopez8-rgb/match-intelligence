@@ -57,8 +57,10 @@ def _match_files(job: tuple) -> dict:
     """Viewer data for one match: highlights always, the full match when it is a match of the week."""
     from matchstats.replay import build_replay, highlights
 
-    mid, bundle, full, segments, out = job
+    mid, bundle, full, segments, out, api = job
     data = build_replay(bundle, segments)
+    if api and data.get("club"):
+        data["club"]["api"] = api     # Club mode's live try-outs on the hosted engine server
     hub = f"index.html#/match/{mid}"
     hl = highlights(data)
     hl["hub"] = hub
@@ -101,7 +103,7 @@ def _recap_fields(season: dict, season_dir: Path, recaps: Path | None) -> int:
 
 
 def build_site(season_dir: Path, demo: Path, out: Path, segments: Path | None = None, tracking: Path | None = None,
-               workers: int | None = None, recaps: Path | None = None, progress=print) -> dict:
+               workers: int | None = None, recaps: Path | None = None, tryout_api: str | None = None, progress=print) -> dict:
     from matchstats.replay import render_viewer_shell
     from matchstats.season import build_season, render_season
 
@@ -127,7 +129,7 @@ def build_site(season_dir: Path, demo: Path, out: Path, segments: Path | None = 
         else:
             missing.append(mid)
             continue
-        jobs.append((mid, str(bundle), mid in full_ids, segs if mid == demo_id else None, str(mdir)))
+        jobs.append((mid, str(bundle), mid in full_ids, segs if mid == demo_id else None, str(mdir), tryout_api))
 
     n = max(1, min(len(jobs), workers or int(os.environ.get("MATCH_WORKERS") or (os.cpu_count() or 2))))
     progress(f"3D data for {len(jobs)} matches ({len([j for j in jobs if j[2]])} full) on {n} worker(s)")
@@ -145,6 +147,12 @@ def build_site(season_dir: Path, demo: Path, out: Path, segments: Path | None = 
     n_agent = _recap_fields(season, Path(season_dir), recaps)
     (out / "index.html").write_text(render_season(season), encoding="utf-8")
     (out / "watch.html").write_text(render_viewer_shell(), encoding="utf-8")
+    # Azure Static Web Apps: cache the match files (they only change with a new build), basic hardening headers
+    (out / "staticwebapp.config.json").write_text(json.dumps({
+        "routes": [{"route": "/matches/*", "headers": {"Cache-Control": "public, max-age=3600"}}],
+        "mimeTypes": {".json": "application/json"},
+        "globalHeaders": {"X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin"},
+    }, indent=1), encoding="utf-8")
     # the demo's old address keeps working
     (out / f"{demo_id}.html").write_text(
         f'<!doctype html><meta charset="utf-8"><title>Redirecting…</title>'
