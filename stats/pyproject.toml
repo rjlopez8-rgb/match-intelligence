@@ -18,6 +18,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5"]
 plots = ["matplotlib>=3.8"]
+mcp = ["mcp>=2.0,<3"]          # `matchstats mcp`: the MCP server (MCP Python SDK 2.x API)
 
 [project.scripts]
 matchstats = "matchstats.cli:main"

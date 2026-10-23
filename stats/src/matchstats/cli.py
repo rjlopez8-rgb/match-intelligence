@@ -242,6 +242,13 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--board", default=None, help="Club mode board.json, to show try-outs on player pages")
     s.set_defaults(fn=cmd_season)
 
+    s = sub.add_parser("mcp", help="run the Match Intelligence MCP server (stdio; --http for streamable HTTP)")
+    s.add_argument("--http", action="store_true")
+    s.add_argument("--host", default="127.0.0.1")
+    s.add_argument("--port", type=int, default=8766)
+    s.add_argument("--data", default=None, help="the repo's data folder")
+    s.set_defaults(fn=lambda a: __import__("matchstats.mcp_server", fromlist=["main"]).main(
+        (["--http"] if a.http else []) + ["--host", a.host, "--port", str(a.port)] + (["--data", a.data] if a.data else [])) or 0)
     s = sub.add_parser("schema", help="export JSON Schemas for moments and snapshots")
     s.add_argument("--out", default="docs/schema")
     s.set_defaults(fn=cmd_schema)

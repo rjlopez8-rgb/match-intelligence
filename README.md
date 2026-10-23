@@ -122,6 +122,18 @@ happened and 40 times with the shot flipped, on any machine. The Recap agent wri
 decided it; code checks every number, scoreline and player name against the evidence, then the Fact-checker reviews
 every claim; one rewrite, else a code-written recap. Without `--recaps` the hub shows the code-written ones.
 
+### Match Intelligence as an MCP server (GitHub Copilot)
+
+```
+pip install -e "./stats[mcp]"
+matchstats mcp                     # stdio; VS Code starts it from .vscode/mcp.json
+```
+
+19 tools: the season (`list_matches`, `league_table`, `season_player`, `what_decided_it`), the stats layer's own query
+tools for any match as of any minute, and Club mode (`tryout_board`, `tryout_result`, `run_tryout` on the engine).
+In VS Code, Copilot agent mode uses them directly; `/scout` and `/matchday-report` are ready-made prompts. Setup and a
+demo script: [`docs/COPILOT_DEMO.md`](docs/COPILOT_DEMO.md).
+
 ### Club mode (player try-outs)
 
 ```
