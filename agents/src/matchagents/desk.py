@@ -13,6 +13,17 @@ For every key moment the stats layer detects:
   code (every number must exist in the stats layer's results), then a model review. Rejected lines
   go back to the Commentator once; if they still fail, the stats layer's own factual title airs.
   Nothing unverified reaches the screen.
+
+Editions (``Desk.cover_editions``): one moment told many ways. The research runs once (Producer, Analyst,
+Telestrator, Scenario, one set of simulations), then one edition desk per viewer style works in parallel:
+
+    Producer ──► Analyst / Telestrator / Scenario ──► (join) ──► Fan desk ───────┐
+                                                           ├──► Tactician desk ──┤
+                                                           ├──► Analyst desk ────┼──► (join) ──► Segment
+                                                           └──► Academy desk ────┘
+
+Each edition desk has its own Director cut, then a Commentator ⇄ Fact-checker loop for every channel
+(neutral, or a club's own channel) and language (English, Spanish, French), checked in that language.
 """
 
 from __future__ import annotations
@@ -33,6 +44,7 @@ from .ghost import for_agents
 from .llm import ScriptedChatClient, Trace, foundry_client
 from .prompts import INSTRUCTIONS
 from .schemas import (
+    LANGUAGES,
     AnalystBrief,
     Commentary,
     DirectorCue,
@@ -46,6 +58,7 @@ from .session import MatchSession
 from .tools import Ledger, Receipt, stats_tools
 
 MAX_REVISIONS = 1
+MAX_PARALLEL = int(__import__("os").environ.get("MATCH_PARALLEL_CALLS", "4"))  # model calls in flight at once
 EVIDENCE_KEYS = ("event_id", "minute", "type", "team", "player", "location", "details")
 
 
@@ -56,6 +69,24 @@ class ScenarioRunner(Protocol):
 
 
 # ----------------------------------------------------------------------------- state
+@dataclass(frozen=True)
+class Edition:
+    """One way of telling a moment: a viewer style, a channel (neutral or a club's own) and a language."""
+
+    style: str
+    channel: str = "neutral"  # neutral | home | away
+    lang: str = "en"
+
+    @property
+    def key(self) -> str:
+        return f"{self.style}.{self.channel}.{self.lang}"
+
+    @staticmethod
+    def parse(key: str) -> Edition:
+        style, channel, lang = key.split(".")
+        return Edition(style, channel, lang)
+
+
 @dataclass
 class DeskState:
     moment: dict
@@ -75,6 +106,10 @@ class DeskState:
     fallback: bool = False
     errors: list[str] = field(default_factory=list)
     halted: bool = False
+    decision: dict | None = None
+    editions: list[Edition] | None = None
+    variants: dict[str, dict] = field(default_factory=dict)
+    directors: dict[str, dict] = field(default_factory=dict)
 
 
 @dataclass
@@ -111,6 +146,8 @@ class Desk:
         self.rundown: list[dict] = []
         self.settings: dict[str, AgentSettings] = {a: settings_for(a) for a in AGENTS}
         self.agents: dict[str, Agent] = {a: self._agent(a, http_client) for a in AGENTS}
+        self.scenario_cache: dict[tuple[str, str], dict] = {}  # one set of simulations serves every edition
+        self._sem: asyncio.Semaphore | None = None
 
     def _agent(self, name: str, http_client) -> Agent:
         s = self.settings[name]
@@ -151,13 +188,181 @@ class Desk:
         self.ledger.add(Receipt("desk", "explain_moment", {"moment_id": moment["moment_id"]}, ex))
         return [{k: e.get(k) for k in EVIDENCE_KEYS} for e in ex["evidence"]]
 
+    def _decision(self, evidence: list[dict]) -> dict | None:
+        """The options at the key shot (teammates' space, pass odds, xG): the academy's coaching point."""
+        shot = next((e for e in reversed(evidence) if e["type"] == "shot"), None)
+        if not shot:
+            return None
+        try:
+            res = self.session.queries.options(shot["event_id"])
+        except Exception:  # noqa: BLE001 - no frame, no decision: the segment still airs
+            return None
+        self.ledger.add(Receipt("desk", "options", {"event_id": shot["event_id"]}, res))
+        return res
+
+    def _state(self, moment: dict, editions: list[Edition] | None = None) -> DeskState:
+        m = dict(moment)
+        m["team_side"] = self.session.ctx.side(m.get("team_id"))
+        state = DeskState(m, self.profile, self._evidence(m), editions=editions)
+        state.decision = self._decision(state.evidence)
+        return state
+
+    def team_name(self, channel: str) -> str | None:
+        return None if channel == "neutral" else self.session.meta[channel]["short_name"]
+
+    def sem(self) -> asyncio.Semaphore:
+        if self._sem is None:
+            self._sem = asyncio.Semaphore(MAX_PARALLEL)
+        return self._sem
+
+    # ------------------------------------------------------------- commentary and checking
+    def _moment_brief(self, m: dict) -> dict:
+        return {k: m.get(k) for k in ("type", "minute_display", "team_name", "player_names", "score", "title")}
+
+    async def commentary(self, state: DeskState, profile: ViewerProfile, issues: list[dict] | None,
+                         previous: Commentary | None) -> Commentary | None:
+        if state.brief is None:
+            return None
+        data = {
+            "angle": state.plan.angle,
+            "segment": state.plan.segment,
+            "profile": profile.model_dump(),
+            "moment": self._moment_brief(state.moment),
+            "teams": {side: self.session.meta[side]["short_name"] for side in ("home", "away")},
+            "headline": state.brief.headline,
+            "facts": [{"index": i, **f.model_dump()} for i, f in enumerate(state.brief.facts)],
+            "insight": state.brief.insight,
+            "decision": state.brief.decision,
+            "what_if": state.plan.what_if,
+            "what_if_result": _usable(state.scenario_result),
+        }
+        task = "Write the on-air lines."
+        if issues and previous is not None:
+            data["previous_draft"] = previous.model_dump()
+            data["fact_check_issues"] = issues
+            task = "Rewrite the lines to fix every fact-check issue."
+        async with self.sem():
+            return await _safely(state, "commentator", self.ask("commentator", task, data, Commentary))
+
+    async def review(self, state: DeskState, draft: Commentary, attempt: int) -> tuple[bool, list[dict], dict]:
+        """Code check first (numbers must exist in the receipts), then the model's review."""
+        sources = [*self.ledger.results(), state.moment, for_agents(state.scenario_result) or {}]
+        code_issues = check_numbers(draft, sources) + check_style(draft)
+        verdict = None
+        if not code_issues:
+            data = {
+                "commentary": draft.model_dump(),
+                "facts": [f.model_dump() for f in state.brief.facts],
+                "tool_results": _unique_results(self.ledger),
+                "simulation_result": _usable(state.scenario_result),
+            }
+            async with self.sem():
+                ask = self.ask("factchecker", "Check the lines.", data, Verdict)
+                verdict = await _safely(state, "factchecker", ask)
+        approved = not code_issues and verdict is not None and verdict.approved
+        issues = code_issues or ([i.model_dump() for i in verdict.issues] if verdict else [])
+        record = {
+            "attempt": attempt + 1,
+            "code_issues": code_issues,
+            "model_verdict": verdict.model_dump() if verdict else None,
+            "approved": approved,
+        }
+        return approved, issues, record
+
+    async def edition(self, state: DeskState, ed: Edition) -> dict:
+        """Commentary for one edition, fact-checked in its language, with one rewrite allowed."""
+        profile = ViewerProfile(style=ed.style, favourite_team=self.team_name(ed.channel), language=LANGUAGES[ed.lang])
+        drafts: list[Commentary] = []
+        checks: list[dict] = []
+        issues = None
+        for attempt in range(MAX_REVISIONS + 1):
+            draft = await self.commentary(state, profile, issues, drafts[-1] if drafts else None)
+            if draft is None:
+                break
+            drafts.append(draft)
+            ok, issues, record = await self.review(state, draft, attempt)
+            checks.append(record)
+            if ok:
+                return {"lines": [ln.text for ln in draft.lines], "headline": draft.headline, "caption": draft.caption,
+                        "question": draft.question, "fallback": False, "checks": checks,
+                        "drafts": [d.model_dump() for d in drafts]}
+            if state.halted:
+                break
+        return {"lines": [state.moment["title"]], "headline": None, "caption": None, "question": None,
+                "fallback": True, "checks": checks, "drafts": [d.model_dump() for d in drafts]}
+
+    async def direct(self, state: DeskState, style: str) -> DirectorCue | None:
+        data = {
+            "moment": state.moment,
+            "viewer_style": style,
+            "plan": state.plan.model_dump(),
+            "evidence": [{k: e[k] for k in ("event_id", "minute", "type", "player")} for e in state.evidence],
+            "telestration_caption": state.telestration.caption if state.telestration else None,
+        }
+        async with self.sem():
+            return await _safely(state, "director", self.ask("director", "Call the cameras.", data, DirectorCue))
+
+    async def edition_desk(self, state: DeskState, style: str) -> None:
+        """One style's desk: its Director cut, then every channel and language of its commentary, in parallel."""
+        todo = [ed for ed in (state.editions or []) if ed.style == style and ed.key not in state.variants]
+        if style not in state.directors:
+            cue = await self.direct(state, style)
+            if cue:
+                state.directors[style] = cue.model_dump()
+        results = await asyncio.gather(*(self.edition(state, ed) for ed in todo))
+        for ed, r in zip(todo, results, strict=True):
+            # a budget stop or a failed model call is not a verdict: leave it out so the next run retries it
+            if not (r["fallback"] and (state.halted or not r["checks"])):
+                state.variants[ed.key] = r
+
+    # ---------------------------------------------------------------------------- editions
+    async def cover_editions(self, moment: dict, editions: list[Edition], saved: dict | None = None) -> dict:
+        """Tell one moment every way in ``editions``. ``saved`` is this moment's earlier output: its research
+        and finished editions are reused, so an interrupted run resumes where it stopped and pays only once."""
+        self.ledger = Ledger()
+        start_call = len(self.trace.calls)
+        state = self._state(moment, editions)
+        if self.guard is not None and self.guard.remaining() <= 0:
+            state.halted = True
+            state.errors.append("daily budget reached before this moment")
+        if saved and saved.get("plan") and saved.get("brief"):
+            _restore(state, saved, self.ledger)
+            styles = sorted({ed.style for ed in editions}, key=lambda st: [ed.style for ed in editions].index(st))
+            await asyncio.gather(*(self.edition_desk(state, st) for st in styles))
+            final = state
+        else:
+            if saved:
+                state.variants.update(saved.get("editions") or {})
+            result = await build_workflow(self, editions=editions).run(state)
+            outputs = result.get_outputs()
+            final = outputs[-1] if outputs else state
+        seg = self._segment(final, start_call)
+        if final.plan and final.plan.cover:
+            self.rundown.append({"minute": moment["minute_display"], "period": moment["period"], "type": moment["type"],
+                                 "segment": final.plan.segment, "said": [final.plan.angle]})
+        default = next((k for k in (e.key for e in editions) if k in final.variants), None)
+        if default:
+            v = final.variants[default]
+            seg["commentary"] = {"lines": v["lines"], "fallback": v["fallback"], "drafts": v["drafts"]}
+            seg["factcheck"] = v["checks"]
+            seg["aired"] = bool(final.plan and v["lines"])
+        seg["editions"] = final.variants
+        seg["directors"] = final.directors
+        seg["director"] = final.directors.get(editions[0].style) if editions else seg["director"]
+        seg["tool_results"] = _unique_results(self.ledger)
+        seg["telestration_raw"] = final.telestration.model_dump() if final.telestration else None
+        if saved and saved.get("cost"):
+            for k in ("usd", "model_calls", "input_tokens", "output_tokens"):
+                seg["cost"][k] = round(seg["cost"][k] + saved["cost"].get(k, 0), 6)
+        return seg
+
     async def cover(self, moment: dict) -> dict:
         """Run the full desk on one moment and return the segment that airs (or the reason it doesn't)."""
         self.ledger = Ledger()
         start_call = len(self.trace.calls)
         m = dict(moment)
         m["team_side"] = self.session.ctx.side(m.get("team_id"))
-        state = DeskState(m, self.profile, self._evidence(m))
+        state = self._state(moment)
         if self.guard is not None and self.guard.remaining() <= 0:
             state.halted = True
             state.errors.append("daily budget reached before this moment")
@@ -192,6 +397,9 @@ class Desk:
             "plan": s.plan.model_dump() if s.plan else None,
             "commentary": {
                 "lines": s.final_lines,
+                "headline": s.drafts[-1].headline if s.drafts and not s.fallback else None,
+                "caption": s.drafts[-1].caption if s.drafts and not s.fallback else None,
+                "question": s.drafts[-1].question if s.drafts and not s.fallback else None,
                 "fallback": s.fallback,
                 "drafts": [d.model_dump() for d in s.drafts],
             },
@@ -199,6 +407,7 @@ class Desk:
             "factcheck": s.checks,
             "director": s.director.model_dump() if s.director else None,
             "telestration": s.telestration_resolved,
+            "decision": s.decision,
             "scenario": {
                 "spec": s.scenario.model_dump() if s.scenario else None,
                 "result": s.scenario_result,
@@ -226,6 +435,23 @@ def _by_agent(calls) -> dict:
     return out
 
 
+def _restore(state: DeskState, saved: dict, ledger: Ledger) -> None:
+    """Rebuild a moment's shared research from an earlier run's output (no model calls)."""
+    state.plan = ProducerPlan.model_validate(saved["plan"])
+    state.brief = AnalystBrief.model_validate(saved["brief"])
+    if saved.get("telestration_raw"):
+        state.telestration = Telestration.model_validate(saved["telestration_raw"])
+    state.telestration_resolved = saved.get("telestration")
+    sc = saved.get("scenario") or {}
+    state.scenario = ScenarioSpec.model_validate(sc["spec"]) if sc.get("spec") else None
+    state.scenario_result = sc.get("result")
+    state.decision = saved.get("decision") or state.decision
+    state.variants.update(saved.get("editions") or {})
+    state.directors.update(saved.get("directors") or {})
+    for r in saved.get("tool_results") or []:
+        ledger.add(Receipt("analyst", r["tool"], r["args"], r["result"]))
+
+
 async def _safely(state: DeskState, agent: str, coro):
     """Run one agent step; failures degrade the segment instead of crashing the broadcast."""
     if state.halted:
@@ -250,13 +476,20 @@ class ProducerStep(Executor):
     @handler
     async def run(self, state: DeskState, ctx: WorkflowContext[DeskState, DeskState]) -> None:
         m = state.moment
+        profile = state.profile.model_dump()
+        if state.editions:
+            profile = {"style": "every style at once (fan, tactician, analyst, academy)", "favourite_team": None,
+                       "languages": sorted({LANGUAGES[e.lang] for e in state.editions})}
         data = {
             "moment": m,
-            "profile": state.profile.model_dump(),
+            "profile": profile,
             "rundown": self.desk.rundown[-8:],
             "score": m["score"],
         }
         state.plan = await _safely(state, "producer", self.desk.ask("producer", "Plan coverage.", data, ProducerPlan))
+        if state.plan is not None and state.editions and not state.plan.cover:
+            state.plan.cover = True  # editions are for moments a person picked: they always air
+            self.desk.trace.step("producer", "cover overridden: moment chosen for editions")
         if state.plan is None or not state.plan.cover:
             await ctx.yield_output(state)
             return
@@ -274,7 +507,7 @@ class AnalystStep(Executor):
             "moment_id": state.moment["moment_id"],
             "moment": state.moment,
             "angle": state.plan.angle,
-            "viewer_style": state.profile.style,
+            "viewer_style": "all" if state.editions else state.profile.style,
         }
         state.brief = await _safely(
             state, "analyst", self.desk.ask("analyst", "Research this moment with the tools.", data, AnalystBrief)
@@ -314,15 +547,23 @@ class ScenarioStep(Executor):
             if state.scenario:
                 state.scenario.simulations = max(6, min(40, state.scenario.simulations))
                 runner = self.desk.scenario_runner
-                self.desk.trace.step("scenario", "simulating", futures=state.scenario.simulations)
-                try:  # CPU-heavy: run off the event loop so the other agents keep working
-                    state.scenario_result = (
-                        await asyncio.to_thread(runner.run, state.scenario, self.desk.session)
-                        if runner
-                        else {"status": "not_run", "reason": "ghost futures disabled for this run"}
-                    )
-                except Exception as exc:  # a simulation failure must not take the segment down
-                    state.errors.append(f"scenario runner: {type(exc).__name__}: {exc}")
+                key = (state.scenario.event_id, state.scenario.intervention)
+                cached = self.desk.scenario_cache.get(key)
+                if cached and cached.get("status") == "ok":
+                    state.scenario_result = cached
+                    self.desk.trace.step("scenario", "reused simulations", event_id=key[0])
+                else:
+                    self.desk.trace.step("scenario", "simulating", futures=state.scenario.simulations)
+                    try:  # CPU-heavy: run off the event loop so the other agents keep working
+                        state.scenario_result = (
+                            await asyncio.to_thread(runner.run, state.scenario, self.desk.session)
+                            if runner
+                            else {"status": "not_run", "reason": "ghost futures disabled for this run"}
+                        )
+                        if state.scenario_result.get("status") == "ok":
+                            self.desk.scenario_cache[key] = state.scenario_result
+                    except Exception as exc:  # a simulation failure must not take the segment down
+                        state.errors.append(f"scenario runner: {type(exc).__name__}: {exc}")
         await ctx.send_message(state)
 
 
@@ -344,15 +585,7 @@ class DirectorStep(Executor):
 
     @handler
     async def run(self, state: DeskState, ctx: WorkflowContext[DeskState]) -> None:
-        data = {
-            "moment": state.moment,
-            "plan": state.plan.model_dump(),
-            "evidence": [{k: e[k] for k in ("event_id", "minute", "type", "player")} for e in state.evidence],
-            "telestration_caption": state.telestration.caption if state.telestration else None,
-        }
-        state.director = await _safely(
-            state, "director", self.desk.ask("director", "Call the cameras.", data, DirectorCue)
-        )
+        state.director = await self.desk.direct(state, state.profile.style)
         await ctx.send_message(state)
 
 
@@ -361,39 +594,20 @@ class CommentatorStep(Executor):
         super().__init__(id="commentator")
         self.desk = desk
 
-    async def _write(self, state: DeskState, issues: list[dict] | None) -> Commentary | None:
-        if state.brief is None:
-            return None
-        data = {
-            "angle": state.plan.angle,
-            "segment": state.plan.segment,
-            "profile": state.profile.model_dump(),
-            "headline": state.brief.headline,
-            "facts": [{"index": i, **f.model_dump()} for i, f in enumerate(state.brief.facts)],
-            "insight": state.brief.insight,
-            "what_if": state.plan.what_if,
-            "what_if_result": _usable(state.scenario_result),
-        }
-        task = "Write the on-air lines."
-        if issues:
-            data["previous_draft"] = state.drafts[-1].model_dump()
-            data["fact_check_issues"] = issues
-            task = "Rewrite the lines to fix every fact-check issue."
-        return await _safely(state, "commentator", self.desk.ask("commentator", task, data, Commentary))
-
     @handler
     async def first(self, state: DeskState, ctx: WorkflowContext[DeskState]) -> None:
-        draft = await self._write(state, None)
+        draft = await self.desk.commentary(state, state.profile, None, None)
         if draft:
             state.drafts.append(draft)
         await ctx.send_message(state)
 
     @handler
     async def revise(self, rev: Revision, ctx: WorkflowContext[DeskState]) -> None:
-        draft = await self._write(rev.state, rev.issues)
+        st = rev.state
+        draft = await self.desk.commentary(st, st.profile, rev.issues, st.drafts[-1] if st.drafts else None)
         if draft:
-            rev.state.drafts.append(draft)
-        await ctx.send_message(rev.state)
+            st.drafts.append(draft)
+        await ctx.send_message(st)
 
 
 class FactCheckStep(Executor):
@@ -409,29 +623,8 @@ class FactCheckStep(Executor):
             state.final_lines, state.fallback = [state.moment["title"]], True
             await ctx.send_message(state, target_id="on_air")
             return
-        sources = [*self.desk.ledger.results(), state.moment, for_agents(state.scenario_result) or {}]
-        code_issues = check_numbers(draft, sources) + check_style(draft)
-        verdict = None
-        if not code_issues:
-            data = {
-                "commentary": draft.model_dump(),
-                "facts": [f.model_dump() for f in state.brief.facts],
-                "tool_results": _unique_results(self.desk.ledger),
-                "simulation_result": _usable(state.scenario_result),
-            }
-            verdict = await _safely(
-                state, "factchecker", self.desk.ask("factchecker", "Check the lines.", data, Verdict)
-            )
-        approved = not code_issues and verdict is not None and verdict.approved
-        issues = code_issues or ([i.model_dump() for i in verdict.issues] if verdict else [])
-        state.checks.append(
-            {
-                "attempt": attempt + 1,
-                "code_issues": code_issues,
-                "model_verdict": verdict.model_dump() if verdict else None,
-                "approved": approved,
-            }
-        )
+        approved, issues, record = await self.desk.review(state, draft, attempt)
+        state.checks.append(record)
         if approved:
             state.final_lines = [line.text for line in draft.lines]
             await ctx.send_message(state, target_id="on_air")
@@ -456,10 +649,36 @@ def _unique_results(ledger: Ledger) -> list[dict]:
     return out
 
 
-def build_workflow(desk: Desk):
+class EditionStep(Executor):
+    """One viewer style's desk: Director cut + Commentator ⇄ Fact-checker for each channel and language."""
+
+    def __init__(self, desk: Desk, style: str):
+        super().__init__(id=f"{style}_desk")
+        self.desk, self.style = desk, style
+
+    @handler
+    async def run(self, state: DeskState, ctx: WorkflowContext[DeskState]) -> None:
+        if not state.halted:
+            await self.desk.edition_desk(state, self.style)
+        await ctx.send_message(state)
+
+
+def build_workflow(desk: Desk, editions: list[Edition] | None = None):
     producer = ProducerStep(desk)
     analyst, telestrator, scenario = AnalystStep(desk), TelestratorStep(desk), ScenarioStep(desk)
     research = Gather(id="research_done")
+    if editions:
+        styles = list(dict.fromkeys(ed.style for ed in editions))
+        desks = [EditionStep(desk, st) for st in styles]
+        on_air = Gather(id="on_air")
+        return (
+            WorkflowBuilder(name="broadcast-desk-editions", start_executor=producer, output_from=[producer, on_air])
+            .add_fan_out_edges(producer, [analyst, telestrator, scenario])
+            .add_fan_in_edges([analyst, telestrator, scenario], research)
+            .add_fan_out_edges(research, desks)
+            .add_fan_in_edges(desks, on_air)
+            .build()
+        )
     director, commentator, checker = DirectorStep(desk), CommentatorStep(desk), FactCheckStep(desk)
     on_air = Gather(id="on_air")
     return (
@@ -474,7 +693,7 @@ def build_workflow(desk: Desk):
     )
 
 
-def workflow_mermaid(desk: Desk) -> str:
+def workflow_mermaid(desk: Desk, editions: list[Edition] | None = None) -> str:
     from agent_framework import WorkflowViz
 
-    return WorkflowViz(build_workflow(desk)).to_mermaid()
+    return WorkflowViz(build_workflow(desk, editions)).to_mermaid()

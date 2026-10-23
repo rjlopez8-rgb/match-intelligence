@@ -60,3 +60,39 @@ def test_workflow_diagram_names_all_seven_agents():
     text = workflow_mermaid(Desk(session, offline_mode=True))
     for agent in ("producer", "analyst", "scenario", "telestrator", "director", "commentator", "factchecker"):
         assert agent in text
+
+
+def test_editions_tell_one_moment_every_way_and_resume_for_free():
+    from matchagents.desk import Edition
+
+    session = MatchSession(SAMPLE)
+    moment = session.advance_to(GOAL)
+    desk = Desk(session, offline_mode=True)
+    eds = [Edition("fan", "neutral", "en"), Edition("fan", "away", "es"), Edition("academy", "neutral", "fr"),
+           Edition("analyst", "neutral", "en")]
+    seg = run(desk.cover_editions(moment, eds))
+    assert set(seg["editions"]) == {e.key for e in eds} and seg["aired"]
+    for v in seg["editions"].values():
+        assert v["lines"] and not v["fallback"] and v["checks"][-1]["approved"] and v["headline"]
+    texts = {k: " ".join(v["lines"]) for k, v in seg["editions"].items()}
+    assert texts["fan.away.es"] != texts["fan.neutral.en"] and "¡" in texts["fan.away.es"]
+    assert "xG" in texts["analyst.neutral.en"]
+    d = seg["directors"]
+    assert set(d) == {"fan", "academy", "analyst"}
+    assert [s["camera"] for s in d["fan"]["shots"]] != [s["camera"] for s in d["analyst"]["shots"]]
+    assert seg["decision"] and seg["decision"]["choice"]["action"] == "shot"
+    # resuming with everything done makes no model calls at all
+    session2 = MatchSession(SAMPLE)
+    m2 = session2.advance_to(GOAL)
+    desk2 = Desk(session2, offline_mode=True)
+    again = run(desk2.cover_editions(m2, eds, seg))
+    assert again["cost"]["model_calls"] == seg["cost"]["model_calls"] and len(desk2.trace.calls) == 0
+    assert again["editions"] == seg["editions"]
+
+
+def test_editions_workflow_has_a_desk_per_style():
+    from matchagents.desk import Edition
+
+    eds = [Edition("fan"), Edition("academy", lang="fr")]
+    text = workflow_mermaid(Desk(MatchSession(SAMPLE), offline_mode=True), eds)
+    assert "fan_desk" in text and "academy_desk" in text

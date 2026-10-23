@@ -106,6 +106,97 @@ def cmd_schema(args: argparse.Namespace) -> None:
         print(p)
 
 
+def _slot_of(home: str, away: str, side: str, position: str) -> int:
+    from .tryout import lineup
+
+    for pos in lineup(home, away)[side]:
+        if position.upper() in (pos["label"], str(pos["slot"])) or position == pos["player_id"]:
+            return pos["slot"]
+    raise SystemExit(f"No position {position!r}; options: {[p['label'] for p in lineup(home, away)[side]]}")
+
+
+def cmd_tryout(args: argparse.Namespace) -> None:
+    import json
+
+    from .tryout import run_tryout
+
+    slot = _slot_of(args.home, args.away, args.side, args.position)
+
+    def show(r: dict) -> None:
+        pr, d = r["progress"], r["difference"]
+        print(f"  {pr['done']}/{pr['total']} matches  expected points {d.get('xpts', 0):+.2f} "
+              f"(+/-{d.get('xpts_margin_95', 0):.2f})", flush=True)
+
+    r = run_tryout(args.home, args.away, args.side, slot, args.player, n=args.n, cache_dir=args.cache, on_progress=show)
+    w, i, d = r["with_candidate"], r["with_incumbent"], r["difference"]
+    print(f"\n{r['candidate']['name']} at {r['position']['label']} for {r['fixture']['team']} "
+          f"(instead of {r['incumbent']['name']}), {w['futures']} matches each:")
+    print(f"  expected points  {w['xpts']:.2f} vs {i['xpts']:.2f}  ({d['xpts']:+.2f} +/-{d['xpts_margin_95']:.2f})")
+    print(f"  team xG for      {w['xg_for']:.2f} vs {i['xg_for']:.2f};  against {w['xg_against']:.2f} vs {i['xg_against']:.2f}")
+    print(f"  results          W{w['win']:.0%} D{w['draw']:.0%} L{w['loss']:.0%}  vs  W{i['win']:.0%} D{i['draw']:.0%} L{i['loss']:.0%}")
+    for k in ("goals", "xg", "assists", "key_passes", "dribbles_completed", "tackles_won", "interceptions"):
+        print(f"  {k:<18} {w['per90'][k]:.2f} vs {i['per90'][k]:.2f} per 90")
+    if args.out:
+        with open(args.out, "w", encoding="utf-8") as fh:
+            json.dump(r, fh, indent=1)
+        print(f"saved {args.out}")
+
+
+def cmd_board(args: argparse.Namespace) -> None:
+    import json
+    from pathlib import Path
+
+    from .tryout import board, featured_clip, run_tryout, save_clip
+
+    sides = ["home", "away"] if args.side == "both" else [args.side]
+    out: dict = {"home": args.home, "away": args.away, "n": args.n, "sides": {}}
+    path = Path(args.out)
+    if path.exists():
+        out = json.loads(path.read_text(encoding="utf-8"))
+        out.setdefault("sides", {})
+    clips = Path(args.cache) / "clips"
+    clips.mkdir(parents=True, exist_ok=True)
+    for side in sides:
+        b = board(args.home, args.away, side, ready=args.ready)
+        done = {(r["position"]["slot"], r["candidate"]["player_id"]): r for r in out["sides"].get(side, {}).get("tryouts", [])}
+        results = list(done.values())
+        for pos in b:
+            if args.positions and pos["label"] not in args.positions:
+                continue
+            for c in [c for c in pos["candidates"] if c["ready"]]:
+                key = (pos["slot"], c["player_id"])
+                if key in done and done[key]["with_candidate"]["futures"] >= args.n:
+                    if not args.refresh:
+                        continue
+                    old = done[key]   # re-assemble from the cached runs (no new simulations), keep notes and clips
+                    r = run_tryout(args.home, args.away, side, pos["slot"], c["player_id"], n=args.n, cache_dir=args.cache)
+                    if old.get("featured") and r.get("featured"):
+                        r["featured"]["clip"] = old["featured"].get("clip")
+                    for k in ("scout",):
+                        if old.get(k):
+                            r[k] = old[k]
+                    done[key] = r
+                    continue
+                print(f"{side} {pos['label']}: {c['name']} ({c['club']}) vs {pos['name']}", flush=True)
+                r = run_tryout(args.home, args.away, side, pos["slot"], c["player_id"], n=args.n, cache_dir=args.cache)
+                fe = r.get("featured")
+                if fe:
+                    clip = featured_clip(args.home, args.away, side, pos["slot"], c["player_id"], fe["seed"], fe)
+                    if clip:
+                        name = f"{side}-{pos['slot']}-{c['player_id']}.json.gz"
+                        save_clip(clip, clips / name)
+                        r["featured"]["clip"] = f"clips/{name}"
+                d = r["difference"]
+                print(f"   expected points {d['xpts']:+.2f} (+/-{d['xpts_margin_95']:.2f})", flush=True)
+                done[key] = r
+                results = list(done.values())
+                out["sides"][side] = {"board": b, "tryouts": results}
+                path.write_text(json.dumps(out, indent=1), encoding="utf-8")
+        out["sides"][side] = {"board": b, "tryouts": list(done.values())}
+        path.write_text(json.dumps(out, indent=1), encoding="utf-8")
+    print(f"saved {path}")
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="matchengine", description="Synthetic football match engine")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -152,6 +243,44 @@ def build_parser() -> argparse.ArgumentParser:
     ca.add_argument("--workers", type=int, default=2)
     ca.add_argument("--json")
     ca.set_defaults(func=cmd_calibrate)
+
+    to = sub.add_parser("tryout", help="try any league player in a position for full matches")
+    to.add_argument("--home", default="RIV")
+    to.add_argument("--away", default="KIN")
+    to.add_argument("--side", default="home", choices=["home", "away"])
+    to.add_argument("--position", required=True, help="slot label (ST, LW, RCB...) or index")
+    to.add_argument("--player", required=True, help="player id of the candidate (e.g. wes-20)")
+    to.add_argument("--n", type=int, default=20, help="matches each way")
+    to.add_argument("--cache", default=None, help="folder to cache runs in")
+    to.add_argument("--out")
+    to.set_defaults(func=cmd_tryout)
+
+    bo = sub.add_parser("board", help="recruitment board: rank every candidate, pre-simulate the top picks")
+    bo.add_argument("--home", default="RIV")
+    bo.add_argument("--away", default="KIN")
+    bo.add_argument("--side", default="both", choices=["home", "away", "both"])
+    bo.add_argument("--ready", type=int, default=2, help="players to pre-simulate per position")
+    bo.add_argument("--positions", nargs="*", help="only these slot labels")
+    bo.add_argument("--n", type=int, default=12)
+    bo.add_argument("--refresh", action="store_true", help="rebuild finished try-outs from the cache (no simulations)")
+    bo.add_argument("--cache", required=True)
+    bo.add_argument("--out", required=True)
+    bo.set_defaults(func=cmd_board)
+
+    sv = sub.add_parser("serve", help="live try-out server for the 3D page (engine only, daily cap)")
+    sv.add_argument("--cache", required=True)
+    sv.add_argument("--host", default="127.0.0.1")
+    sv.add_argument("--port", type=int, default=8765)
+    sv.add_argument("--origin", default="*")
+    sv.set_defaults(func=lambda a: __import__("matchengine.serve", fromlist=["main"]).main(
+        ["--cache", a.cache, "--host", a.host, "--port", str(a.port), "--origin", a.origin]))
+
+    se = sub.add_parser("season", help="simulate a full league season (56 matches, no tracking)")
+    se.add_argument("--out", required=True)
+    se.add_argument("--demo", default=None, help="recorded match bundle to slot into the schedule")
+    se.add_argument("--workers", type=int, default=None)
+    se.set_defaults(func=lambda a: __import__("matchengine.season", fromlist=["main"]).main(
+        ["--out", a.out] + (["--demo", a.demo] if a.demo else []) + (["--workers", str(a.workers)] if a.workers else [])))
 
     sh = sub.add_parser("schema", help="export JSON Schemas for events, frames and metadata")
     sh.add_argument("--out", required=True)

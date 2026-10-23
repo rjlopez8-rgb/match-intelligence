@@ -164,6 +164,7 @@ def build_replay(bundle: str | Path, segments: list[dict] | None = None) -> dict
     captions: list[tuple[int, str, str]] = []
     raw_touches: list[dict] = []
     raw_shots: list[dict] = []
+    raw_actions: list[dict] = []
     save_kind: dict[str, str] = {}
     last_shot: dict | None = None
     possession_s = [0.0, 0.0]
@@ -180,6 +181,8 @@ def build_replay(bundle: str | Path, segments: list[dict] | None = None) -> dict
                 save_kind[last_shot["event_id"]] = (item.get("details") or {}).get("kind")
             if item["type"] in TOUCH_CODES and item.get("player_id"):
                 raw_touches.append(item)
+            if item["type"] in ACTION_TYPES and item.get("player_id"):
+                raw_actions.append(item)
             if item["type"] in CAPTION_TYPES and frames:
                 text = _caption(item, ctx)
                 if text:
@@ -255,6 +258,10 @@ def build_replay(bundle: str | Path, segments: list[dict] | None = None) -> dict
                 "weight": m["moment_weight"],
                 "facts": _brief_facts(m),
                 "evidence": len(m["evidence"]),
+                "who": m.get("player_names") or [],
+                "team": m.get("team_name"),
+                "score": [m["score"]["home"], m["score"]["away"]] if m.get("score") else None,
+                "x": {k: v for k, v in (m.get("facts") or {}).items() if k in RAW_FACTS and isinstance(v, (int, float))},
             }
         )
 
@@ -301,11 +308,69 @@ def build_replay(bundle: str | Path, segments: list[dict] | None = None) -> dict
         "shots": [
             _shot_row(_frac_frame(keys, e["period"], e["t"]), e, slot_of, save_kind.get(e["event_id"])) for e in raw_shots
         ],
+        "shotXg": [_xg(ctx, e) for e in raw_shots],
         "moments": moments,
+        "actions": _actions(raw_actions, keys, slot_of, ctx),
         "models": a.models.status(),
         "final": {"score": dict(ctx.score)},
         "segments": _viewer_segments(segments or [], frame_of, slot_of, ctx),
+        "club": _viewer_club(bundle, slot_of, ctx),
     }
+
+
+ACTION_TYPES = {"pass", "shot", "tackle", "interception", "dribble", "foul", "save", "aerial_duel", "ball_recovery",
+                "pressure", "block", "clearance"}
+RAW_FACTS = ("xg", "distance_m", "shot_speed_kmh", "speed_kmh", "difficulty", "lines_broken", "passes",
+             "possession_share", "distance_km", "chaos_index", "moment_weight")
+# what each player did, for the player-focus stat line, alerts and timeline marks
+ACT = {"pass_ok": 1, "pass_bad": 2, "shot": 3, "shot_on": 4, "goal": 5, "chance": 6, "tackle": 7, "interception": 8,
+       "dribble": 9, "foul": 10, "save": 11, "aerial": 12, "recovery": 13, "assist": 14, "pressure": 15, "block": 16,
+       "clearance": 17}
+
+
+def _xg(ctx, e: dict) -> float | None:
+    v = ctx.ann.get(e["event_id"], {}).get("xg")
+    return round(v, 3) if isinstance(v, (int, float)) else None
+
+
+def _actions(events: list[dict], keys: list[tuple], slot_of: dict, ctx) -> list[list]:
+    key_pass, assists = {}, set()
+    for eid, ann in ctx.ann.items():
+        kp = ann.get("key_pass_event_id")
+        if kp:
+            key_pass[kp] = eid
+    goals_from = {e["event_id"] for e in events if e["type"] == "shot" and (e.get("details") or {}).get("outcome") == "goal"}
+    for kp, shot in key_pass.items():
+        if shot in goals_from:
+            assists.add(kp)
+    out = []
+    for e in events:
+        s = slot_of.get(e["player_id"])
+        if s is None:
+            continue
+        t, d = e["type"], e.get("details") or {}
+        oc = d.get("outcome")
+        if t == "pass":
+            code = ACT["assist"] if e["event_id"] in assists else ACT["chance"] if e["event_id"] in key_pass else (
+                ACT["pass_ok"] if oc == "complete" else ACT["pass_bad"])
+        elif t == "shot":
+            code = ACT["goal"] if oc == "goal" else ACT["shot_on"] if oc == "saved" else ACT["shot"]
+        elif t == "tackle":
+            if oc != "won":
+                continue
+            code = ACT["tackle"]
+        elif t == "dribble":
+            if oc != "success":
+                continue
+            code = ACT["dribble"]
+        elif t == "aerial_duel":
+            code = ACT["aerial"]
+        else:
+            code = ACT.get({"ball_recovery": "recovery"}.get(t, t))
+            if code is None:
+                continue
+        out.append([round(_frac_frame(keys, e["period"], e["t"]), 1), s, code])
+    return out
 
 
 SAMPLE_KEYS = [
@@ -433,11 +498,73 @@ def _fan_line(curve: list[list], frame_of) -> list[int]:
     return out
 
 
+CLUB_PER90 = ("goals", "xg", "shots", "assists", "xa", "key_passes", "passes_completed", "progressive_passes",
+               "dribbles_completed", "tackles_won", "interceptions", "ball_recoveries", "clearances", "aerials_won",
+               "dispossessed", "saves", "goals_conceded", "xg_faced", "distance_km", "sprints")
+
+
+def _compact_tryout(r: dict) -> dict:
+    def side(x: dict) -> dict:
+        keep = ("futures", "win", "draw", "loss", "xwin", "xdraw", "xloss", "result_margin_95", "xpts", "xpts_margin_95", "xg_for",
+                "xg_for_margin_95", "xg_against", "xg_against_margin_95", "minutes")
+        return {**{k: x.get(k) for k in keep}, "per90": {k: x["per90"].get(k, 0) for k in CLUB_PER90}}
+
+    fe = r.get("featured") or {}
+    return {
+        "candidate": {k: r["candidate"][k] for k in ("player_id", "name", "club", "role", "age")},
+        "incumbent": {k: r["incumbent"][k] for k in ("player_id", "name", "club", "role", "age")},
+        "position": r["position"],
+        "with": side(r["with_candidate"]),
+        "without": side(r["with_incumbent"]),
+        "diff": r["difference"],
+        "featured": {k: fe.get(k) for k in ("kind", "minute", "seed")} if fe else None,
+        "method": r.get("method"),
+        "report": r.get("scout"),
+    }
+
+
+def _viewer_club(bundle: Path, slot_of: dict, ctx) -> dict | None:
+    """The recruitment board for this fixture (``tryouts/board.json`` from ``matchengine board``), with the
+    pre-simulated try-outs and each one's featured moment packed like a ghost clip."""
+    path = bundle / "tryouts" / "board.json"
+    if not path.exists():
+        return None
+    import gzip
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+    sides, clips = {}, {}
+    for side, block in data.get("sides", {}).items():
+        positions = []
+        for pos in block["board"]:
+            positions.append({
+                **{k: pos[k] for k in ("slot", "label", "role", "player_id", "name", "incumbent_projected")},
+                "candidates": [
+                    {k: c[k] for k in ("player_id", "name", "club", "club_code", "role", "age", "projected", "ready", "tag")}
+                    for c in pos["candidates"]
+                ],
+            })
+        tryouts = {}
+        for r in block.get("tryouts", []):
+            key = f"{r['position']['slot']}:{r['candidate']['player_id']}"
+            tryouts[key] = _compact_tryout(r)
+            ref = (r.get("featured") or {}).get("clip")
+            if ref and (bundle / "tryouts" / ref).exists():
+                with gzip.open(bundle / "tryouts" / ref, "rt", encoding="utf-8") as fh:
+                    clip = json.load(fh)
+                alias = {**slot_of, r["candidate"]["player_id"]: slot_of.get(r["incumbent"]["player_id"], -1)}
+                packed = _pack_clip({**clip, "kind": "tryout"}, alias, ctx)
+                packed["moment"] = clip.get("moment")
+                clips[f"{side}:{key}"] = packed
+                tryouts[key]["clip"] = f"{side}:{key}"
+        sides[side] = {"positions": positions, "tryouts": tryouts}
+    return {"home": data.get("home"), "away": data.get("away"), "n": data.get("n"), "sides": sides, "clips": clips}
+
+
 def _pack_clip(clip: dict, slot_of: dict, ctx) -> dict:
     """A moment of a simulated future in the main frame layout, with its shots, touches and goals,
     so the 3D view animates it exactly like the real match."""
     frames = clip["frames"]
-    n_slots = len(slot_of)
+    n_slots = max(slot_of.values(), default=-1) + 1  # aliases (a try-out's candidate) share a slot
     arr = np.full((len(frames), 2 * n_slots + 6), ABSENT, dtype=np.int16)
     keys = []
     for i, f in enumerate(frames):
@@ -485,6 +612,21 @@ def _pack_clip(clip: dict, slot_of: dict, ctx) -> dict:
         ],
         "goals": [
             [local(e), 0 if ctx.side(e["team_id"]) == "home" else 1] for e in events if e["type"] == "goal"
+        ],
+    }
+
+
+def _pack_director(d: dict, slot, frame_of_event) -> dict:
+    return {
+        "live": d.get("live_camera"),
+        "replay": bool(d.get("replay")),
+        "fromF": frame_of_event(d.get("replay_from_event_id")),
+        "graphic": d.get("graphic"),
+        "tele": bool(d.get("show_telestration")),
+        "shots": [
+            {"cam": x["camera"], "sec": x["seconds"], "slow": x["slow_motion"], "focus": slot(x.get("focus_player")),
+             "purpose": x["purpose"]}
+            for x in (d.get("shots") or [])[:4]
         ],
     }
 
@@ -559,6 +701,27 @@ def _viewer_segments(segments: list[dict], frame_of, slot_of: dict, ctx) -> list
                 ),
             },
         }
+        if s.get("editions"):
+            seg["ed"] = {
+                k: {"l": v["lines"], "h": v.get("headline"), "c": v.get("caption"), "q": v.get("question"),
+                    "fb": v["fallback"], "att": len(v.get("checks") or []),
+                    "ok": bool(v.get("checks") and v["checks"][-1].get("approved")),
+                    "code": sum(len(c.get("code_issues") or []) for c in (v.get("checks") or []))}
+                for k, v in s["editions"].items()
+            }
+            seg["dirs"] = {st: _pack_director(dd, slot, frame_of_event) for st, dd in (s.get("directors") or {}).items() if dd}
+            seg["desk"]["editions"] = len(s["editions"])
+        dec = s.get("decision")
+        if dec and dec.get("teammates"):
+            best = dec["teammates"][0]
+            seg["decision"] = {
+                "player": dec["event"]["player"], "better": bool(dec.get("better_option_exists")),
+                "choice": {k: dec["choice"].get(k) for k in ("action", "xg", "value", "space_m", "defenders_in_lane")},
+                "from": [dec["choice"]["location"]["x"], dec["choice"]["location"]["y"]],
+                "best": {"name": best["name"], "slot": slot_of.get(best["player_id"], -1),
+                         "at": [best["location"]["x"], best["location"]["y"]],
+                         **{k: best[k] for k in ("p_complete", "xg_from_there", "space_m", "value", "opponents_near_pass_line")}},
+            }
         tele = s.get("telestration")
         if tele and tele.get("shapes"):
             fz = tele.get("freeze") or {}

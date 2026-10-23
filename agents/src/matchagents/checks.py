@@ -22,7 +22,7 @@ from .schemas import Commentary, Telestration
 
 # ----------------------------------------------------------------------- number checking
 _SCORE = re.compile(r"(?<!\d)(?<!\d\.)(\d{1,2})\s?[-–]\s?(\d{1,2})(?!\d|\.\d)")
-_PCT = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s?(?:%|percent\b|per cent\b)")
+_PCT = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s?(?:%|percent\b|per cent\b|por ciento\b|pour cent\b)")
 _NUM = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)")
 _NUM_IN_STR = re.compile(r"\d+(?:\.\d+)?")
 STRUCTURAL = {45.0, 90.0}  # halves and full time are not claims
@@ -87,15 +87,25 @@ def _normalise(text: str) -> str:
     """Read numbers the way the viewer's language writes them: 0,74 is 0.74 and 1,234 is 1234."""
     text = re.sub(r"(?<![\d.,])([1-9]\d{0,2}),(?=\d{3}(?!\d))", r"\1", text)  # thousands separators
     text = re.sub(r"(?<=\d),(?=\d)", ".", text)  # decimal commas
-    return text.replace("\u00a0", " ")
+    return text.replace("\u00a0", " ").replace("\u202f", " ")
+
+
+def _texts(commentary: Commentary) -> list[tuple[int | str, str]]:
+    """Everything the viewer will read: the lines, and the on-screen headline, caption and what-if question."""
+    out: list[tuple[int | str, str]] = [(i, line.text) for i, line in enumerate(commentary.lines)]
+    for field in ("headline", "caption", "question"):
+        text = getattr(commentary, field, None)
+        if text:
+            out.append((field, text))
+    return out
 
 
 def check_numbers(commentary: Commentary, sources: Iterable[Any]) -> list[dict]:
     """Issues for every number in the commentary that the evidence does not contain."""
     values, scores = evidence_numbers(sources)
     issues = []
-    for i, line in enumerate(commentary.lines):
-        text = _normalise(line.text)
+    for i, raw in _texts(commentary):
+        text = _normalise(raw)
         for a, b in _SCORE.findall(text):
             if (int(a), int(b)) not in scores and (int(b), int(a)) not in scores:
                 issues.append({"line": i, "claim": f"{a}-{b}", "problem": "scoreline not in the evidence"})
@@ -119,8 +129,7 @@ _LONG_DECIMAL = re.compile(r"(?<![\w.])\d+\.\d{3,}")
 def check_style(commentary: Commentary) -> list[dict]:
     """Issues for lines that would sound wrong on air, even if every number is true."""
     issues = []
-    for i, line in enumerate(commentary.lines):
-        text = line.text
+    for i, text in _texts(commentary):
         if m := _DATA.search(text):
             issues.append({"line": i, "claim": m.group(0), "problem": "pasted data: say it in words"})
         for d in _LONG_DECIMAL.findall(text):

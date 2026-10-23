@@ -15,3 +15,8 @@ dist/
 # generated replay pages (rebuild with `matchstats replay`)
 *-replay.html
 *-broadcast.html
+
+# built website (matchagents site)
+site/
+
+preview.html

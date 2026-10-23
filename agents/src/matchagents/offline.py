@@ -87,39 +87,54 @@ def _analyst(p: dict, results: dict) -> list[tuple[str, dict]] | dict:
     if "explain_moment" not in results:
         return [("explain_moment", {"moment_id": p["moment_id"]}), ("win_probability", {})]
     ex = results["explain_moment"]
+    shot = next((e for e in reversed(ex.get("evidence", [])) if e["type"] == "shot"), None)
+    if shot and "options" not in results:
+        return [("options", {"event_id": shot["event_id"]})]
     evidence = [e["event_id"] for e in ex.get("evidence", [])][-3:]
+    f = ex.get("facts", {}) or {}
     facts = []
-    nums: list = []
-    _flat_numbers("", ex.get("facts", {}), nums)
-    for name, value in nums[:4]:
-        facts.append(
-            {
-                "statement": f"{name.replace('_', ' ')} was {_spoken(value)}",
-                "value": str(value),
-                "source_tool": "explain_moment",
-                "evidence": evidence,
-            }
-        )
+
+    def add(statement, value, tool="explain_moment", ev=evidence):
+        facts.append({"statement": statement, "value": str(value), "source_tool": tool, "evidence": ev})
+
+    # canonical openings: the offline Commentator recognises them to write in every language
+    if f.get("xg") is not None:
+        add(f"The chance was worth {f['xg']:.2f} xG", f["xg"])
+    if f.get("distance_m"):
+        add(f"The shot came from {f['distance_m']:.0f} metres", f["distance_m"])
+    if f.get("shot_speed_kmh"):
+        add(f"The ball flew at {f['shot_speed_kmh']:.0f} km/h", f["shot_speed_kmh"])
     if ex.get("moment_weight"):
-        facts.append(
-            {
-                "statement": f"the moment moved win probability by {ex['moment_weight']} points",
-                "value": str(ex["moment_weight"]),
-                "source_tool": "explain_moment",
-                "evidence": evidence,
-            }
-        )
+        add(f"The moment moved win probability by {ex['moment_weight']:.0f} points", ex["moment_weight"])
+    for side in ("home", "away"):
+        t = f.get(side) if isinstance(f.get(side), dict) else None
+        if t and t.get("possession") is not None:
+            add(f"Possession {t['team']}: {round(t['possession'] * 100)}%", t["possession"])
+            add(f"Expected goals {t['team']}: {t['xg']:.2f}", t["xg"])
+    if not facts:
+        nums: list = []
+        _flat_numbers("", f, nums)
+        for name, value in nums[:4]:
+            add(f"{name.replace('_', ' ')} was {_spoken(value)}", value)
     wp = results.get("win_probability", {}).get("current")
     if wp:
-        facts.append(
-            {
-                "statement": f"home win probability is now {round(wp['home'] * 100)}%",
-                "value": str(wp["home"]),
-                "source_tool": "win_probability",
-                "evidence": [],
-            }
-        )
-    return {"headline": ex["title"], "facts": facts, "insight": f"{ex['title']}."}
+        add(f"Home win probability is now {round(wp['home'] * 100)}%", wp["home"], "win_probability", [])
+    decision = ""
+    o = results.get("options")
+    if o and isinstance(o, dict) and o.get("choice"):
+        ch, best = o["choice"], (o.get("teammates") or [None])[0]
+        if o.get("better_option_exists") and best:
+            decision = (f"{o['event']['player']} shot at {ch.get('xg')} xG; {best['name']} was free with "
+                        f"{best['space_m']} m of space: a pass there arrives {round(best['p_complete'] * 100)}% of "
+                        f"the time and he would shoot at {best['xg_from_there']} xG.")
+            pc = round(best["p_complete"] * 100)
+            add(f"Better option: {best['name']}, pass {pc}%", best["p_complete"], "options", [])
+        elif best:
+            decision = (f"{o['event']['player']} was right to shoot: his chance was {ch.get('xg')} xG and the best "
+                        f"pass, to {best['name']}, led to only {best['xg_from_there']} xG.")
+            x = best["xg_from_there"]
+            add(f"Right call: best alternative only {x:.2f} xG", x, "options", [])
+    return {"headline": ex["title"], "facts": facts, "insight": f"{ex['title']}.", "decision": decision}
 
 
 def _telestrator(p: dict) -> dict:
@@ -166,67 +181,53 @@ def _telestrator(p: dict) -> dict:
     return {"freeze_event_id": key["event_id"] if key else None, "shapes": shapes, "caption": m["title"]}
 
 
+DIRECTOR_CUTS = {  # (camera, slow motion, purpose) per style: the same moment, cut for its audience
+    "fan": [("sweep", False, "the reaction"), ("player", True, "the hero")],
+    "analyst": [("skycam", False, "the build-up"), ("behind", True, "the shot"), ("tactical", False, "the shape")],
+    "tactician": [("tactical", False, "the shape"), ("skycam", False, "the move"), ("behind", True, "the finish")],
+    "academy": [("player", True, "the decision"), ("behind", True, "the outcome"), ("tactical", False, "the options")],
+}
+GRAPHIC = {"fan": "scoreboard", "analyst": "xg", "tactician": "momentum", "academy": "player_card"}
+
+
 def _director(p: dict) -> dict:
     m, plan, ev = p["moment"], p["plan"], p.get("evidence", [])
-    typ = m["type"]
+    typ, style = m["type"], p.get("viewer_style") or "fan"
     replay = plan["segment"] in ("replay_breakdown", "what_if")
     live = (
         "behind"
         if typ in SHOT_TYPES | {"penalty_awarded"}
         else "tactical"
-        if typ in ("dominance", "momentum_shift", "tactical_change", "pressing_surge")
+        if typ in ("dominance", "momentum_shift", "tactical_change", "pressing_surge", "period_summary")
         else "broadcast"
     )
+    if style == "fan" and typ == "goal":
+        live = "sweep"
+    elif style == "tactician" and live == "broadcast":
+        live = "tactical"
+    focus = m["player_names"][0] if m["player_names"] else None
     shots = []
     if replay:
-        focus = m["player_names"][0] if m["player_names"] else None
-        shots = [
-            {
-                "camera": "tactical",
-                "focus_player": None,
-                "seconds": 4.0,
-                "slow_motion": False,
-                "purpose": "the build-up",
-            },
-            {
-                "camera": "behind",
-                "focus_player": focus,
-                "seconds": 3.0,
-                "slow_motion": True,
-                "purpose": "the decisive touch",
-            },
-            {
-                "camera": "sweep" if typ == "goal" else "player",
-                "focus_player": focus,
-                "seconds": 4.0,
-                "slow_motion": False,
-                "purpose": "the reaction",
-            },
-        ]
-    graphic = {
-        "goal": "win_probability",
-        "big_chance": "xg",
-        "great_save": "xg",
-        "dominance": "momentum",
-        "momentum_shift": "momentum",
-        "period_summary": "scoreboard",
-    }.get(typ, "none")
+        for cam, slow, purpose in DIRECTOR_CUTS.get(style, DIRECTOR_CUTS["fan"]):
+            shots.append({"camera": cam, "focus_player": focus if cam in ("player", "behind", "sweep") else None,
+                          "seconds": 4.0 if slow else 3.5, "slow_motion": slow, "purpose": purpose})
+    graphic = GRAPHIC.get(style, "none") if typ in SHOT_TYPES else {
+        "dominance": "momentum", "momentum_shift": "momentum", "period_summary": "scoreboard"}.get(typ, "none")
     return {
         "live_camera": live,
         "replay": replay,
         "replay_from_event_id": ev[0]["event_id"] if replay and ev else None,
         "shots": shots,
-        "show_telestration": bool(plan.get("telestrate")),
+        "show_telestration": bool(plan.get("telestrate")) or style in ("tactician", "academy"),
         "graphic": graphic,
     }
 
 
+from . import phrasebook  # noqa: E402  (kept beside the responders that use it)
+
+
 def _commentator(p: dict) -> dict:
-    facts = p["facts"]
-    lines = [{"text": p["headline"] + "!", "facts_used": []}]
-    for i, f in enumerate(facts[:2]):
-        lines.append({"text": f"{f['statement'][0].upper()}{f['statement'][1:]}.", "facts_used": [i]})
-    return {"lines": lines}
+    return phrasebook.commentary(p)
 
 
 def _scenario(p: dict) -> dict:

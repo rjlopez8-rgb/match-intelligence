@@ -24,7 +24,10 @@ Item = tuple[str, dict]
 
 
 def _events(path: Path) -> Iterator[dict]:
-    with path.open(encoding="utf-8") as fh:
+    if not path.exists() and path.with_suffix(".jsonl.gz").exists():
+        path = path.with_suffix(".jsonl.gz")
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as fh:
         for line in fh:
             if line.strip():
                 yield json.loads(line)

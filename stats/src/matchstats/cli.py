@@ -147,6 +147,17 @@ def cmd_replay(args) -> int:
     return 0
 
 
+def cmd_season(args) -> int:
+    from .season import build_season, render_season
+
+    links = dict(x.split("=", 1) for x in (args.link or []))
+    data = build_season(args.root, links=links, board=args.board)
+    out = Path(args.out)
+    out.write_text(render_season(data), encoding="utf-8")
+    print(f"season hub -> {out} ({out.stat().st_size / 1e6:.1f} MB, {len(data['matches'])} matches, {len(data['players'])} players)")
+    return 0
+
+
 def cmd_tools(_args) -> int:
     for name, spec in TOOLS.items():
         params = ", ".join(spec["parameters"]["properties"]) or "-"
@@ -223,6 +234,13 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("directory")
     s.add_argument("--report", help="write the accuracy report (markdown, plus .json) here")
     s.set_defaults(fn=cmd_train)
+
+    s = sub.add_parser("season", help="build the season hub page (table, results, players) from `matchengine season`")
+    s.add_argument("root", help="season folder (with season.json)")
+    s.add_argument("--out", default="season.html")
+    s.add_argument("--link", action="append", help="MATCH_ID=URL of a 3D page for that match (repeatable)")
+    s.add_argument("--board", default=None, help="Club mode board.json, to show try-outs on player pages")
+    s.set_defaults(fn=cmd_season)
 
     s = sub.add_parser("schema", help="export JSON Schemas for moments and snapshots")
     s.add_argument("--out", default="docs/schema")

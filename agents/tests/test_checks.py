@@ -8,7 +8,7 @@ EVIDENCE = [{"xg": 0.7385, "speed_kmh": 107.6, "score": {"home": 0, "away": 1}, 
 
 
 def lines(*texts):
-    return Commentary(lines=[Line(text=t, facts_used=[]) for t in texts])
+    return Commentary(lines=[Line(text=t, facts_used=[]) for t in texts], headline="", caption="", question=None)
 
 
 def test_supported_numbers_pass_including_rounding_and_percentages():
@@ -80,3 +80,12 @@ def test_pasted_data_and_robotic_numbers_never_air():
     assert {i["line"] for i in check_style(bad)} == {0, 1, 2}
     good = lines("Duarte sends the keeper the wrong way, and Kingsport's chances leap to 75%.")
     assert check_style(good) == []
+
+
+def test_french_and_spanish_words_and_on_screen_text_are_checked():
+    c = lines("Un xG de 0,74 et 74 pour cent de chances.", "Un 74 por ciento, a 108 km/h.")
+    assert check_numbers(c, EVIDENCE) == []
+    c = Commentary(lines=[Line(text="Arrêt décisif.", facts_used=[])], headline="BUT ! 0-1",
+                   caption="La frappe à 108 km/h", question="Et si Duarte avait marqué à la 81e ?")
+    issues = check_numbers(c, EVIDENCE)
+    assert [i["line"] for i in issues] == ["question"] and issues[0]["claim"] == "81"

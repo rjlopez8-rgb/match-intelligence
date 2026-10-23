@@ -1,4 +1,6 @@
 import base64
+import json
+from pathlib import Path
 
 from matchstats.replay import build_replay, render_html
 
@@ -136,3 +138,66 @@ def test_desk_segments_are_packed_for_the_3d_view():
     raw = base64.b64decode(clip["frames"])
     assert len(raw) == clip["n"] * data["width"] * 2  # same layout as the real match
     assert clip["p2"] == 0 and clip["shots"][0][6] == 1  # second half; the shot is a save
+
+
+def test_recruitment_board_is_packed_for_the_3d_view(tmp_path):
+    import shutil
+
+    from matchstats.replay import build_replay
+
+    src = Path(__file__).resolve().parents[2] / "data" / "sample" / "riv-kin-7"
+    for f in src.iterdir():
+        if f.is_file():
+            shutil.copy(f, tmp_path / f.name)
+    side = lambda xpts: {"futures": 2, "win": 0.5, "draw": 0.5, "loss": 0.0, "result_margin_95": 0.7, "xpts": xpts,
+                         "xpts_margin_95": 0.3, "xg_for": 1.2, "xg_for_margin_95": 0.2, "xg_against": 0.9,
+                         "xg_against_margin_95": 0.2, "minutes": 95.0, "per90": {"goals": 0.5, "xg": 0.6}}
+    tryout = {"candidate": {"player_id": "wes-20", "name": "Ante Babić", "club": "Westmere Town", "role": "ST", "age": 28},
+              "incumbent": {"player_id": "riv-10", "name": "Kwame Mensah", "club": "Riverside Athletic", "role": "ST", "age": 27},
+              "position": {"slot": 9, "label": "ST", "role": "ST"}, "with_candidate": side(1.6), "with_incumbent": side(1.4),
+              "difference": {"pairs": 2, "xpts": 0.2, "xpts_margin_95": 0.3, "clear": False}, "featured": None,
+              "scout": {"headline": "Close call", "report": "Too close to call.", "verdict": "shortlist"}}
+    pos = {"slot": 9, "label": "ST", "role": "ST", "player_id": "riv-10", "name": "Kwame Mensah", "incumbent_projected": 79.6,
+           "candidates": [{"player_id": "wes-20", "name": "Ante Babić", "club": "Westmere Town", "club_code": "WES",
+                           "role": "ST", "age": 28, "projected": 74.0, "ready": True, "tag": "Top projected"}]}
+    (tmp_path / "tryouts").mkdir()
+    (tmp_path / "tryouts" / "board.json").write_text(json.dumps(
+        {"home": "RIV", "away": "KIN", "n": 2, "sides": {"home": {"board": [pos], "tryouts": [tryout]}}}), encoding="utf-8")
+    club = build_replay(tmp_path)["club"]
+    t = club["sides"]["home"]["tryouts"]["9:wes-20"]
+    assert t["diff"]["xpts"] == 0.2 and t["report"]["verdict"] == "shortlist"
+    assert club["sides"]["home"]["positions"][0]["candidates"][0]["ready"]
+
+
+def test_personal_edition_data_is_packed():
+    """Editions (style x channel x language), per-style Director cuts, the decision and the player-focus inputs."""
+    seg = {
+        "moment_id": "riv-kin-7-m044", "aired": True, "period": 2, "t": 1681.5, "type": "goal", "minute": "74'",
+        "title": "GOAL", "plan": {"segment": "replay_breakdown", "angle": "a", "priority": "breaking", "what_if": None},
+        "commentary": {"lines": ["one"], "fallback": False}, "brief": {"facts": [], "insight": "i"},
+        "factcheck": [{"approved": True, "code_issues": []}], "director": None, "telestration": None,
+        "scenario": {"spec": None, "result": None}, "receipts": [],
+        "cost": {"usd": 0.0, "model_calls": 0, "seconds": 0.0, "by_agent": {}},
+        "editions": {"fan.home.es": {"lines": ["¡Gol!"], "headline": "¡GOL!", "caption": "La definición", "question": None,
+                                     "fallback": False, "checks": [{"approved": True, "code_issues": []}]}},
+        "directors": {"academy": {"live_camera": "behind", "replay": True, "replay_from_event_id": None, "graphic": "player_card",
+                                  "show_telestration": True, "shots": [{"camera": "player", "seconds": 4, "slow_motion": True,
+                                                                        "focus_player": "Duarte", "purpose": "the decision"}]}},
+        "decision": {"event": {"player": "Duarte"}, "better_option_exists": False,
+                     "choice": {"action": "shot", "xg": 0.74, "value": 0.74, "space_m": 2.0, "defenders_in_lane": 0,
+                                "location": {"x": 94.0, "y": 34.0}},
+                     "teammates": [{"name": "Sarr", "player_id": "kin-07", "location": {"x": 90.0, "y": 20.0}, "p_complete": 0.7,
+                                    "xg_from_there": 0.05, "space_m": 3.0, "value": 0.035, "opponents_near_pass_line": 1}]},
+    }
+    data = build_replay(SAMPLE, [seg])
+    s = data["segments"][0]
+    assert s["ed"]["fan.home.es"] == {"l": ["¡Gol!"], "h": "¡GOL!", "c": "La definición", "q": None, "fb": False, "att": 1, "ok": True, "code": 0}
+    assert s["dirs"]["academy"]["shots"][0]["cam"] == "player" and s["dirs"]["academy"]["shots"][0]["focus"] >= 0
+    assert s["decision"]["best"]["name"] == "Sarr" and s["decision"]["from"] == [94.0, 34.0] and not s["decision"]["better"]
+    assert len(data["shotXg"]) == len(data["shots"]) and all(x is None or 0 <= x <= 1 for x in data["shotXg"])
+    goal = next(m for m in data["moments"] if m["type"] == "goal")
+    assert goal["who"] and goal["score"] and "xg" in goal["x"]
+    acts = data["actions"]
+    assert acts and all(0 <= a[1] < len(data["players"]) for a in acts)
+    assert any(a[2] == 5 for a in acts)          # the goal is in his action list
+    assert [a[0] for a in acts] == sorted(a[0] for a in acts)

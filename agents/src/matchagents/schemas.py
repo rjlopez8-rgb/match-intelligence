@@ -28,6 +28,10 @@ class ViewerProfile(BaseModel):
     language: str = "English"
 
 
+LANGUAGES = {"en": "English", "es": "Spanish", "fr": "French"}
+STYLES: tuple[str, ...] = ("fan", "tactician", "analyst", "academy")
+
+
 # ----------------------------------------------------------------------------- producer
 class ProducerPlan(_Strict):
     cover: bool = Field(description="false if this moment is not worth airtime right now")
@@ -50,6 +54,10 @@ class AnalystBrief(_Strict):
     headline: str
     facts: list[Fact]
     insight: str = Field(description="the tactical why, two sentences at most")
+    decision: str = Field(
+        description="the key decision at the action, from the options tool: what he chose, the best alternative "
+        "with its numbers, and whether the choice was right. Empty string when there was no decision to judge."
+    )
 
 
 # --------------------------------------------------------------------------- telestrator
@@ -98,6 +106,9 @@ class Line(_Strict):
 
 class Commentary(_Strict):
     lines: list[Line]
+    headline: str = Field(description="the on-screen title for this moment, under 10 words, in the viewer's language")
+    caption: str = Field(description="a 2-8 word caption for the drawing on the replay, in the viewer's language")
+    question: str | None = Field(description="the what-if question in the viewer's language, or null if none")
 
 
 # -------------------------------------------------------------------------- fact-checker
@@ -119,3 +130,10 @@ class ScenarioSpec(_Strict):
     event_id: str = Field(description="the shot the intervention changes (its event id)")
     simulations: int = Field(description="how many futures to simulate (10-40)")
     hypothesis: str = Field(description="what you expect and why, to compare with the result")
+
+
+# -------------------------------------------------------------------------- scout (Club mode)
+class ScoutReport(_Strict):
+    headline: str
+    report: str
+    verdict: Literal["sign", "shortlist", "pass"]

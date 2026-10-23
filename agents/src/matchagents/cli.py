@@ -140,6 +140,177 @@ def _confirm(args, n_estimate: int) -> bool:
     return input("Run with real models? [y/N] ").strip().lower() == "y"
 
 
+EST_USD_PER_NOTE = 0.004
+EST_USD_PER_CALL = 0.004  # gpt-5-mini with low reasoning, priced high like the budget guard
+LANG_CODES = ("en", "es", "fr")
+
+
+def edition_list(styles: list[str], languages: list[str], channels: bool) -> list:
+    from .desk import Edition
+
+    out = []
+    for st in styles:
+        for ch in (("neutral", "home", "away") if channels and st == "fan" else ("neutral",)):
+            for lang in languages:
+                out.append(Edition(st, ch, lang))
+    return out
+
+
+def _seed_cache(desk, segs: list[dict], want: int) -> None:
+    """Reuse simulations from earlier runs (offline or live: the engine is the same) when they have enough futures."""
+    for s in segs:
+        sc = s.get("scenario") or {}
+        spec, res = sc.get("spec"), sc.get("result") or {}
+        if not spec or res.get("status") != "ok":
+            continue
+        n = (res.get("with_change") or {}).get("futures") or res.get("candidates_evaluated") or 0
+        key = (spec["event_id"], spec["intervention"])
+        have = (desk.scenario_cache.get(key, {}).get("with_change") or {}).get("futures", 0)
+        if n >= want and n > have:
+            desk.scenario_cache[key] = res
+
+
+def _editions(args) -> int:
+    from .desk import Desk
+    from .session import MatchSession
+
+    styles = [x.strip() for x in args.styles.split(",") if x.strip()]
+    langs = [x.strip() for x in args.languages.split(",") if x.strip()]
+    bad = [x for x in langs if x not in LANG_CODES]
+    bad += [x for x in styles if x not in ("fan", "tactician", "analyst", "academy")]
+    if bad:
+        print(f"Unknown style or language: {', '.join(bad)} (languages: {', '.join(LANG_CODES)})")
+        return 1
+    eds = edition_list(styles, langs, not args.no_channels)
+    mode = "offline" if args.offline else "live"
+    saved = {}
+    if args.out.exists():
+        for s in json.loads(args.out.read_text(encoding="utf-8")):
+            saved[s["moment_id"]] = s
+    session = MatchSession(args.bundle)
+    mid = session.meta["match_id"]
+    picks = None if args.moments == "auto" else {m if "-m" in m else f"{mid}-{m}" for m in args.moments.split(",")}
+
+    def chosen(m: dict) -> bool:
+        return m["moment_id"] in picks if picks else (m["importance"] >= args.min_importance)
+
+    # count the work left before spending anything
+    probe = MatchSession(args.bundle)
+    todo_moments, todo_eds, fresh = [], 0, 0
+    for m in probe.moments(0.0):
+        if not chosen(m):
+            continue
+        s = saved.get(m["moment_id"])
+        reuse = s if s and s.get("mode") == mode else None
+        missing = [e for e in eds if not reuse or e.key not in (reuse.get("editions") or {})]
+        if missing:
+            todo_moments.append(m["moment_id"])
+            todo_eds += len(missing)
+            fresh += 0 if reuse and reuse.get("brief") else 1
+    if not todo_moments:
+        print(f"Every edition is already in {args.out}. Nothing to do.")
+        return 0
+    calls = fresh * 6 + len(todo_moments) * len(styles) + round(todo_eds * 2 * 1.25)
+    print(f"{len(todo_moments)} moments, {todo_eds} editions to write "
+          f"({len(styles)} styles x channels x {len(langs)} languages).")
+    if not args.offline and not args.yes:
+        guard = BudgetGuard()
+        est = calls * EST_USD_PER_CALL
+        print("Models: " + ", ".join(f"{a}={s.deployment}" for a, s in all_settings().items() if a != "scout"))
+        print(f"About {calls} model calls, roughly ${est:.2f} at most on gpt-5-mini.")
+        print(f"Budget guard: ${guard.remaining():.2f} left of today's ${guard.cap:.2f} cap.")
+        if est > guard.remaining():
+            print("That is more than today's allowance: the run stops itself at the cap and keeps what it finished. "
+                  "Run the same command tomorrow to finish (finished editions are never paid for twice).")
+        if input("Run with real models? [y/N] ").strip().lower() != "y":
+            return 1
+    if args.futures:
+        import os
+
+        os.environ["MATCH_GHOST_FUTURES"] = str(args.futures)
+    runner = None
+    if not args.no_ghosts:
+        from .ghost import GhostRunner
+
+        runner = GhostRunner()
+    desk = Desk(session, offline_mode=args.offline, scenario_runner=runner)
+    seed = list(saved.values())
+    for extra in args.reuse or []:
+        seed += json.loads(Path(extra).read_text(encoding="utf-8"))
+    _seed_cache(desk, seed, args.futures or 6)
+    order = [m for m in saved]
+
+    async def go():
+        for m in session.moments(0.0):
+            if m["moment_id"] not in todo_moments:
+                continue
+            prev = saved.get(m["moment_id"])
+            seg = await desk.cover_editions(m, eds, prev if prev and prev.get("mode") == mode else None)
+            seg["mode"] = mode
+            saved[m["moment_id"]] = seg
+            if m["moment_id"] not in order:
+                order.append(m["moment_id"])
+            done = sum(1 for e in eds if e.key in seg["editions"])
+            fb = sum(1 for v in seg["editions"].values() if v["fallback"])
+            print(f"{m['minute_display']:>6}  {m['type']:<16} {done}/{len(eds)} editions"
+                  + (f", {fb} fell back to the verified headline" if fb else "")
+                  + f"  ({seg['cost']['model_calls']} calls, ${seg['cost']['usd']:.4f})")
+            v = seg["editions"].get(eds[0].key)
+            if v:
+                print(f"        {eds[0].key}: {v['lines'][0]}")
+            for e in seg["errors"]:
+                print(f"        ! {e}")
+            out = sorted(saved.values(), key=lambda s: (s["period"], s["t"]))
+            args.out.write_text(json.dumps(out, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
+            if desk.guard is not None and desk.guard.remaining() <= 0:
+                print("\nDaily budget reached: stopped. Finished editions are saved; run the same command tomorrow.")
+                break
+
+    asyncio.run(go())
+    print(f"Saved {args.out}")
+    if desk.guard is not None:
+        print(desk.guard.report())
+    return 0
+
+
+def _scout(args) -> int:
+    from matchengine.serve import compact
+
+    from .scout import Scout
+
+    board = json.loads(args.board.read_text(encoding="utf-8"))
+    todo = [(side, r) for side, b in board.get("sides", {}).items() for r in b.get("tryouts", [])
+            if args.redo or not r.get("scout")]
+    if not todo:
+        print("Every try-out already has a note (use --redo to rewrite).")
+        return 0
+    if not args.offline and not args.yes:
+        guard = BudgetGuard()
+        print(f"{len(todo)} notes, roughly ${len(todo) * EST_USD_PER_NOTE:.2f} at most on gpt-5-mini.")
+        print(f"Budget guard: ${guard.remaining():.2f} left of today's ${guard.cap:.2f} cap.")
+        if input("Run with real models? [y/N] ").strip().lower() != "y":
+            return 1
+    scout = Scout(offline_mode=args.offline)
+
+    async def go():
+        for side, r in todo:
+            t = compact(r)
+            t["team"] = r["fixture"]["team"]
+            note = await scout.note(t)
+            r["scout"] = note
+            print(f"{side} {r['position']['label']}: {r['candidate']['name']} -> {note['verdict'].upper()}: {note['headline']}")
+            print(f"    {note['report']}")
+            args.board.write_text(json.dumps(board, indent=1), encoding="utf-8")
+            if scout.guard is not None and scout.guard.remaining() <= 0:
+                print("Daily budget reached: stopping.")
+                break
+
+    asyncio.run(go())
+    if scout.guard is not None:
+        print(scout.guard.report())
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     _utf8()
     p = argparse.ArgumentParser(prog="matchagents", description="The AI broadcast desk")
@@ -167,6 +338,29 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("bundle", type=Path)
     r.add_argument("segments", type=Path, help="JSON saved with --out")
     r.add_argument("--out", type=Path, default=None)
+    sc = sub.add_parser("scout", help="the Scout agent writes a note for every pre-simulated try-out on a board")
+    sc.add_argument("board", type=Path, help="board.json from `matchengine board`")
+    sc.add_argument("--offline", action="store_true")
+    sc.add_argument("--yes", action="store_true")
+    sc.add_argument("--redo", action="store_true", help="rewrite notes that already exist")
+    ed = sub.add_parser("editions", help="every big moment told for every viewer: styles x channels x languages")
+    ed.add_argument("bundle", type=Path)
+    ed.add_argument("--out", type=Path, required=True, help="editions JSON (resumes if it exists)")
+    ed.add_argument("--moments", default="auto", help="'auto' (importance >= --min-importance) or ids like m002,m026")
+    ed.add_argument("--min-importance", type=float, default=0.7)
+    ed.add_argument("--styles", default="fan,tactician,analyst,academy")
+    ed.add_argument("--languages", default="en,es,fr")
+    ed.add_argument("--no-channels", action="store_true", help="skip the clubs' own Fan channels")
+    ed.add_argument("--offline", action="store_true")
+    ed.add_argument("--yes", action="store_true")
+    ed.add_argument("--no-ghosts", action="store_true")
+    ed.add_argument("--futures", type=int, default=0, help="ghost futures per what-if (default: the agent's choice)")
+    ed.add_argument("--reuse", action="append", help="segments JSON whose simulations can be reused (e.g. demo.json)")
+    st = sub.add_parser("site", help="build the website: season hub (index.html) + the 3D broadcast, linked together")
+    st.add_argument("--season", type=Path, required=True, help="folder from `matchengine season`")
+    st.add_argument("--demo", type=Path, required=True, help="the demo match bundle (with tracking)")
+    st.add_argument("--segments", type=Path, default=None, help="AI desk segments JSON for the demo match")
+    st.add_argument("--out", type=Path, default=Path("site"))
     sub.add_parser("diagram", help="print the desk workflow as Mermaid")
     sub.add_parser("spend", help="today's model spending")
     args = p.parse_args(argv)
@@ -180,6 +374,27 @@ def main(argv: list[str] | None = None) -> int:
         out.write_text(render_html(data, view="broadcast"), encoding="utf-8")
         print(f"{len(data['segments'])} desk segments -> {out}  (open it in a browser)")
         return 0
+    if args.cmd == "site":
+        from matchstats.replay import build_replay, render_html
+        from matchstats.season import build_season, render_season
+
+        args.out.mkdir(parents=True, exist_ok=True)
+        match_id = json.loads((args.demo / "meta.json").read_text(encoding="utf-8"))["match_id"]
+        page = f"{match_id}.html"
+        segs = json.loads(args.segments.read_text(encoding="utf-8")) if args.segments else None
+        data = build_replay(args.demo, segs)
+        data["hub"] = f"index.html#/match/{match_id}"
+        (args.out / page).write_text(render_html(data, view="broadcast"), encoding="utf-8")
+        board = args.demo / "tryouts" / "board.json"
+        season = build_season(args.season, links={match_id: page}, board=board if board.exists() else None)
+        (args.out / "index.html").write_text(render_season(season), encoding="utf-8")
+        size = sum(f.stat().st_size for f in args.out.iterdir()) / 1e6
+        print(f"site -> {args.out}/index.html (season hub) + {page} (3D broadcast), {size:.1f} MB. Open index.html in a browser.")
+        return 0
+    if args.cmd == "scout":
+        return _scout(args)
+    if args.cmd == "editions":
+        return _editions(args)
     if args.cmd == "spend":
         print(BudgetGuard().report())
         return 0

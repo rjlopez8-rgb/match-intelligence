@@ -12,6 +12,7 @@ tool server can register them without restating anything.
 from __future__ import annotations
 
 import difflib
+import math
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -435,6 +436,113 @@ class MatchQueries:
             "analysis": {k: v for k, v in self.ctx.ann.get(event_id, {}).items() if k in ANNOTATION_KEYS},
         }
 
+    def options(self, event_id: str) -> dict:
+        """The decision at one action (a shot or a pass): where every teammate was, how much space he had,
+        how likely a pass to him was to arrive, and the xG he would have had shooting from there. ``value`` is
+        pass completion times that xG, a simple measure of what the option was worth. It ignores how defenders
+        would have reacted, so it is a coaching pointer, not a verdict."""
+        c = self.ctx
+        e = c.by_id.get(event_id)
+        if e is None:
+            raise QueryError(f"unknown event '{event_id}'")
+        if not e.get("player_id") or not e.get("team_id"):
+            raise QueryError(f"event '{event_id}' has no player on the ball")
+        f = c.frame_at(e["period"], e["t"], tolerance=0.6)
+        if f is None:
+            raise QueryError("no tracking frame at that moment (the stats layer keeps the last 24 seconds)")
+        tid, opp, period = e["team_id"], c.opponent(e["team_id"]), e["period"]
+        pos = {row[0]: (float(row[1]), float(row[2])) for row in f["players"]}
+        loc = e.get("location") or {}
+        me = pos.get(e["player_id"]) or (float(loc.get("x", 52.5)), float(loc.get("y", 34.0)))
+
+        def tf(xy):
+            return c.tf({"x": xy[0], "y": xy[1]}, tid, period)
+
+        opps = [tf(xy) for pid, xy in pos.items() if c.team_of(pid) == opp]
+        mx, my = tf(me)
+
+        def space(x, y):
+            return min((math.dist((x, y), o) for o in opps), default=30.0)
+
+        def in_lane(x, y):  # opponents inside the triangle from the shooter to the posts
+            p1, p2 = (105.0, 34.0 - 3.66), (105.0, 34.0 + 3.66)
+
+            def side(a, b, p):
+                return (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])
+
+            n = 0
+            for o in opps:
+                s1, s2, s3 = side((x, y), p1, o), side(p1, p2, o), side(p2, (x, y), o)
+                if (s1 >= 0 and s2 >= 0 and s3 >= 0) or (s1 <= 0 and s2 <= 0 and s3 <= 0):
+                    n += 1
+            return n
+
+        def near_line(x, y):  # opponents within 1.5 m of the passing line, between passer and receiver
+            ax, ay, bx, by = mx, my, x, y
+            L2 = (bx - ax) ** 2 + (by - ay) ** 2 or 1e-9
+            n = 0
+            for ox, oy in opps:
+                u = ((ox - ax) * (bx - ax) + (oy - ay) * (by - ay)) / L2
+                if 0.1 < u < 0.95 and math.dist((ox, oy), (ax + u * (bx - ax), ay + u * (by - ay))) < 1.5:
+                    n += 1
+            return n
+
+        models = self.a.models
+        press = space(mx, my)
+
+        def xg_from(x, y, sp):
+            d = {"body_part": "foot", "shot_kind": "open_play", "under_pressure": sp < 3.0,
+                 "defenders_in_lane": in_lane(x, y)}
+            return models.shot_xg(d, x, y)
+
+        rows = []
+        for pid, xy in pos.items():
+            if pid == e["player_id"] or c.team_of(pid) != tid or c.players[pid].position == "GK":
+                continue
+            x, y = tf(xy)
+            length = math.dist((mx, my), (x, y))
+            details = {"length_m": length, "pass_kind": "ground" if length < 30 else "long", "height": "ground",
+                       "nearest_opponent_m": min(press, 10.0), "progression_m": x - mx, "under_pressure": press < 3.0}
+            pc = models.pass_completion(details, mx, my, x, y)
+            sp = space(x, y)
+            xg = xg_from(x, y, sp)
+            rows.append({
+                "name": c.player_name(pid), "player_id": pid,
+                "location": {"x": round(xy[0], 1), "y": round(xy[1], 1)},
+                "distance_m": round(length, 1), "space_m": round(sp, 1),
+                "p_complete": round(pc, 2), "xg_from_there": round(xg, 2), "value": round(pc * xg, 3),
+                "opponents_near_pass_line": near_line(x, y),
+            })
+        rows.sort(key=lambda r: -r["value"])
+        ann = c.ann.get(event_id, {})
+        d = e.get("details") or {}
+        if e["type"] == "shot":
+            xg = ann.get("xg")
+            if xg is None:
+                xg = xg_from(mx, my, press)
+            choice = {"action": "shot", "xg": round(xg, 2), "value": round(xg, 3)}
+        else:
+            to = d.get("recipient_id")
+            r = next((r for r in rows if r["player_id"] == to), None)
+            choice = {"action": e["type"], "to": c.player_name(to) if to else None,
+                      "p_complete": r["p_complete"] if r else ann.get("p_complete"),
+                      "value": r["value"] if r else None}
+        choice.update({"space_m": round(press, 1), "defenders_in_lane": in_lane(mx, my),
+                       "location": {"x": round(me[0], 1), "y": round(me[1], 1)}})
+        best = rows[0] if rows else None
+        better = bool(best and choice.get("value") is not None and best["value"] > choice["value"] + 0.02)
+        return {
+            "as_of": self._as_of(),
+            "event": {"event_id": event_id, "minute": e["minute_display"], "type": e["type"],
+                      "player": c.player_name(e["player_id"]), "team": c.team_name(tid)},
+            "choice": choice,
+            "teammates": rows[:5],
+            "best_option": best["name"] if better else None,
+            "better_option_exists": better,
+            "method": "pass completion and xG from the stats layer's trained models; value = completion x xG "
+                      "from the teammate's spot; ignores how defenders would react",
+        }
+
     def win_probability(self) -> dict:
         """Current result probabilities, the trend, and the moments that moved them most."""
         wp = self._snap("win_probability")
@@ -565,6 +673,11 @@ TOOLS: dict[str, dict] = {
     "event": {
         "description": "One feed event with the stats layer's analysis.",
         "parameters": _obj({"event_id": {"type": "string"}}, ("event_id",)),
+    },
+    "options": {
+        "description": "The decision at a shot or pass: every teammate's space, pass completion and xG from his "
+        "spot, and whether a better option was on (for coaching).",
+        "parameters": _obj({"event_id": {"type": "string", "description": "the shot or pass event"}}, ("event_id",)),
     },
     "win_probability": {
         "description": "Result probabilities, trend and biggest swings.",

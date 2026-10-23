@@ -1962,6 +1962,7 @@ class MatchEngine:
             for ps in team.players
             if ps.on_pitch
             and ps.slot.role != "GK"
+            and ps.idx not in getattr(self, "protected", ())
             and match_seconds(self.period, self.t) - ps.minutes_from > 600
         ]
         if not cands:

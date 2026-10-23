@@ -17,7 +17,7 @@ def q(analyzer):
 
 def test_every_tool_answers(q, analyzer):
     for tool in TOOLS:
-        if tool in ("explain_moment", "event"):
+        if tool in ("explain_moment", "event", "options"):
             continue
         result = q.call(tool, SAMPLE_ARGS.get(tool, {}))
         assert result["as_of"]["finished"] is True, tool
@@ -59,3 +59,27 @@ def test_tool_specs_are_valid_json_schema_objects():
         params = spec["parameters"]
         assert params["type"] == "object" and set(params["required"]) <= set(params["properties"]), name
         assert hasattr(MatchQueries, name)
+
+
+def test_options_at_a_shot(items):
+    """The decision tool needs the tracking frame at the action, so stop the feed just after a shot."""
+    from matchstats import MatchAnalyzer
+
+    a, shot = MatchAnalyzer(), None
+    for kind, item in items:
+        a.process(kind, item)
+        if kind == "event" and item["type"] == "shot" and shot is None:
+            shot = item
+        if shot and kind == "frame" and item["t"] > shot["t"] + 1:
+            break
+    q = MatchQueries(a)
+    o = q.options(shot["event_id"])
+    assert o["choice"]["action"] == "shot" and 0 <= o["choice"]["xg"] <= 1
+    assert 1 <= len(o["teammates"]) <= 5
+    vals = [r["value"] for r in o["teammates"]]
+    assert vals == sorted(vals, reverse=True)
+    for r in o["teammates"]:
+        assert 0 <= r["p_complete"] <= 1 and 0 <= r["xg_from_there"] <= 1 and r["space_m"] >= 0
+    assert o["better_option_exists"] == (o["best_option"] is not None)
+    with pytest.raises(QueryError):
+        MatchQueries(a).options("nope")

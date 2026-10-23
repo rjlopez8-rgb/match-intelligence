@@ -106,7 +106,8 @@ def test_wire_format_and_budget_records(tmp_path):
     seg = run(desk.cover(moment))
 
     assert seg["aired"] and not seg["commentary"]["fallback"], seg["errors"]
-    assert len(fake.requests) == seg["cost"]["model_calls"] == 8
+    # the analyst makes 3 calls: stats tools, then options on the shot, then the brief
+    assert len(fake.requests) == seg["cost"]["model_calls"] == 9
     for req, body in fake.requests:
         assert str(req.url) == "https://test-resource.services.ai.azure.com/openai/v1/chat/completions"
         assert req.headers["authorization"] == "Bearer test-key"

@@ -118,6 +118,7 @@ body.replay .lower { bottom: calc(var(--ctrl-h, 110px) + 7vh + 22px); }
 .seg-label { font-size: 10.5px; letter-spacing: 0.14em; color: var(--faint); text-transform: uppercase; font-weight: 600; }
 .btn { border: 1px solid var(--edge); background: rgba(255, 255, 255, 0.04); border-radius: 8px; padding: 6px 11px; cursor: pointer; font-weight: 600; font-size: 12.5px; white-space: nowrap; }
 .btn:hover { background: rgba(255, 255, 255, 0.1); }
+a.btn { text-decoration: none; color: inherit; display: inline-block; }
 .spacer { flex: 1; }
 
 /* Stats panel */
@@ -243,6 +244,176 @@ body.skipping #tags, body.split #tags .ptag { opacity: 0; }
 .fanbox canvas { display: block; width: 100%; height: 100%; }
 .fanbox span { position: absolute; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; color: var(--muted); }
 .fan-top { left: 8px; top: 6px; } .fan-bot { left: 8px; bottom: 6px; } .fan-count { right: 8px; top: 6px; color: #5ee7ff !important; }
+/* ---------- Club mode ---------- */
+.clubp { position: fixed; z-index: 4; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(92px + env(safe-area-inset-top, 0px)); width: 372px;
+  max-height: calc(100vh - 92px - var(--ctrl-h, 110px) - 40px); overflow-y: auto; padding: 13px 14px; display: flex; flex-direction: column; gap: 10px; }
+.clubp h3 { margin: 0; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.clubp .seg button { padding: 4px 8px; font-size: 11.5px; }
+.cl-pitch { position: relative; height: 168px; border-radius: 10px; background: linear-gradient(0deg, #1f5c32, #23703b); border: 1px solid rgba(255,255,255,0.18); overflow: hidden; flex: none; }
+.cl-half { position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid rgba(255,255,255,0.25); }
+.cl-box { position: absolute; left: 30%; right: 30%; bottom: 0; height: 14%; border: 1px solid rgba(255,255,255,0.25); border-bottom: 0; }
+.cl-dot { position: absolute; transform: translate(-50%, 50%); display: flex; flex-direction: column; align-items: center; gap: 1px; border: 0; background: none; cursor: pointer; padding: 2px; z-index: 1; }
+.cl-dot i { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.85); }
+.cl-dot span { font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-shadow: 0 1px 2px rgba(0,0,0,0.7); }
+.cl-dot em { position: absolute; top: -4px; right: -6px; font-style: normal; font-size: 9px; font-weight: 800; background: #3ddc97; color: #04140c; border-radius: 6px; padding: 0 4px; }
+.cl-dot.on i { box-shadow: 0 0 0 3px var(--gold); } .cl-dot.on span { color: var(--gold); }
+.cl-pos { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12.5px; }
+.cl-pos small { color: var(--faint); margin-left: 4px; }
+.cl-list { display: flex; flex-direction: column; gap: 2px; }
+.cl-row { display: grid; grid-template-columns: minmax(0, 1fr) 64px 84px; gap: 8px; align-items: center; padding: 6px 6px; border-radius: 8px; border: 0; background: transparent; text-align: left; cursor: pointer; width: 100%; }
+.cl-row:hover { background: rgba(255,255,255,0.07); }
+.cl-row.ready { background: rgba(61, 220, 151, 0.07); }
+.cl-name { font-weight: 700; font-size: 13px; display: flex; flex-direction: column; min-width: 0; }
+.cl-name em { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: 0.06em; color: var(--gold); text-transform: uppercase; }
+.cl-name small { font-weight: 500; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cl-proj { position: relative; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.07); overflow: hidden; }
+.cl-proj i { position: absolute; inset: 0 auto 0 0; background: rgba(58, 160, 255, 0.45); }
+.cl-proj b { position: relative; font-size: 11px; padding-left: 5px; line-height: 18px; }
+.cl-res, .cl-sim, .cl-run { font-size: 12px; font-weight: 800; text-align: right; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; }
+.cl-res small, .cl-sim small { font-weight: 600; font-size: 10px; color: var(--muted); }
+.cl-res.up { color: #3ddc97; } .cl-res.down { color: #ff7b7b; }
+.cl-sim { color: var(--accent); } .cl-run { color: var(--gold); font-size: 11px; }
+.cl-search { width: 100%; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--edge); background: rgba(255,255,255,0.06); color: var(--ink); font: inherit; font-size: 12.5px; }
+.cl-empty { font-size: 12.5px; color: var(--muted); padding: 8px 4px; }
+.cl-foot { font-size: 11px; color: var(--faint); border-top: 1px solid var(--edge); padding-top: 8px; line-height: 1.35; }
+body.clubopen .caption { left: calc((100vw - 404px) / 2); width: min(720px, calc(100vw - 32px - 404px)); }
+.tryoutcard { width: min(620px, calc(100vw - 32px)); pointer-events: auto; border-color: rgba(61, 220, 151, 0.35); }
+.tryoutcard .k { color: #3ddc97; }
+body.clubopen .tryoutcard { left: calc((100vw - 404px) / 2); }
+.to-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin: 0 0 10px; }
+.to-big { font-weight: 800; font-stretch: 75%; font-size: 40px; line-height: 1; display: flex; flex-direction: column; }
+.to-big small { font-size: 11.5px; font-weight: 600; font-stretch: 100%; color: var(--muted); margin-top: 4px; }
+.to-big.up { color: #3ddc97; } .to-big.down { color: #ff7b7b; }
+.to-verdict { text-align: right; font-weight: 800; font-size: 15px; display: flex; flex-direction: column; }
+.to-verdict small { font-weight: 500; font-size: 11.5px; color: var(--muted); }
+.to-xg { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+.to-note { font-size: 11px; color: var(--faint); margin-top: 6px; }
+.to-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 10px; }
+.to-table td { padding: 3px 4px; border-top: 1px solid var(--edge); }
+.to-table tr:first-child td { color: var(--muted); font-size: 11px; border-top: 0; }
+.to-table td.r { text-align: right; font-weight: 800; font-stretch: 85%; width: 80px; }
+.to-table td.up { color: #3ddc97; } .to-table td.down { color: #ff7b7b; }
+.to-report { margin-top: 10px; font-size: 13px; line-height: 1.4; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px 10px; }
+.to-report span { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 3px; }
+.to-report strong { font-weight: 800; }
+.to-v { float: right; letter-spacing: 0.1em; padding: 1px 6px; border-radius: 4px; background: rgba(255,255,255,0.12); color: var(--ink); }
+.to-v.sign { background: #3ddc97; color: #04140c; } .to-v.shortlist { background: var(--gold); color: #1a1405; } .to-v.pass { background: rgba(255,123,123,0.85); color: #1a0505; }
+.to-prog { position: relative; height: 20px; border-radius: 6px; background: rgba(255,255,255,0.06); overflow: hidden; margin: 0 0 10px; }
+.to-prog i { position: absolute; inset: 0 auto 0 0; background: rgba(61, 220, 151, 0.35); transition: width .4s; }
+.to-prog span { position: relative; font-size: 11.5px; font-weight: 700; padding-left: 8px; line-height: 20px; }
+.to-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+/* ---------- Your broadcast: personal edition ---------- */
+:root { --s-fan: #ff7a59; --s-analyst: #3aa0ff; --s-tactician: #3ddc97; --s-academy: #ffd166; }
+.ybbtn { display: inline-flex; align-items: center; gap: 7px; border-color: rgba(255,255,255,0.22); }
+.yb-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--style-c, var(--s-fan)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--style-c, #ff7a59) 28%, transparent); }
+.ybp { position: fixed; z-index: 8; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(3, 6, 12, 0.55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.ybp[hidden] { display: none !important; }
+.yb-card { width: min(760px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; padding: 20px 22px 18px; background: var(--glass-strong); border: 1px solid var(--edge); border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 16px; }
+.yb-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.yb-top h2 { margin: 0; font-weight: 800; font-stretch: 78%; font-size: 30px; line-height: 1; letter-spacing: 0.01em; }
+.yb-top p { margin: 6px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.4; max-width: 520px; }
+.yb-x { border: 0; background: rgba(255,255,255,0.08); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 18px; line-height: 1; flex: none; }
+.yb-sec h4 { margin: 0 0 8px; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.yb-styles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.yb-style { position: relative; text-align: left; border: 1px solid var(--edge); background: rgba(255,255,255,0.035); border-radius: 12px; padding: 12px 12px 11px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px; min-height: 118px; transition: border-color .2s, background .2s; }
+.yb-style:hover { background: rgba(255,255,255,0.07); }
+.yb-style svg { width: 26px; height: 26px; color: var(--c); }
+.yb-style b { font-weight: 800; font-stretch: 85%; font-size: 17px; }
+.yb-style span { font-size: 12px; color: #c4cede; line-height: 1.35; }
+.yb-style[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); box-shadow: inset 0 0 0 1px var(--c); }
+.yb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.yb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.yb-chip { border: 1px solid var(--edge); background: rgba(255,255,255,0.04); border-radius: 999px; padding: 6px 12px; cursor: pointer; font-weight: 700; font-size: 12.5px; display: inline-flex; gap: 7px; align-items: center; }
+.yb-chip i { width: 10px; height: 10px; border-radius: 50%; }
+.yb-chip[aria-pressed="true"] { background: var(--ink); color: #0a0f1a; border-color: var(--ink); }
+.yb-search { width: 100%; padding: 8px 11px; border-radius: 9px; border: 1px solid var(--edge); background: rgba(255,255,255,0.06); color: var(--ink); font: inherit; font-size: 13px; }
+.yb-res { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; min-height: 30px; }
+.yb-pl { border: 1px solid var(--edge); background: rgba(255,255,255,0.04); border-radius: 8px; padding: 4px 9px 4px 4px; cursor: pointer; font-size: 12.5px; font-weight: 700; display: inline-flex; gap: 7px; align-items: center; }
+.yb-pl b { display: inline-grid; place-items: center; min-width: 20px; height: 18px; border-radius: 4px; font-size: 11px; padding: 0 4px; }
+.yb-pl small { color: var(--muted); font-weight: 600; }
+.yb-pl[aria-pressed="true"] { outline: 2px solid var(--gold); }
+.yb-follow { display: inline-flex; gap: 8px; align-items: center; margin-top: 8px; font-size: 12.5px; color: #c4cede; cursor: pointer; }
+.yb-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--edge); padding-top: 12px; }
+.yb-foot small { color: var(--faint); font-size: 11.5px; line-height: 1.35; }
+.yb-go { border: 0; background: var(--style-c, var(--s-fan)); color: #0a0f1a; font-weight: 800; font-size: 14px; padding: 10px 22px; border-radius: 10px; cursor: pointer; flex: none; }
+@media (max-width: 760px) { .yb-styles { grid-template-columns: 1fr 1fr; } .yb-row { grid-template-columns: 1fr; } .yb-top h2 { font-size: 24px; } .yb-style { min-height: 0; } }
+
+/* the scorebug from your club's side */
+.bug-team.mine span::before { content: "★ "; color: var(--gold); }
+.wp-legend b.mine { color: var(--gold); }
+.pin { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11.5px; color: var(--muted); font-weight: 600; border-top: 1px solid var(--edge); padding-top: 5px; }
+.pin b { color: var(--ink); font-weight: 800; font-stretch: 85%; font-size: 13px; }
+.pin .pk { letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; }
+.grow.mine span:first-child { color: var(--gold); font-weight: 800; }
+
+/* player focus */
+.focus { position: fixed; z-index: 4; left: max(16px, env(safe-area-inset-left, 0px)); top: calc(126px + env(safe-area-inset-top, 0px)); width: min(400px, calc(100vw - 32px));
+  padding: 10px 12px 11px; display: flex; flex-direction: column; gap: 8px; border-color: rgba(255, 209, 102, 0.35); }
+body.replay .focus { top: calc(7vh + 122px); }
+.focus.hasPin { top: calc(152px + env(safe-area-inset-top, 0px)); }
+.fo-head { display: flex; align-items: center; gap: 8px; }
+.fo-head b.sh { display: inline-grid; place-items: center; min-width: 22px; height: 20px; border-radius: 5px; font-size: 12px; padding: 0 4px; font-weight: 800; }
+.fo-name { font-weight: 800; font-stretch: 82%; font-size: 17px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fo-name small { font-weight: 600; font-stretch: 100%; font-size: 11px; color: var(--muted); margin-left: 6px; }
+.fo-now { font-size: 12px; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; }
+.fo-x { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 16px; padding: 0 2px; }
+.fo-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.fo-grid div { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.04); border-radius: 7px; padding: 5px 6px; min-width: 0; }
+.fo-grid b { font-weight: 800; font-stretch: 80%; font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fo-grid small { font-size: 9px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fo-acts { display: flex; gap: 6px; }
+.fo-acts .btn { padding: 4px 9px; font-size: 11.5px; }
+.fo-acts .btn[aria-pressed="true"] { background: rgba(255, 209, 102, 0.18); border-color: rgba(255, 209, 102, 0.6); }
+.fo-state { font-size: 11.5px; color: var(--muted); }
+.ptag .spd { color: var(--gold); font-variant-numeric: tabular-nums; margin-left: 2px; }
+.ptag.focus-tag { outline: 1.5px solid var(--gold); }
+.alerts { position: fixed; z-index: 6; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(92px + env(safe-area-inset-top, 0px)); display: flex; flex-direction: column; gap: 6px; pointer-events: none; align-items: flex-end; }
+.alert { padding: 7px 12px 8px; border-radius: 10px; background: var(--glass-strong); border: 1px solid rgba(255, 209, 102, 0.45); display: flex; gap: 9px; align-items: center;
+  font-size: 13px; font-weight: 700; transform: translateX(16px); opacity: 0; transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+.alert.show { transform: none; opacity: 1; }
+.alert small { color: var(--muted); font-weight: 600; font-size: 11.5px; }
+.alert i { font-style: normal; color: var(--gold); font-weight: 800; }
+body.deskopen .alerts, body.clubopen .alerts { right: calc(364px + 16px); }
+
+/* style graphics: the Director's graphic, cut for the viewer */
+.gfx { position: fixed; z-index: 5; left: max(16px, env(safe-area-inset-left, 0px)); top: calc(126px + env(safe-area-inset-top, 0px)); width: min(300px, calc(100vw - 32px));
+  padding: 11px 13px 12px; transform: translateX(-16px); opacity: 0; transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .35s; pointer-events: none; }
+body.replay .gfx { top: calc(7vh + 122px); }
+.gfx.show { transform: none; opacity: 1; }
+.gfx .gk { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--style-c, var(--muted)); font-weight: 800; margin-bottom: 6px; }
+.gfx .gbig { font-weight: 800; font-stretch: 75%; font-size: 38px; line-height: 1; }
+.gfx .gsub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.gfx .gbar { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden; margin-top: 8px; }
+.gfx .gbar span { display: block; height: 100%; border-radius: 4px; background: var(--style-c, var(--accent)); }
+.gfx .gwp { display: grid; grid-template-columns: 48px 1fr 1fr; gap: 4px 8px; align-items: center; font-size: 12px; margin-top: 4px; }
+.gfx .gwp b { font-weight: 800; font-size: 15px; font-stretch: 85%; }
+.gfx .gwp .arrow { color: var(--muted); }
+.gfx table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.gfx td { padding: 3px 2px; border-top: 1px solid var(--edge); }
+.gfx td.r { text-align: right; font-weight: 800; font-stretch: 85%; }
+.gfx .gverdict { margin-top: 8px; font-weight: 800; font-size: 14px; }
+.gfx .gverdict.good { color: #3ddc97; } .gfx .gverdict.better { color: var(--gold); }
+body.hasfocus .gfx { top: calc(262px + env(safe-area-inset-top, 0px)); }
+body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
+.pop { position: absolute; transform: translate(-50%, -150%); padding: 2px 7px; border-radius: 5px; background: var(--s-analyst); color: #04121f; font-size: 12px; font-weight: 800;
+  font-stretch: 85%; white-space: nowrap; pointer-events: none; box-shadow: 0 2px 10px rgba(0,0,0,0.4); transition: opacity .4s; }
+
+/* your club scores */
+.celebrate { position: fixed; inset: 0; z-index: 6; pointer-events: none; display: grid; place-items: center; opacity: 0; }
+.celebrate.run { animation: cel 2.6s ease forwards; }
+.celebrate .cb { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 55%, color-mix(in srgb, var(--cel-c) 55%, transparent) 0%, transparent 62%); }
+.celebrate b { position: relative; font-weight: 800; font-stretch: 68%; font-size: min(22vw, 190px); line-height: 0.9; color: #fff; letter-spacing: 0.02em;
+  text-shadow: 0 0 60px var(--cel-c), 0 6px 0 rgba(0,0,0,0.25); transform: scale(0.8); animation: celb 2.6s cubic-bezier(.2,.8,.2,1) forwards; }
+.celebrate small { position: absolute; top: calc(50% + min(11vw, 96px)); font-size: 20px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+.celebrate.against .cb { background: radial-gradient(ellipse at 50% 55%, rgba(10, 14, 24, 0.55), transparent 70%); }
+.celebrate.against b { font-size: min(9vw, 72px); text-shadow: none; color: #cdd6e4; }
+@keyframes cel { 0% { opacity: 0; } 10% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes celb { 0% { transform: scale(0.6); } 18% { transform: scale(1.06); } 30% { transform: scale(1); } 100% { transform: scale(1.04); } }
+@media (max-width: 760px) { .focus, .focus.hasPin, body.replay .focus { top: auto; bottom: calc(var(--ctrl-h, 110px) + 26px); } .fo-grid b { font-size: 14px; } .gfx { display: none; } }
+
+@media (max-width: 760px) { .clubp { left: max(16px, env(safe-area-inset-left, 0px)); width: auto; top: auto; bottom: calc(150px + env(safe-area-inset-bottom, 0px)); max-height: 52vh; } }
 @media (max-width: 760px) {
   .caption .text { font-size: 16px; } .deskp { display: none; } .ghostcard .q { font-size: 18px; }
 }
@@ -254,6 +425,7 @@ body.skipping #tags, body.split #tags .ptag { opacity: 0; }
   .panel { left: max(16px, env(safe-area-inset-left, 0px)); width: auto; top: auto; bottom: calc(190px + env(safe-area-inset-bottom, 0px)); height: 44vh; }
 }
 @media (max-width: 1500px) { .seg-label { display: none; } }
+@media (max-width: 480px) { .director { display: none; } .seg { max-width: 100%; overflow-x: auto; scrollbar-width: none; } .controls .row { gap: 6px 8px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation-duration: 0.01s !important; } }
 </style>
 
@@ -272,8 +444,9 @@ body.skipping #tags, body.split #tags .ptag { opacity: 0; }
   </div>
   <div class="wp" title="Live win probability from the trained model">
     <div class="wp-bar"><span id="wpH"></span><span class="d" id="wpD"></span><span id="wpA"></span></div>
-    <div class="wp-legend num"><span id="wpHL"></span><span>Win probability</span><span id="wpAL"></span></div>
+    <div class="wp-legend num"><span id="wpHL"></span><span id="wpMid" data-i18n="wp">Win probability</span><span id="wpAL"></span></div>
   </div>
+  <div class="pin" id="pin" hidden></div>
 </header>
 
 <div class="director glass" aria-live="polite">
@@ -296,9 +469,9 @@ body.skipping #tags, body.split #tags .ptag { opacity: 0; }
 </div>
 
 <aside class="panel glass" id="panel" hidden aria-label="Match stats and key moments">
-  <h3>Match stats</h3>
+  <h3 data-i18n="statsH">Match stats</h3>
   <div class="stats" id="stats"></div>
-  <h3>Key moments</h3>
+  <h3 data-i18n="momentsH">Key moments</h3>
   <div class="moments" id="moments"></div>
 </aside>
 
@@ -312,15 +485,18 @@ body.skipping #tags, body.split #tags .ptag { opacity: 0; }
     <button class="play" id="play" aria-label="Play"></button>
     <span class="time num" id="time">0'</span>
     <div class="seg" role="group" aria-label="Playback speed" id="speeds"></div>
-    <span class="seg-label">Camera</span>
+    <span class="seg-label" data-i18n="camera">Camera</span>
     <div class="seg" role="group" aria-label="Camera" id="cams"></div>
     <span class="spacer"></span>
-    <span class="seg-label">Players</span>
+    <span class="seg-label" data-i18n="players">Players</span>
     <div class="seg" role="group" aria-label="Player style" id="styles"></div>
-    <button class="btn" id="nextMoment" title="Jump to the next key moment (N)">Next moment</button>
-    <button class="btn" id="deskBtn" aria-pressed="false" title="The AI desk: what each agent did (D)">AI desk</button>
-    <button class="btn" id="statsBtn" aria-pressed="false" title="Stats and moments (S)">Stats</button>
-    <button class="btn" id="fsBtn" title="Full screen (F)" aria-label="Full screen"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:block"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <button class="btn" id="nextMoment" data-i18n="nextMoment" data-i18n-title="nextMomentT">Next moment</button>
+    <button class="btn ybbtn" id="ybBtn" aria-haspopup="dialog" data-i18n-title="ybT"><span class="yb-dot" id="ybDot"></span><span data-i18n="yb">Your broadcast</span></button>
+    <button class="btn" id="deskBtn" aria-pressed="false" data-i18n="aiDesk" data-i18n-title="aiDeskT">AI desk</button>
+    <a class="btn" id="hubBtn" hidden data-i18n="season" data-i18n-title="seasonT">Season</a>
+    <button class="btn" id="clubBtn" aria-pressed="false" data-i18n="club" data-i18n-title="clubT">Club mode</button>
+    <button class="btn" id="statsBtn" aria-pressed="false" data-i18n="stats" data-i18n-title="statsT">Stats</button>
+    <button class="btn" id="fsBtn" data-i18n-title="fullscreen" aria-label="Full screen"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:block"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
   </div>
 </section>
 
@@ -329,9 +505,16 @@ body.skipping #tags, body.split #tags .ptag { opacity: 0; }
 <aside class="deskp glass" id="deskp" hidden aria-label="AI broadcast desk"></aside>
 <div class="ghostcard glass" id="ghostcard" aria-live="polite"></div>
 <div class="skip" id="skip" aria-live="polite"></div>
-<div class="ffchip glass" id="ffchip" aria-live="polite"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M3 6v12l8.5-6zM12.5 6v12L21 12z"/></svg><span>Stoppage · skipping ahead</span></div>
+<div class="ffchip glass" id="ffchip" aria-live="polite"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M3 6v12l8.5-6zM12.5 6v12L21 12z"/></svg><span data-i18n="ff">Stoppage · skipping ahead</span></div>
+<aside class="clubp glass" id="clubp" hidden aria-label="Club mode: recruitment board"></aside>
+<div class="ghostcard glass tryoutcard" id="tryoutcard" aria-live="polite"></div>
+<aside class="focus glass" id="focus" hidden aria-label="Player focus"></aside>
+<div class="alerts" id="alerts" aria-live="polite"></div>
+<div class="gfx glass" id="gfx" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" aria-hidden="true"></div>
+<div class="ybp" id="ybp" hidden></div>
 <div class="wipe" id="wipe"><span id="wipeText">REPLAY</span></div>
-<div class="loading" id="loading">Building the stadium…</div>
+<div class="loading" id="loading" data-i18n="loading">Building the stadium…</div>
 
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
@@ -341,6 +524,288 @@ const $ = (id) => document.getElementById(id);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const smooth = (k, dt) => 1 - Math.exp(-k * dt);
+
+// ---------------------------------------------------------------- languages
+// Every word on screen comes from this table. The AI desk's commentary is not translated here: it is written
+// natively in each language by the Commentator and fact-checked in that language (see DATA.segments[].ed).
+const I18N = {
+  en: {
+    loading: "Building the stadium…", wp: "Win probability", wpYou: "{t} win chance", autoDir: "Auto director", aiDir: "AI director", yourCam: "Your camera",
+    following: "Following play", followName: "Following {n}", pickAuto: "Pick Auto to hand control back to the director",
+    setPiece: "Set piece in the box", inBox: "{t} in the box", building: "{t} attack building", onBall: "{t} on the ball",
+    shapeCheck: "Shape check: {t} building from the back", backLive: "Back to live", attacking: "{c}, {t} attacking",
+    tagLive: "LIVE", tagManual: "MANUAL", tagReplay: "REPLAY", tagGhost: "GHOST",
+    h1: "1st half", h2: "2nd half", ft: "Full-time", ghostTl: "Ghost timeline", tryout: "Try-out",
+    statsH: "Match stats", momentsH: "Key moments", camera: "Camera", players: "Players",
+    nextMoment: "Next moment", nextMomentT: "Jump to the next key moment (N)", aiDesk: "AI desk", aiDeskT: "The AI desk: what each agent did (D)",
+    season: "Season", seasonT: "Back to the season: table, results, players", club: "Club mode", clubT: "Club mode: try any player in any position (C)",
+    stats: "Stats", statsT: "Stats and moments (S)", fullscreen: "Full screen (F)", yb: "Your broadcast", ybT: "Style, language, your club and your player (Y)",
+    ff: "Stoppage · skipping ahead", realTime: "Real time", xReal: "{s}× real time", clean: "Clean", mannequin: "Mannequin",
+    cam_auto: "Auto", cam_broadcast: "Broadcast", cam_behind: "Behind goal", cam_tactical: "Tactical", cam_skycam: "Skycam", cam_player: "Player",
+    cam_sweep: "Pitch-side", cam_free: "Free", cam_tele: "Telestrator", cam_split: "History splits", cam_focus: "Focus cam",
+    st_poss: "Possession", st_xg: "Expected goals", st_shots: "Shots", st_sot: "On target", st_pass: "Pass accuracy", st_corners: "Corners",
+    goal: "Goal", big_chance: "Big chance", great_save: "Big save", woodwork: "Woodwork", penalty_awarded: "Penalty", red_card: "Red card", yellow_card: "Yellow card",
+    tactical_change: "Tactical change", substitution: "Substitution", period_summary: "Summary", speed_alert: "Speed", top_speed: "Top speed",
+    distance_milestone: "Distance", hard_pass: "Line-breaking pass", long_sequence: "Passing move", dominance: "Dominance", pressing_surge: "Pressing surge",
+    momentum_shift: "Momentum shift", chaos_spike: "Chaos",
+    swingShort: "{n}-pt win-prob swing", swingLong: "{n}-point win-probability swing",
+    t_goal: "GOAL! {p} ({team}) · {h}-{a}", t_great_save: "Great save: {p} denies {q}", t_big_chance: "Big chance: {p}", t_woodwork: "Off the woodwork: {p}",
+    t_penalty_awarded: "Penalty to {team}: {p} fouled", t_red_card: "Red card: {p} ({team})", t_yellow_card: "Yellow card: {p} ({team})",
+    t_momentum_shift: "Momentum swings to {team}", t_half: "Half-time: {home} {h}-{a} {away}", t_full: "Full-time: {home} {h}-{a} {away}",
+    f_xg: "xG {v}", f_dist: "{v} m out", f_speed: "{v} km/h strike",
+    rp_sweep: "Pitch-side, half speed", rp_behind_ss: "Behind the goal, super slow", rp_sky: "Skycam", rp_behind: "Behind the goal, half speed",
+    rp_tactical: "Tactical, the shape", rp_player: "Player cam, slow motion", rp_replay: "replay", replayOf: "Replay: {t}",
+    agentP: "Producer", agentA: "Analyst", agentT: "Telestrator", agentS: "Scenario agent", agentD: "Director", agentC: "Commentator", agentF: "Fact-checker",
+    deskH: "AI broadcast desk", deskNone: "This page has no AI desk segments. Build it with <b>matchagents render</b>.",
+    seg_live_call: "live call", seg_replay_breakdown: "replay breakdown", seg_what_if: "what if", seg_stat_drop: "stat drop",
+    pri_low: "low", pri_normal: "normal", pri_high: "high", pri_breaking: "breaking", priority: "{p} priority", askedWhatIf: "asked a what-if",
+    factsFrom: "{n} facts from {t}", noBrief: "no brief", drawings: "{n} drawings", nothingDraw: "nothing to draw", noWhatIf: "no what-if this time",
+    notSim: "not simulated", ghostScoutRe: "Ghost Scout: re-took the chance with {n} players", futuresEach: "{n} futures each way: “{q}”",
+    liveOn: "live on {c}", defaultCams: "default cameras", linesFor: "{n} lines for this viewer", oneLine: "1 line for this viewer", draftsRejected: "drafts rejected",
+    approvedOn: "approved on attempt {n} · code check + model review", rejectedDrafts: "rejected the drafts: the verified headline aired", notReached: "not reached",
+    modelCalls: "{n} model calls", receipts: "{n} tool receipts", toAir: "{s}s to air", editions: "{n} editions", code: "code", slow: "slow",
+    aiComm: "{m} · AI commentary", factChecked: "✓ fact-checked", verified: "verified headline", inLang: "written in English",
+    scenarioAsks: "The Scenario agent asks", simByEngine: "simulated by the match engine",
+    liveReaction: "Live reaction", slowMo: "{c}, slow motion", historySplits: "History splits", fromGoal: "History splits · from the goal",
+    fastForward: "Fast-forward", ghostAt: "Ghost timeline · {m}", backReality: "Back to reality", verdict: "The verdict", ghostScout: "Ghost Scout",
+    goalLine: "In this timeline: {s} scores, {m}.", ftLine: "Full time in this timeline: {h} {a}-{b} {aw}", itGoesIn: "In the ghost timeline, it goes in.",
+    itsSaved: "In the ghost timeline, it's saved.", neverHappened: "Something happens here that never happened for real", ghostFf: "Ghost timeline · fast-forward",
+    w_replay: "REPLAY", w_live: "LIVE", w_ghost: "GHOST TIMELINE", w_scout: "GHOST SCOUT", w_tryout: "TRY-OUT", w_goal: "GOAL!",
+    settled: "Settled by simulation", ifIn: "If it had gone in", ifSaved: "If it had been saved", asHappened: "As it happened",
+    futuresFoot: "{n} simulated futures each way · ±{m} margin", whiteLine: "white line: the real match", ahead: "{t} ahead", win: "{t} win", draw: "Draw", lose: "{t} lose",
+    futuresCount: "{c} of {n} futures", yourView: "your club's view",
+    scoutHead: "Ghost Scout · same chance, every attacker in the league", tookIt: "(took it)", scores: "Scores", teamWins: "Team wins",
+    scoutFoot: "{n} players · the engine's shot model for this exact chance",
+    // Club mode
+    clubNone: "No recruitment board in this page. Build one with <b>matchengine board</b>, then render again.", clubH: "Club mode · try any player",
+    startsHere: "{n} starts here", projected: "projected {v}", ready: "Ready", allN: "All {n}", searchPh: "Search a player, club or role (ST, CB…)",
+    simulating: "simulating… {d}/{t}", simulate: "Simulate", twoMin: "~2 min", pts: "{v} pts", nobodySim: "Nobody simulated here yet. Pick \"All\" to choose a player.",
+    pickPos: "Pick a position on the pitch.", clubFoot: "Ready: pre-simulated, instant. Anyone else is simulated live by the match engine ({n} full matches each way, about 2 minutes){srv}.",
+    onServer: " on the try-out server", tag_top: "Top projected", tag_u23: "Best under-23",
+    p_saves: "Saves", p_goals_conceded: "Goals conceded", p_xg_faced: "xG faced", p_passes_completed: "Passes completed", p_tackles_won: "Tackles won",
+    p_interceptions: "Interceptions", p_clearances: "Clearances", p_aerials_won: "Aerials won", p_progressive_passes: "Progressive passes",
+    p_key_passes: "Chances created", p_dribbles_completed: "Take-ons won", p_sprints: "Sprints", p_ball_recoveries: "Recoveries", p_dispossessed: "Lost the ball",
+    p_xg: "xG", p_xa: "xA", p_goals: "Goals", p_shots: "Shots",
+    toSimulating: "Simulating…", toClear: "Clear improvement", toWorse: "Clearly worse", toClose: "Too close to call", toKicker: "Try-out · simulated by the match engine",
+    toQ: "What if {c} played {pos} instead of {i}?", toProg: "Simulating live: {d} of {t} matches · the numbers firm up as they come in",
+    toXpts: "expected points per match", age: "age {n}", withP: "With {n}", toXg: "xG for {a} · against {b} · actual W{w} D{d} L{l}",
+    toNote: "Win, draw and loss are what the chances deserved (every shot's xG), which settles far faster than the scorelines of {n} matches.",
+    per90: "Per 90 minutes", scoutAgent: "Scout agent", verifiedSummary: "verified summary", v_sign: "sign", v_shortlist: "shortlist", v_pass: "pass",
+    tighten: "Tighten the margin (+12 matches, ~2 min)", watchBest: "Watch his best moment", close: "Close",
+    toFoot: "{n} full matches each way{live} · paired on the same seeds · expected points from the quality of every shot", liveW: " · live",
+    clipTitle: "{c} at {pos}", clipAngle: "Try-out: {c} at {pos}", m_goal: "scores", m_assist: "sets one up", m_chance: "gets a big chance", m_key_pass: "creates a chance",
+    m_save: "makes a save", m_other: "makes his mark", clipCap: "In a simulated match, {c} {w}{m}.", simLive: "Simulate {c} live", tryServer: "Try-out server",
+    serverOff: "Live try-outs run on the match engine server, which this page isn't connected to. Start it with <b>matchengine serve</b> and open this page with <b>?api=http://localhost:8765</b>, or pick a Ready player.",
+    couldnt: "Couldn't simulate {c}", server: "Server",
+    // Your broadcast
+    ybH: "Your broadcast", ybSub: "The same match, directed for you: cameras, graphics and commentary change with your choices.",
+    ybStyle: "How do you watch?", ybLang: "Language", ybClub: "Your club", ybPlayer: "Your player", ybPin: "Keep an eye on", ybGo: "Watch", ybNeutral: "Neutral",
+    ybPlayerPh: "Search both squads", ybNone: "Nobody", ybFollow: "Camera follows him",
+    s_fan: "Fan", s_fanD: "Big moments, player cams, the emotion. No jargon.", s_analyst: "Analyst", s_analystD: "xG, win probability, pass difficulty. The numbers behind it.",
+    s_tactician: "Tactician", s_tacticianD: "The shape: lines, spaces, pressing. High cameras.", s_academy: "Academy", s_academyD: "Coaching: what he saw, what was on, what to practise.",
+    pin_none: "Nothing", pin_xg: "xG", pin_poss: "Possession", pin_pass: "Pass accuracy", pin_shots: "Shots", pin_dist: "His distance", pin_speed: "His top speed", pin_sprints: "His sprints",
+    clubChannel: "{t} channel", neutralChannel: "Neutral", styleTag: "{s} edition",
+    // player focus
+    fTouches: "Touches", fPasses: "Passes", fDist: "Distance", fTop: "Top speed", fSprints: "Sprints", fNow: "now", fBench: "On the bench", fOff: "Off the pitch",
+    fNext: "His next action", fNone: "No more actions", fCam: "Follow", unitKm: "km", unitKmh: "km/h",
+    a_goal: "Goal!", a_shot_on: "Shot on target", a_shot: "Shot", a_chance: "Chance created", a_assist: "Assist", a_tackle: "Tackle won", a_interception: "Interception",
+    a_dribble: "Beats his man", a_save: "Save", a_sprint: "Top speed: {v} km/h",
+    // style graphics
+    g_xg: "Chance quality", g_xgOf: "xG of this chance", g_wp: "Win probability", g_before: "before", g_after: "after", g_card: "Match so far", g_mom: "Momentum",
+    g_shape: "Shape", g_line: "{t} back line", g_compact: "{t}: {v} m from back line to front line",
+    dec_h: "The decision", dec_right: "Right call", dec_better: "Better option", dec_shot: "His shot: {x} xG", dec_pass: "{n}: pass {pc} · {x} xG from there",
+    dec_lane: "{n} defenders in the way", coaching: "Coaching point",
+    oc_goal: "goal", oc_parried: "parried", oc_saved: "saved", oc_wide: "wide", oc_blocked: "blocked", oc_post: "off the post",
+  },
+  es: {
+    loading: "Construyendo el estadio…", wp: "Probabilidad de victoria", wpYou: "{t}: opciones de ganar", autoDir: "Realización automática", aiDir: "Realización IA", yourCam: "Tu cámara",
+    following: "Siguiendo la jugada", followName: "Siguiendo a {n}", pickAuto: "Elige Auto para devolver el control a la realización",
+    setPiece: "Balón parado en el área", inBox: "{t} en el área", building: "{t} prepara el ataque", onBall: "{t} con el balón",
+    shapeCheck: "Vista táctica: {t} sale desde atrás", backLive: "Volvemos al directo", attacking: "{c}, ataca el {t}",
+    tagLive: "DIRECTO", tagManual: "MANUAL", tagReplay: "REPETICIÓN", tagGhost: "FANTASMA",
+    h1: "1.ª parte", h2: "2.ª parte", ft: "Final", ghostTl: "Línea fantasma", tryout: "Prueba",
+    statsH: "Estadísticas", momentsH: "Momentos clave", camera: "Cámara", players: "Jugadores",
+    nextMoment: "Siguiente momento", nextMomentT: "Ir al siguiente momento clave (N)", aiDesk: "Mesa IA", aiDeskT: "La mesa IA: qué hizo cada agente (D)",
+    season: "Temporada", seasonT: "Volver a la temporada: clasificación, resultados, jugadores", club: "Modo club", clubT: "Modo club: prueba a cualquier jugador en cualquier puesto (C)",
+    stats: "Datos", statsT: "Datos y momentos (S)", fullscreen: "Pantalla completa (F)", yb: "Tu retransmisión", ybT: "Estilo, idioma, tu club y tu jugador (Y)",
+    ff: "Juego parado · avanzando", realTime: "Tiempo real", xReal: "{s}× tiempo real", clean: "Limpio", mannequin: "Maniquí",
+    cam_auto: "Auto", cam_broadcast: "General", cam_behind: "Tras la portería", cam_tactical: "Táctica", cam_skycam: "Skycam", cam_player: "Jugador",
+    cam_sweep: "Pie de campo", cam_free: "Libre", cam_tele: "Telestrador", cam_split: "La historia se bifurca", cam_focus: "Cámara foco",
+    st_poss: "Posesión", st_xg: "Goles esperados", st_shots: "Tiros", st_sot: "A puerta", st_pass: "Precisión de pase", st_corners: "Córneres",
+    goal: "Gol", big_chance: "Ocasión clara", great_save: "Paradón", woodwork: "Al palo", penalty_awarded: "Penalti", red_card: "Roja", yellow_card: "Amarilla",
+    tactical_change: "Cambio táctico", substitution: "Cambio", period_summary: "Resumen", speed_alert: "Velocidad", top_speed: "Velocidad máxima",
+    distance_milestone: "Distancia", hard_pass: "Pase entre líneas", long_sequence: "Jugada larga", dominance: "Dominio", pressing_surge: "Presión alta",
+    momentum_shift: "Cambio de inercia", chaos_spike: "Caos",
+    swingShort: "{n} pts de vuelco", swingLong: "Vuelco de {n} puntos en la probabilidad de victoria",
+    t_goal: "¡GOL! {p} ({team}) · {h}-{a}", t_great_save: "Paradón: {p} le niega el gol a {q}", t_big_chance: "Ocasión clara: {p}", t_woodwork: "¡Al palo! {p}",
+    t_penalty_awarded: "Penalti para el {team}: falta sobre {p}", t_red_card: "Roja: {p} ({team})", t_yellow_card: "Amarilla: {p} ({team})",
+    t_momentum_shift: "La inercia cambia hacia el {team}", t_half: "Descanso: {home} {h}-{a} {away}", t_full: "Final: {home} {h}-{a} {away}",
+    f_xg: "xG {v}", f_dist: "a {v} m", f_speed: "disparo a {v} km/h",
+    rp_sweep: "Pie de campo, media velocidad", rp_behind_ss: "Tras la portería, súper lenta", rp_sky: "Skycam", rp_behind: "Tras la portería, media velocidad",
+    rp_tactical: "Táctica, el dibujo", rp_player: "Cámara jugador, cámara lenta", rp_replay: "repetición", replayOf: "Repetición: {t}",
+    agentP: "Productor", agentA: "Analista", agentT: "Telestrador", agentS: "Agente de escenarios", agentD: "Realizador", agentC: "Comentarista", agentF: "Verificador",
+    deskH: "Mesa de retransmisión IA", deskNone: "Esta página no tiene segmentos de la mesa IA. Créalos con <b>matchagents render</b>.",
+    seg_live_call: "en directo", seg_replay_breakdown: "análisis de la repetición", seg_what_if: "¿y si…?", seg_stat_drop: "dato",
+    pri_low: "baja", pri_normal: "normal", pri_high: "alta", pri_breaking: "última hora", priority: "prioridad {p}", askedWhatIf: "pidió un ¿y si…?",
+    factsFrom: "{n} datos de {t}", noBrief: "sin informe", drawings: "{n} dibujos", nothingDraw: "nada que dibujar", noWhatIf: "sin ¿y si…? esta vez",
+    notSim: "no simulado", ghostScoutRe: "Ojeador fantasma: repitió la ocasión con {n} jugadores", futuresEach: "{n} futuros por lado: «{q}»",
+    liveOn: "en directo con {c}", defaultCams: "cámaras por defecto", linesFor: "{n} frases para este espectador", oneLine: "1 frase para este espectador", draftsRejected: "borradores rechazados",
+    approvedOn: "aprobado en el intento {n} · control por código + revisión del modelo", rejectedDrafts: "rechazó los borradores: se emitió el titular verificado", notReached: "no llegó",
+    modelCalls: "{n} llamadas al modelo", receipts: "{n} recibos de herramientas", toAir: "{s} s hasta antena", editions: "{n} ediciones", code: "código", slow: "lenta",
+    aiComm: "{m} · comentario IA", factChecked: "✓ verificado", verified: "titular verificado", inLang: "escrito en inglés",
+    scenarioAsks: "El agente de escenarios pregunta", simByEngine: "simulado por el motor del partido",
+    liveReaction: "Reacción en directo", slowMo: "{c}, cámara lenta", historySplits: "La historia se bifurca", fromGoal: "La historia se bifurca · desde la portería",
+    fastForward: "Avance rápido", ghostAt: "Línea fantasma · {m}", backReality: "De vuelta a la realidad", verdict: "El veredicto", ghostScout: "Ojeador fantasma",
+    goalLine: "En esta línea temporal: marca {s}, {m}.", ftLine: "Final en esta línea temporal: {h} {a}-{b} {aw}", itGoesIn: "En la línea fantasma, entra.",
+    itsSaved: "En la línea fantasma, la paran.", neverHappened: "Aquí pasa algo que nunca ocurrió de verdad", ghostFf: "Línea fantasma · avance rápido",
+    w_replay: "REPETICIÓN", w_live: "DIRECTO", w_ghost: "LÍNEA FANTASMA", w_scout: "OJEADOR FANTASMA", w_tryout: "PRUEBA", w_goal: "¡GOL!",
+    settled: "Resuelto por simulación", ifIn: "Si hubiera entrado", ifSaved: "Si la hubieran parado", asHappened: "Como ocurrió",
+    futuresFoot: "{n} futuros simulados por lado · margen ±{m}", whiteLine: "línea blanca: el partido real", ahead: "{t} por delante", win: "Gana el {t}", draw: "Empate", lose: "Pierde el {t}",
+    futuresCount: "{c} de {n} futuros", yourView: "visto desde tu club",
+    scoutHead: "Ojeador fantasma · la misma ocasión, cada atacante de la liga", tookIt: "(la tuvo)", scores: "Marca", teamWins: "Gana su equipo",
+    scoutFoot: "{n} jugadores · el modelo de tiro del motor para esta misma ocasión",
+    clubNone: "Esta página no tiene tablero de fichajes. Créalo con <b>matchengine board</b> y vuelve a generarla.", clubH: "Modo club · prueba a cualquiera",
+    startsHere: "Aquí juega {n}", projected: "proyección {v}", ready: "Listos", allN: "Todos ({n})", searchPh: "Busca jugador, club o puesto (DC, DFC…)",
+    simulating: "simulando… {d}/{t}", simulate: "Simular", twoMin: "~2 min", pts: "{v} pts", nobodySim: "Aún no hay simulaciones aquí. Elige \"Todos\" para escoger un jugador.",
+    pickPos: "Elige un puesto en el campo.", clubFoot: "Listos: simulados de antemano, al instante. Cualquier otro se simula en directo con el motor del partido ({n} partidos completos por lado, unos 2 minutos){srv}.",
+    onServer: " en el servidor de pruebas", tag_top: "Mejor proyección", tag_u23: "Mejor sub-23",
+    p_saves: "Paradas", p_goals_conceded: "Goles encajados", p_xg_faced: "xG en contra", p_passes_completed: "Pases completados", p_tackles_won: "Entradas ganadas",
+    p_interceptions: "Intercepciones", p_clearances: "Despejes", p_aerials_won: "Duelos aéreos ganados", p_progressive_passes: "Pases progresivos",
+    p_key_passes: "Ocasiones creadas", p_dribbles_completed: "Regates ganados", p_sprints: "Sprints", p_ball_recoveries: "Recuperaciones", p_dispossessed: "Pérdidas",
+    p_xg: "xG", p_xa: "xA", p_goals: "Goles", p_shots: "Tiros",
+    toSimulating: "Simulando…", toClear: "Mejora clara", toWorse: "Claramente peor", toClose: "Demasiado igualado", toKicker: "Prueba · simulada por el motor del partido",
+    toQ: "¿Y si {c} jugara de {pos} en lugar de {i}?", toProg: "Simulando en directo: {d} de {t} partidos · las cifras se afinan a medida que llegan",
+    toXpts: "puntos esperados por partido", age: "{n} años", withP: "Con {n}", toXg: "xG a favor {a} · en contra {b} · real G{w} E{d} P{l}",
+    toNote: "Victoria, empate y derrota según lo que merecieron las ocasiones (el xG de cada tiro), que se estabiliza mucho antes que los marcadores de {n} partidos.",
+    per90: "Por 90 minutos", scoutAgent: "Agente ojeador", verifiedSummary: "resumen verificado", v_sign: "fichar", v_shortlist: "en la lista", v_pass: "descartar",
+    tighten: "Afinar el margen (+12 partidos, ~2 min)", watchBest: "Ver su mejor momento", close: "Cerrar",
+    toFoot: "{n} partidos completos por lado{live} · emparejados con las mismas semillas · puntos esperados según la calidad de cada tiro", liveW: " · en directo",
+    clipTitle: "{c} de {pos}", clipAngle: "Prueba: {c} de {pos}", m_goal: "marca", m_assist: "da una asistencia", m_chance: "tiene una ocasión clara", m_key_pass: "crea una ocasión",
+    m_save: "hace una parada", m_other: "deja su huella", clipCap: "En un partido simulado, {c} {w}{m}.", simLive: "Simular a {c} en directo", tryServer: "Servidor de pruebas",
+    serverOff: "Las pruebas en directo se ejecutan en el servidor del motor, al que esta página no está conectada. Arráncalo con <b>matchengine serve</b> y abre la página con <b>?api=http://localhost:8765</b>, o elige un jugador de la lista Listos.",
+    couldnt: "No se pudo simular a {c}", server: "Servidor",
+    ybH: "Tu retransmisión", ybSub: "El mismo partido, realizado para ti: las cámaras, los gráficos y los comentarios cambian según lo que elijas.",
+    ybStyle: "¿Cómo lo ves?", ybLang: "Idioma", ybClub: "Tu club", ybPlayer: "Tu jugador", ybPin: "No le quites ojo a", ybGo: "Ver", ybNeutral: "Neutral",
+    ybPlayerPh: "Busca en las dos plantillas", ybNone: "Ninguno", ybFollow: "La cámara lo sigue",
+    s_fan: "Aficionado", s_fanD: "Los grandes momentos, cámaras de jugador, la emoción. Sin tecnicismos.", s_analyst: "Analista", s_analystD: "xG, probabilidad de victoria, dificultad de pase. Los números detrás.",
+    s_tactician: "Táctico", s_tacticianD: "El dibujo: líneas, espacios, presión. Cámaras altas.", s_academy: "Cantera", s_academyD: "Formación: qué vio, qué opciones tenía, qué practicar.",
+    pin_none: "Nada", pin_xg: "xG", pin_poss: "Posesión", pin_pass: "Precisión de pase", pin_shots: "Tiros", pin_dist: "Su distancia", pin_speed: "Su velocidad máxima", pin_sprints: "Sus sprints",
+    clubChannel: "Canal del {t}", neutralChannel: "Neutral", styleTag: "edición {s}",
+    fTouches: "Toques", fPasses: "Pases", fDist: "Distancia", fTop: "Vel. máxima", fSprints: "Sprints", fNow: "ahora", fBench: "En el banquillo", fOff: "Fuera del campo",
+    fNext: "Su siguiente acción", fNone: "No hay más acciones", fCam: "Seguir", unitKm: "km", unitKmh: "km/h",
+    a_goal: "¡Gol!", a_shot_on: "Tiro a puerta", a_shot: "Tiro", a_chance: "Ocasión creada", a_assist: "Asistencia", a_tackle: "Entrada ganada", a_interception: "Intercepción",
+    a_dribble: "Gana el uno contra uno", a_save: "Parada", a_sprint: "Velocidad máxima: {v} km/h",
+    g_xg: "Calidad de la ocasión", g_xgOf: "xG de esta ocasión", g_wp: "Probabilidad de victoria", g_before: "antes", g_after: "después", g_card: "Su partido", g_mom: "Inercia",
+    g_shape: "Dibujo", g_line: "Línea defensiva del {t}", g_compact: "{t}: {v} m de la defensa a la delantera",
+    dec_h: "La decisión", dec_right: "Buena elección", dec_better: "Mejor opción", dec_shot: "Su tiro: {x} xG", dec_pass: "{n}: pase {pc} · {x} xG desde ahí",
+    dec_lane: "{n} defensores en medio", coaching: "Para aprender",
+    oc_goal: "gol", oc_parried: "despejada", oc_saved: "parada", oc_wide: "fuera", oc_blocked: "bloqueada", oc_post: "al palo",
+  },
+  fr: {
+    loading: "Construction du stade…", wp: "Probabilité de victoire", wpYou: "Chances de victoire : {t}", autoDir: "Réalisation auto", aiDir: "Réalisation IA", yourCam: "Votre caméra",
+    following: "On suit le jeu", followName: "On suit {n}", pickAuto: "Choisissez Auto pour rendre la main à la réalisation",
+    setPiece: "Coup de pied arrêté dans la surface", inBox: "{t} dans la surface", building: "{t} construit son attaque", onBall: "{t} a le ballon",
+    shapeCheck: "Vue tactique : {t} relance de derrière", backLive: "Retour au direct", attacking: "{c}, {t} attaque",
+    tagLive: "DIRECT", tagManual: "MANUEL", tagReplay: "RALENTI", tagGhost: "FANTÔME",
+    h1: "1re mi-temps", h2: "2e mi-temps", ft: "Fin du match", ghostTl: "Ligne fantôme", tryout: "Essai",
+    statsH: "Statistiques", momentsH: "Moments clés", camera: "Caméra", players: "Joueurs",
+    nextMoment: "Moment suivant", nextMomentT: "Aller au moment clé suivant (N)", aiDesk: "Plateau IA", aiDeskT: "Le plateau IA : ce qu'a fait chaque agent (D)",
+    season: "Saison", seasonT: "Retour à la saison : classement, résultats, joueurs", club: "Mode club", clubT: "Mode club : essayez n'importe quel joueur à n'importe quel poste (C)",
+    stats: "Stats", statsT: "Stats et moments (S)", fullscreen: "Plein écran (F)", yb: "Votre diffusion", ybT: "Style, langue, votre club et votre joueur (Y)",
+    ff: "Arrêt de jeu · on avance", realTime: "Temps réel", xReal: "{s}× temps réel", clean: "Épuré", mannequin: "Mannequin",
+    cam_auto: "Auto", cam_broadcast: "Plan large", cam_behind: "Derrière le but", cam_tactical: "Tactique", cam_skycam: "Skycam", cam_player: "Joueur",
+    cam_sweep: "Bord terrain", cam_free: "Libre", cam_tele: "Palette", cam_split: "L'histoire bifurque", cam_focus: "Caméra joueur suivi",
+    st_poss: "Possession", st_xg: "Buts attendus", st_shots: "Tirs", st_sot: "Cadrés", st_pass: "Passes réussies", st_corners: "Corners",
+    goal: "But", big_chance: "Grosse occasion", great_save: "Arrêt décisif", woodwork: "Poteau", penalty_awarded: "Penalty", red_card: "Carton rouge", yellow_card: "Carton jaune",
+    tactical_change: "Changement tactique", substitution: "Remplacement", period_summary: "Bilan", speed_alert: "Vitesse", top_speed: "Pointe de vitesse",
+    distance_milestone: "Distance", hard_pass: "Passe entre les lignes", long_sequence: "Longue séquence", dominance: "Domination", pressing_surge: "Pressing",
+    momentum_shift: "Bascule", chaos_spike: "Chaos",
+    swingShort: "bascule de {n} pts", swingLong: "Bascule de {n} points de probabilité de victoire",
+    t_goal: "BUT ! {p} ({team}) · {h}-{a}", t_great_save: "Arrêt décisif : {p} prive {q} du but", t_big_chance: "Grosse occasion : {p}", t_woodwork: "Sur le poteau : {p}",
+    t_penalty_awarded: "Penalty pour {team} : faute sur {p}", t_red_card: "Carton rouge : {p} ({team})", t_yellow_card: "Carton jaune : {p} ({team})",
+    t_momentum_shift: "L'élan passe du côté de {team}", t_half: "Mi-temps : {home} {h}-{a} {away}", t_full: "Fin du match : {home} {h}-{a} {away}",
+    f_xg: "xG {v}", f_dist: "à {v} m", f_speed: "frappe à {v} km/h",
+    rp_sweep: "Bord terrain, demi-vitesse", rp_behind_ss: "Derrière le but, super ralenti", rp_sky: "Skycam", rp_behind: "Derrière le but, demi-vitesse",
+    rp_tactical: "Tactique, le bloc", rp_player: "Caméra joueur, ralenti", rp_replay: "ralenti", replayOf: "Ralenti : {t}",
+    agentP: "Producteur", agentA: "Analyste", agentT: "Palette", agentS: "Agent scénarios", agentD: "Réalisateur", agentC: "Commentateur", agentF: "Vérificateur",
+    deskH: "Plateau de diffusion IA", deskNone: "Cette page n'a pas de segments du plateau IA. Générez-les avec <b>matchagents render</b>.",
+    seg_live_call: "à chaud", seg_replay_breakdown: "décryptage du ralenti", seg_what_if: "et si… ?", seg_stat_drop: "stat",
+    pri_low: "basse", pri_normal: "normale", pri_high: "haute", pri_breaking: "urgente", priority: "priorité {p}", askedWhatIf: "a demandé un « et si »",
+    factsFrom: "{n} faits tirés de {t}", noBrief: "pas de note", drawings: "{n} dessins", nothingDraw: "rien à dessiner", noWhatIf: "pas de « et si » cette fois",
+    notSim: "non simulé", ghostScoutRe: "Recruteur fantôme : l'occasion rejouée avec {n} joueurs", futuresEach: "{n} futurs de chaque côté : « {q} »",
+    liveOn: "en direct sur {c}", defaultCams: "caméras par défaut", linesFor: "{n} phrases pour ce spectateur", oneLine: "1 phrase pour ce spectateur", draftsRejected: "brouillons refusés",
+    approvedOn: "validé à l'essai {n} · contrôle par le code + relecture du modèle", rejectedDrafts: "brouillons refusés : le titre vérifié est passé à l'antenne", notReached: "non atteint",
+    modelCalls: "{n} appels au modèle", receipts: "{n} reçus d'outils", toAir: "{s} s avant l'antenne", editions: "{n} éditions", code: "code", slow: "ralenti",
+    aiComm: "{m} · commentaire IA", factChecked: "✓ vérifié", verified: "titre vérifié", inLang: "écrit en anglais",
+    scenarioAsks: "L'agent scénarios demande", simByEngine: "simulé par le moteur de match",
+    liveReaction: "Réaction en direct", slowMo: "{c}, ralenti", historySplits: "L'histoire bifurque", fromGoal: "L'histoire bifurque · depuis le but",
+    fastForward: "Avance rapide", ghostAt: "Ligne fantôme · {m}", backReality: "Retour à la réalité", verdict: "Le verdict", ghostScout: "Recruteur fantôme",
+    goalLine: "Dans cette ligne temporelle : {s} marque, {m}.", ftLine: "Fin du match dans cette ligne : {h} {a}-{b} {aw}", itGoesIn: "Dans la ligne fantôme, elle entre.",
+    itsSaved: "Dans la ligne fantôme, elle est arrêtée.", neverHappened: "Ici se passe quelque chose qui n'est jamais arrivé", ghostFf: "Ligne fantôme · avance rapide",
+    w_replay: "RALENTI", w_live: "DIRECT", w_ghost: "LIGNE FANTÔME", w_scout: "RECRUTEUR FANTÔME", w_tryout: "ESSAI", w_goal: "BUT !",
+    settled: "Tranché par la simulation", ifIn: "Si elle était entrée", ifSaved: "Si elle avait été arrêtée", asHappened: "Dans la réalité",
+    futuresFoot: "{n} futurs simulés de chaque côté · marge ±{m}", whiteLine: "ligne blanche : le vrai match", ahead: "{t} devant", win: "Victoire {t}", draw: "Nul", lose: "Défaite {t}",
+    futuresCount: "{c} futurs sur {n}", yourView: "vu par votre club",
+    scoutHead: "Recruteur fantôme · même occasion, chaque attaquant de la ligue", tookIt: "(l'a tentée)", scores: "Marque", teamWins: "Son équipe gagne",
+    scoutFoot: "{n} joueurs · le modèle de tir du moteur pour cette occasion précise",
+    clubNone: "Pas de tableau de recrutement dans cette page. Créez-le avec <b>matchengine board</b>, puis régénérez.", clubH: "Mode club · essayez qui vous voulez",
+    startsHere: "{n} est titulaire ici", projected: "projection {v}", ready: "Prêts", allN: "Tous ({n})", searchPh: "Cherchez un joueur, un club ou un poste (BU, DC…)",
+    simulating: "simulation… {d}/{t}", simulate: "Simuler", twoMin: "~2 min", pts: "{v} pts", nobodySim: "Personne n'a encore été simulé ici. Choisissez « Tous » pour sélectionner un joueur.",
+    pickPos: "Choisissez un poste sur le terrain.", clubFoot: "Prêts : simulés à l'avance, instantané. Tout autre joueur est simulé en direct par le moteur ({n} matchs complets de chaque côté, environ 2 minutes){srv}.",
+    onServer: " sur le serveur d'essais", tag_top: "Meilleure projection", tag_u23: "Meilleur moins de 23 ans",
+    p_saves: "Arrêts", p_goals_conceded: "Buts encaissés", p_xg_faced: "xG concédés", p_passes_completed: "Passes réussies", p_tackles_won: "Tacles gagnés",
+    p_interceptions: "Interceptions", p_clearances: "Dégagements", p_aerials_won: "Duels aériens gagnés", p_progressive_passes: "Passes vers l'avant",
+    p_key_passes: "Occasions créées", p_dribbles_completed: "Dribbles réussis", p_sprints: "Sprints", p_ball_recoveries: "Récupérations", p_dispossessed: "Ballons perdus",
+    p_xg: "xG", p_xa: "xA", p_goals: "Buts", p_shots: "Tirs",
+    toSimulating: "Simulation…", toClear: "Nette amélioration", toWorse: "Nettement moins bien", toClose: "Trop serré pour trancher", toKicker: "Essai · simulé par le moteur de match",
+    toQ: "Et si {c} jouait {pos} à la place de {i} ?", toProg: "Simulation en direct : {d} matchs sur {t} · les chiffres se précisent au fil de l'eau",
+    toXpts: "points attendus par match", age: "{n} ans", withP: "Avec {n}", toXg: "xG pour {a} · contre {b} · réel V{w} N{d} D{l}",
+    toNote: "Victoire, nul et défaite d'après ce que méritaient les occasions (l'xG de chaque tir), bien plus stable que les scores de {n} matchs.",
+    per90: "Par 90 minutes", scoutAgent: "Agent recruteur", verifiedSummary: "résumé vérifié", v_sign: "recruter", v_shortlist: "à suivre", v_pass: "non",
+    tighten: "Resserrer la marge (+12 matchs, ~2 min)", watchBest: "Voir son meilleur moment", close: "Fermer",
+    toFoot: "{n} matchs complets de chaque côté{live} · appariés sur les mêmes graines · points attendus selon la qualité de chaque tir", liveW: " · en direct",
+    clipTitle: "{c} au poste {pos}", clipAngle: "Essai : {c} au poste {pos}", m_goal: "marque", m_assist: "délivre une passe décisive", m_chance: "a une grosse occasion", m_key_pass: "crée une occasion",
+    m_save: "fait un arrêt", m_other: "laisse sa marque", clipCap: "Dans un match simulé, {c} {w}{m}.", simLive: "Simuler {c} en direct", tryServer: "Serveur d'essais",
+    serverOff: "Les essais en direct tournent sur le serveur du moteur, auquel cette page n'est pas connectée. Lancez-le avec <b>matchengine serve</b> et ouvrez la page avec <b>?api=http://localhost:8765</b>, ou choisissez un joueur prêt.",
+    couldnt: "Impossible de simuler {c}", server: "Serveur",
+    ybH: "Votre diffusion", ybSub: "Le même match, réalisé pour vous : caméras, graphiques et commentaires changent selon vos choix.",
+    ybStyle: "Comment regardez-vous ?", ybLang: "Langue", ybClub: "Votre club", ybPlayer: "Votre joueur", ybPin: "À surveiller", ybGo: "Regarder", ybNeutral: "Neutre",
+    ybPlayerPh: "Cherchez dans les deux effectifs", ybNone: "Personne", ybFollow: "La caméra le suit",
+    s_fan: "Supporter", s_fanD: "Les grands moments, les caméras joueurs, l'émotion. Sans jargon.", s_analyst: "Analyste", s_analystD: "xG, probabilité de victoire, difficulté des passes. Les chiffres derrière.",
+    s_tactician: "Tacticien", s_tacticianD: "Le bloc : lignes, espaces, pressing. Caméras hautes.", s_academy: "Centre de formation", s_academyD: "Formation : ce qu'il a vu, ce qui était possible, ce qu'il faut travailler.",
+    pin_none: "Rien", pin_xg: "xG", pin_poss: "Possession", pin_pass: "Passes réussies", pin_shots: "Tirs", pin_dist: "Sa distance", pin_speed: "Sa pointe de vitesse", pin_sprints: "Ses sprints",
+    clubChannel: "Chaîne {t}", neutralChannel: "Neutre", styleTag: "édition {s}",
+    fTouches: "Ballons", fPasses: "Passes", fDist: "Distance", fTop: "Pointe", fSprints: "Sprints", fNow: "maintenant", fBench: "Sur le banc", fOff: "Hors du terrain",
+    fNext: "Sa prochaine action", fNone: "Plus d'actions", fCam: "Suivre", unitKm: "km", unitKmh: "km/h",
+    a_goal: "But !", a_shot_on: "Tir cadré", a_shot: "Tir", a_chance: "Occasion créée", a_assist: "Passe décisive", a_tackle: "Tacle gagné", a_interception: "Interception",
+    a_dribble: "Élimine son vis-à-vis", a_save: "Arrêt", a_sprint: "Pointe de vitesse : {v} km/h",
+    g_xg: "Qualité de l'occasion", g_xgOf: "xG de cette occasion", g_wp: "Probabilité de victoire", g_before: "avant", g_after: "après", g_card: "Son match", g_mom: "Dynamique",
+    g_shape: "Bloc", g_line: "Ligne défensive de {t}", g_compact: "{t} : {v} m entre la défense et l'attaque",
+    dec_h: "La décision", dec_right: "Bon choix", dec_better: "Meilleure option", dec_shot: "Son tir : {x} xG", dec_pass: "{n} : passe {pc} · {x} xG depuis là",
+    dec_lane: "{n} défenseurs sur la trajectoire", coaching: "À retenir",
+    oc_goal: "but", oc_parried: "repoussée", oc_saved: "arrêtée", oc_wide: "à côté", oc_blocked: "contrée", oc_post: "sur le poteau",
+  },
+};
+const LANGS = [["en", "English"], ["es", "Español"], ["fr", "Français"]];
+const STYLES = ["fan", "analyst", "tactician", "academy"];
+const PREFS_KEY = "mi.broadcast.prefs";
+const prefs = (() => {
+  const base = { style: "fan", lang: "en", club: "neutral", player: null, follow: true, pin: "none", seen: false };
+  try { const q = new URLSearchParams(location.search); const s = JSON.parse(localStorage.getItem(PREFS_KEY) || "null");
+    const out = { ...base, ...(s || {}) };
+    for (const k of ["style", "lang", "club", "player", "pin"]) if (q.get(k)) out[k] = q.get(k);
+    if (q.get("style") || q.get("lang")) out.seen = true;
+    return out; } catch { return base; }
+})();
+const savePrefs = () => { try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch { /* private window: preferences last this visit */ } };
+const tr = (k, v) => {
+  let s = I18N[prefs.lang]?.[k] ?? I18N.en[k] ?? k;
+  if (v) s = s.replace(/\{(\w+)\}/g, (_, n) => (v[n] ?? ""));
+  return s;
+};
+const fmtNum = (v, d = 2) => { const s = Number(v).toFixed(d); return prefs.lang === "en" ? s : s.replace(".", ","); };
+const fmtPct = (v) => (prefs.lang === "en" ? `${Math.round(v * 100)}%` : `${Math.round(v * 100)} %`);
+
 
 // ---------------------------------------------------------------- data
 // The animation code reads the frame source below (F, N, P2, touches, goals, shots). It is the real match,
@@ -427,6 +892,17 @@ renderer.toneMappingExposure = 1.08;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 stage.appendChild(renderer.domElement);
+// A graphics driver can drop the WebGL context (low GPU memory, sleep, driver update). Ask for it back instead of
+// leaving a black or half-drawn stadium, and say what is happening.
+const GFX = { lost: 0, restored: 0, heals: 0, rebuilt: 0 };
+renderer.domElement.addEventListener("webglcontextlost", (e) => {
+  e.preventDefault(); GFX.lost++;
+  const el = $("loading"); el.classList.remove("done"); el.innerHTML = '<div class="err">The graphics driver reset. Restoring the stadium…</div>';
+}, false);
+renderer.domElement.addEventListener("webglcontextrestored", () => {
+  GFX.restored++; $("loading").classList.add("done");
+  snapNext = true; cutNext = true;
+}, false);
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(30, 16 / 9, 0.3, 900);
@@ -1362,18 +1838,9 @@ class Damp {
   }
   snap(v) { this.v = v; this.vel = 0; return v; }
 }
-const CAMS = [
-  { id: "auto", label: "Auto" },
-  { id: "broadcast", label: "Broadcast" },
-  { id: "behind", label: "Behind goal" },
-  { id: "tactical", label: "Tactical" },
-  { id: "skycam", label: "Skycam" },
-  { id: "player", label: "Player" },
-  { id: "sweep", label: "Pitch-side" },
-  { id: "free", label: "Free" },
-];
-const camName = Object.fromEntries(CAMS.map((c) => [c.id, c.label]));
-let auto = true, mode = "broadcast", modeEnd = 0, reason = "Following play", lastSwitch = -99, end = 1, exitSince = null;
+const CAMS = ["auto", "broadcast", "behind", "tactical", "skycam", "player", "sweep", "free"].map((id) => ({ id }));
+const camLabel = (id) => tr(`cam_${id}`);
+let auto = true, mode = "broadcast", modeEnd = 0, reason = tr("following"), lastSwitch = -99, end = 1, exitSince = null;
 let selected = -1, followSlot = -1;
 const cam = { pos: new THREE.Vector3(0, 22, 64), tgt: new THREE.Vector3(0, 0, 0), fov: 30 };
 const cb = new THREE.Vector3();                     // camera focus point on the pitch
@@ -1381,7 +1848,7 @@ const fx = new Damp(0), fz = new Damp(0), fovD = new Damp(30), headD = new Damp(
 const free = { theta: 0.3, phi: 0.95, r: 55 };
 let sweepAngle = 0, sweepAnchor = new THREE.Vector3(), blend = null, cutNext = true, realTime = 0;
 // smoothing time (s) and dead zone (m) per camera: wide shots move slowly and ignore small passes
-const RIG = { broadcast: [1.0, 5], behind: [0.55, 1.5], tactical: [1.4, 8], skycam: [0.5, 1], player: [0.3, 0], sweep: [0.25, 0], free: [0.45, 0] };
+const RIG = { broadcast: [1.0, 5], behind: [0.55, 1.5], tactical: [1.4, 8], skycam: [0.5, 1], player: [0.3, 0], sweep: [0.25, 0], free: [0.45, 0], focus: [0.7, 0] };
 const la = { x: 0, y: 0, z: 0 }, lb = { x: 0, y: 0, z: 0 };
 
 function updateFocus(t, dt, snap) {
@@ -1431,13 +1898,20 @@ function desired(m, t, out, dt, snap) {
       out.pos.set(sweepAnchor.x + Math.sin(sweepAngle) * r, 4.4, sweepAnchor.z + Math.cos(sweepAngle) * r);
       out.tgt.set(ball.position.x, 0.9, ball.position.z); out.fov = 44; break;
     }
+    case "focus": {          // your player, framed with the ball: he stays in shot wherever play goes
+      const g = players[followSlot >= 0 ? followSlot : focusPlayer(t)];
+      const px = g.position.x, pz = g.position.z, spread = Math.hypot(px - ball.position.x, pz - ball.position.z);
+      const tx = lerp(ball.position.x, px, 0.62), tz = lerp(ball.position.z, pz, 0.62);
+      out.pos.set(clamp(tx, -46, 46) * 0.85, 13 + spread * 0.32, clamp(tz, -30, 30) * 0.35 + 34 + spread * 0.55);
+      out.tgt.set(tx, 0, tz - 1); out.fov = clamp(27 + spread * 0.4, 27, 46); break;
+    }
     case "free": {
       const r = free.r;
       out.pos.set(bx + r * Math.sin(free.phi) * Math.sin(free.theta), 2 + r * Math.cos(free.phi), bz + r * Math.sin(free.phi) * Math.cos(free.theta));
       out.tgt.set(bx, 0, bz); out.fov = 40; break;
     }
   }
-  if (m === "sweep" || m === "player") {
+  if (m === "sweep" || m === "player" || m === "focus") {
     out.pos.x = clamp(out.pos.x, -57, 57); out.pos.z = clamp(out.pos.z, -37.5, 37.5);
     if (Math.abs(out.pos.x) > 49 && Math.abs(out.pos.z) < 11) out.pos.z = (out.pos.z < 0 ? -1 : 1) * 11;
   }
@@ -1466,29 +1940,41 @@ function setMode(m, why, cut = false) {
 }
 const teamShort = (side) => (side === 0 ? HOME.short : AWAY.short);
 
+let attackMode = false;
+// The live director cuts differently for each style: the tactician lives on the high camera, the fan rides the attack
+// on the low skycam, the analyst gets more shape checks, the academy viewer gets player's-eye views of the build-up.
 function liveDirector(t) {
+  const base = prefs.style === "tactician" ? "tactical" : "broadcast", attackCam = prefs.style === "fan" ? "skycam" : "behind";
+  if (focusCamOn()) { followSlot = FOCUS.slot; if (mode !== "focus") setMode("focus", tr("followName", { n: DATA.players[FOCUS.slot].name }), true); return; }
+  if (mode === "focus") { followSlot = selected; attackMode = false; setMode(base, tr("following"), true); return; }
+  if (mode !== "behind" && mode !== attackCam) attackMode = false;
   const side = possAt(t);
   const dir = side >= 0 ? attackDir(side, t) : 0;
   const gx = dir * 52.5, dGoal = Math.abs(gx - ball.position.x);
   const held = realTime - lastSwitch;
   const nearEnd = Math.sign(ball.position.x) || 1, dNear = 52.5 - Math.abs(ball.position.x);
   if (side < 0 && dNear < 20 && Math.abs(ball.position.z) < 20) {          // set piece in or near the box
-    if ((mode !== "behind" || end !== nearEnd) && held > 1.5) { end = nearEnd; setMode("behind", "Set piece in the box", true); }
+    if ((mode !== "behind" || end !== nearEnd) && held > 1.5) { end = nearEnd; attackMode = true; setMode("behind", tr("setPiece"), true); }
     return;
   }
-  const attacking = side >= 0 && dGoal < 24 && Math.abs(ball.position.z) < 24;
-  if (attacking && (mode !== "behind" || end !== dir) && held > 2.5) {
-    end = dir; setMode("behind", `${teamShort(side)} ${dGoal < 17 ? "in the box" : "attack building"}`, true); return;
+  const reach = prefs.style === "tactician" ? 17 : 24;
+  const attacking = side >= 0 && dGoal < reach && Math.abs(ball.position.z) < 24;
+  if (attacking && (!attackMode || end !== dir) && held > 2.5) {
+    end = dir; attackMode = true;
+    setMode(prefs.style === "fan" && dGoal < 15 ? "behind" : attackCam, tr(dGoal < 17 ? "inBox" : "building", { t: teamShort(side) }), true); return;
   }
-  if (mode === "behind") {
+  if (attackMode) {
+    if (prefs.style === "fan" && mode === "skycam" && side >= 0 && attackDir(side, t) === end && dGoal < 15 && held > 1.5) { setMode("behind", tr("inBox", { t: teamShort(side) }), true); return; }
     const leave = (side >= 0 && attackDir(side, t) !== end) || dGoal > 34 || (side < 0 && dNear > 26);
-    if (leave) { exitSince ??= realTime; if (realTime - exitSince > 1.2 && held > 4) setMode("broadcast", side >= 0 ? `${teamShort(side)} on the ball` : "Following play", true); }
-    else { exitSince = null; if (side >= 0) reason = `${teamShort(side)} ${dGoal < 17 ? "in the box" : "attack building"}`; }
+    if (leave) { exitSince ??= realTime; if (realTime - exitSince > 1.2 && held > 4) { attackMode = false; setMode(base, side >= 0 ? tr("onBall", { t: teamShort(side) }) : tr("following"), true); } }
+    else { exitSince = null; if (side >= 0) reason = tr(dGoal < 17 ? "inBox" : "building", { t: teamShort(side) }); }
     return;
   }
-  if (mode === "tactical" || mode === "skycam") { if (realTime > modeEnd) setMode("broadcast", "Following play", true); return; }
-  if (held > 45 && side >= 0 && Math.abs(ball.position.x) < 22) { setMode("tactical", `Shape check: ${teamShort(side)} building from the back`, true); modeEnd = realTime + 6; return; }
-  if (mode === "broadcast") reason = side >= 0 ? `${teamShort(side)} on the ball` : "Following play";
+  if (mode !== base) { if (realTime > modeEnd) setMode(base, tr("following"), true); return; }
+  const every = prefs.style === "analyst" ? 25 : 45;
+  if (base === "broadcast" && held > every && side >= 0 && Math.abs(ball.position.x) < 22) { setMode("tactical", tr("shapeCheck", { t: teamShort(side) }), true); modeEnd = realTime + 6; return; }
+  if (prefs.style === "academy" && held > 22 && side >= 0) { end = dir || end; setMode("skycam", tr("building", { t: teamShort(side) }), true); modeEnd = realTime + 7; return; }
+  reason = side >= 0 ? tr("onBall", { t: teamShort(side) }) : tr("following");
 }
 
 // ---------------------------------------------------------------- replays
@@ -1502,10 +1988,8 @@ function startReplay(m) {
   const sh = shotEndNear(m.f);
   const side = sh && sh.side != null ? sh.side : m.side === "home" ? 0 : 1, dir = sh ? sh.end : attackDir(side, m.f);
   const steps = m.type === "goal"
-    ? [{ cam: "sweep", from: m.f - 7 * HZ, to: m.f + 1.2 * HZ, rate: 0.5, label: "Pitch-side, half speed" },
-       { cam: "behind", from: m.f - 4.5 * HZ, to: m.f + 1 * HZ, rate: 0.35, label: "Behind the goal, super slow" },
-       { cam: "skycam", from: m.f - 6 * HZ, to: m.f + 0.6 * HZ, rate: 0.65, label: "Skycam" }]
-    : [{ cam: "behind", from: m.f - 5 * HZ, to: m.f + 1.2 * HZ, rate: 0.5, label: "Behind the goal, half speed" }];
+    ? replayCut(m)
+    : [{ cam: "behind", from: m.f - 5 * HZ, to: m.f + 1.2 * HZ, rate: 0.5, label: "rp_behind" }];
   replay = { steps, i: -1, resume: pos, moment: m, end: dir, side };
   nextReplayStep();
 }
@@ -1519,13 +2003,14 @@ function nextReplayStep() {
   replay.i++;
   const done = replay.i >= replay.steps.length;
   const col = sideColor(replay.side ?? (replay.moment.side === "home" ? 0 : 1));
-  wipe(done ? "LIVE" : "REPLAY", done ? "#0b1220" : col, () => {
-    if (done) { pos = replay.resume; replay = null; document.body.classList.remove("replay"); cutNext = true; snapNext = true; setMode("broadcast", "Back to live", true); return; }
+  wipe(done ? tr("w_live") : tr("w_replay"), done ? "#0b1220" : col, () => {
+    if (done) { followSlot = selected; pos = replay.resume; replay = null; document.body.classList.remove("replay"); cutNext = true; snapNext = true; setMode("broadcast", tr("backLive"), true); return; }
     const st = replay.steps[replay.i];
     pos = Math.max(0, st.from); end = replay.end; snapNext = true; replay.wiping = false;
+    followSlot = st.focus >= 0 ? st.focus : selected;
     document.body.classList.add("replay");
     cb.set(ballAt(pos, bpos).x, 0, bpos.z);
-    setMode(st.cam, `Replay: ${replay.moment.title}`, true);
+    setMode(st.cam, tr("replayOf", { t: mTitle(replay.moment) }), true);
     if (st.cam === "sweep") { sweepAnchor.set(bpos.x, 0, bpos.z); sweepAngle = Math.atan2(-end * 1.0, 1.0); }
     cutNext = true;
   });
@@ -1536,46 +2021,60 @@ for (const [side, t] of [["H", HOME], ["A", AWAY]]) { $("code" + side).textConte
 $("league").textContent = M.competition || "";
 const colH = HOME.colors.primary, colA = (() => { const c = AWAY.colors.primary; const n = parseInt(c.slice(1), 16); const l = (0.3 * (n >> 16) + 0.59 * ((n >> 8) & 255) + 0.11 * (n & 255)) / 255; return l < 0.28 ? AWAY.colors.secondary : c; })();
 const statDefs = [
-  ["Possession", (s) => [s[K.possH], 1 - s[K.possH]], (v) => `${Math.round(v * 100)}%`],
-  ["Expected goals", (s) => [s[K.xgH], s[K.xgA]], (v) => v.toFixed(2)],
-  ["Shots", (s) => [s[K.shotsH], s[K.shotsA]], String],
-  ["On target", (s) => [s[K.sotH], s[K.sotA]], String],
-  ["Pass accuracy", (s) => [s[K.passH] ? s[K.cmpH] / s[K.passH] : 0, s[K.passA] ? s[K.cmpA] / s[K.passA] : 0], (v) => `${Math.round(v * 100)}%`],
-  ["Corners", (s) => [s[K.cornH], s[K.cornA]], String],
+  ["st_poss", (s) => [s[K.possH], 1 - s[K.possH]], (v) => fmtPct(v)],
+  ["st_xg", (s) => [s[K.xgH], s[K.xgA]], (v) => fmtNum(v)],
+  ["st_shots", (s) => [s[K.shotsH], s[K.shotsA]], String],
+  ["st_sot", (s) => [s[K.sotH], s[K.sotA]], String],
+  ["st_pass", (s) => [s[K.passH] ? s[K.cmpH] / s[K.passH] : 0, s[K.passA] ? s[K.cmpA] / s[K.passA] : 0], (v) => fmtPct(v)],
+  ["st_corners", (s) => [s[K.cornH], s[K.cornA]], String],
 ];
 const statRows = statDefs.map(([label]) => {
   const r = document.createElement("div"); r.className = "stat";
-  r.innerHTML = `<span class="v num"></span><span class="lab">${label}</span><span class="v r num"></span><div class="bars"><span></span><span></span></div>`;
+  r.innerHTML = `<span class="v num"></span><span class="lab" data-i18n="${label}">${tr(label)}</span><span class="v r num"></span><div class="bars"><span></span><span></span></div>`;
   $("stats").appendChild(r); const v = r.querySelectorAll(".v"), b = r.querySelectorAll(".bars span"); return { h: v[0], a: v[1], bh: b[0], ba: b[1] };
 });
-const LABEL = { goal: "Goal", big_chance: "Big chance", great_save: "Big save", woodwork: "Woodwork", penalty_awarded: "Penalty", red_card: "Red card", yellow_card: "Yellow card",
-  tactical_change: "Tactical change", substitution: "Substitution", period_summary: "Summary", speed_alert: "Speed", top_speed: "Top speed",
-  distance_milestone: "Distance", hard_pass: "Line-breaking pass", long_sequence: "Passing move", dominance: "Dominance", pressing_surge: "Pressing surge",
-  momentum_shift: "Momentum shift", chaos_spike: "Chaos" };
+const typeLabel = (type) => tr(type);
+// moment titles in the viewer's language, rebuilt from the stats layer's structured facts
+function mTitle(m) {
+  const who = m.who || [], [h, a] = m.score || [0, 0];
+  const v = { p: who[0] || m.team || "", q: who[1] || "", team: m.team || "", h, a, home: HOME.short, away: AWAY.short };
+  if (m.type === "period_summary") return tr(/^Half/.test(m.title) ? "t_half" : "t_full", v);
+  if (I18N.en[`t_${m.type}`] && (who.length || m.team)) return tr(`t_${m.type}`, v);
+  return m.title;
+}
+function mFacts(m) {
+  const x = m.x || {}, out = [];
+  if (x.xg != null) out.push(tr("f_xg", { v: fmtNum(x.xg) }));
+  if (x.distance_m) out.push(tr("f_dist", { v: Math.round(x.distance_m) }));
+  if (x.shot_speed_kmh) out.push(tr("f_speed", { v: Math.round(x.shot_speed_kmh) }));
+  return prefs.lang === "en" || !m.x ? m.facts : out.length ? out : m.facts;
+}
 const keyMoments = DATA.moments.filter((m) => m.importance >= 0.5);
 const momentEls = keyMoments.map((m) => {
   const b = document.createElement("button"); b.className = "mrow"; b.hidden = true;
   const c = m.side === "home" ? colH : m.side === "away" ? colA : "#8b98ad";
-  b.innerHTML = `<span class="mm num"><span class="dot" style="background:${c}"></span>${m.minute}</span><span><div class="mt"></div>${m.weight ? `<div class="mw">${Math.round(m.weight)}-pt win-prob swing</div>` : ""}</span>`;
-  b.querySelector(".mt").textContent = m.title;
+  b.innerHTML = `<span class="mm num"><span class="dot" style="background:${c}"></span>${m.minute}</span><span><div class="mt"></div>${m.weight ? `<div class="mw"></div>` : ""}</span>`;
+  b._m = m; relabelMoment(b);
   b.addEventListener("click", () => { cancelReplay(); seek(Math.max(0, m.f - 9 * HZ)); play(true); });
   $("moments").appendChild(b); return b;
 });
 let lastSi = -1;
+function relabelMoment(b) { const m = b._m; b.querySelector(".mt").textContent = mTitle(m); const w = b.querySelector(".mw"); if (w) w.textContent = tr("swingShort", { n: Math.round(m.weight) }); }
 function updateHud() {
   const live = liveFrame();
   const i = clamp(Math.floor(live), 0, N - 1), c = clockParts(i);
   $("clock").textContent = c.clock; $("added").textContent = c.added; $("time").textContent = clockParts(clamp(Math.floor(pos), 0, N - 1)).minute;
-  $("period").textContent = live >= N - 1 ? "Full-time" : periodOf(i) === 1 ? "1st half" : "2nd half";
+  $("period").textContent = live >= N - 1 ? tr("ft") : periodOf(i) === 1 ? tr("h1") : tr("h2");
   const si = Math.floor(live / DATA.sampleEvery);
   if (si !== lastSi) {
     lastSi = si; const s = sampleAt(live);
     $("goalsH").textContent = s[K.goalsH]; $("goalsA").textContent = s[K.goalsA];
-    const pct = (v) => `${Math.round(v * 100)}%`;
+    const pct = (v) => fmtPct(v);
     $("wpH").style.flex = `0 0 ${s[K.wpH] * 100}%`; $("wpH").style.background = colH;
     $("wpD").style.flex = `0 0 ${s[K.wpD] * 100}%`;
     $("wpA").style.flex = `0 0 ${s[K.wpA] * 100}%`; $("wpA").style.background = colA;
-    $("wpHL").innerHTML = `${HOME.code} <b>${pct(s[K.wpH])}</b>`; $("wpAL").innerHTML = `<b>${pct(s[K.wpA])}</b> ${AWAY.code}`;
+    $("wpHL").innerHTML = `${HOME.code} <b>${fmtPct(s[K.wpH])}</b>`; $("wpAL").innerHTML = `<b>${fmtPct(s[K.wpA])}</b> ${AWAY.code}`;
+    updatePin(s);
     statDefs.forEach(([, get, fmt], k) => {
       const [h, a] = get(s), r = statRows[k]; r.h.textContent = fmt(h); r.a.textContent = fmt(a);
       const tt = h + a; r.bh.style.flexGrow = tt ? h / tt : 1; r.ba.style.flexGrow = tt ? a / tt : 1; r.bh.style.background = colH; r.ba.style.background = colA;
@@ -1587,29 +2086,30 @@ function updateHud() {
   const tag = $("liveTag");
   if (desk) {
     const st = desk.steps[Math.max(0, desk.i)] || {}, gh = st.kind === "ghost" || st.kind === "scout";
-    tag.textContent = gh ? "GHOST" : st.kind === "live" ? "LIVE" : "REPLAY"; tag.className = gh ? "tag ghost" : st.kind === "live" ? "tag" : "tag replay";
-    $("dirLabel").textContent = "AI director"; $("dirShot").textContent = st.label || camName[mode]; $("dirReason").textContent = desk.seg.plan.angle || desk.seg.title;
+    tag.textContent = gh ? tr("tagGhost") : st.kind === "live" ? tr("tagLive") : tr("tagReplay"); tag.className = gh ? "tag ghost" : st.kind === "live" ? "tag" : "tag replay";
+    $("dirLabel").textContent = desk.tryout ? tr("aiDir") : `${tr("aiDir")} · ${styleTagText()}`; $("dirShot").textContent = st.label || camLabel(mode); $("dirReason").textContent = desk.angle || desk.seg.plan.angle || desk.seg.title;
     if (desk.gsrc) {
       const c = withSource(desk.gsrc, () => clockParts(clamp(Math.floor(desk.gt), 0, N - 1))), sc = ghostScore();
-      $("clock").textContent = c.clock; $("added").textContent = c.added; $("period").textContent = "Ghost timeline";
+      $("clock").textContent = c.clock; $("added").textContent = c.added; $("period").textContent = desk.tryout ? tr("tryout") : tr("ghostTl");
       if (sc) { $("goalsH").textContent = sc.home; $("goalsA").textContent = sc.away; }
       lastSi = -1;
     }
-  } else if (replay) { tag.textContent = "REPLAY"; tag.className = "tag replay"; $("dirLabel").textContent = "Auto director"; $("dirShot").textContent = `${camName[mode]} · ${(replay.steps[clamp(replay.i, 0, replay.steps.length - 1)].label.split(", ")[1]) || "replay"}`; $("dirReason").textContent = replay.moment.title; }
+  } else if (replay) { tag.textContent = tr("tagReplay"); tag.className = "tag replay"; $("dirLabel").textContent = tr("autoDir"); $("dirShot").textContent = tr(replay.steps[clamp(replay.i, 0, replay.steps.length - 1)].label); $("dirReason").textContent = mTitle(replay.moment); }
   else {
-    tag.textContent = auto ? "LIVE" : "MANUAL"; tag.className = auto ? "tag" : "tag manual";
-    $("dirLabel").textContent = auto ? "Auto director" : "Your camera";
-    $("dirShot").textContent = camName[mode] + (mode === "behind" ? `, ${attackDir(0, live) === end ? HOME.short : AWAY.short} attacking` : "");
-    $("dirReason").textContent = auto ? reason : (mode === "player" ? `Following ${DATA.players[followSlot >= 0 ? followSlot : focusPlayer(live)].name}` : "Pick Auto to hand control back to the director");
+    tag.textContent = auto ? tr("tagLive") : tr("tagManual"); tag.className = auto ? "tag" : "tag manual";
+    $("dirLabel").textContent = auto ? `${tr("autoDir")} · ${styleTagText()}` : tr("yourCam");
+    $("dirShot").textContent = mode === "behind" ? tr("attacking", { c: camLabel(mode), t: attackDir(0, live) === end ? HOME.short : AWAY.short }) : camLabel(mode);
+    $("dirReason").textContent = auto ? reason : (mode === "player" || mode === "focus" ? tr("followName", { n: DATA.players[followSlot >= 0 ? followSlot : focusPlayer(live)].name }) : tr("pickAuto"));
   }
 }
 let lowerTimer = 0;
 function showLower(m) {
   const el = $("lower");
-  $("lowerKick").textContent = `${m.minute} · ${LABEL[m.type] || m.type}`;
-  $("lowerTitle").textContent = m.type === "goal" ? m.title.replace(/^GOAL: /, "GOAL! ").replace(/\s\d+'?(\+\d+')?, /, " · ") : m.title;
-  $("lowerFacts").textContent = m.facts.join(" · ");
-  $("lowerSwing").textContent = m.weight ? `${Math.round(m.weight)}-point win-probability swing` : "";
+  $("lowerKick").textContent = `${m.minute} · ${typeLabel(m.type)}`;
+  $("lowerTitle").textContent = mTitle(m);
+  const facts = mFacts(m);
+  $("lowerFacts").textContent = (prefs.style === "fan" ? facts.filter((f) => !/xG/.test(f)) : facts).join(" · ");
+  $("lowerSwing").textContent = m.weight ? tr("swingLong", { n: Math.round(m.weight) }) : "";
   $("lowerBand").style.background = m.side === "home" ? colH : m.side === "away" ? colA : "#ffffff";
   el.classList.toggle("goal", m.type === "goal"); el.classList.add("show");
   clearTimeout(lowerTimer); lowerTimer = setTimeout(() => el.classList.remove("show"), m.type === "goal" ? 6500 : 5000);
@@ -1621,7 +2121,8 @@ scrub.max = String(N - 1);
 let tlDpr = 1;
 function drawTimeline() {
   const r = tl.getBoundingClientRect(); tlDpr = Math.min(window.devicePixelRatio || 1, 2);
-  tl.width = Math.round(r.width * tlDpr); tl.height = Math.round(r.height * tlDpr);
+  const tw = Math.round(r.width * tlDpr), th = Math.round(r.height * tlDpr);
+  if (tl.width !== tw || tl.height !== th) { tl.width = tw; tl.height = th; }
   const w = tl.width, h = tl.height, mid = h * 0.55, amp = h * 0.36, d = tlDpr;
   const xAt = (f) => 8 * d + (w - 16 * d) * f / (N - 1);
   tlx.clearRect(0, 0, w, h);
@@ -1646,6 +2147,10 @@ function drawTimeline() {
     else if (m.type === "red_card" || m.type === "yellow_card") { tlx.fillStyle = m.type === "red_card" ? "#e5363d" : "#f5c518"; tlx.fillRect(x - 2.5 * d, 1.5 * d, 5 * d, 8 * d); }
     else if (CHANCE_TYPES.has(m.type)) { tlx.fillStyle = m.side === "home" ? colH : colA; tlx.beginPath(); tlx.arc(x, h - 4 * d, 2.6 * d, 0, Math.PI * 2); tlx.fill(); }
   }
+  if (FOCUS) {
+    tlx.fillStyle = "#ffd166";
+    for (const [f, c] of FOCUS.keyActs) { const x = xAt(f), big = c === 5 || c === 14; tlx.beginPath(); tlx.moveTo(x, h - (big ? 11 : 9) * d); tlx.lineTo(x - (big ? 4 : 3) * d, h - 2 * d); tlx.lineTo(x + (big ? 4 : 3) * d, h - 2 * d); tlx.closePath(); tlx.fill(); }
+  }
   tlx.fillStyle = "#fff"; tlx.fillRect(xAt(live) - 1 * d, 0, 2 * d, h);
 }
 const CHANCE_TYPES = new Set(["big_chance", "great_save", "penalty_awarded", "woodwork"]);
@@ -1654,14 +2159,14 @@ let hoverMarker = null;
 function markerAt(clientX) {
   const r = tl.getBoundingClientRect(), x = clientX - r.left, xAt = (f) => 8 + (r.width - 16) * f / (N - 1);
   let best = null, bd = 9;
-  for (const m of MARKERS) { const d = Math.abs(xAt(m.f) - x); if (d < bd) { bd = d; best = m; } }
+  for (const m of MARKERS_ALL) { const d = Math.abs(xAt(m.f) - x); if (d < bd) { bd = d; best = m; } }
   return { m: best, f: clamp(Math.round(((x - 8) / (r.width - 16)) * (N - 1)), 0, N - 1), x };
 }
 scrub.addEventListener("pointermove", (e) => {
   const { m, f, x } = markerAt(e.clientX), tip = $("tltip");
   hoverMarker = m; tip.hidden = false;
-  tip.innerHTML = m ? `<b>${m.minute}</b><i>${LABEL[m.type] || m.type}</i>` : `<b>${clockParts(f).minute}</b>`;
-  if (m) tip.insertAdjacentText("beforeend", m.title.replace(/^GOAL: /, ""));
+  tip.innerHTML = m ? `<b>${m.minute}</b><i>${esc(m.focusAct ? tr("a_" + m.focusAct) : typeLabel(m.type))}</i>` : `<b>${clockParts(f).minute}</b>`;
+  if (m) tip.insertAdjacentText("beforeend", m.focusAct ? focusName() : mTitle(m));
   const half = tip.offsetWidth / 2, wTl = tl.getBoundingClientRect().width;
   tip.style.left = `${clamp(x, half + 2, wTl - half - 2)}px`;
 });
@@ -1686,13 +2191,18 @@ const segOf = (el, items, get, set) => {
   const btns = items.map(([v, label, title]) => { const b = document.createElement("button"); b.textContent = label; if (title) b.title = title; b.addEventListener("click", () => { set(v); sync(); }); el.appendChild(b); return [v, b]; });
   const sync = () => btns.forEach(([v, b]) => b.setAttribute("aria-pressed", String(get() === v))); sync(); return sync;
 };
-const syncSpeed = segOf($("speeds"), speeds.map((s) => [s, `${s}×`, s === 1 ? "Real time" : `${s}× real time`]), () => speed, (v) => { speed = v; });
-const syncCam = segOf($("cams"), CAMS.map((c, i) => [c.id, c.label, `${c.label} (${i})`]), () => (auto ? "auto" : mode), (v) => {
-  if (v === "auto") { auto = true; cancelReplay(); setMode("broadcast", "Following play"); }
-  else { auto = false; cancelReplay(); end = Math.sign(ball.position.x) || 1; setMode(v, ""); }
-});
-const syncStyle = segOf($("styles"), [["clean", "Clean"], ["mannequin", "Mannequin"]], () => figureStyle, (v) => { figureStyle = v; applyStyle(); });
-$("statsBtn").addEventListener("click", () => { const p = $("panel"); p.hidden = !p.hidden; $("statsBtn").setAttribute("aria-pressed", String(!p.hidden)); if (!p.hidden) { $("deskp").hidden = true; $("deskBtn").setAttribute("aria-pressed", "false"); deskPinned = false; } });
+let syncSpeed, syncCam, syncStyle;
+function buildSegs() {
+  for (const id of ["speeds", "cams", "styles"]) $(id).innerHTML = "";
+  syncSpeed = segOf($("speeds"), speeds.map((s) => [s, `${s}×`, s === 1 ? tr("realTime") : tr("xReal", { s })]), () => speed, (v) => { speed = v; });
+  syncCam = segOf($("cams"), CAMS.map((c, i) => [c.id, camLabel(c.id), `${camLabel(c.id)} (${i})`]), () => (auto ? "auto" : mode), (v) => {
+    if (v === "auto") { auto = true; cancelReplay(); setMode("broadcast", tr("following")); }
+    else { auto = false; cancelReplay(); end = Math.sign(ball.position.x) || 1; setMode(v, ""); }
+  });
+  syncStyle = segOf($("styles"), [["clean", tr("clean")], ["mannequin", tr("mannequin")]], () => figureStyle, (v) => { figureStyle = v; applyStyle(); });
+}
+buildSegs();
+$("statsBtn").addEventListener("click", () => { if (clubOpen) showClub(false); const p = $("panel"); p.hidden = !p.hidden; $("statsBtn").setAttribute("aria-pressed", String(!p.hidden)); if (!p.hidden) { $("deskp").hidden = true; $("deskBtn").setAttribute("aria-pressed", "false"); deskPinned = false; } });
 $("fsBtn").addEventListener("click", () => { const d = document; if (d.fullscreenElement) d.exitFullscreen?.(); else d.documentElement.requestFullscreen?.().catch(() => {}); });
 function jumpNext() {
   const target = keyMoments.find((m) => m.f - 9 * HZ > (liveFrame()) + HZ);
@@ -1700,7 +2210,7 @@ function jumpNext() {
 }
 $("nextMoment").addEventListener("click", jumpNext);
 document.addEventListener("keydown", (e) => {
-  if (e.target.closest?.("input:not([type=range]), textarea")) return;
+  if (e.target.closest?.("input:not([type=range]):not([type=checkbox]), textarea")) { if (e.key === "Escape" && !$("ybp").hidden) showYB(false); return; }
   const k = e.key.toLowerCase();
   if (k === " ") { e.preventDefault(); play(); }
   else if (k === "arrowright") { cancelReplay(); seek(pos + 10 * HZ); }
@@ -1708,6 +2218,9 @@ document.addEventListener("keydown", (e) => {
   else if (k === "n") jumpNext();
   else if (k === "s") $("statsBtn").click();
   else if (k === "d") $("deskBtn").click();
+  else if (k === "c") $("clubBtn").click();
+  else if (k === "y") $("ybBtn").click();
+  else if (k === "escape" && !$("ybp").hidden) showYB(false);
   else if (k === "f") $("fsBtn").click();
   else if (/^[0-7]$/.test(k)) $("cams").children[+k].click();
 });
@@ -1743,14 +2256,18 @@ const tags = $("tags"), tagEls = new Map(), v3 = new THREE.Vector3();
 function updateTags(t) {
   const show = new Set();
   const o = ownerAt(t); if (o >= 0) show.add(o); if (selected >= 0) show.add(selected);
+  const fs = FOCUS && !(desk && desk.gsrc) ? FOCUS.slot : -1; if (fs >= 0) show.add(fs);
   for (const [s, el] of tagEls) if (!show.has(s)) { el.remove(); tagEls.delete(s); }
   const w = renderer.domElement.clientWidth, h = renderer.domElement.clientHeight;
   for (const s of show) {
     const g = players[s]; if (!g.visible) continue;
     let el = tagEls.get(s);
     const pl = DATA.players[s], kit = kitFor(pl);
-    if (!el) { el = document.createElement("div"); el.className = "ptag"; el.innerHTML = `<b style="background:${kit.shirtHex};color:${kit.numberColor}">${pl.shirt}</b>${pl.short.toUpperCase()}`; tags.appendChild(el); tagEls.set(s, el); }
-    el.classList.toggle("sel", s === selected);
+    const alias = tagAlias && tagAlias.slot === s && desk && desk.tryout ? tagAlias.name.split(" ").slice(-1)[0] : null;
+    if (el && el.dataset.alias !== String(alias)) { el.remove(); tagEls.delete(s); el = null; }
+    if (!el) { el = document.createElement("div"); el.className = "ptag"; el.dataset.alias = String(alias); el.innerHTML = `<b style="background:${kit.shirtHex};color:${kit.numberColor}">${alias ? "★" : pl.shirt}</b>${(alias || pl.short).toUpperCase()}<span class="spd"></span>`; tags.appendChild(el); tagEls.set(s, el); }
+    el.classList.toggle("sel", s === selected); el.classList.toggle("focus-tag", s === fs);
+    const sp = el.querySelector(".spd"); if (sp) sp.textContent = s === fs && !desk && !replay ? ` ${Math.round(FOCUS.spd[clamp(Math.floor(t), 0, MAIN.N - 1)])} km/h` : "";
     v3.set(g.position.x, 2.25, g.position.z).project(camera);
     const vis = v3.z < 1 && Math.abs(v3.x) < 1.1 && Math.abs(v3.y) < 1.1;
     el.style.display = vis ? "flex" : "none";
@@ -1766,11 +2283,10 @@ const SEGS = DATA.segments || [];
 const segById = Object.fromEntries(SEGS.map((sg) => [sg.id, sg]));
 const momentById = Object.fromEntries(DATA.moments.map((m) => [m.id, m]));
 const slotById = Object.fromEntries(DATA.players.map((p, i) => [p.id, i]));
-const AGENTS = [["producer", "P", "Producer"], ["analyst", "A", "Analyst"], ["telestrator", "T", "Telestrator"], ["scenario", "S", "Scenario agent"],
-  ["director", "D", "Director"], ["commentator", "C", "Commentator"], ["factchecker", "F", "Fact-checker"]];
+const AGENTS = [["producer", "P", "agentP"], ["analyst", "A", "agentA"], ["telestrator", "T", "agentT"], ["scenario", "S", "agentS"],
+  ["director", "D", "agentD"], ["commentator", "C", "agentC"], ["factchecker", "F", "agentF"]];
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const pct = (v) => `${Math.round(v * 100)}%`;
-camName.tele = "Telestrator"; camName.split = "History splits";
+const pct = (v) => fmtPct(v);
 RIG.tele = [0.6, 0]; RIG.split = [0.6, 0];
 let desk = null, lastSeg = null, deskPinned = false;
 const sideColor = (side) => (side === 0 ? HOME.colors.primary : AWAY.colors.primary);
@@ -1779,7 +2295,7 @@ const sideColor = (side) => (side === 0 ? HOME.colors.primary : AWAY.colors.prim
 const teleGroup = new THREE.Group(); scene.add(teleGroup);
 const teleFocus = { x: 0, z: 0 };
 let tele = null;
-const teleColor = (c) => (c === "home" ? colH : c === "away" ? colA : c === "warning" ? "#ff5a5f" : "#ffd166");
+const teleColor = (c) => (c === "home" ? colH : c === "away" ? colA : c === "warning" ? "#ff5a5f" : c === "good" ? "#3ddc97" : c === "muted" ? "#c9d2e0" : "#ffd166");
 const flatMat = (color, opacity) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity, depthWrite: false, side: THREE.DoubleSide, toneMapped: false });
 function clearTele() {
   if (!tele) return;
@@ -1872,8 +2388,9 @@ function updateTele() {
 let capType = 0;
 function showCaption(text, sg, who) {
   if (!text) return;
-  $("capWho").innerHTML = who || (`<span>${esc(sg.minute)} · AI commentary</span>` +
-    (sg.fallback ? `<span class="warn">verified headline</span>` : `<span class="ok">✓ fact-checked</span>`));
+  const V = sg.ed ? variantOf(sg) : { fb: sg.fallback };
+  $("capWho").innerHTML = who || (`<span>${esc(tr("aiComm", { m: sg.minute }))}</span>` +
+    (V.fb ? `<span class="warn">${tr("verified")}</span>` : `<span class="ok">${tr("factChecked")}</span>`) + (V.foreign ? `<span class="warn">${tr("inLang")}</span>` : ""));
   const el = $("capText"); el.textContent = ""; $("caption").classList.add("show");
   clearInterval(capType);
   let k = 0;
@@ -1882,25 +2399,25 @@ function showCaption(text, sg, who) {
 function hideCaption() { $("caption").classList.remove("show"); clearInterval(capType); }
 const modelName = (m) => String(m || "").replace(/-\d+$/, "");
 function renderDeskPanel(sg) {
-  const A = sg.desk?.agents || {}, g = sg.ghost;
+  const A = sg.desk?.agents || {}, g = sg.ghost, V = variantOf(sg), D = directorOf(sg);
   const what = {
-    producer: `${esc((sg.plan.segment || "").replace("_", " "))}, ${esc(sg.plan.priority || "")} priority${sg.plan.what_if ? " · asked a what-if" : ""}`,
-    analyst: sg.facts.length ? `${sg.facts.length} facts from ${esc(sg.desk.tools.join(", ") || "the stats tools")}` : "no brief",
-    telestrator: sg.tele ? `${sg.tele.shapes.length} drawings · “${esc(sg.tele.caption)}”` : "nothing to draw",
-    scenario: !g ? "no what-if this time" : g.status !== "ok" ? `asked “${esc(g.question)}” (${esc(g.reason || "not simulated")})`
-      : g.scout ? `Ghost Scout: re-took the chance with ${g.scout.candidates_evaluated} players` : `${g.withChange.futures} futures each way: “${esc(g.question)}”`,
-    director: sg.director ? (sg.director.replay ? sg.director.shots.map((s) => esc(camName[s.cam] || s.cam) + (s.slow ? " (slow)" : "")).join(" → ") : `live on ${esc(camName[sg.director.live] || sg.director.live)}`) : "default cameras",
-    commentator: `${sg.lines.length} line${sg.lines.length === 1 ? "" : "s"} for this viewer${sg.fallback ? " · drafts rejected" : ""}`,
-    factchecker: sg.check.approved ? `approved on attempt ${sg.check.attempts} · code check + model review` : sg.fallback ? "rejected the drafts: the verified headline aired" : "not reached",
+    producer: `${esc(tr("seg_" + (sg.plan.segment || "live_call")))}, ${esc(tr("priority", { p: tr("pri_" + (sg.plan.priority || "normal")) }))}${sg.plan.what_if ? " · " + tr("askedWhatIf") : ""}`,
+    analyst: sg.facts.length ? tr("factsFrom", { n: sg.facts.length, t: esc(sg.desk.tools.join(", ") || "stats") }) : tr("noBrief"),
+    telestrator: sg.tele ? `${tr("drawings", { n: sg.tele.shapes.length })} · “${esc(V.caption || sg.tele.caption)}”` : tr("nothingDraw"),
+    scenario: !g ? tr("noWhatIf") : g.status !== "ok" ? `“${esc(V.question || g.question)}” (${esc(g.reason || tr("notSim"))})`
+      : g.scout ? tr("ghostScoutRe", { n: g.scout.candidates_evaluated }) : tr("futuresEach", { n: g.withChange.futures, q: esc(V.question || g.question) }),
+    director: D ? (D.replay ? D.shots.map((s) => esc(camLabel(s.cam)) + (s.slow ? ` (${tr("slow")})` : "")).join(" → ") : tr("liveOn", { c: esc(camLabel(D.live)) })) : tr("defaultCams"),
+    commentator: `${V.lines.length === 1 ? tr("oneLine") : tr("linesFor", { n: V.lines.length })} · ${styleTagText()}${V.fb ? " · " + tr("draftsRejected") : ""}`,
+    factchecker: V.ok ? tr("approvedOn", { n: V.att }) : V.fb ? tr("rejectedDrafts") : tr("notReached"),
   };
   const rows = AGENTS.map(([id, ic, nm]) => {
     const a = A[id];
-    const meta = a ? `${esc(modelName(a.model))} · ${a.seconds.toFixed(1)}s` : "code";
-    return `<div class="agent on" data-agent="${id}"><span class="ic">${ic}</span><span class="nm">${nm}<small>${meta}</small></span><span class="wh">${what[id]}</span></div>`;
+    const meta = a ? `${esc(modelName(a.model))} · ${a.seconds.toFixed(1)}s` : tr("code");
+    return `<div class="agent on" data-agent="${id}"><span class="ic">${ic}</span><span class="nm">${tr(nm)}<small>${meta}</small></span><span class="wh">${what[id]}</span></div>`;
   }).join("");
-  $("deskp").innerHTML = `<h3><span>AI broadcast desk</span><span>${esc(sg.minute)}</span></h3><div class="angle"></div>${rows}` +
-    `<div class="foot"><span>${sg.desk.calls} model calls</span><span>$${sg.desk.usd.toFixed(4)}</span><span>${sg.desk.receipts} tool receipts</span><span>${sg.desk.seconds.toFixed(0)}s to air</span></div>`;
-  $("deskp").querySelector(".angle").textContent = sg.plan.angle || sg.title;
+  $("deskp").innerHTML = `<h3><span>${tr("deskH")}</span><span>${esc(sg.minute)}</span></h3><div class="angle"></div>${rows}` +
+    `<div class="foot"><span>${tr("modelCalls", { n: sg.desk.calls })}</span><span>$${sg.desk.usd.toFixed(4)}</span>${sg.desk.editions ? `<span>${tr("editions", { n: sg.desk.editions })}</span>` : ""}<span>${tr("receipts", { n: sg.desk.receipts })}</span><span>${tr("toAir", { s: sg.desk.seconds.toFixed(0) })}</span></div>`;
+  $("deskp").querySelector(".angle").textContent = V.headline || sg.plan.angle || sg.title;
 }
 function setDeskNow(...ids) { for (const el of $("deskp").querySelectorAll(".agent")) el.classList.toggle("now", ids.includes(el.dataset.agent)); }
 function showDeskPanel(on) {
@@ -1909,14 +2426,15 @@ function showDeskPanel(on) {
   if (on) { $("panel").hidden = true; $("statsBtn").setAttribute("aria-pressed", "false"); }
 }
 function outcomeRows(d) {
-  return [["home_win", `${HOME.short} win`, colH], ["draw", "Draw", "rgba(255,255,255,0.55)"], ["away_win", `${AWAY.short} win`, colA]]
-    .map(([k, lab, c]) => `<div class="grow"><span>${esc(lab)}</span><span class="bar"><span data-w="${d[k]}" style="background:${c}"></span></span><b>${pct(d[k])}</b></div>`).join("");
+  const rows = [["home_win", tr("win", { t: HOME.short }), colH, "home"], ["draw", tr("draw"), "rgba(255,255,255,0.55)", ""], ["away_win", tr("win", { t: AWAY.short }), colA, "away"]];
+  if (prefs.club === "away") rows.reverse();          // your club first
+  return rows.map(([k, lab, c, side]) => `<div class="grow${side && side === prefs.club ? " mine" : ""}"><span>${esc(lab)}</span><span class="bar"><span data-w="${d[k]}" style="background:${c}"></span></span><b>${pct(d[k])}</b></div>`).join("");
 }
 // ---- the split: where history forks, drawn as two ball paths (gold = what happened, cyan = the ghost)
 const arcGroup = new THREE.Group(); scene.add(arcGroup);
 const splitCam = { pos: new THREE.Vector3(), tgt: new THREE.Vector3(), fov: 40 };
 let arcs = null;
-const OUTCOME_WORD = (s) => (s.oc === 0 ? "goal" : s.oc === 1 ? (s.saveKind === 1 ? "parried" : "saved") : s.oc === 2 ? "wide" : s.oc === 3 ? "blocked" : "off the post");
+const OUTCOME_WORD = (s) => tr("oc_" + (s.oc === 0 ? "goal" : s.oc === 1 ? (s.saveKind === 1 ? "parried" : "saved") : s.oc === 2 ? "wide" : s.oc === 3 ? "blocked" : "post"));
 // the path a shot took, sampled from the same flight the ball flies (curl, dip, and what happened next)
 function shotArc(row, color, src) {
   const s = buildShots([row])[0], q = { x: 0, y: 0, z: 0 }, pts = [];
@@ -1943,7 +2461,7 @@ function clearArcs() {
 function buildArcs(realRow, ghostRow, ghostSrc) {
   clearArcs();
   const real = shotArc(realRow, "#ffd166", null), ghost = shotArc(ghostRow, "#5ee7ff", ghostSrc);
-  const labels = [[real, `As it happened · ${real.word}`, "#ffd166"], [ghost, `Ghost timeline · ${ghost.word}`, "#5ee7ff"]].map(([arc, text, col]) => {
+  const labels = [[real, `${tr("asHappened")} · ${real.word}`, "#ffd166"], [ghost, `${tr("ghostTl")} · ${ghost.word}`, "#5ee7ff"]].map(([arc, text, col]) => {
     const el = document.createElement("div"); el.className = "tlabel"; el.textContent = text; el.style.background = col; el.style.opacity = 0;
     $("tags").appendChild(el); return { el, p: arc.hit };
   });
@@ -1996,13 +2514,13 @@ function updateArcs() {
 // ---- the verdict: every simulated future's win probability, fanned out from the moment to full time
 function showVerdict(sg) {
   const g = sg.ghost, gc = $("ghostcard");
-  const changed = g.changed === "goal" ? "If it had gone in" : "If it had been saved";
-  gc.innerHTML = `<div class="k"><span>Settled by simulation</span><span>${esc(sg.minute)}</span></div><div class="q"></div>` +
-    `<div class="fanbox"><canvas id="fan"></canvas><span class="fan-top">${esc(HOME.short)} ahead</span><span class="fan-bot">${esc(AWAY.short)} ahead</span>` +
+  const changed = g.changed === "goal" ? tr("ifIn") : tr("ifSaved");
+  gc.innerHTML = `<div class="k"><span>${tr("settled")}${prefs.club !== "neutral" ? " · " + tr("yourView") : ""}</span><span>${esc(sg.minute)}</span></div><div class="q"></div>` +
+    `<div class="fanbox"><canvas id="fan"></canvas><span class="fan-top">${esc(tr("ahead", { t: HOME.short }))}</span><span class="fan-bot">${esc(tr("ahead", { t: AWAY.short }))}</span>` +
     `<span class="fan-count" id="fanCount"></span></div>` +
-    `<div class="gcols"><div class="gcol alt"><h4>${changed}</h4>${outcomeRows(g.withChange)}</div><div class="gcol"><h4>As it happened</h4>${outcomeRows(g.asItHappened)}</div></div>` +
-    `<div class="foot"><span>${g.withChange.futures} simulated futures each way · ±${pct(g.withChange.margin_95 ?? 0)} margin</span><span>white line: the real match</span></div>`;
-  gc.querySelector(".q").textContent = g.question;
+    `<div class="gcols"><div class="gcol alt"><h4>${changed}</h4>${outcomeRows(g.withChange)}</div><div class="gcol"><h4>${tr("asHappened")}</h4>${outcomeRows(g.asItHappened)}</div></div>` +
+    `<div class="foot"><span>${tr("futuresFoot", { n: g.withChange.futures, m: pct(g.withChange.margin_95 ?? 0) })}</span><span>${tr("whiteLine")}</span></div>`;
+  gc.querySelector(".q").textContent = variantOf(sg).question || g.question;
   gc.classList.add("show", "verdict");
   desk.fan = { t0: realTime, drawn: -1 };
   requestAnimationFrame(() => requestAnimationFrame(() => gc.querySelectorAll(".bar span").forEach((b) => { b.style.width = `${+b.dataset.w * 100}%`; })));
@@ -2043,21 +2561,21 @@ function drawFan() {
     if (j) c.lineTo(x, y); else c.moveTo(x, y);
   }
   c.stroke(); c.shadowBlur = 0;
-  $("fanCount").textContent = `${count} of ${lines.length} futures`;
+  $("fanCount").textContent = tr("futuresCount", { c: count, n: lines.length });
 }
 function showScoutCard(sg) {
   const sc = sg.ghost.scout, gc = $("ghostcard");
   const rowsHtml = [{ ...sc.taker, taker: true }, ...sc.best.slice(0, 4)].map((r) =>
-    `<tr class="${r.taker ? "taker" : ""}"><td>${esc(r.name)}${r.taker ? " (took it)" : ""}</td><td>${esc(r.club)}</td><td class="r">${pct(r.goal_probability)}</td><td class="r">${pct(r.team_win_probability)}</td></tr>`).join("");
-  gc.innerHTML = `<div class="k"><span>Ghost Scout · same chance, every attacker in the league</span><span>${esc(sg.minute)}</span></div><div class="q"></div>` +
-    `<table class="scout"><tr><td></td><td></td><td class="r">Scores</td><td class="r">Team wins</td></tr>${rowsHtml}</table>` +
-    `<div class="foot"><span>${sc.candidates_evaluated} players · the engine's shot model for this exact chance</span></div>`;
-  gc.querySelector(".q").textContent = sg.ghost.question;
+    `<tr class="${r.taker ? "taker" : ""}"><td>${esc(r.name)}${r.taker ? " " + tr("tookIt") : ""}</td><td>${esc(r.club)}</td><td class="r">${pct(r.goal_probability)}</td><td class="r">${pct(r.team_win_probability)}</td></tr>`).join("");
+  gc.innerHTML = `<div class="k"><span>${tr("scoutHead")}</span><span>${esc(sg.minute)}</span></div><div class="q"></div>` +
+    `<table class="scout"><tr><td></td><td></td><td class="r">${tr("scores")}</td><td class="r">${tr("teamWins")}</td></tr>${rowsHtml}</table>` +
+    `<div class="foot"><span>${tr("scoutFoot", { n: sc.candidates_evaluated })}</span></div>`;
+  gc.querySelector(".q").textContent = variantOf(sg).question || sg.ghost.question;
   gc.classList.add("show");
 }
 const hideGhostCard = () => { $("ghostcard").classList.remove("show", "verdict"); if (desk) desk.fan = null; };
 function showSkip(fromMin, toMin, scorer) {
-  const el = $("skip"); el.innerHTML = `<div class="sk-k">Ghost timeline · fast-forward</div><div class="sk-clock num" id="skClock">${esc(fromMin)}</div><div class="sk-sub"></div>`;
+  const el = $("skip"); el.innerHTML = `<div class="sk-k">${tr("ghostFf")}</div><div class="sk-clock num" id="skClock">${esc(fromMin)}</div><div class="sk-sub"></div>`;
   el.querySelector(".sk-sub").textContent = typeof scorer === "string" ? scorer : "";
   el.classList.add("show");
   const a = parseInt(fromMin, 10) || 0, b = toMin === "FT" ? 90 : parseInt(toMin, 10) || a, t0 = performance.now();
@@ -2081,11 +2599,11 @@ function startDesk(sg) {
   const m = momentById[sg.id] || {};
   const sh = shotEndNear(sg.ghost?.shotF ?? sg.f);
   const side = sh && sh.side != null ? sh.side : m.side === "home" ? 0 : m.side === "away" ? 1 : Math.max(0, possAt(sg.f));
-  const lines = sg.lines.slice();
-  const gi = sg.ghost?.status === "ok" ? lines.findIndex((l) => /future|simulat|would have|ghost|if he|if it had|timeline/i.test(l)) : -1;
+  const V = variantOf(sg), lines = V.lines.slice();
+  const gi = sg.ghost?.status === "ok" ? lines.findIndex((l) => GHOST_WORDS.test(l)) : -1;
   const ghostLine = gi >= 0 ? lines.splice(gi, 1)[0] : null;
-  const steps = [{ kind: "live", dur: 3.6, cam: sg.director?.live || "broadcast", label: "Live reaction", who: ["producer", "commentator", "factchecker"] }];
-  const d = sg.director, gh = sg.ghost, fe = gh?.featured?.[0];
+  const d = directorOf(sg), gh = sg.ghost, fe = gh?.featured?.[0];
+  const steps = [{ kind: "live", dur: 3.6, cam: d?.live || "broadcast", label: tr("liveReaction"), who: ["producer", "commentator", "factchecker"], graphic: d?.graphic }];
   const ghostComing = gh?.status === "ok" && (fe?.clips?.length || gh.scout);
   if (d && d.replay && d.shots.length) {
     const to = sg.f + 0.9 * HZ;
@@ -2093,61 +2611,65 @@ function startDesk(sg) {
       const rate = sh.slow ? 0.38 : 0.75;
       let from = to - clamp(sh.sec, 2, 7) * rate * HZ;
       if (d.fromF != null) from = Math.max(from, d.fromF - HZ);
-      steps.push({ kind: "replay", cam: sh.cam, from: Math.max(0, from), to, rate, focus: sh.focus, label: `${camName[sh.cam] || sh.cam}${sh.slow ? ", slow motion" : ""}`, who: ["director"] });
+      steps.push({ kind: "replay", cam: sh.cam, from: Math.max(0, from), to, rate, focus: sh.focus, label: sh.slow ? tr("slowMo", { c: camLabel(sh.cam) }) : camLabel(sh.cam), who: ["director"] });
     }
   }
-  if (sg.tele) steps.push({ kind: "tele", f: sg.tele.f, dur: ghostComing ? 4.5 : 6, label: "Telestrator", who: ["telestrator", "analyst"] });
+  const academy = prefs.style === "academy" && sg.decision;
+  if (sg.tele && (d?.tele !== false || academy)) steps.push({ kind: "tele", f: sg.tele.f, dur: (ghostComing ? 4.5 : 6) + (academy ? 2.5 : 0) + (prefs.style === "tactician" ? 1.5 : 0), label: camLabel("tele"), who: ["telestrator", "analyst"] });
+  else if (academy) steps.push({ kind: "tele", f: (gh?.shotF ?? sg.f) - 0.2 * HZ, dur: 6.5, label: tr("dec_h"), who: ["analyst"], decisionOnly: true });
   if (gh?.status === "ok" && fe && fe.clips.length) {
     const fork = fe.clips.find((c) => c.kind === "fork"), goal = fe.clips.find((c) => c.kind === "goal");
     const realRow = nearestShotRow(gh.shotF ?? sg.f), ghostRow = fork?.shots?.[0];
     const shooterSide = gh.teamSide === "away" ? 1 : 0;
     if (realRow && ghostRow) {     // the fork, from beside the shot and then from behind the goal
-      steps.push({ kind: "split", angle: 0, f: realRow[0], realRow, ghostRow, clip: fork, dur: 3.6, label: "History splits", who: ["scenario"] });
-      steps.push({ kind: "split", angle: 1, f: realRow[0], dur: 3.4, last: true, label: "History splits · from the goal", who: ["scenario"] });
+      steps.push({ kind: "split", angle: 0, f: realRow[0], realRow, ghostRow, clip: fork, dur: 3.6, label: tr("historySplits"), who: ["scenario"] });
+      steps.push({ kind: "split", angle: 1, f: realRow[0], dur: 3.4, last: true, label: tr("fromGoal"), who: ["scenario"] });
     }
-    if (fork) steps.push({ kind: "gclip", clip: fork, from: 0, to: Math.min(fork.n - 1, 5.5 * HZ), rate: 0.85, side: shooterSide, label: "Ghost timeline", who: ["scenario"] });
+    if (fork) steps.push({ kind: "gclip", clip: fork, from: 0, to: Math.min(fork.n - 1, 5.5 * HZ), rate: 0.85, side: shooterSide, label: tr("ghostTl"), who: ["scenario"] });
     if (!goal) {        // no later goal in this timeline: jump to its full-time score
-      const fin = fe.final, sub = `Full time in this timeline: ${HOME.short} ${fin.home}-${fin.away} ${AWAY.short}`;
-      steps.push({ kind: "gskip", dur: 2.8, fromMin: sg.minute, toMin: "FT", sub, label: "Fast-forward", who: ["scenario"] });
+      const fin = fe.final, sub = tr("ftLine", { h: HOME.short, a: fin.home, b: fin.away, aw: AWAY.short });
+      steps.push({ kind: "gskip", dur: 2.8, fromMin: sg.minute, toMin: "FT", sub, label: tr("fastForward"), who: ["scenario"] });
     }
     if (goal) {
-      steps.push({ kind: "gskip", dur: 2.0, fromMin: sg.minute, toMin: goal.minute, label: "Fast-forward", who: ["scenario"] });
+      steps.push({ kind: "gskip", dur: 2.0, fromMin: sg.minute, toMin: goal.minute, label: tr("fastForward"), who: ["scenario"] });
       steps.push({ kind: "gclip", clip: goal, from: Math.max(0, goal.n - 1 - 9.5 * HZ), to: goal.n - 1, rate: 1, side: goal.side === "away" ? 1 : 0,
-        label: `Ghost timeline · ${goal.minute}`, goalLine: `In this timeline: ${goal.scorer} scores, ${goal.minute}.`, who: ["scenario"] });
+        label: tr("ghostAt", { m: goal.minute }), goalLine: tr("goalLine", { s: goal.scorer, m: goal.minute }), who: ["scenario"] });
     }
-    steps.push({ kind: "rewind", from: Math.min(MAIN.N - 1, (gh.shotF ?? sg.f) + 3 * HZ), to: gh.shotF ?? sg.f, label: "Back to reality", who: ["scenario"] });
-    steps.push({ kind: "verdict", f: gh.shotF ?? sg.f, dur: 8, label: "The verdict", line: ghostLine, who: ["scenario", "factchecker"] });
+    steps.push({ kind: "rewind", from: Math.min(MAIN.N - 1, (gh.shotF ?? sg.f) + 3 * HZ), to: gh.shotF ?? sg.f, label: tr("backReality"), who: ["scenario"] });
+    steps.push({ kind: "verdict", f: gh.shotF ?? sg.f, dur: 8, label: tr("verdict"), line: ghostLine, who: ["scenario", "factchecker"] });
   } else if (gh?.status === "ok" && gh.scout) {
-    steps.push({ kind: "scout", f: gh.shotF ?? sg.f, dur: 8, label: "Ghost Scout", line: ghostLine, who: ["scenario"] });
+    steps.push({ kind: "scout", f: gh.shotF ?? sg.f, dur: 8, label: tr("ghostScout"), line: ghostLine, who: ["scenario"] });
   }
   desk = { seg: sg, steps, i: -1, resume: pos, end: sh ? sh.end : attackDir(side, sg.f), side, lines, wiping: false, clock: 0, until: 0,
-           gsrc: null, gclip: null, gt: 0, gtPrev: 0, gscore: null, fan: null };
+           gsrc: null, gclip: null, gt: 0, gtPrev: 0, gscore: null, fan: null, angle: V.headline || null, caption: V.caption || null, question: V.question || null };
   lastSeg = sg; renderDeskPanel(sg); showDeskPanel(true);
   $("lower").classList.remove("show");
   nextDeskStep();
 }
 const deskLine = () => (desk.lines.length ? desk.lines.shift() : null);
-const GHOST_WHO = '<span>Ghost timeline</span><span class="sim">simulated by the match engine</span>';
+const GHOST_WHO_HTML = () => `<span>${tr("ghostTl")}</span><span class="sim">${tr("simByEngine")}</span>`;
+const GHOST_WORDS = /future|simulat|would have|ghost|if he|if it had|timeline|futuro|simulad|habría|hubiera|fantasma|futur|simulé|aurait|fantôme/i;
 function nextDeskStep() {
   const prev = desk.steps[desk.i];
   leaveStep(prev);
   desk.i++;
   const st = desk.steps[desk.i];
-  if (!st) { desk.wiping = true; wipe("LIVE", "#0b1220", () => endDesk(true)); return; }
+  if (!st) { desk.wiping = true; wipe(tr("w_live"), "#0b1220", () => endDesk(true)); return; }
   const go = () => enterStep(st, prev);
-  if (st.kind === "replay" && (!prev || prev.kind !== "replay")) { desk.wiping = true; wipe("REPLAY", sideColor(desk.side), go); }
-  else if (st.kind === "gclip" && prev && prev.kind === "split") { desk.wiping = true; wipe("GHOST TIMELINE", "#0b3d4f", go); }
-  else if (st.kind === "scout") { desk.wiping = true; wipe("GHOST SCOUT", "#0b3d4f", go); }
+  if (st.kind === "replay" && (!prev || prev.kind !== "replay")) { desk.wiping = true; wipe(tr("w_replay"), sideColor(desk.side), go); }
+  else if (st.kind === "gclip" && prev && prev.kind === "split") { desk.wiping = true; wipe(tr("w_ghost"), "#0b3d4f", go); }
+  else if (st.kind === "scout") { desk.wiping = true; wipe(tr("w_scout"), "#0b3d4f", go); }
   else go();
 }
 function withSource(src, fn) { if (src) useSource(src); try { return fn(); } finally { if (src) useSource(MAIN); } }
 function enterStep(st, prev) {
   desk.wiping = false; end = desk.end; desk.until = desk.clock + (st.dur || 0);
   setDeskNow(...st.who);
-  const why = desk.seg.plan.angle || desk.seg.title, B = document.body.classList;
+  const why = desk.angle || desk.seg.plan.angle || desk.seg.title, B = document.body.classList;
   if (st.kind === "live") {
     setMode(st.cam, why, true);
     showCaption(deskLine(), desk.seg);
+    if (st.graphic && !desk.tryout) showGraphic(st.graphic, desk.seg);
   } else if (st.kind === "replay") {
     B.add("replay");
     pos = st.from; snapNext = true;
@@ -2159,39 +2681,48 @@ function enterStep(st, prev) {
     if (!prev || prev.kind !== "replay") showCaption(deskLine(), desk.seg);
   } else if (st.kind === "tele") {
     B.add("replay");
-    pos = st.f; snapNext = true; buildTele(desk.seg);
-    setMode("tele", desk.seg.tele.caption || why, true);
-    showCaption(deskLine() || desk.seg.tele.caption, desk.seg);
+    pos = st.f; snapNext = true;
+    const dec = prefs.style === "academy" ? desk.seg.decision : null;
+    buildTele({ tele: { shapes: [...decisionShapes(dec), ...(st.decisionOnly ? [] : desk.seg.tele.shapes)] } });
+    if (dec) showDecisionCard(dec);
+    if (prefs.style === "tactician") showShape(true, st.f);
+    setMode("tele", desk.caption || desk.seg.tele?.caption || why, true);
+    showCaption(deskLine() || desk.caption || desk.seg.tele?.caption, desk.seg);
   } else if (st.kind === "split") {
     B.add("replay", "split");
     if (!deskPinned) showDeskPanel(false);
     pos = st.f; snapNext = true; cutNext = true;
     if (st.angle === 0) {
       buildArcs(st.realRow, st.ghostRow, st.clip ? clipSource(st.clip) : null);
-      showCaption(desk.seg.ghost.question, desk.seg, '<span>The Scenario agent asks</span>');
+      showCaption(desk.question || desk.seg.ghost.question, desk.seg, `<span>${tr("scenarioAsks")}</span>`);
     } else setSplitCam(1);
-    setMode("split", desk.seg.ghost.question, true);
+    setMode("split", desk.question || desk.seg.ghost.question, true);
   } else if (st.kind === "gclip") {
     B.add("replay", "ghost"); B.remove("skipping");
     desk.gsrc = clipSource(st.clip); desk.gclip = st.clip; desk.gt = desk.gtPrev = st.from; snapNext = true; cutNext = true;
-    withSource(desk.gsrc, () => { end = attackDir(st.side, st.from); cb.set(ballAt(st.from, bpos).x, 0, bpos.z); });
+    withSource(desk.gsrc, () => {
+      end = attackDir(st.side, st.from);
+      if (st.clip.kind === "tryout") { const b = ballAt(Math.max(0, st.clip.n - 1 - 3.5 * HZ), { x: 0, y: 0, z: 0 }); end = b.x >= 0 ? 1 : -1; }
+      cb.set(ballAt(st.from, bpos).x, 0, bpos.z);
+    });
     setMode("behind", st.label, true);
-    if (st.clip.kind === "fork") showCaption(desk.seg.ghost.changed === "goal" ? "In the ghost timeline, it goes in." : "In the ghost timeline, it's saved.", desk.seg, GHOST_WHO);
+    if (st.caption) showCaption(st.caption, desk.seg, `<span>${tr("tryout")}</span><span class="sim">${tr("simByEngine")}</span>`);
+    if (st.clip.kind === "fork") showCaption(desk.seg.ghost.changed === "goal" ? tr("itGoesIn") : tr("itsSaved"), desk.seg, GHOST_WHO_HTML());
   } else if (st.kind === "gskip") {
     B.add("skipping");
-    showSkip(st.fromMin, st.toMin, st.sub || "Something happens here that never happened for real");
+    showSkip(st.fromMin, st.toMin, st.sub || tr("neverHappened"));
     hideCaption();
   } else if (st.kind === "rewind") {
     desk.gsrc = null; desk.gclip = null;
     B.remove("ghost", "skipping"); B.add("rewind");
     pos = st.from; snapNext = true; cutNext = true;
-    setMode("behind", "Back to reality", true);
+    setMode("behind", tr("backReality"), true);
     hideCaption();
   } else if (st.kind === "verdict") {
     B.remove("rewind");
     renderDeskPanel(desk.seg); showDeskPanel(true); setDeskNow(...st.who);
     pos = st.f; snapNext = true;
-    setMode("broadcast", desk.seg.ghost.question, true);
+    setMode("broadcast", desk.question || desk.seg.ghost.question, true);
     showVerdict(desk.seg);
     showCaption(st.line || deskLine(), desk.seg);
   } else if (st.kind === "scout") {
@@ -2200,15 +2731,15 @@ function enterStep(st, prev) {
     const tk = slotById[desk.seg.ghost.scout?.taker?.player_id];
     if (tk !== undefined) { selected = tk; followSlot = tk; }
     showScoutCard(desk.seg);
-    setMode("behind", desk.seg.ghost.question, true);
+    setMode("behind", desk.question || desk.seg.ghost.question, true);
     showCaption(st.line || deskLine(), desk.seg);
   }
 }
 function leaveStep(st) {
   if (!st) return;
   const B = document.body.classList;
-  if (st.kind === "live") desk.resume = pos;
-  if (st.kind === "tele") clearTele();
+  if (st.kind === "live") { desk.resume = pos; hideGraphic(); }
+  if (st.kind === "tele") { clearTele(); showShape(false); hideGraphic(); }
   if (st.kind === "split" && st.last) { clearArcs(); B.remove("split"); }
   if (st.kind === "gskip") hideSkip();
   if (st.kind === "verdict") hideGhostCard();
@@ -2219,11 +2750,12 @@ function endDesk(resume) {
   if (!desk) return;
   leaveStep(desk.steps[desk.i]);
   const back = desk.resume;
+  if (desk.tryout) { tagAlias = null; selected = -1; followSlot = -1; if (cardTryout === null && clubOpen) renderClub(); }
   desk = null;
   document.body.classList.remove("replay", "ghost", "split", "rewind", "skipping");
-  hideCaption(); clearTele(); clearArcs(); hideSkip(); hideGhostCard(); setDeskNow();
+  hideCaption(); clearTele(); clearArcs(); hideSkip(); hideGhostCard(); setDeskNow(); hideGraphic(); showShape(false);
   lastSi = -1;
-  if (resume) { pos = back; snapNext = true; cutNext = true; setMode("broadcast", "Back to live", true); }
+  if (resume) { pos = back; snapNext = true; cutNext = true; setMode("broadcast", tr("backLive"), true); }
   setTimeout(() => { if (!desk && !deskPinned) showDeskPanel(false); }, 3500);
 }
 const deskRate = () => {
@@ -2249,19 +2781,598 @@ function tickDesk(dt) {
   if (st.kind === "gclip") {
     desk.gtPrev = desk.gt;
     desk.gt = Math.min(st.to, desk.gt + dt * HZ * st.rate);
-    if (st.goalLine) for (const [f] of st.clip.goals) { const g = Math.max(f, (desk.gsrc.SHOTS.filter((x) => x.f <= f && x.oc === 0).pop()?.f ?? -99) + 1.1 * HZ); if (g > desk.gtPrev && g <= desk.gt) { excite = 1; showCaption(st.goalLine, desk.seg, GHOST_WHO); } }
+    if (st.goalLine) for (const [f] of st.clip.goals) { const g = Math.max(f, (desk.gsrc.SHOTS.filter((x) => x.f <= f && x.oc === 0).pop()?.f ?? -99) + 1.1 * HZ); if (g > desk.gtPrev && g <= desk.gt) { excite = 1; showCaption(st.goalLine, desk.seg, GHOST_WHO_HTML()); } }
     if (desk.gt >= st.to) nextDeskStep();
     return;
   }
   if (st.kind === "replay" ? pos >= st.to : st.kind === "rewind" ? pos <= st.to : desk.clock >= desk.until) nextDeskStep();
 }
 $("deskBtn").addEventListener("click", () => {
+  if (clubOpen) showClub(false);
   const show = $("deskp").hidden;
   deskPinned = show;
   if (show && !lastSeg && SEGS.length) { lastSeg = SEGS[0]; renderDeskPanel(lastSeg); }
-  if (show && !SEGS.length) $("deskp").innerHTML = '<h3>AI broadcast desk</h3><div class="wh">This page has no AI desk segments. Build it with <b>matchagents render</b>.</div>';
+  if (show && !SEGS.length) $("deskp").innerHTML = `<h3>${tr("deskH")}</h3><div class="wh">${tr("deskNone")}</div>`;
   showDeskPanel(show);
 });
+
+// ---------------------------------------------------------------- Club mode: the recruitment board and player try-outs
+// Any player in the league, in any position, for full matches: the engine plays the fixture many times with him
+// and many times with the player who really starts there (same seeds), and compares. Two players per position
+// are pre-simulated ("Ready"); anyone else can be simulated live on the try-out server.
+const CLUB = DATA.club || null;
+const API = (() => { try { return new URLSearchParams(location.search).get("api") || CLUB?.api || null; } catch { return CLUB?.api || null; } })();
+let clubSide = "home", clubSlot = null, clubFilter = "ready", clubOpen = false, liveJob = null, clubQuery = "";
+const sideTeam = (side) => (side === "home" ? HOME : AWAY);
+const slotOfPid = Object.fromEntries(DATA.players.map((p, i) => [p.id, i]));
+const signed = (v, d = 2) => `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(d)}`;
+// where each starter actually played (average first-half position, attacking upwards), for the mini pitch
+const avgPos = (() => {
+  const acc = DATA.players.map(() => [0, 0, 0]);
+  for (let i = 0; i < Math.min(MAIN.P2, MAIN.N); i += 5) for (let s = 0; s < NP; s++) {
+    const x = MAIN.F[i * W + 2 * s]; if (x === ABSENT) continue;
+    acc[s][0] += x / 10; acc[s][1] += MAIN.F[i * W + 2 * s + 1] / 10; acc[s][2]++;
+  }
+  return acc.map(([x, y, n]) => (n ? { x: x / n, y: y / n } : null));
+})();
+function clubPositions() { return CLUB?.sides?.[clubSide]?.positions || []; }
+function clubTryouts() { return (CLUB.sides[clubSide].tryouts ||= {}); }
+function renderClub() {
+  const el = $("clubp");
+  if (!CLUB) { el.innerHTML = `<h3><span>${tr("club")}</span></h3><div class="cl-empty">${tr("clubNone")}</div>`; return; }
+  const team = sideTeam(clubSide), pos = clubPositions();
+  const sel = pos.find((p) => p.slot === clubSlot) || null;
+  const pitch = pos.map((p) => {
+    const s = slotOfPid[p.player_id], a = s != null ? avgPos[s] : null;
+    const attackRight = clubSide === "home";            // first half: home attacks towards x = 105
+    let px = a ? (attackRight ? a.x : 105 - a.x) / 105 : 0.5, py = a ? (attackRight ? a.y : 68 - a.y) / 68 : 0.5;
+    if (p.role === "GK") px = 0.1;
+    const done = Object.keys(clubTryouts()).filter((k) => k.startsWith(`${p.slot}:`)).length;
+    return `<button class="cl-dot${p.slot === clubSlot ? " on" : ""}" data-slot="${p.slot}" style="left:${(clamp(py, 0.07, 0.93) * 100).toFixed(1)}%;bottom:${(clamp(px, 0.1, 0.9) * 100).toFixed(1)}%" title="${esc(p.name)}">
+      <i style="background:${team.colors.primary}"></i><span>${esc(p.label)}</span>${done ? `<em>${done}</em>` : ""}</button>`;
+  }).join("");
+  let list = "";
+  if (sel) {
+    const trs = clubTryouts();
+    const q = clubQuery.trim().toLowerCase();
+    const cands = sel.candidates.filter((c) => (clubFilter === "all" || c.ready || trs[`${sel.slot}:${c.player_id}`])
+      && (!q || c.name.toLowerCase().includes(q) || c.club.toLowerCase().includes(q) || c.role.toLowerCase() === q));
+    list = `<div class="cl-pos"><div><b>${esc(sel.label)}</b> · ${esc(tr("startsHere", { n: sel.name }))} <small>${tr("projected", { v: sel.incumbent_projected })}</small></div>
+      <div class="seg cl-filter"><button data-f="ready" aria-pressed="${clubFilter === "ready"}">${tr("ready")}</button><button data-f="all" aria-pressed="${clubFilter === "all"}">${tr("allN", { n: sel.candidates.length })}</button></div></div>
+      ${clubFilter === "all" ? `<input class="cl-search" id="clSearch" type="search" placeholder="${esc(tr("searchPh"))}" value="${esc(clubQuery)}" aria-label="${esc(tr("searchPh"))}">` : ""}
+      <div class="cl-list">${cands.slice(0, 80).map((c) => {
+        const r = trs[`${sel.slot}:${c.player_id}`], key = `${sel.slot}:${c.player_id}`, running = liveJob && liveJob.key === key;
+        const status = r ? `<span class="cl-res ${r.diff.xpts >= 0 ? "up" : "down"}">${tr("pts", { v: signed(r.diff.xpts) })}<small>±${fmtNum(r.diff.xpts_margin_95)}</small></span>`
+          : running ? `<span class="cl-run">${tr("simulating", { d: liveJob.done, t: liveJob.total })}</span>`
+          : `<span class="cl-sim">${tr("simulate")}<small>${tr("twoMin")}</small></span>`;
+        const bar = clamp((c.projected - 55) / 35, 0, 1);
+        return `<button class="cl-row${r ? " ready" : ""}" data-pid="${c.player_id}">
+          <span class="cl-name">${esc(c.name)}${c.tag ? `<em>${esc(tagText(c.tag))}</em>` : ""}<small>${esc(c.club)} · ${esc(c.role)} · ${c.age}</small></span>
+          <span class="cl-proj"><i style="width:${(bar * 100).toFixed(0)}%"></i><b>${c.projected}</b></span>${status}</button>`;
+      }).join("") || `<div class="cl-empty">${esc(tr("nobodySim"))}</div>`}</div>`;
+  } else list = `<div class="cl-empty">${tr("pickPos")}</div>`;
+  el.innerHTML = `<h3><span>${tr("clubH")}</span><span class="seg cl-side"><button data-side="home" aria-pressed="${clubSide === "home"}">${esc(HOME.code)}</button><button data-side="away" aria-pressed="${clubSide === "away"}">${esc(AWAY.code)}</button></span></h3>
+    <div class="cl-pitch">${pitch}<div class="cl-half"></div><div class="cl-box"></div></div>${list}
+    <div class="cl-foot">${tr("clubFoot", { n: CLUB.n || 12, srv: API ? "" : tr("onServer") })}</div>`;
+}
+function showClub(on) {
+  clubOpen = on; $("clubp").hidden = !on; $("clubBtn").setAttribute("aria-pressed", String(on));
+  document.body.classList.toggle("clubopen", on && window.innerWidth > 760);
+  if (on) {
+    $("panel").hidden = true; $("statsBtn").setAttribute("aria-pressed", "false");
+    $("deskp").hidden = true; $("deskBtn").setAttribute("aria-pressed", "false"); deskPinned = false;
+    if (clubSlot == null && CLUB) { const st = clubPositions().find((p) => p.role === "ST") || clubPositions()[0]; clubSlot = st?.slot ?? null; }
+    renderClub();
+  } else hideTryoutCard();
+}
+$("clubp").addEventListener("input", (e) => {
+  if (e.target.id !== "clSearch") return;
+  clubQuery = e.target.value; const at = e.target.selectionStart;
+  renderClub(); const box = $("clSearch"); if (box) { box.focus(); box.setSelectionRange(at, at); }
+});
+$("clubp").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.side) { clubSide = b.dataset.side; clubSlot = null; const st = clubPositions().find((p) => p.role === "ST"); clubSlot = st?.slot ?? null; renderClub(); return; }
+  if (b.dataset.slot) { clubSlot = +b.dataset.slot; renderClub(); return; }
+  if (b.dataset.f) { clubFilter = b.dataset.f; renderClub(); return; }
+  if (b.dataset.pid) {
+    const key = `${clubSlot}:${b.dataset.pid}`, r = clubTryouts()[key];
+    if (r) showTryoutCard(r, clubSide);
+    else startLiveTryout(clubSide, clubSlot, b.dataset.pid);
+  }
+});
+
+// ---- the result card
+const PER90_ROWS = {   // [stat, lower is better]
+  GK: [["saves"], ["goals_conceded", true], ["xg_faced"], ["passes_completed"]],
+  CB: [["tackles_won"], ["interceptions"], ["clearances"], ["aerials_won"], ["progressive_passes"], ["passes_completed"]],
+  FB: [["tackles_won"], ["interceptions"], ["key_passes"], ["progressive_passes"], ["dribbles_completed"], ["sprints"]],
+  DM: [["tackles_won"], ["interceptions"], ["ball_recoveries"], ["progressive_passes"], ["passes_completed"], ["dispossessed", true]],
+  CM: [["key_passes"], ["progressive_passes"], ["passes_completed"], ["xg"], ["tackles_won"], ["ball_recoveries"]],
+  AM: [["key_passes"], ["xa"], ["xg"], ["goals"], ["dribbles_completed"], ["dispossessed", true]],
+  W: [["xg"], ["goals"], ["key_passes"], ["xa"], ["dribbles_completed"], ["sprints"]],
+  ST: [["goals"], ["xg"], ["shots"], ["key_passes"], ["aerials_won"], ["dispossessed", true]],
+};
+const tagText = (tag) => (/under/i.test(tag) ? tr("tag_u23") : /top/i.test(tag) ? tr("tag_top") : tag);
+let cardTryout = null;
+function hideTryoutCard() { $("tryoutcard").classList.remove("show"); cardTryout = null; }
+function showTryoutCard(r, side, live) {
+  cardTryout = { r, side };
+  const team = sideTeam(side), d = r.diff || {}, w = r.with, o = r.without;
+  const verdict = !d.pairs ? tr("toSimulating") : d.clear ? (d.xpts > 0 ? tr("toClear") : tr("toWorse")) : tr("toClose");
+  const rows = (PER90_ROWS[r.position.role] || PER90_ROWS.CM).map(([k, lowBetter]) => {
+    const label = tr("p_" + k);
+    const a = w.per90[k] ?? 0, b = o.per90[k] ?? 0, better = lowBetter ? a < b : a > b, same = Math.abs(a - b) < 0.005;
+    const f = (v) => fmtNum(v, Math.abs(v) >= 10 ? 1 : 2);
+    return `<tr><td>${label}</td><td class="r ${same ? "" : better ? "up" : "down"}">${f(a)}</td><td class="r">${f(b)}</td></tr>`;
+  }).join("");
+  // expected win/draw/loss from chance quality (agrees with the expected points); real results in small print
+  const res = (x) => [[x.xwin ?? x.win, tr("win", { t: team.short }), team.colors.primary], [x.xdraw ?? x.draw, tr("draw"), "rgba(255,255,255,0.55)"], [x.xloss ?? x.loss, tr("lose", { t: team.short }), "#8b98ad"]]
+    .map(([v, lab, c]) => [lab, c, v]).map(([lab, c, v]) => ({ k: v, lab, c })).map(({ k, lab, c }) => `<div class="grow"><span>${esc(lab)}</span><span class="bar"><span data-w="${k}" style="background:${c}"></span></span><b>${pct(k)}</b></div>`).join("");
+  const gc = $("tryoutcard");
+  const xgLine = (x) => tr("toXg", { a: fmtNum(x.xg_for), b: fmtNum(x.xg_against), w: Math.round(x.win * x.futures), d: Math.round(x.draw * x.futures), l: Math.round(x.loss * x.futures) });
+  gc.innerHTML = `<div class="k"><span>${tr("toKicker")}</span><span>${esc(HOME.short)} v ${esc(AWAY.short)}</span></div>
+    <div class="q">${esc(tr("toQ", { c: r.candidate.name, pos: r.position.label, i: r.incumbent.name }))}</div>
+    ${live && r.progress && r.progress.done < r.progress.total ? `<div class="to-prog"><i style="width:${(100 * r.progress.done / r.progress.total).toFixed(0)}%"></i><span>${tr("toProg", { d: r.progress.done, t: r.progress.total })}</span></div>` : ""}
+    <div class="to-head"><div class="to-big ${d.xpts >= 0 ? "up" : "down"}">${d.pairs ? signed(d.xpts) : "…"}<small>${tr("toXpts")} ${d.pairs ? `· ±${fmtNum(d.xpts_margin_95 ?? 0)}` : ""}</small></div>
+      <div class="to-verdict">${verdict}<small>${esc(r.candidate.club)} · ${esc(r.candidate.role)} · ${tr("age", { n: r.candidate.age })}</small></div></div>
+    <div class="gcols"><div class="gcol alt"><h4>${esc(tr("withP", { n: r.candidate.name }))}</h4>${res(w)}<div class="to-xg">${xgLine(w)}</div></div>
+      <div class="gcol"><h4>${esc(tr("withP", { n: r.incumbent.name }))}</h4>${res(o)}<div class="to-xg">${xgLine(o)}</div></div></div>
+    <div class="to-note">${tr("toNote", { n: w.futures })}</div>
+    <table class="to-table"><tr><td>${tr("per90")}</td><td class="r">${esc(r.candidate.name.split(" ").slice(-1)[0])}</td><td class="r">${esc(r.incumbent.name.split(" ").slice(-1)[0])}</td></tr>${rows}</table>
+    ${r.report ? `<div class="to-report"><span>${tr("scoutAgent")} · ${r.report.fallback ? tr("verifiedSummary") : tr("factChecked")}${prefs.lang !== "en" ? ` · ${tr("inLang")}` : ""}<b class="to-v ${esc(r.report.verdict)}">${esc(tr("v_" + r.report.verdict))}</b></span><strong>${esc(r.report.headline)}</strong> ${esc(r.report.report)}</div>` : ""}
+    <div class="to-actions">${API && !live && w.futures < 24 ? `<button class="btn" id="toMore">${tr("tighten")}</button>` : ""}${r.clip ? `<button class="btn" id="toWatch">${tr("watchBest")}${r.featured?.minute ? ` (${esc(r.featured.minute)})` : ""}</button>` : ""}<button class="btn" id="toClose">${tr("close")}</button></div>
+    <div class="foot"><span>${tr("toFoot", { n: w.futures, live: live ? tr("liveW") : "" })}</span></div>`;
+  gc.classList.add("show");
+  requestAnimationFrame(() => requestAnimationFrame(() => gc.querySelectorAll(".bar span").forEach((b) => { b.style.width = `${+b.dataset.w * 100}%`; })));
+  $("toClose").onclick = hideTryoutCard;
+  if (r.clip) $("toWatch").onclick = () => playTryoutClip(r, side);
+  const more = $("toMore");
+  if (more) more.onclick = () => { hideTryoutCard(); startLiveTryout(side, r.position.slot, r.candidate.player_id, w.futures + 12, r); };
+}
+
+// ---- watch his best moment: the featured future plays on the real models, his name on the player
+let tagAlias = null;
+function playTryoutClip(r, side) {
+  const c = CLUB.clips[r.clip]; if (!c || desk || replay) return;
+  hideTryoutCard();
+  const slot = slotOfPid[r.incumbent.player_id];
+  tagAlias = { slot, name: r.candidate.name };
+  selected = slot; followSlot = slot;
+  const seg = { id: "tryout", f: pos, minute: r.featured?.minute || "", title: tr("clipTitle", { c: r.candidate.name, pos: r.position.label }), plan: { angle: tr("clipAngle", { c: r.candidate.name, pos: r.position.label }) }, lines: [], ghost: null };
+  const what = tr("m_" + (["goal", "assist", "chance", "key_pass", "save"].includes(c.moment) ? c.moment : "other"));
+  desk = { seg, steps: [{ kind: "gclip", clip: c, from: 0, to: c.n - 1, rate: 0.9, side: side === "home" ? 0 : 1, label: `${tr("tryout")} · ${r.candidate.name}`,
+    caption: tr("clipCap", { c: r.candidate.name, w: what, m: c.minute ? ` (${c.minute})` : "" }), who: [] }],
+    i: -1, resume: pos, end: 1, side: side === "home" ? 0 : 1, lines: [], wiping: false, clock: 0, until: 0, gsrc: null, gclip: null, gt: 0, gtPrev: 0, fan: null, tryout: true };
+  desk.wiping = true; wipe(tr("w_tryout"), "#0b3d4f", () => nextDeskStep());
+}
+
+// ---- live: anyone else, simulated on the try-out server and streamed in
+async function startLiveTryout(side, slot, pid, nWant, prior) {
+  if (liveJob) return;
+  const cand = clubPositions().find((p) => p.slot === slot)?.candidates.find((c) => c.player_id === pid);
+  if (!API) {
+    const gc = $("tryoutcard");
+    gc.innerHTML = `<div class="k"><span>${tr("tryout")}</span><span></span></div><div class="q">${esc(tr("simLive", { c: cand?.name || pid }))}</div>
+      <div class="to-report"><span>${tr("tryServer")}</span>${tr("serverOff")}</div>
+      <div class="to-actions"><button class="btn" id="toClose">${tr("close")}</button></div>`;
+    gc.classList.add("show"); $("toClose").onclick = hideTryoutCard; return;
+  }
+  const key = `${slot}:${pid}`;
+  const n = Math.min(24, nWant || CLUB.n || 12);
+  liveJob = { key, done: 0, total: 2 * n };
+  renderClub();
+  try {
+    const res = await fetch(`${API.replace(/\/$/, "")}/tryout`, { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ home: CLUB.home, away: CLUB.away, side, slot, player: pid, n }) });
+    if (!res.ok) throw new Error((await res.text()) || res.statusText);
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    let buf = "", last = null;
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+        if (!line) continue;
+        const msg = JSON.parse(line);
+        if (msg.error) throw new Error(msg.error);
+        last = msg; liveJob.done = msg.progress?.done ?? liveJob.done; liveJob.total = msg.progress?.total ?? liveJob.total;
+        if (msg.with && msg.without && msg.with.futures && msg.without.futures) showTryoutCard(msg, side, true);
+        renderClub();
+      }
+    }
+    if (last && last.with) {
+      if (prior && prior.clip) { last.clip = prior.clip; last.featured = prior.featured; }
+      if (prior && prior.report && last.with.futures === prior.with.futures) last.report = prior.report;
+      clubTryouts()[key] = last; showTryoutCard(last, side, false);
+    }
+  } catch (err) {
+    const gc = $("tryoutcard");
+    gc.innerHTML = `<div class="k"><span>${tr("tryout")}</span><span></span></div><div class="q">${esc(tr("couldnt", { c: cand?.name || pid }))}</div><div class="to-report"><span>${tr("server")}</span>${esc(String(err.message || err))}</div><div class="to-actions"><button class="btn" id="toClose">${tr("close")}</button></div>`;
+    gc.classList.add("show"); $("toClose").onclick = hideTryoutCard;
+  } finally { liveJob = null; renderClub(); }
+}
+$("clubBtn").addEventListener("click", () => showClub(!clubOpen));
+
+// ---------------------------------------------------------------- Your broadcast: one match, directed for each viewer
+// The viewer picks a style, a language, a club and a player. That re-directs everything: the live cameras, the
+// replays and the AI desk's segments (each style has its own Director cut, and every style x channel x language
+// has its own commentary, written natively and fact-checked in that language), the graphics, and the player focus.
+const STYLE_ICON = {
+  fan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg>',
+  analyst: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  tactician: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16M3 9h3v6H3M21 9h-3v6h3"/><circle cx="8.5" cy="12" r="1"/><path d="M14 8l3 2-3 2"/></svg>',
+  academy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/></svg>',
+};
+const styleColor = (s) => getComputedStyle(document.documentElement).getPropertyValue(`--s-${s}`).trim() || "#ff7a59";
+const clubTeam = () => (prefs.club === "home" ? HOME : prefs.club === "away" ? AWAY : null);
+function styleTagText() {
+  const base = tr("styleTag", { s: tr("s_" + prefs.style) });
+  return prefs.style === "fan" && clubTeam() ? `${base} · ${tr("clubChannel", { t: clubTeam().short })}` : base;
+}
+function editionKeys() {
+  const ch = prefs.style === "fan" && prefs.club !== "neutral" ? prefs.club : "neutral";
+  const L = prefs.lang, S = prefs.style;
+  return [`${S}.${ch}.${L}`, `${S}.neutral.${L}`, `fan.neutral.${L}`, `${S}.${ch}.en`, `${S}.neutral.en`, "fan.neutral.en"];
+}
+// the commentary this viewer hears: their style, their club's channel, their language (falling back gracefully)
+function variantOf(sg) {
+  const m = momentById[sg.id];
+  const verified = () => { const h = m ? mTitle(m) : sg.title; return { lines: [h], headline: h, caption: null, question: null, fb: true, ok: false, att: 0, foreign: false }; };
+  if (!sg.ed) {
+    if (sg.fallback) return verified();
+    return { lines: sg.lines, headline: null, caption: sg.tele?.caption, question: sg.ghost?.question, fb: false, ok: sg.check?.approved, att: sg.check?.attempts, foreign: prefs.lang !== "en" };
+  }
+  for (const k of editionKeys()) {
+    const v = sg.ed[k];
+    if (!v) continue;
+    if (v.fb) return { ...verified(), att: v.att, key: k };
+    return { lines: v.l, headline: v.h, caption: v.c, question: v.q, fb: false, ok: v.ok, att: v.att, foreign: !k.endsWith(`.${prefs.lang}`), key: k };
+  }
+  return verified();
+}
+const directorOf = (sg) => sg.dirs?.[prefs.style] || sg.director;
+
+// replays the auto director cuts for each style (no AI segment for this moment)
+function replayCut(m) {
+  const r = nearestShotRow(m.f), focus = r && r[9] >= 0 ? r[9] : -1;
+  const S = {
+    sweep: { cam: "sweep", from: m.f - 7 * HZ, to: m.f + 1.2 * HZ, rate: 0.5, label: "rp_sweep" },
+    behindSlow: { cam: "behind", from: m.f - 4.5 * HZ, to: m.f + 1 * HZ, rate: 0.35, label: "rp_behind_ss" },
+    sky: { cam: "skycam", from: m.f - 6 * HZ, to: m.f + 0.6 * HZ, rate: 0.65, label: "rp_sky" },
+    tactical: { cam: "tactical", from: m.f - 10 * HZ, to: m.f + 0.8 * HZ, rate: 0.7, label: "rp_tactical" },
+    player: { cam: "player", from: m.f - 4 * HZ, to: m.f + 1.5 * HZ, rate: 0.45, label: "rp_player", focus },
+  };
+  const cut = { fan: ["sweep", "player", "behindSlow"], analyst: ["behindSlow", "sky", "tactical"], tactician: ["tactical", "sky", "behindSlow"], academy: ["player", "behindSlow", "tactical"] }[prefs.style];
+  return cut.map((k) => S[k]).filter((s) => s.cam !== "player" || s.focus >= 0);
+}
+
+// ---- the panel
+let ybQuery = "";
+function renderYB() {
+  const el = $("ybp");
+  const styles = STYLES.map((s) => `<button class="yb-style" data-style="${s}" style="--c:var(--s-${s})" aria-pressed="${prefs.style === s}">${STYLE_ICON[s]}<b>${tr("s_" + s)}</b><span>${tr("s_" + s + "D")}</span></button>`).join("");
+  const langs = LANGS.map(([k, n]) => `<button class="yb-chip" data-lang="${k}" aria-pressed="${prefs.lang === k}">${n}</button>`).join("");
+  const clubs = [["neutral", tr("ybNeutral"), "#8b98ad"], ["home", HOME.short, colH], ["away", AWAY.short, colA]]
+    .map(([k, n, c]) => `<button class="yb-chip" data-club="${k}" aria-pressed="${prefs.club === k}"><i style="background:${c}"></i>${esc(n)}</button>`).join("");
+  const q = ybQuery.trim().toLowerCase();
+  const pool = DATA.players.map((p, i) => ({ ...p, slot: i })).filter((p) => !q || p.name.toLowerCase().includes(q) || p.short.toLowerCase().includes(q) || String(p.shirt) === q);
+  const sel = prefs.player ? DATA.players.find((p) => p.id === prefs.player) : null;
+  const stars = [...new Set(DATA.moments.filter((m) => m.importance >= 0.7).flatMap((m) => m.who || []))];
+  const rank = (p) => { const k = stars.indexOf(p.short); return k < 0 ? 99 : k; };
+  const shown = (q ? pool : pool.filter((p) => !p.gk || rank(p) < 99).sort((a, b) => rank(a) - rank(b))).slice(0, q ? 10 : 9);
+  if (sel && !shown.some((p) => p.id === sel.id)) shown.unshift({ ...sel, slot: slotById[sel.id] });
+  const plBtn = (p) => { const k = kitFor(p); return `<button class="yb-pl" data-player="${p.id}" aria-pressed="${prefs.player === p.id}"><b style="background:${k.shirtHex};color:${k.numberColor}">${p.shirt}</b>${esc(p.name)}<small>${esc(p.side === "home" ? HOME.code : AWAY.code)} · ${esc(p.pos)}</small></button>`; };
+  const pins = ["none", "xg", "poss", "pass", "shots", ...(prefs.player ? ["dist", "speed", "sprints"] : [])]
+    .map((k) => `<button class="yb-chip" data-pin="${k}" aria-pressed="${prefs.pin === k}">${tr("pin_" + k)}</button>`).join("");
+  el.innerHTML = `<div class="yb-card" role="dialog" aria-modal="true" aria-labelledby="ybTitle">
+    <div class="yb-top"><div><h2 id="ybTitle">${tr("ybH")}</h2><p>${tr("ybSub")}</p></div><button class="yb-x" id="ybX" aria-label="${esc(tr("close"))}">×</button></div>
+    <div class="yb-sec"><h4>${tr("ybStyle")}</h4><div class="yb-styles">${styles}</div></div>
+    <div class="yb-row"><div class="yb-sec"><h4>${tr("ybLang")}</h4><div class="yb-chips">${langs}</div></div>
+      <div class="yb-sec"><h4>${tr("ybClub")}</h4><div class="yb-chips">${clubs}</div></div></div>
+    <div class="yb-sec"><h4>${tr("ybPlayer")}</h4><input class="yb-search" id="ybSearch" type="search" placeholder="${esc(tr("ybPlayerPh"))}" value="${esc(ybQuery)}" aria-label="${esc(tr("ybPlayerPh"))}">
+      <div class="yb-res"><button class="yb-chip" data-player="" aria-pressed="${!prefs.player}">${tr("ybNone")}</button>${shown.map(plBtn).join("")}</div>
+      ${prefs.player ? `<label class="yb-follow"><input type="checkbox" id="ybFollow" ${prefs.follow ? "checked" : ""}> ${tr("ybFollow")}</label>` : ""}</div>
+    <div class="yb-sec"><h4>${tr("ybPin")}</h4><div class="yb-chips">${pins}</div></div>
+    <div class="yb-foot"><small>${esc(styleTagText())}</small><button class="yb-go" id="ybGo">${tr("ybGo")}</button></div></div>`;
+}
+function showYB(on) {
+  $("ybp").hidden = !on;
+  if (on) { renderYB(); setTimeout(() => $("ybGo")?.focus(), 30); }
+  else if (!prefs.seen) { prefs.seen = true; savePrefs(); }
+}
+$("ybp").addEventListener("click", (e) => {
+  if (e.target === $("ybp")) return showYB(false);
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.id === "ybX" || b.id === "ybGo") { showYB(false); if (b.id === "ybGo" && !playing && !desk) play(true); return; }
+  if (b.dataset.style) prefs.style = b.dataset.style;
+  else if (b.dataset.lang) prefs.lang = b.dataset.lang;
+  else if (b.dataset.club) prefs.club = b.dataset.club;
+  else if (b.dataset.pin) prefs.pin = b.dataset.pin;
+  else if ("player" in b.dataset) { prefs.player = b.dataset.player || null; if (!prefs.player && ["dist", "speed", "sprints"].includes(prefs.pin)) prefs.pin = "none"; }
+  else return;
+  savePrefs(); applyPrefs(); renderYB();
+});
+$("ybp").addEventListener("input", (e) => {
+  if (e.target.id === "ybSearch") { ybQuery = e.target.value; const at = e.target.selectionStart; renderYB(); const box = $("ybSearch"); box.focus(); box.setSelectionRange(at, at); }
+});
+$("ybp").addEventListener("change", (e) => { if (e.target.id === "ybFollow") { prefs.follow = e.target.checked; savePrefs(); applyPrefs(); } });
+$("ybBtn").addEventListener("click", () => showYB($("ybp").hidden));
+
+// ---- applying the choices, live
+function applyStatic() {
+  document.documentElement.lang = prefs.lang;
+  for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = tr(el.dataset.i18n);
+  for (const el of document.querySelectorAll("[data-i18n-title]")) el.title = tr(el.dataset.i18nTitle);
+}
+let focusFor = null;
+function applyPrefs() {
+  const c = styleColor(prefs.style);
+  document.documentElement.style.setProperty("--style-c", c);
+  document.body.dataset.style = prefs.style;
+  applyStatic(); buildSegs();
+  momentEls.forEach(relabelMoment);
+  // the scorebug from your club's side
+  $("codeH").parentElement.classList.toggle("mine", prefs.club === "home");
+  $("codeA").parentElement.classList.toggle("mine", prefs.club === "away");
+  $("wpMid").textContent = clubTeam() ? tr("wpYou", { t: clubTeam().short }) : tr("wp");
+  // the player you follow
+  const slot = prefs.player != null ? slotById[prefs.player] : undefined;
+  if (slot === undefined) { FOCUS = null; focusFor = null; }
+  else if (focusFor !== prefs.player) { FOCUS = buildFocus(slot); focusFor = prefs.player; lastTopAlert = 0; }
+  rebuildMarkers();
+  $("focus").hidden = !FOCUS; document.body.classList.toggle("hasfocus", !!FOCUS);
+  $("focus").classList.toggle("hasPin", prefs.pin !== "none");
+  if (FOCUS) renderFocusHead();
+  lastSi = -1; updateHud(); drawTimeline();
+  if (!$("deskp").hidden && lastSeg && lastSeg.desk) renderDeskPanel(lastSeg);
+  if (clubOpen) renderClub();
+  if (cardTryout && $("tryoutcard").classList.contains("show")) showTryoutCard(cardTryout.r, cardTryout.side);
+  if (!desk && !replay && auto) setMode(mode, tr("following"));
+}
+
+// ---- pinned stat (under the scorebug)
+function updatePin(s) {
+  const el = $("pin"); if (!el) return;
+  const k = prefs.pin;
+  if (k === "none" || (["dist", "speed", "sprints"].includes(k) && !FOCUS)) { el.hidden = true; return; }
+  el.hidden = false;
+  s = s || sampleAt(liveFrame());
+  const pair = (a, b) => `<span><b>${HOME.code} ${a}</b></span><span class="pk">${tr("pin_" + k)}</span><span><b>${b} ${AWAY.code}</b></span>`;
+  if (k === "xg") el.innerHTML = pair(fmtNum(s[K.xgH]), fmtNum(s[K.xgA]));
+  else if (k === "poss") el.innerHTML = pair(fmtPct(s[K.possH]), fmtPct(1 - s[K.possH]));
+  else if (k === "pass") el.innerHTML = pair(fmtPct(s[K.passH] ? s[K.cmpH] / s[K.passH] : 0), fmtPct(s[K.passA] ? s[K.cmpA] / s[K.passA] : 0));
+  else if (k === "shots") el.innerHTML = pair(`${s[K.shotsH]} (${s[K.sotH]})`, `${s[K.shotsA]} (${s[K.sotA]})`);
+  else {
+    const i = clamp(Math.floor(liveFrame()), 0, MAIN.N - 1), p = DATA.players[FOCUS.slot];
+    const v = k === "dist" ? `${fmtNum(FOCUS.dist[i] / 1000, 1)} ${tr("unitKm")}` : k === "speed" ? `${fmtNum(FOCUS.top[i], 1)} ${tr("unitKmh")}` : String(FOCUS.spr[i]);
+    el.innerHTML = `<span class="pk">${tr("pin_" + k)}</span><span><b>${esc(p.short)} · ${v}</b></span>`;
+  }
+}
+
+// ---- player focus: his stat line, live speed, alerts, timeline marks, his next action
+let FOCUS = null, lastTopAlert = 0, lastFocusPos = 0;
+const ACT_NAME = { 3: "shot", 4: "shot_on", 5: "goal", 6: "chance", 7: "tackle", 8: "interception", 9: "dribble", 11: "save", 14: "assist" };
+function buildFocus(slot) {
+  const n = MAIN.N, dist = new Float32Array(n), spd = new Float32Array(n), top = new Float32Array(n), spr = new Uint16Array(n), on = new Uint8Array(n);
+  let d = 0, tp = 0, sp = 0, run = 0, px = null, py = null;
+  const win = [], need = Math.round(HZ);
+  for (let i = 0; i < n; i++) {
+    const x = MAIN.F[i * W + 2 * slot], y = MAIN.F[i * W + 2 * slot + 1];
+    if (x === ABSENT) { px = null; win.length = 0; run = 0; dist[i] = d; top[i] = tp; spr[i] = sp; continue; }
+    on[i] = 1;
+    const X = x / 10, Y = y / 10;
+    let v = 0;
+    if (px !== null) { const step = Math.hypot(X - px, Y - py); if (step < 3) { d += step; v = step * HZ * 3.6; } }
+    px = X; py = Y;
+    win.push(v); if (win.length > need) win.shift();
+    const vs = win.reduce((a, b) => a + b, 0) / win.length;
+    if (win.length === need && vs > tp) tp = vs;
+    if (vs > 25.2) { run++; if (run === need) sp++; } else run = 0;
+    dist[i] = d; spd[i] = vs; top[i] = tp; spr[i] = sp;
+  }
+  const acts = (DATA.actions || []).filter((a) => a[1] === slot).map((a) => [a[0], a[2]]);
+  return { slot, dist, spd, top, spr, on, acts, keyActs: acts.filter((a) => ACT_NAME[a[1]]) };
+}
+const focusName = () => (FOCUS ? DATA.players[FOCUS.slot].name : "");
+function renderFocusHead() {
+  const p = DATA.players[FOCUS.slot], k = kitFor(p);
+  $("focus").innerHTML = `<div class="fo-head"><b class="sh" style="background:${k.shirtHex};color:${k.numberColor}">${p.shirt}</b>
+      <span class="fo-name">${esc(p.name)}<small>${esc(p.side === "home" ? HOME.code : AWAY.code)} · ${esc(p.pos)}</small></span><span class="fo-now" id="foNow"></span>
+      <button class="fo-x" id="foX" aria-label="${esc(tr("close"))}">×</button></div>
+    <div class="fo-grid" id="foGrid"></div>
+    <div class="fo-acts"><button class="btn" id="foNext">${tr("fNext")} ▸</button><button class="btn" id="foCam" aria-pressed="${prefs.follow}">${tr("fCam")}</button><span class="fo-state" id="foState"></span></div>`;
+  $("foX").onclick = () => { prefs.player = null; if (["dist", "speed", "sprints"].includes(prefs.pin)) prefs.pin = "none"; savePrefs(); applyPrefs(); };
+  $("foCam").onclick = () => { prefs.follow = !prefs.follow; savePrefs(); $("foCam").setAttribute("aria-pressed", String(prefs.follow)); if (!desk && !replay) { auto = true; setMode("broadcast", tr("following")); } };
+  $("foNext").onclick = () => {
+    const now = liveFrame(), nx = FOCUS.keyActs.find((a) => a[0] > now + HZ);
+    if (!nx) { $("foState").textContent = tr("fNone"); return; }
+    cancelReplay(); seek(Math.max(0, nx[0] - 4 * HZ)); play(true); $("foState").textContent = "";
+  };
+}
+function updateFocusStrip() {
+  if (!FOCUS) return;
+  const i = clamp(Math.floor(liveFrame()), 0, MAIN.N - 1), f = liveFrame();
+  let touches = 0, pa = 0, pc = 0;
+  for (const [af, c] of FOCUS.acts) { if (af > f) break; if (c !== 15) touches++; if (c === 1 || c === 2 || c === 6 || c === 14) { pa++; if (c !== 2) pc++; } }
+  const cells = [[touches, "fTouches"], [`${pc}/${pa}`, "fPasses"], [fmtNum(FOCUS.dist[i] / 1000, 1), "fDist"], [fmtNum(FOCUS.top[i], 1), "fTop"], [FOCUS.spr[i], "fSprints"]];
+  const html = cells.map(([v, k]) => `<div><b>${v}</b><small>${tr(k)}</small></div>`).join("");
+  if ($("foGrid").dataset.h !== html) { $("foGrid").innerHTML = html; $("foGrid").dataset.h = html; }
+  const onPitch = FOCUS.on[i], ever = FOCUS.on.indexOf(1);
+  $("foNow").textContent = onPitch ? `${Math.round(FOCUS.spd[i])} ${tr("unitKmh")}` : "";
+  if (!onPitch) $("foState").textContent = ever > i ? tr("fBench") : tr("fOff");
+  else if ($("foState").textContent === tr("fBench") || $("foState").textContent === tr("fOff")) $("foState").textContent = "";
+}
+function focusAlerts(prev, now) {
+  if (!FOCUS || desk || replay || now <= prev || now - prev > 3 * HZ) return;
+  for (const [f, c] of FOCUS.keyActs) if (f > prev && f <= now) toast(tr("a_" + ACT_NAME[c]), clockParts(Math.floor(f)).minute);
+  const i = clamp(Math.floor(now), 0, MAIN.N - 1), tp = FOCUS.top[i];
+  if (tp >= 30 && tp > lastTopAlert + 0.8 && FOCUS.spd[i] >= tp - 0.05) { lastTopAlert = tp; toast(tr("a_sprint", { v: fmtNum(tp, 1) }), clockParts(i).minute); }
+}
+function toast(text, minute) {
+  const el = document.createElement("div"); el.className = "alert";
+  el.innerHTML = `<i>${esc(DATA.players[FOCUS.slot].short.toUpperCase())}</i><span>${esc(text)}</span><small>${esc(minute)}</small>`;
+  $("alerts").prepend(el);
+  requestAnimationFrame(() => el.classList.add("show"));
+  setTimeout(() => { el.classList.remove("show"); setTimeout(() => el.remove(), 400); }, 3600);
+  while ($("alerts").children.length > 3) $("alerts").lastChild.remove();
+}
+let MARKERS_ALL = [];
+function rebuildMarkers() {
+  const fm = FOCUS ? FOCUS.keyActs.map(([f, c]) => ({ f, minute: clockParts(Math.floor(f)).minute, type: "focus", focusAct: ACT_NAME[c] })) : [];
+  MARKERS_ALL = [...MARKERS, ...fm];
+}
+const focusCamOn = () => FOCUS && prefs.follow && FOCUS.on[clamp(Math.floor(pos), 0, MAIN.N - 1)];
+
+// ---- the Director's graphic, for this viewer's style
+let gfxTimer = 0;
+function hideGraphic() { $("gfx").classList.remove("show"); clearTimeout(gfxTimer); }
+function playerSummary(slot, f) {
+  const F2 = buildFocus(slot), i = clamp(Math.floor(f), 0, MAIN.N - 1);
+  const n = (codes) => F2.acts.filter(([af, c]) => af <= f && codes.includes(c)).length;
+  return [[tr("fTouches"), F2.acts.filter(([af, c]) => af <= f && c !== 15).length], [tr("fPasses"), `${n([1, 6, 14])}/${n([1, 2, 6, 14])}`],
+    [tr("p_shots"), n([3, 4, 5])], [tr("fDist"), `${fmtNum(F2.dist[i] / 1000, 1)} ${tr("unitKm")}`], [tr("fTop"), `${fmtNum(F2.top[i], 1)} ${tr("unitKmh")}`]];
+}
+function showGraphic(kind, sg) {
+  const el = $("gfx"), m = momentById[sg.id] || {}, x = m.x || {};
+  let html = "";
+  if (kind === "xg" && x.xg != null) {
+    html = `<div class="gk">${tr("g_xg")}</div><div class="gbig">${fmtNum(x.xg)}</div><div class="gsub">${tr("g_xgOf")}${x.distance_m ? " · " + tr("f_dist", { v: Math.round(x.distance_m) }) : ""}</div><div class="gbar"><span style="width:${Math.min(100, x.xg * 100).toFixed(0)}%"></span></div>`;
+  } else if (kind === "win_probability" || (kind === "xg" && x.xg == null)) {
+    const b = sampleAt(Math.max(0, sg.f - 3 * HZ)), a = sampleAt(Math.min(MAIN.N - 1, sg.f + 6 * HZ));
+    const row = (code, kb, c) => `<span>${code}</span><b>${fmtPct(b[K[kb]])}</b><b style="color:${c}">→ ${fmtPct(a[K[kb]])}</b>`;
+    html = `<div class="gk">${tr("g_wp")}</div><div class="gwp"><span></span><small class="arrow">${tr("g_before")}</small><small class="arrow">${tr("g_after")}</small>${row(HOME.code, "wpH", colH)}${row(AWAY.code, "wpA", colA)}</div>`;
+  } else if (kind === "player_card" && m.who?.length) {
+    const p = DATA.players.find((q) => q.short === m.who[0] || q.name.endsWith(m.who[0]));
+    if (p) html = `<div class="gk">${tr("g_card")} · ${esc(p.name)}</div><table>${playerSummary(slotById[p.id], sg.f).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="r">${v}</td></tr>`).join("")}</table>`;
+  } else if (kind === "momentum" || kind === "pass_network") {
+    const s = sampleAt(sg.f), mom = clamp(s[K.mom] / 100, -1, 1);
+    html = `<div class="gk">${tr("g_mom")}</div><div class="gbig" style="color:${mom >= 0 ? colH : colA}">${mom >= 0 ? HOME.code : AWAY.code}</div><div class="gbar"><span style="width:${(50 + mom * 50).toFixed(0)}%;background:${colH}"></span></div>`;
+  } else if (kind === "scoreboard") {
+    const s = sampleAt(Math.min(MAIN.N - 1, sg.f + 2 * HZ));
+    html = `<div class="gk">${esc(M.competition || "")}</div><div class="gbig">${HOME.code} ${s[K.goalsH]}-${s[K.goalsA]} ${AWAY.code}</div><div class="gsub">${esc(sg.minute)}</div>`;
+  }
+  if (!html) return;
+  el.innerHTML = html; el.classList.add("show");
+  clearTimeout(gfxTimer); gfxTimer = setTimeout(hideGraphic, 12000);
+}
+// Academy: the decision, drawn from the stats layer's options tool (teammates' space, pass odds, xG from their spot)
+function decisionShapes(dec) {
+  if (!dec) return [];
+  const [fx, fy] = dec.from, gx = fx < 52.5 ? 0 : 105, b = dec.best, shotLabel = tr("dec_shot", { x: fmtNum(dec.choice.xg ?? 0) });
+  return [
+    Math.hypot(gx - fx, 34 - fy) > 6 ? { kind: "arrow", color: dec.better ? "muted" : "good", label: shotLabel, x: fx, y: fy, x2: gx, y2: 34 }
+      : { kind: "ring", color: dec.better ? "muted" : "good", label: shotLabel, x: fx, y: fy, r: 1.6 },
+    { kind: "run", color: dec.better ? "good" : "muted", label: tr("dec_pass", { n: b.name, pc: fmtPct(b.p_complete), x: fmtNum(b.xg_from_there) }), x: fx, y: fy, x2: b.at[0], y2: b.at[1] },
+    { kind: "ring", color: dec.better ? "good" : "muted", label: null, x: b.at[0], y: b.at[1], r: 1.4 },
+  ];
+}
+function showDecisionCard(dec) {
+  const el = $("gfx"), b = dec.best;
+  el.innerHTML = `<div class="gk">${tr("coaching")} · ${tr("dec_h")}</div><table>
+    <tr><td>${esc(dec.player)}</td><td class="r">${tr("dec_shot", { x: fmtNum(dec.choice.xg ?? 0) })}</td></tr>
+    <tr><td>${esc(b.name)}</td><td class="r">${fmtPct(b.p_complete)} · ${fmtNum(b.xg_from_there)} xG</td></tr></table>
+    <div class="gverdict ${dec.better ? "better" : "good"}">${dec.better ? `${tr("dec_better")}: ${esc(b.name)}` : `✓ ${tr("dec_right")}`}</div>`;
+  el.classList.add("show"); clearTimeout(gfxTimer); gfxTimer = setTimeout(hideGraphic, 9000);
+}
+
+// ---- Tactician: both teams' back lines and the space between their lines, drawn live on the pitch
+const shapeGroup = new THREE.Group(); scene.add(shapeGroup);
+const shapeParts = [0, 1].map((side) => {
+  const col = side === 0 ? colH : colA;
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 68), flatMat(col, 0.9)); back.rotation.x = -Math.PI / 2;
+  const front = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 68), flatMat(col, 0.55)); front.rotation.x = -Math.PI / 2;
+  const band = new THREE.Mesh(new THREE.PlaneGeometry(1, 68), flatMat(col, 0.07)); band.rotation.x = -Math.PI / 2;
+  for (const m of [back, front, band]) { m.position.y = 0.025 + side * 0.003; m.renderOrder = 3; shapeGroup.add(m); }
+  return { back, front, band };
+});
+shapeGroup.visible = false;
+let shapeForced = false, compact = [0, 0];
+function showShape(on) { shapeForced = on; }
+function updateShape(f, ghostActive) {
+  const on = !ghostActive && (shapeForced || (prefs.style === "tactician" && !desk && !replay));
+  shapeGroup.visible = on;
+  if (!on) return;
+  for (const side of [0, 1]) {
+    const dir = attackDir(side, f), xs = [];
+    for (let s = 0; s < NP; s++) { const g = players[s]; if (!g.visible || DATA.players[s].gk || (DATA.players[s].side === "home" ? 0 : 1) !== side) continue; xs.push(g.position.x * dir); }
+    if (xs.length < 6) { shapeParts[side].back.visible = shapeParts[side].front.visible = shapeParts[side].band.visible = false; continue; }
+    xs.sort((a, b) => a - b);
+    const back = xs.slice(0, 4).reduce((a, b) => a + b, 0) / 4 * dir, front = xs.slice(-2).reduce((a, b) => a + b, 0) / 2 * dir;
+    const P = shapeParts[side];
+    P.back.visible = P.front.visible = P.band.visible = true;
+    P.back.position.x = back; P.front.position.x = front;
+    P.band.position.x = (back + front) / 2; P.band.scale.x = Math.max(0.5, Math.abs(front - back));
+    compact[side] = Math.abs(front - back);
+  }
+}
+
+// ---- Analyst: every shot's xG pops up where it was struck
+const SHOT_XG = DATA.shotXg || [];
+const pops = [];
+function addPop(row, xg) {
+  const el = document.createElement("div"); el.className = "pop"; el.textContent = `xG ${fmtNum(xg)}`;
+  $("tags").appendChild(el); pops.push({ el, x: wx(row[1]), z: wz(row[2]), t0: realTime });
+}
+function updatePops() {
+  const w = renderer.domElement.clientWidth, h = renderer.domElement.clientHeight;
+  for (let i = pops.length - 1; i >= 0; i--) {
+    const p = pops[i], age = realTime - p.t0;
+    if (age > 3.2) { p.el.remove(); pops.splice(i, 1); continue; }
+    v3.set(p.x, 1.6, p.z).project(camera);
+    p.el.style.left = `${(v3.x * 0.5 + 0.5) * w}px`; p.el.style.top = `${(-v3.y * 0.5 + 0.5) * h}px`;
+    p.el.style.opacity = String(v3.z < 1 ? clamp(Math.min(age * 4, (3.2 - age) * 2), 0, 1) : 0);
+  }
+}
+function shotPops(prev, now) {
+  if (prefs.style !== "analyst" || desk || now <= prev || now - prev > 3 * HZ) return;
+  (DATA.shots || []).forEach((r, k) => { if (r[0] > prev && r[0] <= now && SHOT_XG[k] != null) addPop(r, SHOT_XG[k]); });
+}
+
+// ---- your club scores (or concedes)
+function celebrate(m) {
+  const team = clubTeam(); if (!team) return;
+  const mine = m.side === prefs.club, el = $("celebrate");
+  el.className = "celebrate" + (mine ? "" : " against");
+  el.style.setProperty("--cel-c", mine ? team.colors.primary : "#0b1220");
+  el.innerHTML = `<div class="cb"></div><b>${mine ? esc(tr("w_goal")) : esc(mTitle(m))}</b>${mine && m.who?.[0] ? `<small>${esc(m.who[0])}</small>` : ""}`;
+  void el.offsetWidth; el.classList.add("run");
+  if (mine) excite = 1.4;
+}
+
+// ---- safety net: a bad value must never leave the broadcast broken. If the camera or a player ever ends up with a
+// non-finite transform, reset it instead of letting smoothing carry the bad value forever.
+const finite3 = (v) => Number.isFinite(v.x) && Number.isFinite(v.y) && Number.isFinite(v.z);
+let healTick = 0;
+function healCamera(t) {
+  GFX.heals++;
+  fx.snap(Number.isFinite(ball.position.x) ? ball.position.x : 0); fz.snap(Number.isFinite(ball.position.z) ? ball.position.z : 0);
+  fovD.snap(30); headD.snap(0); blend = null; cutNext = true; snapNext = true;
+  cb.set(fx.v, 0, fz.v); desired(mode, t, want, 0.016, true);
+  if (!finite3(want.pos) || !finite3(want.tgt)) { mode = "broadcast"; desired(mode, t, want, 0.016, true); }
+  cam.pos.copy(want.pos); cam.tgt.copy(want.tgt); cam.fov = Number.isFinite(want.fov) ? want.fov : 30;
+}
+function healPlayers() {
+  for (let s = 0; s < NP; s++) {
+    const g = players[s]; if (!g.visible) continue;
+    let ok = true; g.traverse((o) => { if (ok && !o.matrixWorld.elements.every(Number.isFinite)) ok = false; });
+    if (ok) continue;
+    GFX.rebuilt++;
+    scene.remove(g);
+    const fresh = buildPlayer(DATA.players[s], s); scene.add(fresh); players[s] = fresh;
+    fresh.userData.clean.visible = figureStyle === "clean"; fresh.userData.man.visible = figureStyle === "mannequin";
+  }
+}
+// ?debug: frame rate, draw calls, GPU objects and any resets, for diagnosing a viewer's machine
+const DEBUG = /debug/.test(location.search);
+let dbgEl = null, dbgFps = 60;
+function showDebug(dt) {
+  if (!dbgEl) { dbgEl = document.createElement("div"); dbgEl.style.cssText = "position:fixed;z-index:9;left:50%;bottom:4px;transform:translateX(-50%);font:600 11px/1.3 ui-monospace,monospace;background:rgba(0,0,0,.75);color:#9fe;padding:4px 8px;border-radius:6px;pointer-events:none;white-space:nowrap"; document.body.appendChild(dbgEl); }
+  dbgFps = lerp(dbgFps, 1 / Math.max(dt, 1e-3), 0.3);
+  const m = renderer.info.memory, r = renderer.info.render, gl = renderer.getContext();
+  dbgEl.textContent = `${dbgFps.toFixed(0)} fps · ${r.calls} calls · ${(r.triangles / 1000).toFixed(0)}k tris · geo ${m.geometries} tex ${m.textures} · ctx lost ${GFX.lost}/${GFX.restored}${gl.isContextLost() ? " (LOST)" : ""} · cam heals ${GFX.heals} · player resets ${GFX.rebuilt} · ${mode}`;
+}
 
 // ---------------------------------------------------------------- loop
 function resize() {
@@ -2307,13 +3418,14 @@ function frame(ts) {
   if (!replay && !desk && playing && pos > prev && !snapNext) {
     for (const m of DATA.moments) if (m.f > prev && m.f <= pos) {
       const sg = segById[m.id];
-      if (m.type === "goal") excite = 1;
+      if (m.type === "goal") { excite = 1; if (speed <= 5) setTimeout(() => celebrate(m), 700); }
       if (sg && auto && speed <= 5) { setTimeout(() => startDesk(sg), m.type === "goal" ? 1400 : 600); continue; }
       if (m.importance < 0.5) continue;
       showLower(m);
       if (auto && speed <= 5 && (m.type === "goal" || ((m.type === "big_chance" || m.type === "great_save") && m.importance >= 0.6))) setTimeout(() => startReplay(m), m.type === "goal" ? 2600 : 1400);
     }
   }
+  if (playing && !replay && !desk && !snapNext) { focusAlerts(prev, pos); shotPops(prev, pos); }
   excite = Math.max(0, excite - dt * 0.12);
   crowd.uniforms.uTime.value = realTime; crowd.uniforms.uExcite.value = excite;
   for (const t of ledBoards) t.offset.x = (t.offset.x + dt * 0.03) % 1;
@@ -2321,7 +3433,7 @@ function frame(ts) {
   const gs = desk && desk.gsrc ? desk.gsrc : null, rt = gs ? desk.gt : pos;
   if (gs) useSource(gs);
   updatePlayers(rt, gs ? (desk.gt - desk.gtPrev) / HZ : dtMatch, dt, snapNext);
-  updateTele(); updateArcs(); drawFan();
+  updateTele(); updateArcs(); drawFan(); updateShape(rt, !!gs);
   // camera
   if (auto && !replay && !desk) liveDirector(pos);
   const snapCam = snapNext || cutNext;
@@ -2334,17 +3446,43 @@ function frame(ts) {
     if (blend) { const k = ease(clamp((realTime - blend.t0) / 1.1, 0, 1)); cam.pos.lerpVectors(blend.pos, want.pos, k); cam.tgt.lerpVectors(blend.tgt, want.tgt, k); if (k >= 1) blend = null; }
     else { cam.pos.copy(want.pos); cam.tgt.copy(want.tgt); }
   }
+  if (!finite3(cam.pos) || !finite3(cam.tgt) || !Number.isFinite(cam.fov)) healCamera(rt);
   camera.position.copy(cam.pos); camera.lookAt(cam.tgt); camera.fov = cam.fov; camera.updateProjectionMatrix();
   snapNext = false;
   renderer.render(scene, camera);
-  updateTags(rt);
+  updateTags(rt); updatePops();
+  if (++healTick % 30 === 0) healPlayers();
   if (gs) useSource(MAIN);
-  if (Math.floor(realTime * 10) !== tlTick) { tlTick = Math.floor(realTime * 10); updateHud(); drawTimeline(); scrub.value = String(Math.floor(liveFrame())); syncCam(); }
+  if (DEBUG && healTick % 15 === 0) showDebug(dt);
+  if (Math.floor(realTime * 10) !== tlTick) { tlTick = Math.floor(realTime * 10); updateHud(); drawTimeline(); scrub.value = String(Math.floor(liveFrame())); syncCam(); updateFocusStrip(); if (FOCUS && tlTick % 5 === 0) updatePin(); }
 }
-resize(); play(false); seek(0); updateHud();
+applyPrefs(); resize(); play(false); seek(0); updateHud();
+if (!prefs.seen && !/nopanel/.test(location.search)) setTimeout(() => showYB(true), 600);
+if (/club/.test(location.hash)) setTimeout(() => showClub(true), 400);
+if (DATA.hub) { const h = $("hubBtn"); h.hidden = false; h.href = DATA.hub; }   // opened from the season hub's "Try him out"
 requestAnimationFrame(frame);
 setTimeout(() => $("loading").classList.add("done"), 150);
-window.__broadcast = { shots: DATA.shots, follow: (k) => { followSlot = k; }, seek, play, setMode, get pos() { return pos; }, setStyle: (s) => { figureStyle = s; applyStyle(); syncStyle(); }, startReplay, moments: DATA.moments, setAuto: (a) => { auto = a; }, segments: SEGS, startDesk, get desk() { return desk; }, deskNext: () => { if (desk && !desk.wiping) nextDeskStep(); }, forceArcs: () => { if (arcs) arcs.t0 = -100; },
+window.__broadcast = { gfx: GFX, simulate: (a, b, rate = 1, fps = 60) => {     // play [a, b) without drawing; report the first non-finite value
+    const fin = (v) => Number.isFinite(v.x) && Number.isFinite(v.y) && Number.isFinite(v.z);
+    let t = a, steps = 0; const dtR = 1 / fps;
+    while (t < b) {
+      const nt = Math.min(b, t + dtR * HZ * rate); pos = nt; realTime += dtR; updatePlayers(nt, (nt - t) / HZ, dtR, false);
+      if (auto && !replay && !desk) liveDirector(nt);
+      updateFocus(nt, dtR, false); if (mode === "sweep") sweepAngle += dtR * 0.13; desired(mode, nt, want, dtR, false);
+      cam.fov = fovD.to(want.fov, 1.1, dtR);
+      if (blend) { const k = ease(clamp((realTime - blend.t0) / 1.1, 0, 1)); cam.pos.lerpVectors(blend.pos, want.pos, k); cam.tgt.lerpVectors(blend.tgt, want.tgt, k); if (k >= 1) blend = null; } else { cam.pos.copy(want.pos); cam.tgt.copy(want.tgt); }
+      if (!fin(cam.pos) || !fin(cam.tgt) || !Number.isFinite(cam.fov)) return { t, what: "camera", mode, want: [want.pos.toArray(), want.tgt.toArray(), want.fov], steps };
+      t = nt; steps++;
+      if (steps % 4 === 0 || t >= b) {
+        scene.updateMatrixWorld();
+        if (!fin(ball.position)) return { t, what: "ball", steps };
+        if (!Number.isFinite(fx.v) || !Number.isFinite(fz.v)) return { t, what: "camera focus", steps };
+        for (let s = 0; s < NP; s++) { let ok = true; players[s].traverse((o) => { if (ok && !o.matrixWorld.elements.every(Number.isFinite)) ok = false; }); if (!ok) return { t, what: "player", slot: s, name: DATA.players[s].name, steps }; }
+      }
+    }
+    return { ok: true, steps };
+  }, health: () => { let bad = 0, badSlots = []; players.forEach((g, i) => { let ok = true; g.traverse((o) => { if (!o.matrixWorld.elements.every(Number.isFinite)) ok = false; }); if (!ok) { bad++; badSlots.push(i); } });
+    return { cam: camera.position.toArray().map((v) => +v.toFixed(2)), tgt: cam.tgt.toArray().map((v) => +v.toFixed(2)), fov: +camera.fov.toFixed(1), mode, pos, bad, badSlots: badSlots.slice(0, 6), ball: ball.position.toArray().map((v) => +v.toFixed(2)), mem: { ...renderer.info.memory, programs: renderer.info.programs?.length, calls: renderer.info.render.calls, tris: renderer.info.render.triangles }, dom: document.getElementsByTagName('*').length }; }, celebrate: (i) => celebrate(DATA.moments.filter((m) => m.type === "goal")[i]), prefs, setPrefs: (o) => { Object.assign(prefs, o); savePrefs(); applyPrefs(); }, showYB, variantOf, shots: DATA.shots, follow: (k) => { followSlot = k; }, seek, play, setMode, get pos() { return pos; }, setStyle: (s) => { figureStyle = s; applyStyle(); syncStyle(); }, startReplay, moments: DATA.moments, setAuto: (a) => { auto = a; }, segments: SEGS, startDesk, get desk() { return desk; }, deskNext: () => { if (desk && !desk.wiping) nextDeskStep(); }, forceArcs: () => { if (arcs) arcs.t0 = -100; },
   setEnd: (e) => { end = e; }, get skipRate() { return skipRate; },
   debugCam: (p, q, fov) => { dbgCam.pos.set(...p); dbgCam.tgt.set(...q); dbgCam.fov = fov || 40; auto = false; mode = "debug"; cutNext = true; }, get flights() { return FLIGHTS; }, get shotsLive() { return SHOTS; },
   probe: (t) => { updatePlayers(t, 0, 1 / 60, true); return { ball: [ball.position.x, ball.position.y, ball.position.z], players: players.map((g) => [g.position.x, g.position.z, g.visible, g.userData.heading]) }; } };

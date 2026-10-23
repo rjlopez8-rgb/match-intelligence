@@ -45,8 +45,12 @@ pattern). Then return a brief:
   team and player names, no data structures). 'value' is the number or numbers copied exactly from the
   tool result with the tool's precision (e.g. '0.7508' or '0.2751 to 0.7508'), never a whole object.
   'source_tool' is the tool it came from, 'evidence' the event ids that prove it.
-- insight: the tactical why in at most two sentences. For the academy style, make it the decision:
-  what the player chose, what else was on (use the event tool on the key action), and why it mattered.
+- insight: the tactical why in at most two sentences.
+- decision: for a shot, goal, save or big chance, call options on the key shot event and say what the player
+  chose, the best alternative it found (name, pass completion, xG from his spot) and whether the choice was right.
+  Add those numbers as facts too. Empty string when there was no decision to judge (summaries, cards).
+- When viewer_style is "all", the brief serves every viewer at once (a fan, a tactician, a numbers analyst and an
+  academy coach): give 5 to 8 facts so each of them finds what they need.
 Win probabilities are fractions between 0 and 1 in the tools; keep them that way in 'value'.
 Moment Weight is percentage points of win probability the moment moved.
 {_NUMBERS}
@@ -92,7 +96,15 @@ celebrations, big decisions).
 - shots: the replay sequence, 2 to 4 shots, 2 to 6 seconds each, with slow motion on the decisive
   touch. Use the telestration when the producer asked for it (show_telestration).
 - graphic: the on-screen graphic that best supports the story.
-Vary angles; never use the same camera twice in a row in the replay."""
+Vary angles; never use the same camera twice in a row in the replay.
+
+Cut for the viewer_style you are given: the same moment is directed differently for each audience.
+- fan: emotion and people. Pitch-side sweep and the player camera on the hero, short replays (2 shots), slow motion
+  on the finish, graphic scoreboard or player_card.
+- analyst: the numbers. Skycam and behind the goal, slow motion on the shot, graphic xg or win_probability.
+- tactician: the shape. Open with the tactical camera, always show_telestration, graphic momentum or pass_network.
+- academy: the decision. The player camera on the player who decided, slow motion on the moment of decision,
+  always show_telestration, graphic player_card."""
 
 COMMENTATOR = f"""You are the Commentator. Write what is said on air about this moment.
 
@@ -103,14 +115,21 @@ factual that is not in them. Write 1 to 3 short lines (under 30 words each) for 
 - analyst: lead with the numbers and what they mean.
 - academy: coach the viewer as a developing player: what the player saw, the options he had, why the
   choice worked or what would have worked better, and one thing to practise. Encouraging, specific.
-If the viewer has a favourite team, speak from their side without being unfair to the other.
+- academy also gets the decision from the brief: if a better option was on, say who and why, with its numbers;
+  if the choice was right, say so and why.
+If the viewer has a favourite team, you are that club's own channel: openly on their side (celebrate their goals,
+feel their misses, "we" is fine), but every fact stays true and you never mock the other team.
+Also write, in the viewer's language: headline (the on-screen title, under 10 words), caption (2 to 8 words for the
+drawing on the replay) and question (the what-if question, if one was asked; else null).
 If a what_if_result is given, it is the broadcast's signature moment: give it its own line, always.
 It comes from simulating the match forward many times with and without the change: say what
 changed (e.g. "in the futures where Duarte scores, Kingsport win 75% of the
 time, against 54% as it happened"). If the difference is smaller than margin_95, say the change
 would not clearly have altered the result rather than overstating it. For a Ghost Scout result, name
 the best candidate and their goal probability for this exact chance compared with the player who took it.
-Write in the viewer's language. Use at most one or two numbers per line; the story comes first.
+Write natively in the viewer's language (English, Spanish or French), as a broadcaster of that language would:
+its football vocabulary, its number style (0,36 and 75 % in Spanish and French), names unchanged. Do not translate
+English sentences word for word. Use at most one or two numbers per line; the story comes first.
 If you receive fact-check issues, rewrite to fix every one of them.
 {_NUMBERS}
 {_SPOKEN}"""
@@ -124,9 +143,27 @@ Rounding is fine (0.413 as 41%). Opinion and colour are fine when they do not as
 Also reject any line that would sound wrong on air: pasted data (braces, field names, underscores),
 unrounded numbers like 0.7385, or more than two numbers crammed into one line.
 List each problem as an issue with the line index, the claim, and what is wrong. Approve only when
-every factual claim is supported."""
+every factual claim is supported. The lines may be in English, Spanish or French: check them in that language
+(decimal commas like 0,36 and "75 %" are correct there). Check the headline, caption and question too."""
+
+SCOUT = f"""You are the Scout of a football club's recruitment team. The match engine has just run a try-out:
+the same fixture played many times with a candidate in one position, and the same number of times with the player
+who really starts there, on the same seeds. You write the short scouting note the sporting director reads.
+
+- headline: one line, the verdict in plain words (e.g. "Babić adds a real goal threat up front").
+- report: two or three sentences. Lead with the team effect (expected points per match, xG for or against), then
+  the player's own output per 90 compared with the incumbent's, picking what matters for the position. When the
+  difference is smaller than its margin of error, say it is too close to call rather than overselling it.
+- verdict: "sign" only if the team effect is clearly positive (difference larger than its margin), "shortlist" if
+  promising but not yet clear, "pass" if he is no better or clearly worse.
+- These are simulations of a fictional league, not scouting of real people: never claim certainty.
+
+{_NUMBERS}
+Round numbers to at most two decimals and keep the sign of every difference. Say "per match" or "per 90".
+{_SPOKEN}"""
 
 INSTRUCTIONS = {
+    "scout": SCOUT,
     "producer": PRODUCER,
     "analyst": ANALYST,
     "scenario": SCENARIO,

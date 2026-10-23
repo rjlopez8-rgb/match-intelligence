@@ -1,0 +1,690 @@
+{
+ "competition": "Meridian League",
+ "season": "2026/27",
+ "engine": "1.0.0",
+ "clubs": [
+  "RIV",
+  "KIN",
+  "ASH",
+  "NGC",
+  "WES",
+  "CRW",
+  "SAL",
+  "ELM"
+ ],
+ "matches": [
+  {
+   "matchday": 1,
+   "date": "2026-09-12",
+   "home": "ASH",
+   "away": "CRW",
+   "seed": 20262702,
+   "match_id": "md01-ash-crw",
+   "score": {
+    "home": 1,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 1,
+   "date": "2026-09-12",
+   "home": "RIV",
+   "away": "ELM",
+   "seed": 20262700,
+   "match_id": "md01-riv-elm",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 1,
+   "date": "2026-09-12",
+   "home": "SAL",
+   "away": "KIN",
+   "seed": 20262701,
+   "match_id": "md01-sal-kin",
+   "score": {
+    "home": 0,
+    "away": 3
+   }
+  },
+  {
+   "matchday": 1,
+   "date": "2026-09-12",
+   "home": "WES",
+   "away": "NGC",
+   "seed": 20262703,
+   "match_id": "md01-wes-ngc",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 2,
+   "date": "2026-09-19",
+   "home": "ASH",
+   "away": "NGC",
+   "seed": 20262707,
+   "match_id": "md02-ash-ngc",
+   "score": {
+    "home": 0,
+    "away": 3
+   }
+  },
+  {
+   "matchday": 2,
+   "date": "2026-09-19",
+   "home": "ELM",
+   "away": "CRW",
+   "seed": 20262705,
+   "match_id": "md02-elm-crw",
+   "score": {
+    "home": 0,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 2,
+   "date": "2026-09-19",
+   "home": "SAL",
+   "away": "RIV",
+   "seed": 20262704,
+   "match_id": "md02-sal-riv",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 2,
+   "date": "2026-09-19",
+   "home": "WES",
+   "away": "KIN",
+   "seed": 20262706,
+   "match_id": "md02-wes-kin",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 3,
+   "date": "2026-09-26",
+   "home": "ASH",
+   "away": "KIN",
+   "seed": 20262711,
+   "match_id": "md03-ash-kin",
+   "score": {
+    "home": 0,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 3,
+   "date": "2026-09-26",
+   "home": "ELM",
+   "away": "NGC",
+   "seed": 20262710,
+   "match_id": "md03-elm-ngc",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 3,
+   "date": "2026-09-26",
+   "home": "RIV",
+   "away": "CRW",
+   "seed": 20262708,
+   "match_id": "md03-riv-crw",
+   "score": {
+    "home": 2,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 3,
+   "date": "2026-09-26",
+   "home": "WES",
+   "away": "SAL",
+   "seed": 20262709,
+   "match_id": "md03-wes-sal",
+   "score": {
+    "home": 1,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 4,
+   "date": "2026-10-03",
+   "home": "ASH",
+   "away": "SAL",
+   "seed": 20262714,
+   "match_id": "md04-ash-sal",
+   "score": {
+    "home": 1,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 4,
+   "date": "2026-10-03",
+   "home": "CRW",
+   "away": "NGC",
+   "seed": 20262713,
+   "match_id": "md04-crw-ngc",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 4,
+   "date": "2026-10-03",
+   "home": "ELM",
+   "away": "KIN",
+   "seed": 20262715,
+   "match_id": "md04-elm-kin",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 4,
+   "date": "2026-10-03",
+   "home": "WES",
+   "away": "RIV",
+   "seed": 20262712,
+   "match_id": "md04-wes-riv",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 5,
+   "date": "2026-10-10",
+   "home": "ASH",
+   "away": "WES",
+   "seed": 20262717,
+   "match_id": "md05-ash-wes",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 5,
+   "date": "2026-10-10",
+   "home": "CRW",
+   "away": "KIN",
+   "seed": 20262718,
+   "match_id": "md05-crw-kin",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 5,
+   "date": "2026-10-10",
+   "home": "ELM",
+   "away": "SAL",
+   "seed": 20262719,
+   "match_id": "md05-elm-sal",
+   "score": {
+    "home": 2,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 5,
+   "date": "2026-10-10",
+   "home": "RIV",
+   "away": "NGC",
+   "seed": 20262716,
+   "match_id": "md05-riv-ngc",
+   "score": {
+    "home": 2,
+    "away": 4
+   }
+  },
+  {
+   "matchday": 6,
+   "date": "2026-10-17",
+   "home": "ASH",
+   "away": "RIV",
+   "seed": 20262720,
+   "match_id": "md06-ash-riv",
+   "score": {
+    "home": 0,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 6,
+   "date": "2026-10-17",
+   "home": "CRW",
+   "away": "SAL",
+   "seed": 20262723,
+   "match_id": "md06-crw-sal",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 6,
+   "date": "2026-10-17",
+   "home": "ELM",
+   "away": "WES",
+   "seed": 20262722,
+   "match_id": "md06-elm-wes",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 6,
+   "date": "2026-10-17",
+   "home": "NGC",
+   "away": "KIN",
+   "seed": 20262721,
+   "match_id": "md06-ngc-kin",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 7,
+   "date": "2026-10-24",
+   "home": "CRW",
+   "away": "WES",
+   "seed": 20262727,
+   "match_id": "md07-crw-wes",
+   "score": {
+    "home": 1,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 7,
+   "date": "2026-10-24",
+   "home": "ELM",
+   "away": "ASH",
+   "seed": 20262725,
+   "match_id": "md07-elm-ash",
+   "score": {
+    "home": 1,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 7,
+   "date": "2026-10-24",
+   "home": "NGC",
+   "away": "SAL",
+   "seed": 20262726,
+   "match_id": "md07-ngc-sal",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 7,
+   "date": "2026-10-24",
+   "home": "RIV",
+   "away": "KIN",
+   "seed": 20262724,
+   "match_id": "riv-kin-1119",
+   "demo": true,
+   "score": {
+    "home": 1,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 8,
+   "date": "2026-10-31",
+   "home": "CRW",
+   "away": "ASH",
+   "seed": 20262730,
+   "match_id": "md08-crw-ash",
+   "score": {
+    "home": 1,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 8,
+   "date": "2026-10-31",
+   "home": "ELM",
+   "away": "RIV",
+   "seed": 20262728,
+   "match_id": "md08-elm-riv",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 8,
+   "date": "2026-10-31",
+   "home": "KIN",
+   "away": "SAL",
+   "seed": 20262729,
+   "match_id": "md08-kin-sal",
+   "score": {
+    "home": 4,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 8,
+   "date": "2026-10-31",
+   "home": "NGC",
+   "away": "WES",
+   "seed": 20262731,
+   "match_id": "md08-ngc-wes",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 9,
+   "date": "2026-11-07",
+   "home": "CRW",
+   "away": "ELM",
+   "seed": 20262733,
+   "match_id": "md09-crw-elm",
+   "score": {
+    "home": 1,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 9,
+   "date": "2026-11-07",
+   "home": "KIN",
+   "away": "WES",
+   "seed": 20262734,
+   "match_id": "md09-kin-wes",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 9,
+   "date": "2026-11-07",
+   "home": "NGC",
+   "away": "ASH",
+   "seed": 20262735,
+   "match_id": "md09-ngc-ash",
+   "score": {
+    "home": 1,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 9,
+   "date": "2026-11-07",
+   "home": "RIV",
+   "away": "SAL",
+   "seed": 20262732,
+   "match_id": "md09-riv-sal",
+   "score": {
+    "home": 0,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 10,
+   "date": "2026-11-14",
+   "home": "CRW",
+   "away": "RIV",
+   "seed": 20262736,
+   "match_id": "md10-crw-riv",
+   "score": {
+    "home": 0,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 10,
+   "date": "2026-11-14",
+   "home": "KIN",
+   "away": "ASH",
+   "seed": 20262739,
+   "match_id": "md10-kin-ash",
+   "score": {
+    "home": 3,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 10,
+   "date": "2026-11-14",
+   "home": "NGC",
+   "away": "ELM",
+   "seed": 20262738,
+   "match_id": "md10-ngc-elm",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 10,
+   "date": "2026-11-14",
+   "home": "SAL",
+   "away": "WES",
+   "seed": 20262737,
+   "match_id": "md10-sal-wes",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 11,
+   "date": "2026-11-21",
+   "home": "KIN",
+   "away": "ELM",
+   "seed": 20262743,
+   "match_id": "md11-kin-elm",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 11,
+   "date": "2026-11-21",
+   "home": "NGC",
+   "away": "CRW",
+   "seed": 20262741,
+   "match_id": "md11-ngc-crw",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 11,
+   "date": "2026-11-21",
+   "home": "RIV",
+   "away": "WES",
+   "seed": 20262740,
+   "match_id": "md11-riv-wes",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 11,
+   "date": "2026-11-21",
+   "home": "SAL",
+   "away": "ASH",
+   "seed": 20262742,
+   "match_id": "md11-sal-ash",
+   "score": {
+    "home": 1,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 12,
+   "date": "2026-11-28",
+   "home": "KIN",
+   "away": "CRW",
+   "seed": 20262746,
+   "match_id": "md12-kin-crw",
+   "score": {
+    "home": 0,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 12,
+   "date": "2026-11-28",
+   "home": "NGC",
+   "away": "RIV",
+   "seed": 20262744,
+   "match_id": "md12-ngc-riv",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 12,
+   "date": "2026-11-28",
+   "home": "SAL",
+   "away": "ELM",
+   "seed": 20262747,
+   "match_id": "md12-sal-elm",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 12,
+   "date": "2026-11-28",
+   "home": "WES",
+   "away": "ASH",
+   "seed": 20262745,
+   "match_id": "md12-wes-ash",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 13,
+   "date": "2026-12-05",
+   "home": "KIN",
+   "away": "NGC",
+   "seed": 20262749,
+   "match_id": "md13-kin-ngc",
+   "score": {
+    "home": 2,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 13,
+   "date": "2026-12-05",
+   "home": "RIV",
+   "away": "ASH",
+   "seed": 20262748,
+   "match_id": "md13-riv-ash",
+   "score": {
+    "home": 2,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 13,
+   "date": "2026-12-05",
+   "home": "SAL",
+   "away": "CRW",
+   "seed": 20262751,
+   "match_id": "md13-sal-crw",
+   "score": {
+    "home": 1,
+    "away": 2
+   }
+  },
+  {
+   "matchday": 13,
+   "date": "2026-12-05",
+   "home": "WES",
+   "away": "ELM",
+   "seed": 20262750,
+   "match_id": "md13-wes-elm",
+   "score": {
+    "home": 3,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 14,
+   "date": "2026-12-12",
+   "home": "ASH",
+   "away": "ELM",
+   "seed": 20262753,
+   "match_id": "md14-ash-elm",
+   "score": {
+    "home": 4,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 14,
+   "date": "2026-12-12",
+   "home": "KIN",
+   "away": "RIV",
+   "seed": 20262752,
+   "match_id": "md14-kin-riv",
+   "score": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  {
+   "matchday": 14,
+   "date": "2026-12-12",
+   "home": "SAL",
+   "away": "NGC",
+   "seed": 20262754,
+   "match_id": "md14-sal-ngc",
+   "score": {
+    "home": 0,
+    "away": 1
+   }
+  },
+  {
+   "matchday": 14,
+   "date": "2026-12-12",
+   "home": "WES",
+   "away": "CRW",
+   "seed": 20262755,
+   "match_id": "md14-wes-crw",
+   "score": {
+    "home": 2,
+    "away": 2
+   }
+  }
+ ]
+}
