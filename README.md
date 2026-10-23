@@ -37,7 +37,8 @@ stats/       live statistics, models, key moments, agent tools and the 3D viewer
 agents/      the seven-agent broadcast desk on Microsoft Foundry (Python package `matchagents`)
 data/sample/ one complete simulated match (events, 5 Hz tracking, metadata, summary), used by the tests
 data/demo/   the demo match (Riverside 1-2 Kingsport, seed 1119) with its ghost checkpoints and Club mode try-outs
-data/season/ the simulated 2026/27 season: 56 small match bundles (events + box score, no tracking) and season.json
+data/season/ the simulated 2026/27 season: 56 small match bundles (events + box score, no tracking) and season.json;
+             `matchengine season --tracking` re-plays them with tracking for the 3D site
 docs/        event schema, JSON Schemas, engine calibration, model accuracy report, project status
 ```
 
@@ -83,12 +84,22 @@ rest and never pays twice for a finished edition. Links can preset the edition: 
 ```
 cd engine
 matchengine season --out ../data/season --demo ../data/demo/riv-kin-1119   # 56 matches, ~30-60 min, no AI, $0
+# 3D for every match: re-play each one on its seed with tracking (~5 MB a match, kept out of git in data/matches/).
+# Every match is checked event for event against the committed season; any difference stops the run.
+matchengine season --out ../data/season --demo ../data/demo/riv-kin-1119 --tracking ../data/matches/season   # ~15-30 min
 
 cd ../agents
-matchagents site --season ../data/season --demo ../data/demo/riv-kin-1119 --segments editions-live.json --out ../site
-# site/index.html: league table (actual and expected), points race, results by matchday, match reports with the
-# win-probability story, player standings and pages, clubs; the demo match opens the 3D broadcast with the AI desk
+matchagents site --season ../data/season --demo ../data/demo/riv-kin-1119 --segments editions-live.json --tracking ../data/matches/season --out ../site
+cd ../site && python -m http.server 8000      # open http://localhost:8000
 ```
+
+`site/index.html` is the hub: league table (actual and expected), points race, results by matchday, match reports with
+the win-probability story, player standings and pages, clubs. Every match has **3D highlights** (its goals, saves and
+chances back to back, each clip named by a wipe), and each matchday's **match of the week** (the one whose result swung
+most) can be watched in full. The demo match is MD7's pick and carries the AI desk and Club mode. All of it plays in one
+shared page, `watch.html?m=<match id>&v=hl|full`, which loads `matches/<id>.hl.json` or `.full.json`; the whole site is
+about 100 MB, under the 250 MB Static Web Apps limit. Serve the folder over HTTP (as above) rather than opening the
+file directly, because the page fetches its match.
 
 ### Club mode (player try-outs)
 

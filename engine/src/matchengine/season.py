@@ -25,6 +25,7 @@ from .summary import build_summary
 
 SEASON = "2026/27"
 SEASON_SEED = 202627
+TRACKING_HZ = 5   # what the 3D viewer plays (the demo match is recorded at 5 Hz too)
 
 
 def fixtures(codes: list[str]) -> list[tuple[int, str, str]]:
@@ -80,6 +81,71 @@ def _play(args: tuple) -> dict:
     return {**fx, "score": {"home": eng.teams[0].score, "away": eng.teams[1].score}}
 
 
+class SeasonMismatch(RuntimeError):
+    """A re-played match did not reproduce the committed season (different engine, numpy or platform)."""
+
+
+def _replay_with_tracking(args: tuple) -> dict:
+    """Play one season fixture again on its seed with tracking on, and check it is the same match, event for event."""
+    fx, root, out_root = args
+    from .io import write_bundle
+
+    cfg = MatchConfig(home=get_club(fx["home"]), away=get_club(fx["away"]), seed=fx["seed"], match_id=fx["match_id"],
+                      season=SEASON, matchday=fx["matchday"], kickoff_utc=f"{fx['date']}T14:00:00Z")
+    result = MatchEngine(cfg, frame_hz=TRACKING_HZ).simulate()
+    with gzip.open(Path(root) / fx["match_id"] / "events.jsonl.gz", "rt", encoding="utf-8") as fh:
+        committed = [json.loads(line) for line in fh if line.strip()]
+    replayed = json.loads(json.dumps(result.events, ensure_ascii=False))
+    if replayed != committed:
+        first = next((i for i, (a, b) in enumerate(zip(committed, replayed)) if a != b), min(len(committed), len(replayed)))
+        raise SeasonMismatch(f"{fx['match_id']}: the re-played match differs from the committed one at event {first} "
+                             f"({len(committed)} committed, {len(replayed)} re-played). Nothing was written for it.")
+    out = Path(out_root) / fx["match_id"]
+    write_bundle(result, out)
+    return {"match_id": fx["match_id"], "frames": len(result.frames)}
+
+
+
+def record_tracking(root: str | Path, out: str | Path, demo: str | Path | None = None, workers: int | None = None,
+                    only: list[str] | None = None, progress=print) -> list[str]:
+    """Re-play the season's matches with tracking (same seeds, so the same matches) into full bundles under ``out``.
+
+    The committed season stays small (no tracking); these bundles are ~5 MB each and only feed the 3D site build.
+    Every match is checked event for event against the committed one and the run stops on any difference, so the 3D
+    pages can never show a different game from the table. Resumable: bundles that already exist are kept.
+    """
+    root, out = Path(root), Path(out)
+    index = json.loads((root / "season.json").read_text(encoding="utf-8"))
+    demo = Path(demo) if demo else None
+    demo_id = json.loads((demo / "meta.json").read_text(encoding="utf-8"))["match_id"] if demo else None
+    sched = {fx["match_id"]: fx for fx in schedule()}
+    jobs, ready = [], []
+    for m in index["matches"]:
+        mid = m["match_id"]
+        if only and mid not in only:
+            continue
+        if mid == demo_id or m.get("demo"):
+            ready.append(mid)           # the demo match is recorded with tracking already
+            continue
+        if (out / mid / "tracking.jsonl.gz").exists() and (out / mid / "summary.json").exists():
+            ready.append(mid)
+            continue
+        fx = sched.get(mid)
+        if fx is None:
+            raise SeasonMismatch(f"{mid} is not in the schedule this engine builds; was the season made by another version?")
+        jobs.append(fx)
+    n = max(1, min(len(jobs) or 1, workers or int(os.environ.get("MATCH_WORKERS") or (os.cpu_count() or 2))))
+    if jobs:
+        progress(f"Re-playing {len(jobs)} matches with tracking on {n} worker(s), ~30 s each per core")
+        with ProcessPoolExecutor(max_workers=n) as ex:
+            futs = [ex.submit(_replay_with_tracking, (fx, str(root), str(out))) for fx in jobs]
+            for k, f in enumerate(as_completed(futs), 1):
+                r = f.result()           # a SeasonMismatch stops the run here
+                ready.append(r["match_id"])
+                progress(f"  {k}/{len(jobs)}  {r['match_id']}  identical to the committed match, {r['frames']} frames")
+    return ready
+
+
 def simulate_season(root: str | Path, demo: str | Path | None = None, workers: int | None = None,
                     progress=print) -> dict:
     root = Path(root)
@@ -131,9 +197,19 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--out", required=True)
     ap.add_argument("--demo", default=None, help="a recorded match bundle to slot into the schedule")
     ap.add_argument("--workers", type=int, default=None)
+    ap.add_argument("--tracking", default=None, help="also re-play every match with tracking into full bundles here "
+                    "(for the 3D site; ~5 MB a match, keep it out of git)")
+    ap.add_argument("--only", nargs="*", default=None, help="with --tracking: just these match ids")
     a = ap.parse_args(argv)
+    if a.tracking and (Path(a.out) / "season.json").exists():
+        ready = record_tracking(a.out, a.tracking, a.demo, a.workers, a.only)
+        print(f"{len(ready)} matches with tracking -> {a.tracking}")
+        return
     idx = simulate_season(a.out, a.demo, a.workers)
     print(f"{len(idx['matches'])} matches -> {a.out}/season.json")
+    if a.tracking:
+        ready = record_tracking(a.out, a.tracking, a.demo, a.workers, a.only)
+        print(f"{len(ready)} matches with tracking -> {a.tracking}")
 
 
 if __name__ == "__main__":

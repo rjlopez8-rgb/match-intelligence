@@ -201,3 +201,44 @@ def test_personal_edition_data_is_packed():
     assert acts and all(0 <= a[1] < len(data["players"]) for a in acts)
     assert any(a[2] == 5 for a in acts)          # the goal is in his action list
     assert [a[0] for a in acts] == sorted(a[0] for a in acts)
+
+
+def test_highlights_reel_keeps_only_the_clips_and_the_real_clock():
+    """Goals, saves and chances back to back: frames cut from the full match, every frame index remapped,
+    the match clock untouched, and nothing (moments, shots, touches) pointing outside the reel."""
+    from matchstats.replay import highlight_clips, highlights
+
+    full = build_replay(SAMPLE)
+    reel = highlights(full)
+    wins = highlight_clips(full)
+    n, w = reel["nFrames"], reel["width"]
+    assert n == sum(c["b"] - c["a"] + 1 for c in wins) < full["nFrames"] / 10
+    assert len(base64.b64decode(reel["frames"])) == n * w * 2
+    clips = reel["clips"]
+    assert clips[0][0] == 0 and clips[-1][1] == n - 1
+    assert all(a[1] + 1 == b[0] for a, b in zip(clips, clips[1:]))       # contiguous, one after another
+    assert {c[4] for c in clips} <= {"goal", "great_save", "woodwork", "big_chance", "penalty_awarded", "save", "chance"}
+    assert len(clips) <= 10
+    goals = [m for m in full["moments"] if m["type"] == "goal"]
+    assert sum(1 for m in reel["moments"] if m["type"] == "goal") == len(goals)   # every goal is in
+    for row in reel["touches"] + reel["actions"] + reel["shots"]:
+        assert 0 <= row[0] <= n - 1
+    assert len(reel["shots"]) == len(reel["shotXg"])
+    assert len(reel["samples"]) == -(-n // reel["sampleEvery"])
+    # the clock: a reel frame shows the same match time as the full-match frame it was cut from
+    import numpy as np
+
+    f_full = np.frombuffer(base64.b64decode(full["frames"]), "<i2").reshape(-1, w)
+    f_reel = np.frombuffer(base64.b64decode(reel["frames"]), "<i2").reshape(-1, w)
+    for c, (s0, s1, period, *_rest) in zip(wins, clips):
+        assert (f_reel[s0:s1 + 1] == f_full[c["a"]:c["b"] + 1]).all()
+        assert period == (1 if c["a"] < full["period2"] else 2)
+    assert reel["segments"] == [] and reel["club"] is None and reel["highlights"] is True
+
+
+def test_viewer_shell_loads_its_match_from_the_url():
+    from matchstats.replay import render_viewer_shell
+
+    page = render_viewer_shell()
+    assert page.startswith("<!doctype html>") and '"__REPLAY_DATA__"' in page and "__TITLE__" not in page
+    assert "matches/${id}.${v}.json" in page

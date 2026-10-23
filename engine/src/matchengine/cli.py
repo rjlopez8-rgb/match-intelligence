@@ -275,12 +275,15 @@ def build_parser() -> argparse.ArgumentParser:
     sv.set_defaults(func=lambda a: __import__("matchengine.serve", fromlist=["main"]).main(
         ["--cache", a.cache, "--host", a.host, "--port", str(a.port), "--origin", a.origin]))
 
-    se = sub.add_parser("season", help="simulate a full league season (56 matches, no tracking)")
+    se = sub.add_parser("season", help="simulate a full league season (56 matches; --tracking adds 3D tracking bundles)")
     se.add_argument("--out", required=True)
     se.add_argument("--demo", default=None, help="recorded match bundle to slot into the schedule")
     se.add_argument("--workers", type=int, default=None)
+    se.add_argument("--tracking", default=None, help="re-play every match with tracking into full bundles here (3D site)")
+    se.add_argument("--only", nargs="*", default=None, help="with --tracking: just these match ids")
     se.set_defaults(func=lambda a: __import__("matchengine.season", fromlist=["main"]).main(
-        ["--out", a.out] + (["--demo", a.demo] if a.demo else []) + (["--workers", str(a.workers)] if a.workers else [])))
+        ["--out", a.out] + (["--demo", a.demo] if a.demo else []) + (["--workers", str(a.workers)] if a.workers else [])
+        + (["--tracking", a.tracking] if a.tracking else []) + (["--only", *a.only] if a.only else [])))
 
     sh = sub.add_parser("schema", help="export JSON Schemas for events, frames and metadata")
     sh.add_argument("--out", required=True)

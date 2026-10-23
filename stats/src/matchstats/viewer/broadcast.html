@@ -493,6 +493,7 @@ body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
     <button class="btn" id="nextMoment" data-i18n="nextMoment" data-i18n-title="nextMomentT">Next moment</button>
     <button class="btn ybbtn" id="ybBtn" aria-haspopup="dialog" data-i18n-title="ybT"><span class="yb-dot" id="ybDot"></span><span data-i18n="yb">Your broadcast</span></button>
     <button class="btn" id="deskBtn" aria-pressed="false" data-i18n="aiDesk" data-i18n-title="aiDeskT">AI desk</button>
+    <a class="btn" id="altBtn" hidden></a>
     <a class="btn" id="hubBtn" hidden data-i18n="season" data-i18n-title="seasonT">Season</a>
     <button class="btn" id="clubBtn" aria-pressed="false" data-i18n="club" data-i18n-title="clubT">Club mode</button>
     <button class="btn" id="statsBtn" aria-pressed="false" data-i18n="stats" data-i18n-title="statsT">Stats</button>
@@ -518,7 +519,26 @@ body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
 
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
-const DATA = "__REPLAY_DATA__";
+// The match comes embedded (matchagents render, matchstats replay --3d) or, on the website, from a data file named in
+// the URL: watch.html?m=<match id>&v=hl|full loads matches/<id>.<v>.json, so every match shares this one page.
+const EMBEDDED = "__REPLAY_DATA__";
+const DATA = typeof EMBEDDED === "object" ? EMBEDDED : await loadMatch();
+async function loadMatch() {
+  const q = new URLSearchParams(location.search), id = q.get("m") || "", v = q.get("v") === "full" ? "full" : "hl";
+  const lang = q.get("lang") || (() => { try { return JSON.parse(localStorage.getItem("mi.broadcast.prefs") || "{}").lang; } catch { return null; } })() || "en";
+  const say = { en: ["Loading the match…", "This match could not be loaded.", "Back to the season"],
+    es: ["Cargando el partido…", "No se pudo cargar este partido.", "Volver a la temporada"],
+    fr: ["Chargement du match…", "Impossible de charger ce match.", "Retour à la saison"] }[lang] || null;
+  const [loading, failed, back] = say || ["Loading the match…", "This match could not be loaded.", "Back to the season"];
+  const el = document.getElementById("loading");
+  const fail = (why) => { el.innerHTML = `<div class="err">${failed}<br><small>${why}</small><br><br><a href="index.html" style="color:#5ee7ff">${back}</a></div>`; throw new Error(why); };
+  if (!/^[a-z0-9-]{1,64}$/.test(id)) fail("No match in the link.");
+  el.textContent = loading;
+  let res;
+  try { res = await fetch(`matches/${id}.${v}.json`); } catch { fail("The network request failed."); }
+  if (!res.ok) fail(`matches/${id}.${v}.json: ${res.status}`);
+  return res.json();
+}
 
 const $ = (id) => document.getElementById(id);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -538,13 +558,14 @@ const I18N = {
     h1: "1st half", h2: "2nd half", ft: "Full-time", ghostTl: "Ghost timeline", tryout: "Try-out",
     statsH: "Match stats", momentsH: "Key moments", camera: "Camera", players: "Players",
     nextMoment: "Next moment", nextMomentT: "Jump to the next key moment (N)", aiDesk: "AI desk", aiDeskT: "The AI desk: what each agent did (D)",
-    season: "Season", seasonT: "Back to the season: table, results, players", club: "Club mode", clubT: "Club mode: try any player in any position (C)",
+    season: "Season", seasonT: "Back to the season: table, results, players", hlN: "Highlights {k}/{n}",
+    fullMatch: "Full match", fullMatchT: "Watch the whole match in 3D", highlights: "Highlights", highlightsT: "Just the goals, saves and chances", club: "Club mode", clubT: "Club mode: try any player in any position (C)",
     stats: "Stats", statsT: "Stats and moments (S)", fullscreen: "Full screen (F)", yb: "Your broadcast", ybT: "Style, language, your club and your player (Y)",
     ff: "Stoppage · skipping ahead", realTime: "Real time", xReal: "{s}× real time", clean: "Clean", mannequin: "Mannequin",
     cam_auto: "Auto", cam_broadcast: "Broadcast", cam_behind: "Behind goal", cam_tactical: "Tactical", cam_skycam: "Skycam", cam_player: "Player",
     cam_sweep: "Pitch-side", cam_free: "Free", cam_tele: "Telestrator", cam_split: "History splits", cam_focus: "Focus cam",
     st_poss: "Possession", st_xg: "Expected goals", st_shots: "Shots", st_sot: "On target", st_pass: "Pass accuracy", st_corners: "Corners",
-    goal: "Goal", big_chance: "Big chance", great_save: "Big save", woodwork: "Woodwork", penalty_awarded: "Penalty", red_card: "Red card", yellow_card: "Yellow card",
+    goal: "Goal", save: "Save", chance: "Chance", big_chance: "Big chance", great_save: "Big save", woodwork: "Woodwork", penalty_awarded: "Penalty", red_card: "Red card", yellow_card: "Yellow card",
     tactical_change: "Tactical change", substitution: "Substitution", period_summary: "Summary", speed_alert: "Speed", top_speed: "Top speed",
     distance_milestone: "Distance", hard_pass: "Line-breaking pass", long_sequence: "Passing move", dominance: "Dominance", pressing_surge: "Pressing surge",
     momentum_shift: "Momentum shift", chaos_spike: "Chaos",
@@ -626,13 +647,14 @@ const I18N = {
     h1: "1.ª parte", h2: "2.ª parte", ft: "Final", ghostTl: "Línea fantasma", tryout: "Prueba",
     statsH: "Estadísticas", momentsH: "Momentos clave", camera: "Cámara", players: "Jugadores",
     nextMoment: "Siguiente momento", nextMomentT: "Ir al siguiente momento clave (N)", aiDesk: "Mesa IA", aiDeskT: "La mesa IA: qué hizo cada agente (D)",
-    season: "Temporada", seasonT: "Volver a la temporada: clasificación, resultados, jugadores", club: "Modo club", clubT: "Modo club: prueba a cualquier jugador en cualquier puesto (C)",
+    season: "Temporada", seasonT: "Volver a la temporada: clasificación, resultados, jugadores", hlN: "Resumen {k}/{n}",
+    fullMatch: "Partido completo", fullMatchT: "Ver el partido entero en 3D", highlights: "Resumen", highlightsT: "Solo los goles, las paradas y las ocasiones", club: "Modo club", clubT: "Modo club: prueba a cualquier jugador en cualquier puesto (C)",
     stats: "Datos", statsT: "Datos y momentos (S)", fullscreen: "Pantalla completa (F)", yb: "Tu retransmisión", ybT: "Estilo, idioma, tu club y tu jugador (Y)",
     ff: "Juego parado · avanzando", realTime: "Tiempo real", xReal: "{s}× tiempo real", clean: "Limpio", mannequin: "Maniquí",
     cam_auto: "Auto", cam_broadcast: "General", cam_behind: "Tras la portería", cam_tactical: "Táctica", cam_skycam: "Skycam", cam_player: "Jugador",
     cam_sweep: "Pie de campo", cam_free: "Libre", cam_tele: "Telestrador", cam_split: "La historia se bifurca", cam_focus: "Cámara foco",
     st_poss: "Posesión", st_xg: "Goles esperados", st_shots: "Tiros", st_sot: "A puerta", st_pass: "Precisión de pase", st_corners: "Córneres",
-    goal: "Gol", big_chance: "Ocasión clara", great_save: "Paradón", woodwork: "Al palo", penalty_awarded: "Penalti", red_card: "Roja", yellow_card: "Amarilla",
+    goal: "Gol", save: "Parada", chance: "Ocasión", big_chance: "Ocasión clara", great_save: "Paradón", woodwork: "Al palo", penalty_awarded: "Penalti", red_card: "Roja", yellow_card: "Amarilla",
     tactical_change: "Cambio táctico", substitution: "Cambio", period_summary: "Resumen", speed_alert: "Velocidad", top_speed: "Velocidad máxima",
     distance_milestone: "Distancia", hard_pass: "Pase entre líneas", long_sequence: "Jugada larga", dominance: "Dominio", pressing_surge: "Presión alta",
     momentum_shift: "Cambio de inercia", chaos_spike: "Caos",
@@ -710,13 +732,14 @@ const I18N = {
     h1: "1re mi-temps", h2: "2e mi-temps", ft: "Fin du match", ghostTl: "Ligne fantôme", tryout: "Essai",
     statsH: "Statistiques", momentsH: "Moments clés", camera: "Caméra", players: "Joueurs",
     nextMoment: "Moment suivant", nextMomentT: "Aller au moment clé suivant (N)", aiDesk: "Plateau IA", aiDeskT: "Le plateau IA : ce qu'a fait chaque agent (D)",
-    season: "Saison", seasonT: "Retour à la saison : classement, résultats, joueurs", club: "Mode club", clubT: "Mode club : essayez n'importe quel joueur à n'importe quel poste (C)",
+    season: "Saison", seasonT: "Retour à la saison : classement, résultats, joueurs", hlN: "Résumé {k}/{n}",
+    fullMatch: "Match complet", fullMatchT: "Voir tout le match en 3D", highlights: "Résumé", highlightsT: "Seulement les buts, les arrêts et les occasions", club: "Mode club", clubT: "Mode club : essayez n'importe quel joueur à n'importe quel poste (C)",
     stats: "Stats", statsT: "Stats et moments (S)", fullscreen: "Plein écran (F)", yb: "Votre diffusion", ybT: "Style, langue, votre club et votre joueur (Y)",
     ff: "Arrêt de jeu · on avance", realTime: "Temps réel", xReal: "{s}× temps réel", clean: "Épuré", mannequin: "Mannequin",
     cam_auto: "Auto", cam_broadcast: "Plan large", cam_behind: "Derrière le but", cam_tactical: "Tactique", cam_skycam: "Skycam", cam_player: "Joueur",
     cam_sweep: "Bord terrain", cam_free: "Libre", cam_tele: "Palette", cam_split: "L'histoire bifurque", cam_focus: "Caméra joueur suivi",
     st_poss: "Possession", st_xg: "Buts attendus", st_shots: "Tirs", st_sot: "Cadrés", st_pass: "Passes réussies", st_corners: "Corners",
-    goal: "But", big_chance: "Grosse occasion", great_save: "Arrêt décisif", woodwork: "Poteau", penalty_awarded: "Penalty", red_card: "Carton rouge", yellow_card: "Carton jaune",
+    goal: "But", save: "Arrêt", chance: "Occasion", big_chance: "Grosse occasion", great_save: "Arrêt décisif", woodwork: "Poteau", penalty_awarded: "Penalty", red_card: "Carton rouge", yellow_card: "Carton jaune",
     tactical_change: "Changement tactique", substitution: "Remplacement", period_summary: "Bilan", speed_alert: "Vitesse", top_speed: "Pointe de vitesse",
     distance_milestone: "Distance", hard_pass: "Passe entre les lignes", long_sequence: "Longue séquence", dominance: "Domination", pressing_surge: "Pressing",
     momentum_shift: "Bascule", chaos_spike: "Chaos",
@@ -813,6 +836,14 @@ const fmtPct = (v) => (prefs.lang === "en" ? `${Math.round(v * 100)}%` : `${Math
 // get the same running, kicks, shot flights, keeper dives and celebrations as the real players.
 const W = DATA.width, HZ = DATA.hz, ABSENT = -32768;
 let N = DATA.nFrames, P2 = DATA.period2;
+// Spans: stretches of continuous play. A full match has two (the halves); a highlights reel has one per clip
+// (DATA.clips: [start, end, period, minute, type, side]). Motion, ball flights and the clock never blend across a span.
+const CLIPS = DATA.clips || null;
+let SB = CLIPS ? CLIPS.map((c) => c[0]) : [0, P2], SP = CLIPS ? CLIPS.map((c) => c[2]) : [1, 2];
+const spanIn = (B, i) => { let lo = 0, hi = B.length - 1, k = 0; while (lo <= hi) { const m = (lo + hi) >> 1; if (B[m] <= i) { k = m; lo = m + 1; } else hi = m - 1; } return k; };
+const spanOf = (i) => spanIn(SB, i);
+const spanLo = (i) => SB[spanOf(i)];
+const spanHi = (i) => { const k = spanOf(i); return (k + 1 < SB.length ? SB[k + 1] : N) - 1; };
 const NP = DATA.players.length, BASE = 2 * NP;
 const decodeI16 = (b64) => { const raw = atob(b64); const b = new Uint8Array(raw.length); for (let i = 0; i < raw.length; i++) b[i] = raw.charCodeAt(i); return new Int16Array(b.buffer); };
 let F = decodeI16(DATA.frames);
@@ -829,7 +860,7 @@ function buildGoals(goalFrames, rows) {
 }
 let touchesBySlot = buildTouches(DATA.touches);
 let goals = buildGoals(DATA.moments.filter((m) => m.type === "goal"), DATA.touches);
-const periodOf = (i) => (i >= P2 ? 2 : 1);
+const periodOf = (i) => SP[spanOf(i)];
 const tOf = (i) => F[i * W + BASE + 5] / 10;
 const wx = (x) => x - 52.5, wz = (y) => 34 - y;   // pitch metres -> world (camera side = y 0)
 
@@ -844,7 +875,7 @@ function clockParts(i) {
 // smoothed position of slot s at fractional frame t (world coords); null when off the pitch
 function slotAt(t, s, out) {
   let i = Math.floor(t), u = t - i;
-  const lo = i < P2 ? 0 : P2, hi = i < P2 ? P2 - 1 : N - 1;
+  const lo = spanLo(i), hi = spanHi(i);
   if (i >= hi) { i = hi; u = 0; }
   if (i < lo) { i = lo; u = 0; }
   const idx = (j) => { j = clamp(j, lo, hi); return F[j * W + 2 * s] === ABSENT ? -1 : j; };
@@ -863,7 +894,7 @@ function slotAt(t, s, out) {
 }
 function ballAt(t, out) {
   let i = Math.floor(t), u = t - i;
-  const hi = i < P2 ? P2 - 1 : N - 1;
+  const hi = spanHi(i);
   if (i >= hi) { i = hi; u = 0; }
   const j = i + 1 <= hi ? i + 1 : i;
   const g = (k, o) => F[k * W + BASE + o] / 10;
@@ -1284,16 +1315,16 @@ function shotCurve(s, u, out) {
 }
 let SHOTS = buildShots(DATA.shots);
 let FLIGHTS = [];
-const MAIN = { F, N, P2, touchesBySlot, goals, SHOTS, flights: null };
+const MAIN = { F, N, P2, SB, SP, touchesBySlot, goals, SHOTS, flights: null };
 function useSource(src) {
-  F = src.F; N = src.N; P2 = src.P2; touchesBySlot = src.touchesBySlot; goals = src.goals; SHOTS = src.SHOTS;
+  F = src.F; N = src.N; P2 = src.P2; SB = src.SB; SP = src.SP; touchesBySlot = src.touchesBySlot; goals = src.goals; SHOTS = src.SHOTS;
   if (!src.flights) src.flights = buildFlights(src);
   FLIGHTS = src.flights;
 }
 // a moment of a simulated future, in the same layout as the real match
 function clipSource(c) {
   if (c.src) return c.src;
-  return (c.src = { F: decodeI16(c.frames), N: c.n, P2: c.p2, touchesBySlot: buildTouches(c.touches), SHOTS: buildShots(c.shots),
+  return (c.src = { F: decodeI16(c.frames), N: c.n, P2: c.p2, SB: [0, c.p2], SP: [1, 2], touchesBySlot: buildTouches(c.touches), SHOTS: buildShots(c.shots),
     goals: buildGoals(c.goals.map(([f, side]) => ({ f, side: side === 0 ? "home" : "away" })), c.touches), flights: null });
 }
 function shotIndex(t) {
@@ -1364,7 +1395,7 @@ function lastTouchOf(s, t) {
 // follows the engine's flight (lofted balls keep their height).
 const ownerOf = (Fa, i) => Fa[i * W + BASE + 3];
 function buildFlights(src) {
-  const Fa = src.F, n = src.N, p2 = src.P2, tb = src.touchesBySlot, out = [];
+  const Fa = src.F, n = src.N, tb = src.touchesBySlot, out = [], sp = (i) => spanIn(src.SB, i);
   const touchIn = (s, a, b) => { let best = null; for (const tt of tb[s] || []) { if (tt[0] > b) break; if (tt[0] >= a && tt[1] !== 3 && tt[1] !== 6) best = tt; } return best; };
   let prev = ownerOf(Fa, 0);
   for (let i = 1; i < n; i++) {
@@ -1376,7 +1407,7 @@ function buildFlights(src) {
       while (j < n && ownerOf(Fa, j) < 0) { if (Fa[j * W + BASE + 4] < 0) dead = true; j++; }
       if (j >= n) break;
       const r = ownerOf(Fa, j);
-      if ((ta < p2) !== (j < p2)) dead = true;
+      if (sp(ta) !== sp(j)) dead = true;            // never fly the ball across half-time or a highlights cut
       const fl = { ta, tb: j, kicker, r, code: tt ? tt[1] : 0, dead: dead || j - ta > 6 * HZ };
       out.push(fl);
       if (tt) {
@@ -1401,7 +1432,7 @@ MAIN.flights = FLIGHTS = buildFlights(MAIN);
 // ball from the tracking feed: Catmull-Rom through clean flights (smooth arcs), linear elsewhere
 function ballTrack(t, out) {
   let i = Math.floor(t), u = t - i;
-  const lo = i < P2 ? 0 : P2, hi = i < P2 ? P2 - 1 : N - 1;
+  const lo = spanLo(i), hi = spanHi(i);
   if (i >= hi) { i = hi; u = 0; } if (i < lo) { i = lo; u = 0; }
   const j = Math.min(i + 1, hi), h = Math.max(i - 1, lo), k = Math.min(i + 2, hi);
   const g = (q, o) => F[q * W + BASE + o] / 10;
@@ -2064,7 +2095,7 @@ function updateHud() {
   const live = liveFrame();
   const i = clamp(Math.floor(live), 0, N - 1), c = clockParts(i);
   $("clock").textContent = c.clock; $("added").textContent = c.added; $("time").textContent = clockParts(clamp(Math.floor(pos), 0, N - 1)).minute;
-  $("period").textContent = live >= N - 1 ? tr("ft") : periodOf(i) === 1 ? tr("h1") : tr("h2");
+  $("period").textContent = live >= N - 1 ? tr("ft") : CLIPS ? tr("hlN", { k: spanOf(i) + 1, n: CLIPS.length }) : periodOf(i) === 1 ? tr("h1") : tr("h2");
   const si = Math.floor(live / DATA.sampleEvery);
   if (si !== lastSi) {
     lastSi = si; const s = sampleAt(live);
@@ -2139,7 +2170,7 @@ function drawTimeline() {
     tlx.lineTo(xAt(N - 1), mid); tlx.closePath(); tlx.fillStyle = c; tlx.globalAlpha = 0.75; tlx.fill(); tlx.globalAlpha = 1;
   }
   tlx.restore();
-  tlx.fillStyle = "rgba(255,255,255,0.28)"; tlx.fillRect(xAt(P2) - d, 2 * d, 2 * d, h - 4 * d);
+  tlx.fillStyle = "rgba(255,255,255,0.28)"; for (const b of MAIN.SB) if (b > 0 && b < N) tlx.fillRect(xAt(b) - d, 2 * d, 2 * d, h - 4 * d);
   tlx.fillStyle = "rgba(255,255,255,0.18)"; tlx.fillRect(xAt(0), mid - 0.5 * d, w - 16 * d, d);
   for (const m of DATA.moments) {
     const x = xAt(m.f);
@@ -2173,7 +2204,7 @@ scrub.addEventListener("pointermove", (e) => {
 scrub.addEventListener("pointerleave", () => { $("tltip").hidden = true; hoverMarker = null; });
 scrub.addEventListener("input", () => {
   cancelReplay();
-  if (hoverMarker) { seek(Math.max(0, hoverMarker.f - 8 * HZ)); play(true); } else seek(+scrub.value);
+  if (hoverMarker) { seek(Math.max(spanLo(hoverMarker.f), hoverMarker.f - 8 * HZ)); play(true); } else seek(+scrub.value);
 });
 
 // ---------------------------------------------------------------- controls
@@ -2205,8 +2236,8 @@ buildSegs();
 $("statsBtn").addEventListener("click", () => { if (clubOpen) showClub(false); const p = $("panel"); p.hidden = !p.hidden; $("statsBtn").setAttribute("aria-pressed", String(!p.hidden)); if (!p.hidden) { $("deskp").hidden = true; $("deskBtn").setAttribute("aria-pressed", "false"); deskPinned = false; } });
 $("fsBtn").addEventListener("click", () => { const d = document; if (d.fullscreenElement) d.exitFullscreen?.(); else d.documentElement.requestFullscreen?.().catch(() => {}); });
 function jumpNext() {
-  const target = keyMoments.find((m) => m.f - 9 * HZ > (liveFrame()) + HZ);
-  if (target) { cancelReplay(); seek(target.f - 9 * HZ); play(true); }
+  const target = keyMoments.find((m) => Math.max(spanLo(m.f), m.f - 9 * HZ) > (liveFrame()) + HZ);
+  if (target) { cancelReplay(); seek(Math.max(spanLo(target.f), target.f - 9 * HZ)); play(true); }
 }
 $("nextMoment").addEventListener("click", jumpNext);
 document.addEventListener("keydown", (e) => {
@@ -3157,8 +3188,9 @@ const ACT_NAME = { 3: "shot", 4: "shot_on", 5: "goal", 6: "chance", 7: "tackle",
 function buildFocus(slot) {
   const n = MAIN.N, dist = new Float32Array(n), spd = new Float32Array(n), top = new Float32Array(n), spr = new Uint16Array(n), on = new Uint8Array(n);
   let d = 0, tp = 0, sp = 0, run = 0, px = null, py = null;
-  const win = [], need = Math.round(HZ);
+  const win = [], need = Math.round(HZ), cuts = new Set(MAIN.SB);
   for (let i = 0; i < n; i++) {
+    if (cuts.has(i)) { px = null; win.length = 0; run = 0; }
     const x = MAIN.F[i * W + 2 * slot], y = MAIN.F[i * W + 2 * slot + 1];
     if (x === ABSENT) { px = null; win.length = 0; run = 0; dist[i] = d; top[i] = tp; spr[i] = sp; continue; }
     on[i] = 1;
@@ -3385,10 +3417,20 @@ window.addEventListener("resize", resize);
 let excite = 0, tlTick = 0;
 // stoppages (fouls, substitutions, goal kicks, celebrations) play at 8x, like a broadcast cutting away
 const LIVE_NEXT = new Int32Array(MAIN.N), LIVE_LAST = new Int32Array(MAIN.N);
-{ let nx = MAIN.N - 1; for (let i = MAIN.N - 1; i >= 0; i--) { if (MAIN.F[i * W + BASE + 4] >= 0) nx = i; LIVE_NEXT[i] = nx; }
-  let ls = 0; for (let i = 0; i < MAIN.N; i++) { if (MAIN.F[i * W + BASE + 4] >= 0) ls = i; LIVE_LAST[i] = ls; } }
+{ const start = new Set(MAIN.SB);   // never skip across a highlights cut
+  let nx = MAIN.N - 1; for (let i = MAIN.N - 1; i >= 0; i--) { if (MAIN.F[i * W + BASE + 4] >= 0) nx = i; LIVE_NEXT[i] = nx; if (start.has(i)) nx = i - 1; }
+  let ls = 0; for (let i = 0; i < MAIN.N; i++) { if (start.has(i)) ls = i; if (MAIN.F[i * W + BASE + 4] >= 0) ls = i; LIVE_LAST[i] = ls; } }
 const BIG_MOMENTS = DATA.moments.filter((m) => m.importance >= 0.5).map((m) => m.f);
-let skipRate = 1;
+let skipRate = 1, clipWipe = false;
+// highlights: a clip plays to its end, then a wipe names the next one ("67' · BIG SAVE") and cuts to it
+const clipLabel = (c) => `${c[3]} · ${typeLabel(c[4]).toUpperCase()}`;
+function toNextClip(prev) {
+  const k = spanIn(MAIN.SB, prev), end = (k + 1 < MAIN.SB.length ? MAIN.SB[k + 1] : MAIN.N) - 1;
+  if (k + 1 >= CLIPS.length || pos < end) return;
+  pos = end; clipWipe = true;
+  const c = CLIPS[k + 1];
+  wipe(clipLabel(c), c[5] === "home" ? HOME.colors.primary : c[5] === "away" ? AWAY.colors.primary : "#0b1220", () => { seek(c[0]); clipWipe = false; });
+}
 function stoppageSkip(dt) {
   let want = false;
   if (playing && auto && !desk && !replay && speed < 5) {
@@ -3408,7 +3450,8 @@ function frame(ts) {
   stoppageSkip(dt);
   if (playing) {
     const rate = desk ? deskRate() : replay ? (replay.steps[replay.i]?.rate ?? 0) : speed * skipRate;
-    if (!(replay && replay.wiping)) pos = clamp(pos + dt * HZ * rate, 0, N - 1);
+    if (!(replay && replay.wiping) && !clipWipe) pos = clamp(pos + dt * HZ * rate, 0, N - 1);
+    if (CLIPS && !replay && !desk && !clipWipe) toNextClip(prev);
     if (!replay && !desk && pos >= N - 1) play(false);
   }
   const dtMatch = (pos - prev) / HZ;
@@ -3456,6 +3499,9 @@ function frame(ts) {
   if (DEBUG && healTick % 15 === 0) showDebug(dt);
   if (Math.floor(realTime * 10) !== tlTick) { tlTick = Math.floor(realTime * 10); updateHud(); drawTimeline(); scrub.value = String(Math.floor(liveFrame())); syncCam(); updateFocusStrip(); if (FOCUS && tlTick % 5 === 0) updatePin(); }
 }
+if (DATA.alt) { const a = $("altBtn"); a.hidden = false; a.href = DATA.alt.href; a.dataset.i18n = DATA.alt.kind === "full" ? "fullMatch" : "highlights"; a.dataset.i18nTitle = DATA.alt.kind === "full" ? "fullMatchT" : "highlightsT"; }
+if (DATA.hub && !SEGS.length) $("deskBtn").hidden = true;    // website pages without an AI desk
+if (DATA.hub && !CLUB) $("clubBtn").hidden = true;           // Club mode lives on the demo fixture
 applyPrefs(); resize(); play(false); seek(0); updateHud();
 if (!prefs.seen && !/nopanel/.test(location.search)) setTimeout(() => showYB(true), 600);
 if (/club/.test(location.hash)) setTimeout(() => showClub(true), 400);

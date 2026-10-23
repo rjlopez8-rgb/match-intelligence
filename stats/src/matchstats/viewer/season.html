@@ -119,7 +119,7 @@ h2 { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: 
 .fx { display: block; background: var(--panel); border: 1px solid var(--edge); border-radius: 14px; padding: 13px 15px; transition: border-color .15s, transform .15s; }
 .fx:hover { border-color: var(--edge-2); transform: translateY(-1px); }
 .fx .meta { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--faint); margin-bottom: 8px; }
-.fx .badge3d { color: #5ee7ff; font-weight: 800; letter-spacing: 0.08em; }
+.fx .badge3d { color: #5ee7ff; font-weight: 800; letter-spacing: 0.08em; } .fx .badge3d.dim { opacity: 0.6; font-weight: 700; }
 .fx .row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; align-items: center; }
 .fx .team { display: flex; align-items: center; gap: 9px; font-weight: 750; font-size: 15px; }
 .fx .team.r { justify-content: flex-end; text-align: right; }
@@ -363,14 +363,16 @@ function viewResults(md) {
   const cur = clamp(+md || (DEMO ? DEMO.md : maxMd), 1, maxMd);
   const games = D.matches.filter((m) => m.md === cur);
   const v = $("view");
-  v.innerHTML = `<div class="hero"><div><div class="kicker">Results</div><h1>Matchday ${cur}</h1><div class="muted" style="margin-top:4px">${esc(longDate(games[0].date))}</div></div></div>
+  const top = games.find((m) => m.motw && m.w3d?.full);
+  v.innerHTML = `<div class="hero"><div><div class="kicker">Results</div><h1>Matchday ${cur}</h1><div class="muted" style="margin-top:4px">${esc(longDate(games[0].date))}</div></div>
+      ${top ? `<a class="cta" href="${esc(top.link || top.w3d.full)}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>Match of the week: ${esc(C[top.home].short)} v ${esc(C[top.away].short)} in 3D</a>` : ""}</div>
     <div class="mds">${Array.from({ length: maxMd }, (_, i) => `<a href="#/results/${i + 1}" ${i + 1 === cur ? 'aria-current="page"' : ""}>${i + 1}</a>`).join("")}</div>
     <div class="fixtures">${games.map(fixtureCard).join("")}</div>`;
 }
 function fixtureCard(m) {
   const hw = m.score.home > m.score.away, aw = m.score.away > m.score.home;
   const sc = (side) => m.goals.filter((g) => g.side === side).map((g) => `${esc(P[g.scorer]?.short || g.scorer_name)} ${esc(g.min)}${g.pen ? " (pen)" : ""}`).join(", ");
-  return `<a class="fx" href="#/match/${m.id}"><div class="meta"><span>${esc(shortDate(m.date))} · ${esc(m.venue)}</span>${m.link ? '<span class="badge3d">3D · AI DESK</span>' : ""}</div>
+  return `<a class="fx" href="#/match/${m.id}"><div class="meta"><span>${esc(shortDate(m.date))} · ${esc(m.venue)}</span>${m.link ? '<span class="badge3d">3D · AI DESK</span>' : m.motw && m.w3d?.full ? '<span class="badge3d">3D · MATCH OF THE WEEK</span>' : m.w3d ? '<span class="badge3d dim">3D HIGHLIGHTS</span>' : ""}</div>
     <div class="row"><span class="team ${hw ? "win" : aw ? "lose" : ""}">${crest(m.home)}${esc(C[m.home].short)}</span><span class="score num">${m.score.home} – ${m.score.away}</span>
     <span class="team r ${aw ? "win" : hw ? "lose" : ""}">${esc(C[m.away].short)}${crest(m.away)}</span></div>
     <div class="xg num">xG ${m.xg[0].toFixed(2)} – ${m.xg[1].toFixed(2)}</div>
@@ -391,7 +393,9 @@ function viewMatch(id) {
       <div class="meta"><span>${esc(D.competition)} · Matchday ${m.md} · ${esc(longDate(m.date))}</span><span>${esc(m.venue)}${m.att ? ` · ${Number(m.att).toLocaleString()} fans` : ""}${m.ref ? ` · Referee ${esc(m.ref)}` : ""}</span></div>
       <div class="sb"><a class="tm" href="#/club/${m.home}">${crest(m.home)}${esc(C[m.home].name)}</a><span class="big num">${m.score.home} – ${m.score.away}</span><a class="tm r" href="#/club/${m.away}">${esc(C[m.away].name)}${crest(m.away)}</a></div>
       <div class="goals"><div>${glist("home")}${red("home") ? `<br>${red("home")}` : ""}</div><div>${glist("away")}${red("away") ? `<br>${red("away")}` : ""}</div></div>
-      <div class="actions">${m.link ? `<a class="cta" href="${esc(m.link)}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>Watch in 3D with the AI desk</a><a class="cta ghost" href="${esc(m.link)}#club">Try players in this fixture (Club mode)</a>` : ""}
+      <div class="actions">${m.link ? `<a class="cta" href="${esc(m.link)}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>Watch in 3D with the AI desk</a>` : m.w3d?.full ? `<a class="cta" href="${esc(m.w3d.full)}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>Watch the full match in 3D</a>` : ""}
+        ${m.w3d ? `<a class="cta ${m.link || m.w3d.full ? "ghost" : ""}" href="${esc(m.w3d.hl)}">${m.link || m.w3d.full ? "" : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>'}3D highlights · ${m.w3d.clips} ${m.w3d.clips === 1 ? "clip" : "clips"}</a>` : ""}
+        ${m.link ? `<a class="cta ghost" href="${esc(m.link)}#club">Try players in this fixture (Club mode)</a>` : ""}
         <a class="cta ghost" href="#/results/${m.md}">Matchday ${m.md} results</a></div>
     </div>
     <div class="grid g2">
@@ -519,7 +523,7 @@ function viewClub(code) {
       <section class="card"><h2>Squad this season</h2><div class="scroll"><table class="tbl"><thead><tr><th class="l">#</th><th class="l">Player</th><th class="l">Pos</th><th>Apps</th><th>Min</th><th>G</th><th>A</th><th>xG</th><th>Chances</th><th>Tkl won</th></tr></thead>
         <tbody>${squad.map((p) => { const s = p.season || {}; return `<tr data-id="${p.id}"><td class="l faint">${esc(p.shirt)}</td><td class="l"><b>${esc(p.name)}</b></td><td class="l muted">${esc(p.role)}</td><td class="num">${fmt(s.apps)}</td><td class="num">${fmt(s.min)}</td><td class="num">${fmt(s.goals)}</td><td class="num">${fmt(s.assists)}</td><td class="num">${fmt(s.xg, 2)}</td><td class="num">${fmt(s.key_passes)}</td><td class="num">${fmt(s.tackles_won)}</td></tr>`; }).join("")}</tbody></table></div></section>
       <section class="card"><h2>Results</h2>${games.map((m) => { const home = m.home === code, opp = home ? m.away : m.home, gf = home ? m.score.home : m.score.away, ga = home ? m.score.away : m.score.home, res = gf > ga ? "W" : gf === ga ? "D" : "L";
-        return `<a href="#/match/${m.id}" style="display:grid;grid-template-columns:42px 22px minmax(0,1fr) auto;gap:9px;align-items:center;padding:7px 4px;border-top:1px solid var(--edge)"><span class="faint num">MD${m.md}</span><span class="pill ${res}">${res}</span><span class="club-cell">${crest(opp)}${home ? "" : "at "}${esc(C[opp].short)}${m.link ? ' <small style="color:#5ee7ff">3D</small>' : ""}</span><b class="num">${gf}–${ga}</b></a>`; }).join("")}</section>
+        return `<a href="#/match/${m.id}" style="display:grid;grid-template-columns:42px 22px minmax(0,1fr) auto;gap:9px;align-items:center;padding:7px 4px;border-top:1px solid var(--edge)"><span class="faint num">MD${m.md}</span><span class="pill ${res}">${res}</span><span class="club-cell">${crest(opp)}${home ? "" : "at "}${esc(C[opp].short)}${m.w3d || m.link ? ' <small style="color:#5ee7ff">3D</small>' : ""}</span><b class="num">${gf}–${ga}</b></a>`; }).join("")}</section>
     </div>`;
   v.querySelectorAll("tr[data-id]").forEach((tr) => tr.addEventListener("click", () => { location.hash = `#/player/${tr.dataset.id}`; }));
 }

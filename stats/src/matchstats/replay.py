@@ -489,6 +489,155 @@ def render_html(data: dict, standalone: bool = True, view: str = "replay") -> st
     )
 
 
+def render_viewer_shell(title: str = "Match Intelligence 3D") -> str:
+    """The shared 3D page with no match inside: it loads ``matches/<id>.<hl|full>.json`` named in its URL
+    (``watch.html?m=<id>&v=hl``), so the site ships one copy of the viewer instead of one per match."""
+    template = resources.files("matchstats").joinpath("viewer/broadcast.html").read_text(encoding="utf-8")
+    page = template.replace("__TITLE__", html.escape(title))
+    return (
+        '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+        "</head>\n<body>\n" + page + "\n</body>\n</html>\n"
+    )
+
+
+# ------------------------------------------------------------------- highlights
+HIGHLIGHT_TYPES = ("goal", "great_save", "woodwork", "big_chance", "penalty_awarded", "save", "chance")
+HIGHLIGHT_RANK = {t: i for i, t in enumerate(HIGHLIGHT_TYPES)}   # which moment names a clip that holds several
+CLIP_BEFORE_S = 15.0                                             # the build-up
+CLIP_AFTER_S = {"goal": 11.0}                                    # goals keep the celebration and the auto replay
+CLIP_AFTER_DEFAULT_S = 6.0
+CLIP_JOIN_GAP_S = 4.0                                            # clips closer than this play as one
+# beyond the stats layer's key moments, the shots worth seeing again: a save from a real chance, or any good chance
+SAVE_MIN_XG, CHANCE_MIN_XG = 0.05, 0.10
+MAX_CLIPS = 10
+
+
+def highlight_clips(data: dict) -> list[dict]:
+    """Where the highlights are, in the full match's frames: one window per goal, save or chance, overlapping
+    windows joined, never across half-time."""
+    hz, n, p2 = data["hz"], data["nFrames"], data["period2"]
+    picks = [m for m in data["moments"] if m["type"] in HIGHLIGHT_RANK]
+    extra = []
+    for row, xg in zip(data["shots"], data.get("shotXg") or []):
+        oc, xg = row[6], xg or 0.0
+        if oc == 1 and xg >= SAVE_MIN_XG or oc != 0 and xg >= CHANCE_MIN_XG:   # goals are already key moments
+            extra.append({"f": int(row[0]), "type": "save" if oc == 1 else "chance", "importance": xg,
+                          "minute": _minute_at(data, int(row[0])), "side": _side_of_slot(data, row[9])})
+    # the reel stays short: keep the key moments, then the best extra chances
+    room = max(0, MAX_CLIPS - len(picks))
+    picks += sorted(extra, key=lambda e: -e["importance"])[:room]
+    wins = []
+    for m in picks:
+        f = m["f"]
+        lo, hi = (0, p2 - 1) if f < p2 else (p2, n - 1)
+        a = max(lo, int(round(f - CLIP_BEFORE_S * hz)))
+        b = min(hi, int(round(f + CLIP_AFTER_S.get(m["type"], CLIP_AFTER_DEFAULT_S) * hz)))
+        wins.append({"a": a, "b": b, "period": 1 if f < p2 else 2, "moments": [m]})
+    wins.sort(key=lambda w: w["a"])
+    clips: list[dict] = []
+    for w in wins:
+        last = clips[-1] if clips else None
+        if last and last["period"] == w["period"] and w["a"] <= last["b"] + CLIP_JOIN_GAP_S * hz:
+            last["b"] = max(last["b"], w["b"])
+            last["moments"] += w["moments"]
+        else:
+            clips.append(w)
+    for c in clips:
+        lead = min(c["moments"], key=lambda m: (HIGHLIGHT_RANK[m["type"]], -m["importance"]))
+        c["lead"] = lead
+    return clips[:MAX_CLIPS] if len(clips) <= MAX_CLIPS else sorted(
+        sorted(clips, key=lambda c: (HIGHLIGHT_RANK[c["lead"]["type"]], -c["lead"]["importance"]))[:MAX_CLIPS], key=lambda c: c["a"])
+
+
+def _side_of_slot(data: dict, slot: int) -> str:
+    return data["players"][slot]["side"] if 0 <= slot < len(data["players"]) else ""
+
+
+def _minute_at(data: dict, f: int) -> str:
+    """The broadcast minute of a full-match frame: 1' to 45', 45+2', 46' to 90', 90+4'."""
+    raw = np.frombuffer(base64.b64decode(data["frames"]), dtype="<i2")
+    t = raw[f * data["width"] + data["width"] - 1] / 10
+    period = 1 if f < data["period2"] else 2
+    if t < 2700:
+        return f"{int(t // 60) + 1 + 45 * (period - 1)}'"
+    return f"{45 * period}+{int((t - 2700) // 60) + 1}'"
+
+
+def highlights(data: dict) -> dict:
+    """A highlights reel from a full match's viewer data (``build_replay``): only the frames of its goals, saves and
+    chances, played back to back. Every frame keeps its real match clock; ``clips`` tells the 3D page where each cut
+    is, so motion, ball flights and stats never blend across one. The AI desk and Club mode stay with the full match."""
+    hz, w, n = data["hz"], data["width"], data["nFrames"]
+    clips = highlight_clips(data)
+    if not clips:   # a 0-0 with nothing on target: the opening and the closing minute
+        clips = [{"a": 0, "b": min(n - 1, 30 * hz), "period": 1, "moments": [], "lead": None},
+                 {"a": max(data["period2"], n - 1 - 30 * hz), "b": n - 1, "period": 2, "moments": [], "lead": None}]
+    full = np.frombuffer(base64.b64decode(data["frames"]), dtype="<i2").reshape(n, w)
+    starts, rows = [], []
+    for c in clips:
+        starts.append(sum(len(r) for r in rows))
+        rows.append(full[c["a"]: c["b"] + 1])
+    arr = np.concatenate(rows)
+    m_new = len(arr)
+
+    def remap(f):
+        """A full-match frame (fractional allowed) in reel frames, or None when it is not in any clip."""
+        for c, s0 in zip(clips, starts):
+            if c["a"] <= f <= c["b"] + 0.999:
+                return round(s0 + (f - c["a"]), 2)
+        return None
+
+    def orig(k: int) -> int:
+        for c, s0 in zip(reversed(clips), reversed(starts)):
+            if k >= s0:
+                return c["a"] + (k - s0)
+        return clips[0]["a"]
+
+    def keep_rows(rows_in: list, at: int = 0) -> list:
+        out = []
+        for r in rows_in:
+            f = remap(r[at])
+            if f is not None:
+                out.append([f, *r[at + 1:]] if at == 0 else r)
+        return out
+
+    every, samples = data["sampleEvery"], data["samples"]
+    shots, xgs = [], []
+    for row, xg in zip(data["shots"], data["shotXg"]):
+        f = remap(row[0])
+        if f is not None:
+            shots.append([f, *row[1:]])
+            xgs.append(xg)
+    moments = []
+    for m in data["moments"]:
+        f = remap(m["f"])
+        if f is not None:
+            moments.append({**m, "f": int(f)})
+    out = {
+        **data,
+        "nFrames": m_new,
+        "frames": base64.b64encode(arr.astype("<i2").tobytes()).decode("ascii"),
+        "period2": next((s0 for c, s0 in zip(clips, starts) if c["period"] == 2), m_new),
+        "samples": [samples[min(len(samples) - 1, orig(k) // every)] for k in range(0, m_new, every)],
+        "captions": [[int(remap(f)), t, s] for f, t, s in data["captions"] if remap(f) is not None],
+        "touches": keep_rows(data["touches"]),
+        "shots": shots,
+        "shotXg": xgs,
+        "moments": moments,
+        "actions": keep_rows(data["actions"]),
+        "segments": [],
+        "club": None,
+        "clips": [
+            [s0, s0 + c["b"] - c["a"], c["period"], c["lead"]["minute"] if c["lead"] else "",
+             c["lead"]["type"] if c["lead"] else "", c["lead"]["side"] if c["lead"] else ""]
+            for c, s0 in zip(clips, starts)
+        ],
+        "highlights": True,
+    }
+    return out
+
+
 # ------------------------------------------------------------------- AI desk segments
 def _fan_line(curve: list[list], frame_of) -> list[int]:
     """One future's win-probability swing as [frame, home-minus-away in points, ...] for the fan chart."""

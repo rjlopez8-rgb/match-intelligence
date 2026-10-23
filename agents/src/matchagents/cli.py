@@ -356,11 +356,15 @@ def main(argv: list[str] | None = None) -> int:
     ed.add_argument("--no-ghosts", action="store_true")
     ed.add_argument("--futures", type=int, default=0, help="ghost futures per what-if (default: the agent's choice)")
     ed.add_argument("--reuse", action="append", help="segments JSON whose simulations can be reused (e.g. demo.json)")
-    st = sub.add_parser("site", help="build the website: season hub (index.html) + the 3D broadcast, linked together")
+    st = sub.add_parser("site", help="build the website: season hub (index.html) + every match in 3D (watch.html), linked together")
     st.add_argument("--season", type=Path, required=True, help="folder from `matchengine season`")
     st.add_argument("--demo", type=Path, required=True, help="the demo match bundle (with tracking)")
     st.add_argument("--segments", type=Path, default=None, help="AI desk segments JSON for the demo match")
     st.add_argument("--out", type=Path, default=Path("site"))
+    st.add_argument("--tracking", type=Path, default=None,
+                    help="bundles from `matchengine season --tracking DIR`: every match gets 3D highlights, "
+                         "and each matchday's match of the week the full match")
+    st.add_argument("--workers", type=int, default=None)
     sub.add_parser("diagram", help="print the desk workflow as Mermaid")
     sub.add_parser("spend", help="today's model spending")
     args = p.parse_args(argv)
@@ -375,21 +379,17 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{len(data['segments'])} desk segments -> {out}  (open it in a browser)")
         return 0
     if args.cmd == "site":
-        from matchstats.replay import build_replay, render_html
-        from matchstats.season import build_season, render_season
+        from .site import build_site
 
-        args.out.mkdir(parents=True, exist_ok=True)
-        match_id = json.loads((args.demo / "meta.json").read_text(encoding="utf-8"))["match_id"]
-        page = f"{match_id}.html"
-        segs = json.loads(args.segments.read_text(encoding="utf-8")) if args.segments else None
-        data = build_replay(args.demo, segs)
-        data["hub"] = f"index.html#/match/{match_id}"
-        (args.out / page).write_text(render_html(data, view="broadcast"), encoding="utf-8")
-        board = args.demo / "tryouts" / "board.json"
-        season = build_season(args.season, links={match_id: page}, board=board if board.exists() else None)
-        (args.out / "index.html").write_text(render_season(season), encoding="utf-8")
-        size = sum(f.stat().st_size for f in args.out.iterdir()) / 1e6
-        print(f"site -> {args.out}/index.html (season hub) + {page} (3D broadcast), {size:.1f} MB. Open index.html in a browser.")
+        r = build_site(args.season, args.demo, args.out, args.segments, args.tracking, args.workers)
+        print(f"site -> {args.out}: index.html (season hub), watch.html (3D), {r['matches']} matches in 3D "
+              f"({len(r['full'])} full, highlights for all), {r['mb']} MB "
+              f"(highlights {r['hl_mb']} MB, full matches {r['full_mb']} MB).")
+        if r["missing"]:
+            print(f"{len(r['missing'])} matches have no tracking yet, so no 3D: run "
+                  f"`matchengine season --out {args.season} --demo {args.demo} --tracking ../data/matches/season`, "
+                  f"then pass --tracking ../data/matches/season here.")
+        print("Serve it to view (pages load their match data): cd into the folder, then `python -m http.server 8000`.")
         return 0
     if args.cmd == "scout":
         return _scout(args)
