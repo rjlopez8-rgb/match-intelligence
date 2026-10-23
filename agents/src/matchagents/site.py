@@ -71,8 +71,37 @@ def _match_files(job: tuple) -> dict:
     return {"id": mid, **sizes}
 
 
+def _recap_fields(season: dict, season_dir: Path, recaps: Path | None) -> int:
+    """Each match report gets its recap (the Recap agent's, or code-written from the stats when there is none) and
+    its "what decided it?" simulation. Returns how many recaps came from the agent."""
+    from .recap import TURNING_FILE, evidence, fallback_recap
+
+    tp_path = season_dir / TURNING_FILE
+    research = json.loads(tp_path.read_text(encoding="utf-8"))["matches"] if tp_path.exists() else {}
+    written = json.loads(recaps.read_text(encoding="utf-8")) if recaps and recaps.exists() else {}
+    agent = 0
+    for m in season["matches"]:
+        r = research.get(m["id"]) or {}
+        rec = written.get(m["id"])
+        if rec and not rec.get("fallback") and rec.get("by") not in (None, "code", "offline"):
+            agent += 1
+        else:
+            rec = {**fallback_recap(evidence(m, season, r)), "by": "code"}
+        m["recap"] = {k: rec[k] for k in ("headline", "recap", "decided")} | {
+            "by": rec.get("by"), "reviewed": bool(rec.get("reviewed"))}
+        if r.get("status") == "ok":
+            tp = r["turning_point"]
+            m["whatif"] = {"minute": tp["minute"], "player": tp["player"], "type": tp["type"], "side": tp["side"],
+                           "xg": tp["xg"], "change": tp["change"], "n": r["futures"],
+                           "actual": [r["as_it_happened"][k] for k in ("home_win", "draw", "away_win")],
+                           "flipped": [r["with_change"][k] for k in ("home_win", "draw", "away_win")],
+                           "margin": r["with_change"]["margin_95"],
+                           "score": (r["with_change"].get("most_common_scores") or [[None]])[0][0]}
+    return agent
+
+
 def build_site(season_dir: Path, demo: Path, out: Path, segments: Path | None = None, tracking: Path | None = None,
-               workers: int | None = None, progress=print) -> dict:
+               workers: int | None = None, recaps: Path | None = None, progress=print) -> dict:
     from matchstats.replay import render_viewer_shell
     from matchstats.season import build_season, render_season
 
@@ -113,6 +142,7 @@ def build_site(season_dir: Path, demo: Path, out: Path, segments: Path | None = 
         m["w3d"] = {"hl": _watch(m["id"], "hl"), "full": _watch(m["id"], "full") if "full" in r else None,
                     "clips": r["clips"]} if r else None
     season["motw"] = motw
+    n_agent = _recap_fields(season, Path(season_dir), recaps)
     (out / "index.html").write_text(render_season(season), encoding="utf-8")
     (out / "watch.html").write_text(render_viewer_shell(), encoding="utf-8")
     # the demo's old address keeps working
@@ -125,7 +155,7 @@ def build_site(season_dir: Path, demo: Path, out: Path, segments: Path | None = 
     total = sum(f.stat().st_size for f in out.rglob("*") if f.is_file())
     report = {
         "matches": len(done), "full": sorted(i for i in done if "full" in done[i]), "missing": missing,
-        "mb": round(total / 1e6, 1),
+        "mb": round(total / 1e6, 1), "recaps_by_agent": n_agent,
         "hl_mb": round(sum(r["hl"] for r in done.values()) / 1e6, 1),
         "full_mb": round(sum(r.get("full", 0) for r in done.values()) / 1e6, 1),
     }

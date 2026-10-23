@@ -23,7 +23,7 @@ Status: engine, stats layer, seven-agent desk, ghost futures and the 3D broadcas
 |---|---|---|
 | Ingest synthetic match events as they happen | [`engine/`](engine/): agent-based 10 Hz match simulator + live feed | Done |
 | Interpret into stats, patterns, context | [`stats/`](stats/): live metrics, trained xG / pass-difficulty / win-probability models, key moments with evidence, 11 agent tools | Done |
-| Explain why moments matter | [`agents/`](agents/): seven agents as a Microsoft Agent Framework workflow on Foundry models, fact-checked, budget-guarded | Done (v1) |
+| Explain why moments matter | [`agents/`](agents/): seven agents as a Microsoft Agent Framework workflow on Foundry models, fact-checked, budget-guarded; the Recap agent for every season match, with a simulated "what decided it?" | Done (v1) |
 | Simulate the alternatives | [`engine/`](engine/) ghost futures + Ghost Scout, driven by the Scenario agent | Done (v1) |
 | Render on screen alongside the match | 3D broadcast (`stats/.../viewer/broadcast.html`): AI director, replays, telestration, ghost players, control room | Done (v1) |
 | Club mode: try any player in any position | [`engine/`](engine/) `tryout.py` (paired full-match try-outs), `matchengine board` / `serve`, the Scout agent, the recruitment board in the 3D page | Done (v1) |
@@ -100,6 +100,22 @@ most) can be watched in full. The demo match is MD7's pick and carries the AI de
 shared page, `watch.html?m=<match id>&v=hl|full`, which loads `matches/<id>.hl.json` or `.full.json`; the whole site is
 about 100 MB, under the 250 MB Static Web Apps limit. Serve the folder over HTTP (as above) rather than opening the
 file directly, because the page fetches its match.
+
+### Match recaps: what happened, and what decided it
+
+```
+cd agents
+matchagents recaps ../data/season --demo ../data/demo/riv-kin-1119 --research-only   # $0: the what-ifs (any machine)
+matchagents recaps ../data/season --out recaps-live.json                              # the Recap agent: asks first, ~$0.45
+matchagents site ... --recaps recaps-live.json                                         # the hub shows them
+```
+
+For every season match the stats layer finds the turning point (the goal or chance that moved win probability most).
+The engine froze each match the instant that shot was struck (`data/season/turning_forks.pkl.gz`; freezing needs an
+exact replay, so it was done on Linux, where the season was generated), and plays it to full time 40 times as it
+happened and 40 times with the shot flipped, on any machine. The Recap agent writes a headline, a short recap and what
+decided it; code checks every number, scoreline and player name against the evidence, then the Fact-checker reviews
+every claim; one rewrite, else a code-written recap. Without `--recaps` the hub shows the code-written ones.
 
 ### Club mode (player try-outs)
 

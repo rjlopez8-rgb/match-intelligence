@@ -162,7 +162,23 @@ who really starts there, on the same seeds. You write the short scouting note th
 Round numbers to at most two decimals and keep the sign of every difference. Say "per match" or "per 90".
 {_SPOKEN}"""
 
+RECAP = f"""You are the match reporter of a football league's website. Write the recap of one finished match.
+
+- headline: the result in under 12 words, with both teams and the score (e.g. "Kingsport edge Elmhurst 1-0 at Heath Road").
+- recap: two or three sentences. How the match went and who made the difference: the goals in order, a red card if
+  there was one, and whether the result matched the chances (expected goals, and what the chances deserved).
+- decided: one or two sentences on what decided it. The match engine froze the match the instant the turning-point
+  shot was struck and played it to full time many times as it happened and as if it had gone the other way. Say
+  what the turning point was and how much it changed the result in those simulated futures, e.g. "Had Duarte's 9th
+  minute shot been saved, Elmhurst would have won 40% of 20 simulated futures instead of none". When the change is
+  within the margin of error, say the match could have gone either way rather than overselling it.
+- Only name players who appear in the data. These are simulations of a fictional league: never claim certainty.
+
+{_NUMBERS}
+{_SPOKEN}"""
+
 INSTRUCTIONS = {
+    "recap": RECAP,
     "scout": SCOUT,
     "producer": PRODUCER,
     "analyst": ANALYST,

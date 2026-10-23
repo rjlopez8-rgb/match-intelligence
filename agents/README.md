@@ -26,6 +26,7 @@ flowchart LR
 | **Director** | Calls the live camera, the replay sequence (with slow motion) and the on-screen graphic for the 3D viewer. | `DirectorCue` |
 | **Commentator** | Writes 1-3 lines for the viewer's style (fan, tactician, analyst, academy), favourite team and language, using only the Analyst's facts. | `Commentary` |
 | **Fact-checker** | The gate. First code: every number, percentage, minute and score must exist in the stats layer's results. Then a model review of every claim. One rewrite is allowed; after that the stats layer's own factual title airs instead. | `Verdict` |
+| **Recap** (season matches) | Writes each season match's headline, recap and what decided it, from the season report and the turning-point simulation. Same checks as the commentary, then the Fact-checker's review. | `MatchRecap` |
 
 ## Why it can be trusted on air
 
@@ -55,6 +56,7 @@ matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m044   # the 74' g
 matchagents match ../data/sample/riv-kin-7 --limit 3 --style academy --out segments.json
 matchagents cover ../data/sample/riv-kin-7 --moment riv-kin-7-m044 --futures 40   # with 40 ghost futures
 matchagents render ../data/sample/riv-kin-7 segments.json            # 3D broadcast that plays the desk's segments
+matchagents recaps ../data/season --out recaps-live.json             # every season match's recap (asks first)
 matchagents spend                                                    # today's spending
 matchagents diagram                                                  # the workflow as Mermaid
 ```

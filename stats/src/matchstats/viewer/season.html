@@ -70,6 +70,16 @@ h2 { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: 
 .tile b { display: block; font-weight: 800; font-stretch: 78%; font-size: 24px; line-height: 1.05; }
 .tile span { font-size: 11.5px; color: var(--muted); }
 .note { font-size: 12px; color: var(--faint); line-height: 1.45; margin-top: 10px; }
+.recap-grid { margin-bottom: 14px; }
+.recap .rh { font-size: 20px; font-weight: 800; font-stretch: 85%; margin: 4px 0 8px; line-height: 1.15; }
+.recap p { margin: 0 0 8px; line-height: 1.55; font-size: 14px; color: #d5dde9; }
+.wi-lead { margin: 2px 0 10px; font-size: 14px; }
+.wi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.wi-col h3 { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; font-weight: 700; }
+.wi-row { display: grid; grid-template-columns: 104px minmax(0, 1fr) 40px; gap: 8px; align-items: center; font-size: 12.5px; margin: 6px 0; }
+.wi-row b { text-align: right; font-weight: 800; }
+.wi-bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.07); overflow: hidden; }
+.wi-bar span { display: block; height: 100%; border-radius: 4px; }
 
 /* tables */
 .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -212,6 +222,7 @@ footer { border-top: 1px solid var(--edge); padding: 18px 0 30px; color: var(--f
   .club-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .club-tiles .tile { min-width: 0; }
   .club-head { gap: 12px; } .mhead .crest.big { width: 44px; height: 44px; border-radius: 11px; font-size: 12px; }
   .lineups { grid-template-columns: minmax(0, 1fr); }
+  .wi-grid { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .clubs { grid-template-columns: minmax(0, 1fr); }
   .hide-sm { display: none; }
 }
@@ -379,6 +390,25 @@ function fixtureCard(m) {
     <div class="scorers"><div>${sc("home")}</div><div>${sc("away")}</div></div></a>`;
 }
 
+// ------------------------------------------------------------------ recap and "what decided it?"
+function recapCards(m, hc, ac) {
+  const r = m.recap; if (!r) return "";
+  const by = r.by && r.by !== "code" ? `Written by the Recap agent${r.reviewed ? " · checked by the Fact-checker" : ""}` : "Written from the match stats";
+  const w = m.whatif;
+  let what = "";
+  if (w) {
+    const flipped = w.change === "shot_misses" ? "had been saved" : "had gone in";
+    const kind = { goal: "goal", great_save: "big save", big_chance: "big chance", woodwork: "shot off the woodwork", chance: "best chance" }[w.type] || "chance";
+    const row = (label, v, i, c) => `<div class="wi-row"><span class="muted">${label}</span><span class="wi-bar"><span style="width:${Math.round(v[i] * 100)}%;background:${c}"></span></span><b class="num">${Math.round(v[i] * 100)}%</b></div>`;
+    const block = (title, v) => `<div class="wi-col"><h3>${title}</h3>${row(`${esc(C[m.home].short)} win`, v, 0, hc)}${row("Draw", v, 1, "rgba(255,255,255,0.45)")}${row(`${esc(C[m.away].short)} win`, v, 2, ac)}</div>`;
+    what = `<section class="card"><h2>What decided it?</h2>
+      <p class="wi-lead"><b>${esc(w.minute)} · ${esc(w.player)}'s ${kind}</b> <span class="faint">(${esc(C[m[w.side]]?.short || "")}${w.xg != null ? `, xG ${w.xg.toFixed(2)}` : ""})</span></p>
+      <div class="wi-grid">${block("As it happened", w.actual)}${block(`If it ${flipped}`, w.flipped)}</div>
+      <div class="note">The match engine froze the match the instant the shot was struck and played it to full time ${w.n} times each way, with the same random streams, so the difference is that one moment. Margin of error ±${Math.round(w.margin * 100)} points.${w.score ? ` Most common score if it ${flipped}: ${esc(w.score)}.` : ""}</div></section>`;
+  }
+  return `<div class="grid g2 recap-grid"><section class="card recap"><h2>Match report</h2><h3 class="rh">${esc(r.headline)}</h3><p>${esc(r.recap)}</p>${r.decided ? `<p>${esc(r.decided)}</p>` : ""}<div class="note">${by}.</div></section>${what}</div>`;
+}
+
 // ------------------------------------------------------------------ match report
 const STAT_ROWS = [["possession", "Possession", (v) => `${Math.round(v * 100)}%`], ["xg", "Expected goals (xG)", (v) => v.toFixed(2)], ["shots", "Shots", String],
   ["shots_on_target", "On target", String], ["passes", "Passes", String], ["pass_completion", "Pass accuracy", (v) => `${Math.round(v * 100)}%`],
@@ -398,6 +428,7 @@ function viewMatch(id) {
         ${m.link ? `<a class="cta ghost" href="${esc(m.link)}#club">Try players in this fixture (Club mode)</a>` : ""}
         <a class="cta ghost" href="#/results/${m.md}">Matchday ${m.md} results</a></div>
     </div>
+    ${recapCards(m, hc, ac)}
     <div class="grid g2">
       <section class="card"><h2>How the match swung · win probability</h2><div id="wp"></div><div class="legend"><span><i class="chip" style="background:${hc}"></i>${esc(C[m.home].short)} win</span><span><i class="chip" style="background:${ac}"></i>${esc(C[m.away].short)} win</span><span><i class="chip" style="background:rgba(255,255,255,0.6)"></i>goal</span></div>
         <div class="note">From the stats layer's live win-probability model, minute by minute. What the chances deserved: ${esc(C[m.home].short)} win ${Math.round(m.xres[0] * 100)}%, draw ${Math.round(m.xres[1] * 100)}%, ${esc(C[m.away].short)} win ${Math.round(m.xres[2] * 100)}%.</div></section>

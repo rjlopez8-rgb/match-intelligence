@@ -311,6 +311,69 @@ def _scout(args) -> int:
     return 0
 
 
+EST_USD_PER_RECAP_CALL = 0.004   # gpt-5-mini, low reasoning, priced high like the budget guard
+
+
+def _recaps(args) -> int:
+    """Recaps for every season match: research first ($0, engine), then the Recap agent (asks before spending)."""
+    from matchstats.season import build_season
+
+    from .budget import BudgetExceeded
+    from .recap import TURNING_FILE, evidence, fallback_recap, research_season, squad_names
+
+    tp_path = args.season / TURNING_FILE
+    if args.futures or not tp_path.exists():
+        research_season(args.season, n=args.futures or 40, workers=args.workers, demo=args.demo)
+    research = json.loads(tp_path.read_text(encoding="utf-8"))["matches"] if tp_path.exists() else {}
+    if args.research_only:
+        return 0
+    season = build_season(args.season)
+    out = json.loads(args.out.read_text(encoding="utf-8")) if args.out.exists() else {}
+    todo = [m for m in season["matches"] if args.redo or m["id"] not in out]
+    if not todo:
+        print(f"Every match already has a recap in {args.out} (use --redo to rewrite).")
+        return 0
+    calls = 1 if args.no_review else 2
+    if not args.offline and not args.yes:
+        guard = BudgetGuard()
+        models = ["recap=" + all_settings()["recap"].deployment] + ([] if args.no_review else ["factchecker=" + all_settings()["factchecker"].deployment])
+        print("Models: " + ", ".join(models))
+        print(f"{len(todo)} recaps, {calls} model calls each ({'writer only' if args.no_review else 'writer + fact-check'}): "
+              f"roughly ${len(todo) * calls * EST_USD_PER_RECAP_CALL:.2f}, at most ${len(todo) * calls * 2 * EST_USD_PER_RECAP_CALL:.2f} "
+              f"if every recap needs its one rewrite.")
+        print(f"Budget guard: ${guard.remaining():.2f} left of today's ${guard.cap:.2f} cap. The run stops itself at the cap "
+              "and keeps what it finished; the same command later does the rest.")
+        if input("Run with real models? [y/N] ").strip().lower() != "y":
+            return 1
+    from .recap import Recapper
+
+    agent = Recapper(offline_mode=args.offline, review=not args.no_review)
+    names = squad_names(season)
+
+    async def go():
+        for k, m in enumerate(todo, 1):
+            ev = evidence(m, season, research.get(m["id"]))
+            try:
+                rec = await agent.recap(ev, names)
+            except BudgetExceeded as exc:
+                print(f"\nDaily budget reached: stopped ({exc}). Finished recaps are saved; run the same command later.")
+                break
+            except Exception as exc:  # a model or network error: the code-written recap, never a crash
+                rec = {**fallback_recap(ev), "checked": True, "attempts": 0, "fallback": True, "by": "code", "error": str(exc)[:300]}
+            out[m["id"]] = rec
+            args.out.write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
+            tag = "fallback (code)" if rec.get("fallback") else f"approved on attempt {rec['attempts']}"
+            print(f"{k:>2}/{len(todo)}  {m['id']:<14} {rec['headline']}  [{tag}]")
+
+    asyncio.run(go())
+    done = sum(1 for m in season["matches"] if m["id"] in out)
+    fb = sum(1 for r in out.values() if r.get("fallback"))
+    print(f"{done}/{len(season['matches'])} recaps in {args.out} ({fb} code-written fallbacks); this run ${agent.trace.usd:.4f}.")
+    if agent.guard is not None:
+        print(agent.guard.report())
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     _utf8()
     p = argparse.ArgumentParser(prog="matchagents", description="The AI broadcast desk")
@@ -356,6 +419,19 @@ def main(argv: list[str] | None = None) -> int:
     ed.add_argument("--no-ghosts", action="store_true")
     ed.add_argument("--futures", type=int, default=0, help="ghost futures per what-if (default: the agent's choice)")
     ed.add_argument("--reuse", action="append", help="segments JSON whose simulations can be reused (e.g. demo.json)")
+    rc = sub.add_parser("recaps", help="a recap for every season match, with a simulated 'what decided it?'")
+    rc.add_argument("season", type=Path, help="folder from `matchengine season`")
+    rc.add_argument("--out", type=Path, default=Path("recaps.json"), help="recaps JSON (resumes if it exists)")
+    rc.add_argument("--demo", type=Path, default=None, help="the demo bundle (its turning point uses its own checkpoints)")
+    rc.add_argument("--futures", type=int, default=0,
+                    help="what-if futures each way (default 40 when there is no research yet; giving it re-runs the research: "
+                         "$0, engine only, from the committed frozen turning points, so any machine can do it)")
+    rc.add_argument("--research-only", action="store_true", help="only the turning points and what-ifs ($0)")
+    rc.add_argument("--no-review", action="store_true", help="skip the Fact-checker model review (about half the cost)")
+    rc.add_argument("--workers", type=int, default=None)
+    rc.add_argument("--offline", action="store_true")
+    rc.add_argument("--yes", action="store_true")
+    rc.add_argument("--redo", action="store_true", help="rewrite recaps that already exist")
     st = sub.add_parser("site", help="build the website: season hub (index.html) + every match in 3D (watch.html), linked together")
     st.add_argument("--season", type=Path, required=True, help="folder from `matchengine season`")
     st.add_argument("--demo", type=Path, required=True, help="the demo match bundle (with tracking)")
@@ -365,6 +441,7 @@ def main(argv: list[str] | None = None) -> int:
                     help="bundles from `matchengine season --tracking DIR`: every match gets 3D highlights, "
                          "and each matchday's match of the week the full match")
     st.add_argument("--workers", type=int, default=None)
+    st.add_argument("--recaps", type=Path, default=None, help="recaps JSON from `matchagents recaps`")
     sub.add_parser("diagram", help="print the desk workflow as Mermaid")
     sub.add_parser("spend", help="today's model spending")
     args = p.parse_args(argv)
@@ -381,10 +458,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "site":
         from .site import build_site
 
-        r = build_site(args.season, args.demo, args.out, args.segments, args.tracking, args.workers)
+        r = build_site(args.season, args.demo, args.out, args.segments, args.tracking, args.workers, args.recaps)
         print(f"site -> {args.out}: index.html (season hub), watch.html (3D), {r['matches']} matches in 3D "
               f"({len(r['full'])} full, highlights for all), {r['mb']} MB "
               f"(highlights {r['hl_mb']} MB, full matches {r['full_mb']} MB).")
+        print(f"Recaps: {r['recaps_by_agent']} by the Recap agent, the rest written from the stats"
+              + ("" if args.recaps else " (pass --recaps recaps.json from `matchagents recaps`)") + ".")
         if r["missing"]:
             print(f"{len(r['missing'])} matches have no tracking yet, so no 3D: run "
                   f"`matchengine season --out {args.season} --demo {args.demo} --tracking ../data/matches/season`, "
@@ -393,6 +472,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.cmd == "scout":
         return _scout(args)
+    if args.cmd == "recaps":
+        return _recaps(args)
     if args.cmd == "editions":
         return _editions(args)
     if args.cmd == "spend":

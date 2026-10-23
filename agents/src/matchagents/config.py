@@ -14,7 +14,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 
-AGENTS = ("producer", "analyst", "scenario", "telestrator", "director", "commentator", "factchecker", "scout")
+AGENTS = ("producer", "analyst", "scenario", "telestrator", "director", "commentator", "factchecker", "scout", "recap")
 DEFAULT_DEPLOYMENT = "gpt-5-mini-1"
 
 
@@ -36,6 +36,7 @@ _LIMITS: dict[str, tuple[int, str | None]] = {
     "commentator": (2500, "low"),
     "factchecker": (2500, "low"),
     "scout": (2500, "low"),
+    "recap": (2500, "low"),
 }
 
 

@@ -137,3 +137,10 @@ class ScoutReport(_Strict):
     headline: str
     report: str
     verdict: Literal["sign", "shortlist", "pass"]
+
+
+# -------------------------------------------------------------------------- recap (season matches)
+class MatchRecap(_Strict):
+    headline: str = Field(description="the result in a headline, under 12 words")
+    recap: str = Field(description="two or three sentences: how the match went, who made the difference")
+    decided: str = Field(description="one or two sentences: the turning point and what the simulations say about it")
