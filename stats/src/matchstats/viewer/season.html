@@ -188,6 +188,12 @@ h2 { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: 
 .clubcard h3 { margin: 6px 0 2px; font-size: 16px; font-weight: 800; font-stretch: 85%; }
 .clubcard .rec { display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: var(--muted); }
 .clubcard .rec b { color: var(--ink); font-size: 18px; font-weight: 800; font-stretch: 80%; display: block; }
+/* club page header: scoped under .mhead so it beats `.mhead .big` (the scoreline size) */
+.club-head { display: flex; align-items: center; gap: 16px; margin: 12px 0 4px; min-width: 0; }
+.club-head > div { min-width: 0; }
+.club-head .muted { margin-top: 5px; }
+.club-tiles { margin-top: 12px; }
+.crest.big, .mhead .crest.big { width: 56px; height: 56px; border-radius: 14px; font-size: 15px; font-stretch: 85%; line-height: 1; letter-spacing: 0.04em; }
 
 footer { border-top: 1px solid var(--edge); padding: 18px 0 30px; color: var(--faint); font-size: 12px; line-height: 1.5; }
 
@@ -203,6 +209,8 @@ footer { border-top: 1px solid var(--edge); padding: 18px 0 30px; color: var(--f
   .mhead .sb { gap: 8px; } .mhead .tm { font-size: 15px; gap: 7px; } .mhead .tm .crest { width: 28px; height: 28px; font-size: 9px; }
   .mhead .tm { min-width: 0; overflow-wrap: anywhere; line-height: 1.1; }
   h1 { font-size: 27px; } .mhead .big { font-size: 42px; } .mhead .tm { font-size: 18px; }
+  .club-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .club-tiles .tile { min-width: 0; }
+  .club-head { gap: 12px; } .mhead .crest.big { width: 44px; height: 44px; border-radius: 11px; font-size: 12px; }
   .lineups { grid-template-columns: minmax(0, 1fr); }
   .clubs { grid-template-columns: minmax(0, 1fr); }
   .hide-sm { display: none; }
@@ -503,8 +511,8 @@ function viewClub(code) {
   const squad = Object.values(P).filter((p) => p.club === code).sort((a, b) => "GK CB FB DM CM AM W ST".indexOf(a.role) - "GK CB FB DM CM AM W ST".indexOf(b.role) || (b.season?.min || 0) - (a.season?.min || 0));
   v.innerHTML = `<div class="mhead" style="--hc:${teamColor(code)};--ac:${c.colors.secondary}">
       <div class="meta"><span>${esc(c.city)} · founded ${c.founded} · ${esc(c.stadium)} (${Number(c.capacity).toLocaleString()})</span><span>Manager ${esc(c.manager)} · ${esc(c.formation)}</span></div>
-      <div style="display:flex;align-items:center;gap:16px;margin:12px 0 4px">${crest(code).replace('class="crest ', 'class="crest big ').replace("width", "width")}<div><h1>${esc(c.name)}</h1><div class="muted">${esc(c.identity || "")}</div></div></div>
-      <div class="tiles" style="margin-top:12px"><div class="tile"><b class="num">${r.pos}${["st", "nd", "rd"][r.pos - 1] || "th"}</b><span>in the table · ${r.xpos}${["st", "nd", "rd"][r.xpos - 1] || "th"} on expected</span></div>
+      <div class="club-head">${crest(code, "big")}<div><h1>${esc(c.name)}</h1><div class="muted">${esc(c.identity || "")}</div></div></div>
+      <div class="tiles club-tiles"><div class="tile"><b class="num">${r.pos}${["st", "nd", "rd"][r.pos - 1] || "th"}</b><span>in the table · ${r.xpos}${["st", "nd", "rd"][r.xpos - 1] || "th"} on expected</span></div>
         <div class="tile"><b class="num">${r.pts}</b><span>points · ${fmt(r.xpts, 1)} expected</span></div><div class="tile"><b class="num">${r.w}-${r.d}-${r.l}</b><span>won-drawn-lost</span></div>
         <div class="tile"><b class="num">${r.gf}:${r.ga}</b><span>goals · xG ${fmt(r.xgf, 1)}:${fmt(r.xga, 1)}</span></div></div></div>
     <div class="grid g2">
