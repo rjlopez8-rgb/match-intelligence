@@ -139,10 +139,14 @@ def record_tracking(root: str | Path, out: str | Path, demo: str | Path | None =
         progress(f"Re-playing {len(jobs)} matches with tracking on {n} worker(s), ~30 s each per core")
         with ProcessPoolExecutor(max_workers=n) as ex:
             futs = [ex.submit(_replay_with_tracking, (fx, str(root), str(out))) for fx in jobs]
-            for k, f in enumerate(as_completed(futs), 1):
-                r = f.result()           # a SeasonMismatch stops the run here
-                ready.append(r["match_id"])
-                progress(f"  {k}/{len(jobs)}  {r['match_id']}  identical to the committed match, {r['frames']} frames")
+            try:
+                for k, f in enumerate(as_completed(futs), 1):
+                    r = f.result()       # a SeasonMismatch stops the run here
+                    ready.append(r["match_id"])
+                    progress(f"  {k}/{len(jobs)}  {r['match_id']}  identical to the committed match, {r['frames']} frames")
+            except SeasonMismatch:
+                ex.shutdown(wait=True, cancel_futures=True)   # don't play the rest of the season for nothing
+                raise
     return ready
 
 
@@ -192,6 +196,23 @@ def simulate_season(root: str | Path, demo: str | Path | None = None, workers: i
     return index
 
 
+def _mismatch_help(e: Exception) -> str:
+    import platform
+
+    import numpy
+
+    return (f"\nStopped: {e}\n\n"
+            f"This machine plays the same seeds into different matches than the ones committed in the season, so its "
+            f"3D would not show the real games. Nothing is wrong with the season or the code: tiny rounding differences "
+            f"between environments (operating system, numpy version) change a simulated match within seconds.\n"
+            f"This machine: {platform.system()} {platform.release()}, Python {platform.python_version()}, "
+            f"numpy {numpy.__version__}. The committed season re-plays exactly on Linux with numpy 2.5.3.\n\n"
+            f"What to do:\n"
+            f"  - Try numpy 2.5.3 here: pip install numpy==2.5.3, then re-run with --only {str(e).split(':')[0]} --workers 1\n"
+            f"  - Or build the 3D data on Linux: WSL on Windows (wsl --install), or the GitHub Actions site build.\n"
+            f"  - Do not re-simulate the season to make it match: every result, table and player stat would change.")
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(prog="matchengine season", description="Simulate a full league season")
     ap.add_argument("--out", required=True)
@@ -202,13 +223,19 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--only", nargs="*", default=None, help="with --tracking: just these match ids")
     a = ap.parse_args(argv)
     if a.tracking and (Path(a.out) / "season.json").exists():
-        ready = record_tracking(a.out, a.tracking, a.demo, a.workers, a.only)
+        try:
+            ready = record_tracking(a.out, a.tracking, a.demo, a.workers, a.only)
+        except SeasonMismatch as e:
+            raise SystemExit(_mismatch_help(e)) from None
         print(f"{len(ready)} matches with tracking -> {a.tracking}")
         return
     idx = simulate_season(a.out, a.demo, a.workers)
     print(f"{len(idx['matches'])} matches -> {a.out}/season.json")
     if a.tracking:
-        ready = record_tracking(a.out, a.tracking, a.demo, a.workers, a.only)
+        try:
+            ready = record_tracking(a.out, a.tracking, a.demo, a.workers, a.only)
+        except SeasonMismatch as e:
+            raise SystemExit(_mismatch_help(e)) from None
         print(f"{len(ready)} matches with tracking -> {a.tracking}")
 
 
