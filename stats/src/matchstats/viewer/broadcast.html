@@ -144,9 +144,8 @@ a.btn { text-decoration: none; color: inherit; display: inline-block; }
 .wipe { position: fixed; inset: -10% -30%; z-index: 6; pointer-events: none; transform: translateX(-120%) skewX(-18deg);
   background: linear-gradient(90deg, transparent 0, var(--wipe-c, #0b1220) 12%, var(--wipe-c, #0b1220) 88%, transparent 100%);
   display: grid; place-items: center; }
-.wipe span { transform: skewX(18deg); font-weight: 800; font-stretch: 70%; font-size: 64px; letter-spacing: 0.08em; color: #fff; opacity: 0.95; }
-.wipe.run { animation: wipe 0.9s cubic-bezier(.65,0,.35,1) forwards; }
-@keyframes wipe { from { transform: translateX(-120%) skewX(-18deg); } to { transform: translateX(120%) skewX(-18deg); } }
+.wipe span { transform: skewX(18deg); font-weight: 800; font-stretch: 70%; font-size: clamp(34px, 7vw, 64px); letter-spacing: 0.08em; color: #fff;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.35); white-space: nowrap; }
 
 .loading { position: fixed; inset: 0; display: grid; place-items: center; z-index: 9; background: var(--night); color: var(--muted);
   font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; transition: opacity .6s; }
@@ -2095,10 +2094,24 @@ function startReplay(m) {
   replay = { steps, i: -1, resume: pos, moment: m, end: dir, side };
   nextReplayStep();
 }
+// A wipe sweeps in, stops with its label centred long enough to read (longer labels hold longer), cuts behind the
+// cover (mid), then sweeps out. Playback waits for mid, so nothing is missed while the label is up.
+let wipeAnim = null, wipeMid = null, wipeTimer = 0;
 function wipe(text, color, mid) {
-  const w = $("wipe"); $("wipeText").textContent = text; w.style.setProperty("--wipe-c", color || "#0b1220");
-  w.classList.remove("run"); void w.offsetWidth; w.classList.add("run");
-  setTimeout(mid, 420);
+  const w = $("wipe"), label = $("wipeText");
+  if (wipeAnim) { wipeAnim.cancel(); clearTimeout(wipeTimer); const m = wipeMid; wipeMid = null; if (m) m(); }   // a new wipe finishes the old one
+  label.textContent = text; w.style.setProperty("--wipe-c", color || "#0b1220");
+  const tin = 340, tout = 380, hold = Math.round(clamp(450 + 45 * String(text).length, 600, 1400)), total = tin + hold + tout;
+  const off = "translateX(-120%) skewX(-18deg)", on = "translateX(0) skewX(-18deg)", gone = "translateX(120%) skewX(-18deg)";
+  wipeAnim = w.animate([
+    { transform: off, easing: "cubic-bezier(.2,.75,.25,1)" },
+    { transform: on, offset: tin / total },
+    { transform: on, offset: (tin + hold) / total, easing: "cubic-bezier(.65,0,.8,.3)" },
+    { transform: gone },
+  ], { duration: total, fill: "forwards" });
+  label.animate([{ opacity: 0 }, { opacity: 1, offset: (tin * 0.8) / total }, { opacity: 1 }], { duration: total, fill: "forwards" });
+  wipeMid = mid;
+  wipeTimer = setTimeout(() => { const m = wipeMid; wipeMid = null; if (m) m(); }, tin + hold);
 }
 function nextReplayStep() {
   replay.wiping = true;
