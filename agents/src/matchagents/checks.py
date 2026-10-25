@@ -126,15 +126,16 @@ _DATA = re.compile(r"[{}\[\]]|'(?:home|away|draw)'|\b(?:home|away|draw)\s*:|\b[a
 _LONG_DECIMAL = re.compile(r"(?<![\w.])\d+\.\d{3,}")
 
 
-def check_style(commentary: Commentary) -> list[dict]:
-    """Issues for lines that would sound wrong on air, even if every number is true."""
+def check_style(commentary: Commentary, max_numbers: int = 3) -> list[dict]:
+    """Issues for lines that would sound wrong on air, even if every number is true. ``max_numbers`` is per line:
+    3 for spoken commentary; written recaps allow more (a what-if sentence carries a minute, two shares and a count)."""
     issues = []
     for i, text in _texts(commentary):
         if m := _DATA.search(text):
             issues.append({"line": i, "claim": m.group(0), "problem": "pasted data: say it in words"})
         for d in _LONG_DECIMAL.findall(text):
             issues.append({"line": i, "claim": d, "problem": "unrounded number: round it for speech"})
-        if len(_NUM.findall(_SCORE.sub(" ", _normalise(text)))) > 3:
+        if len(_NUM.findall(_SCORE.sub(" ", _normalise(text)))) > max_numbers:
             issues.append({"line": i, "claim": text[:40], "problem": "too many numbers in one line"})
     return issues
 

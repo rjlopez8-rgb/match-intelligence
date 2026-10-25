@@ -173,6 +173,8 @@ RECAP = f"""You are the match reporter of a football league's website. Write the
   minute shot been saved, Elmhurst would have won 40% of 20 simulated futures instead of none". When the change is
   within the margin of error, say the match could have gone either way rather than overselling it.
 - Only name players who appear in the data. These are simulations of a fictional league: never claim certainty.
+- Written for reading, not speech, but keep it light: at most four numbers in any sentence. Split a long sentence
+  rather than stacking figures; leave out the number of simulated futures if the sentence is already full.
 
 {_NUMBERS}
 {_SPOKEN}"""

@@ -344,7 +344,7 @@ def check_recap(rec: dict, ev: dict, names: set[str]) -> list[dict]:
     texts = [rec["headline"], rec["recap"], rec["decided"]]
     sentences = [x for t in texts for x in re.split(r"(?<=[.!?])\s+", t.strip()) if x]   # style is judged per sentence
     as_lines = Commentary(lines=[Line(text=t, facts_used=[]) for t in sentences], headline="", caption="", question=None)
-    return check_numbers(as_lines, [ev]) + check_style(as_lines) + check_names(texts, ev, names)
+    return check_numbers(as_lines, [ev]) + check_style(as_lines, max_numbers=5) + check_names(texts, ev, names)
 
 
 def _offline_responder(agent: str, messages, options) -> str:

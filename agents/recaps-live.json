@@ -1,0 +1,611 @@
+{
+ "md01-ash-crw": {
+  "headline": "Crowmoor draw 1-1 with Ashvale at Mill Lane",
+  "recap": "Crowmoor took a halftime lead when Mikel Carbajosa scored in stoppage at 45+3, and Ashvale replied through Thijs van Rijn from Oisín Mulcahy’s assist on 56. Crowmoor controlled possession with 72% and a slightly higher xG of 0.53 to 0.44, but Ashvale had the edge in shots on target, 5 to 3; there were no red cards. The draw matched the chances fairly well: the model gave a draw the single largest probability at 47%, with Crowmoor slightly more likely than Ashvale to win.",
+  "decided": "The turning point was Mikel Carbajosa’s 45+3 strike, a chance worth 0.16 xG. When the match engine froze the moment the shot was struck and replayed the rest of the game 20 times as it went in, Crowmoor won 90% of those simulated finishes and none were home wins; when the shot was instead saved in the alternate 20 simulations Crowmoor still won 60% while home wins rose to 10%. That swing pushed the outcome strongly towards Crowmoor, but given the stated 22% margin of error the game could plausibly have gone either way.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md01-riv-elm": {
+  "headline": "Riverside Athletic beat Elmhurst Albion 2-1",
+  "recap": "Goals: Domagoj Babić (50'), Kwame Mensah (56'), Kwame Mensah (72'). Riverside Athletic had 69% of the ball, and the chances were worth 0.60 expected goals to 0.31.",
+  "decided": "The turning point was Kwame Mensah's goal at 72'. In 20 simulated futures where it had been saved, Riverside Athletic won 20% of the time, against 85% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 4,
+    "claim": "The result broadly matched the chances profile, with Riverside the likelier winner according to the chances model.",
+    "problem": "The chances model data show draw as the likeliest outcome (draw 48%, Riverside/home win 36%, Elmhurst/away win 16%). Saying Riverside was the likelier winner contradicts the provided chances model."
+   }
+  ]
+ },
+ "md01-sal-kin": {
+  "headline": "Kingsport United rout Saltmarsh FC 3-0 at Estuary Road",
+  "recap": "Kingsport United won 3-0 at Estuary Road, Rafael Duarte opening the scoring with a 12' penalty before Cian Brennan struck in the 66th and again in the 90th, assisted by Yuto Arakawa and Kelechi Nwosu. Kingsport dominated the metrics, leading the xG battle 2.13 to 0.55 and outshooting Saltmarsh 21 to 10 with 11 shots on target to one. The result matched the chances — the model gave Kingsport an 80% chance to win — and Brennan was named player of the match for his brace.",
+  "decided": "The turning point was Rafael Duarte's goal at 12', a penalty worth 0.74 xG that the engine froze on. If the penalty had been saved the away-win chance would have fallen from 75% to 60%, but that swing sits inside the 22% margin of error so the match could have gone either way; the most common alternate final score was 0-1.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md01-wes-ngc": {
+  "headline": "Westmere Town and Northgate City draw 0-0 at The Quarry",
+  "recap": "A goalless stalemate saw Northgate dominate possession and chances while Westmere defended deep. Northgate had the better expected goals, 0.70 to 0.14, and more shots, 10 to 4, yet Marin Radošević earned player of the match for Westmere with a composed display. There were no goals and no red cards, and the result slightly flattered Westmere compared with the chances; the match-the-chances model gave a draw 46% and an away win 48%.",
+  "decided": "The turning point was Unai Escudero's big save at 20'; the engine froze the game at that moment and replayed it 20 times as it was and 20 times with the shot given. In the original runs a draw was most likely at 65% but, had the shot gone in, an away win rose to 70%, a swing larger than the 22% margin of error, so the save proved decisive.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md02-ash-ngc": {
+  "headline": "Northgate City beat Ashvale Rovers 3-0",
+  "recap": "Goals: Mathis Delaunay (25'), Yanis Morvan (67'), Yanis Morvan (78'). Ashvale Rovers had 31% of the ball, and the chances were worth 0.48 expected goals to 1.23.",
+  "decided": "The turning point was Mathis Delaunay's goal at 25'. In 20 simulated futures where it had been saved, Northgate City won 25% of the time, against 80% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 4,
+    "claim": "The match was frozen at the instant the ",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md02-elm-crw": {
+  "headline": "Crowmoor Wanderers beat Elmhurst Albion 2-0",
+  "recap": "Goals: Mikel Carbajosa (4'), Mikel Carbajosa (62'). Elmhurst Albion had 49% of the ball, and the chances were worth 0.55 expected goals to 3.21.",
+  "decided": "The turning point was Mikel Carbajosa's goal at 4'. In 20 simulated futures where it had been saved, Crowmoor Wanderers won 65% of the time, against 75% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 5,
+    "claim": "When frozen and replayed 20 times each w",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md02-sal-riv": {
+  "headline": "Riverside Athletic win 1-0 at Estuary Road",
+  "recap": "Riverside Athletic won 1-0 at Estuary Road thanks to an early Kwame Mensah finish from a Lucas Varga assist that proved decisive. Saltmarsh managed just 27% possession and 0.20 xG, while Riverside had 0.66 xG and more attempts; the result broadly reflected the chances with Riverside favored to win in 43% of the model outcomes.",
+  "decided": "The turning point was Kwame Mensah's early goal. Simulations replayed from that instant show Riverside wins fell from 60% to 45% when the chance was flipped, a change within the 22% margin of error, so the match could have gone either way.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md02-wes-kin": {
+  "headline": "Westmere Town and Kingsport United draw 0-0 at The Quarry",
+  "recap": "A goalless draw where Kingsport dominated the chances but could not find a winner. Kingsport had the better xG, 1.24 to Westmere’s 0.29, and peppered the goal with 17 shots and eight on target while Westmere kept 62% possession but managed only two attempts; there were no goals and no red cards, and Josh Brierley was named player of the match. The result understates Kingsport’s superiority — the model gave them a 63% chance to win and a 29% chance of a draw rather than the actual scoreline.",
+  "decided": "The turning point was Rafael Duarte’s big save at 24', a 0.02 xG chance. In simulations frozen at that instant and replayed, the actual sequence produced an away win probability of 50% and a draw probability of 35%, but when the shot was flipped to a goal the away win chance rose to 85% and draws fell to 15%, with 0-2 the most common final score; the swing was larger than the 22% margin of error, so the save materially changed how the rest of the match played out.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md03-ash-kin": {
+  "headline": "Kingsport United beat Ashvale Rovers 2-0 at Mill Lane",
+  "recap": "Kingsport controlled chances and punished Ashvale with two quick goals, Rafael Duarte scoring in the 37th and again in the 41st after a Yuto Arakawa assist. Ashvale had more possession but only managed seven shots with none on target; Kingsport finished with 14 shots and seven on target and deserved the win on the balance of chances and expected goals (Ashvale 0.57 xG, Kingsport 0.90 xG).",
+  "decided": "The turning point was Rafael Duarte's 37th-minute strike, a low-probability chance with an xG of 0.01, and the match engine was frozen at that instant and replayed 20 times as it happened and 20 times as if the shot had been saved. As it happened Kingsport won 90% of those replays; had the shot been saved the draw was most likely at 45%, so the goal clearly shifted the likely result beyond the margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md03-elm-ngc": {
+  "headline": "Elmhurst Albion and Northgate City draw 0-0",
+  "recap": "Neither side scored. Elmhurst Albion had 46% of the ball, and the chances were worth 0.11 expected goals to 0.47.",
+  "decided": "The turning point was Rayan Marchetti's shot off the woodwork at 35'. In 20 simulated futures where it had gone in, Northgate City won 60% of the time, against 50% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 2,
+    "claim": "Northgate had seven shots to Elmhurst's ",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md03-riv-crw": {
+  "headline": "Riverside Athletic beat Crowmoor Wanderers 2-0 at The Wharf Ground",
+  "recap": "Riverside Athletic controlled the game with 60% possession and 25 shots, converting two from Kwame Mensah — a 30th-minute penalty and a 51st-minute finish — while Crowmoor managed six shots and one on target. Mensah’s brace proved decisive; the xG total was 2.10 to 0.35 in Riverside’s favour and the result matched the chances, with an 86% chance the hosts deserved to win. There were no red cards and Mensah took the player of the match award with two goals.",
+  "decided": "The turning point was Kwame Mensah’s 30' penalty, a 0.74 xG chance: in frozen-shot simulations Riverside’s win probability fell from 55% to 25% if that shot had been saved, a change larger than the 22% margin of error, so it substantially shifted the balance; when flipped the most common final score was 0-0.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md03-wes-sal": {
+  "headline": "Westmere Town draw Saltmarsh FC 1-1 at The Quarry",
+  "recap": "Westmere and Saltmarsh shared the points after Ivan Vuković opened the scoring at 23' from a Josh Brierley assist and Jude Brierley levelled at 32' from Chidi Okonkwo's pass. Saltmarsh created the clearer openings, with 13 shots to 3 and xG 0.68 to 0.29, while the model rated a draw the most likely outcome at 45%.",
+  "decided": "The turning point was Ivan Vuković's 23' goal, a very low-quality chance with xG 0.02. Simulations show that as struck Westmere won 75% and drew 25%, while if the shot had been saved Westmere wins fell to 25% and Saltmarsh wins rose to 35%, so the strike decisively shifted the likely outcomes.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md04-ash-sal": {
+  "headline": "Ashvale Rovers and Saltmarsh FC draw 1-1",
+  "recap": "Goals: Jude Brierley (15'), Thijs van Rijn (23'). Ashvale Rovers had 46% of the ball, and the chances were worth 0.92 expected goals to 0.28.",
+  "decided": "The turning point was Jude Brierley's goal at 15'. In 20 simulated futures where it had been saved, Saltmarsh FC won 30% of the time, against 75% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 2,
+    "claim": "Ashvale created far more quality chances, finishing with 0.92 xG to Saltmarsh's 0.28 and registering nine shots to two, so the point was deserved by the chances model.",
+    "problem": "The numbers are correct (home xG 0.92 vs away 0.28; shots 9 vs 2), but the conclusion that “the point was deserved by the chances model” is not supported by the supplied model results: the chances-model probabilities are home win 52%, draw 37%, away win 10%. The draw (the point) was not the most likely outcome according to the model, so claiming the model deems the point deserved is misleading."
+   }
+  ]
+ },
+ "md04-crw-ngc": {
+  "headline": "Crowmoor Wanderers rally to beat Northgate City 2-1",
+  "recap": "Northgate struck first when Davi Lacerda put Northgate City ahead in the 24th minute, but Mikel Carbajosa levelled for Crowmoor at 40' and then finished the turnaround with a second at 69'. There were no red cards and the stats favoured the winners strongly: Crowmoor posted xG 1.80 to Northgate's 0.27, 19 shots and six on target to seven and one. The result broadly matched the chances, with a home win judged most likely by the chance model.",
+  "decided": "The turning point was Mikel Carbajosa's 69' strike, an xG 0.09 chance; when the match engine froze at the moment the shot was struck and played the remainder 20 times, Crowmoor won 75% and drew 25% of those simulated finishes. When replayed 20 times as if the shot had been saved, Crowmoor's win probability fell to 15% and draws rose to 75%, so the strike materially shifted the likely outcomes.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md04-elm-kin": {
+  "headline": "Kingsport beat Elmhurst Albion 1-0 at The Orchard",
+  "recap": "Kingsport won 1-0 thanks to Rafael Duarte's 9' strike from a Yuto Arakawa assist; Tae-yang Hwang was sent off in stoppage time. Elmhurst dominated possession with 68% and 1.32 xG and largely controlled the game yet could not convert chances; the model still rated Elmhurst as more likely to win (44%).",
+  "decided": "The turning point was Rafael Duarte's 9' shot, an xG 0.10 chance that the match engine froze the instant it was struck. Played on with the same random streams, the 20 continuations as it happened gave Kingsport an 80% chance to win and Elmhurst 5%. When the shot was flipped, Kingsport's chance fell to 35% and Elmhurst's rose to 40%, but a 22% margin of error means the result could have gone either way.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md04-wes-riv": {
+  "headline": "Riverside Athletic beat Westmere Town 1-0 at The Quarry",
+  "recap": "Riverside Athletic took a 1-0 win at The Quarry after Kwame Mensah's 31st-minute finish, set up by Yanis Besnard, following Marin Radošević's 24' sending off for Westmere. Riverside edged the chances on expected goals, 0.32 to 0.13, and the overall model rated a draw most likely at 66% while an away win had 25%, so the single goal reflected a narrow but fair margin.",
+  "decided": "The turning point came with Kwame Mensah's goal at 31', a low xG chance of 0.07, and the engine froze the match the instant the shot was struck. The moment was replayed 20 times each way; as it happened Riverside won 80% of those simulations while a flipped save would have given Westmere a 20% win chance and the most common flipped score was 0-0, but a 22% margin of error means it could have gone either way.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md05-ash-wes": {
+  "headline": "Westmere Town beat Ashvale Rovers 1-0 at Mill Lane",
+  "recap": "Westmere Town won 1-0 at Mill Lane thanks to Ante Babić's 81' strike, assisted by Rodrigo Olvera. The visitors edged the match in xG, 0.85 to 0.58, while Ashvale had more shots on target, 5 to 2. The model sided with Westmere: it gave away wins 40%, draws 37% and home wins 23%.",
+  "decided": "The turning point was Ante Babić's goal at 81'; the chance had xG 0.10. The engine froze the moment the shot was struck and replayed it 20 times both ways; as it happened Westmere won 95% and a saved shot would have produced a home win in 40% and a draw in 60%.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md05-crw-kin": {
+  "headline": "Crowmoor Wanderers draw Kingsport United 0-0 at Heath Road",
+  "recap": "A goalless draw at Heath Road after Kingsport dominated chances but couldn't find the net; they had 14 shots to 6 and an xG of 1.30 to Crowmoor's 0.31. Unai Arregui was named player of the match for Crowmoor as the visitors repeatedly threatened, most notably Yuto Arakawa who struck the woodwork at 68'. The scoreline flattered Crowmoor compared with the underlying numbers and the chances deserved an away win.",
+  "decided": "The clear turning point was Yuto Arakawa's 68' shot off the woodwork, a 0.17 xG chance. When the match engine replayed the instant of the strike 20 times as it happened and 20 times as if the shot had gone in, the outcome shifts from 30% away wins to 85% away wins if it had gone in, with 0-1 the most common flipped final score; this change is larger than the stated 22% margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md05-elm-sal": {
+  "headline": "Elmhurst Albion beat Saltmarsh FC 2-0 at The Orchard",
+  "recap": "Elmhurst took an early lead when Domagoj Babić scored after 5' with Lewis Whitcombe's assist, and Mason Pruitt added a second at 70' before Saltmarsh were reduced to ten at 80' when Kelechi Adebayo was sent off. Expected goals were 0.65 for Elmhurst and 0.67 for Saltmarsh, and both teams had nine shots. Elmhurst managed five shots on target to Saltmarsh's one and held 56% possession, so the win slightly overachieved what the chance model suggested.",
+  "decided": "The turning point was Domagoj Babić's goal at 5', an xG 0.09 chance; the simulation froze the game at the instant the shot was struck and played it out 20 times as it happened and 20 times as if it had been saved. As it happened Elmhurst won in 85% of those runs but if the strike had been saved Elmhurst's win probability fell to 60%, with a margin of error of 22%, so the goal clearly shifted the balance.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md05-riv-ngc": {
+  "headline": "Northgate City beat Riverside Athletic 4-2",
+  "recap": "Goals: Kwame Mensah, Kwame Mensah, Mathis Delaunay, Mathis Delaunay, Sergi Carbajosa, Yanis Morvan. Riverside Athletic had 42% of the ball, and the chances were worth 1.57 expected goals to 2.16.",
+  "decided": "The turning point was Kwame Mensah's goal at 3'. In 20 simulated futures where it had been saved, Riverside Athletic won 50% of the time, against 65% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 3,
+    "claim": "Northgate hit back when Mathis Delaunay scored at 24' and converted a penalty three minutes later; Sergi Carbajosa levelled before Yanis Morvan's 82' winner, and Tomás Okafor was sent off in the 67th.",
+    "problem": "The sentence implies Sergi Carbajosa 'levelled' the score, but the level was brought about by Mathis Delaunay's penalty at 27'. Sergi Carbajosa scored at 34' to give Northgate the lead; attributing the levelling to Carbajosa is incorrect. The red card timing is correct."
+   }
+  ]
+ },
+ "md06-ash-riv": {
+  "headline": "Riverside Athletic beat Ashvale Rovers 2-0",
+  "recap": "Goals: Kwame Mensah (8'), Vegard Brekke (90+4'). Ashvale Rovers had 35% of the ball, and the chances were worth 0.39 expected goals to 1.61.",
+  "decided": "The turning point was Lucas Varga's goal at 8'. In 20 simulated futures where it had gone in, Riverside Athletic won 60% of the time, against 35% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 5,
+    "claim": "The turning point was Kwame Mensah's 8th-minute chance, an xG 0.22 effort that put Riverside ahead.",
+    "problem": "The data shows the 8th-minute 0.22 xG chance is attributed to Lucas Varga in 'what_decided_it', while the goals list credits Kwame Mensah with the 8' goal. Attributing the 0.22 xG chance specifically to Kwame Mensah is not supported by the provided data."
+   }
+  ]
+ },
+ "md06-crw-sal": {
+  "headline": "Crowmoor Wanderers beat Saltmarsh 2-1 at Heath Road",
+  "recap": "Crowmoor edged a tense game at Heath Road with Kojo Badu breaking the deadlock in first-half stoppage, Obinna Ihejirika levelled for Saltmarsh in the 86th minute, and Iker Valdivieso struck a late winner at 90+1. Crowmoor dominated the chance metrics, posting 1.77 xG to Saltmarsh's 0.32 with 26 shots and 15 on target to eight and four, and Toby Croft still picked up the player of the match despite the loss. There were no red cards and the result broadly reflected the chances; the expected-goals and match models favoured a Crowmoor win.",
+  "decided": "The turning point was Iker Valdivieso's 90+1 goal, a 0.09 xG chance that was frozen and replayed in simulations. As it happened Crowmoor won in all simulated runs; had the shot been saved the simulations show a 90% chance of a draw and the most common final score would have been 1-1, so that late strike decisively tilted the outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md06-elm-wes": {
+  "headline": "Elmhurst Albion beat Westmere Town 2-1",
+  "recap": "Goals: Mason Pruitt (54'), Domagoj Babić (66'), Tadhg Gilmartin (84'). Elmhurst Albion had 68% of the ball, and the chances were worth 1.46 expected goals to 0.25.",
+  "decided": "The turning point was Mason Pruitt's goal at 54'. In 20 simulated futures where it had been saved, Elmhurst Albion won 20% of the time, against 90% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 1,
+    "claim": "Elmhurst Albion took control after the break with Mason Pruitt's 54' finish set up by Domagoj Babić, and Domagoj Babić added a header from Kieran Pollitt at 66'.",
+    "problem": "The data confirms the goals, minutes and assists, but does not state that Domagoj Babić's 66' goal was a header. Describing it as a 'header' is an unsupported specific detail."
+   }
+  ]
+ },
+ "md06-ngc-kin": {
+  "headline": "Northgate City 0-0 Kingsport United at Beacon Stadium",
+  "recap": "A goalless draw after a night of city dominance; Northgate City had the better chances with 1.07 xG to Kingsport's 0.79 and 67% possession but could not break the deadlock. Kingsport were down to ten when Kelechi Nwosu was sent off in the 29th minute and Mathis Delaunay's big save at the same time kept the score level; the goalless result broadly matched the chances, with the pre-match chance model giving a 43% chance of a City win, 33% for a draw and 25% for Kingsport. Yuto Arakawa was named player of the match despite the draw.",
+  "decided": "The turning point was Mathis Delaunay's save from a 0.37 xG chance at 29'. The engine froze the match there and replayed it with the same random streams, running 20 continuations as it happened and 20 if the shot had gone in. As it happened the simulations produced 40% home wins, 45% draws and 15% away wins; had the shot gone in the simulated futures shifted to 95% home wins and 5% draws, with the most common flipped score 3-0, so that moment strongly swung the probable outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md07-crw-wes": {
+  "headline": "Westmere Town win 2-1 at Heath Road",
+  "recap": "Westmere came from behind to beat Crowmoor Wanderers 2-1 after Mikel Carbajosa put Crowmoor ahead from the spot at 41'. Marin Radošević levelled at 55' and Rodrigo Olvera sealed it at 82', with Toma Barišić sent off for Westmere after the restart. The scoreline belies the chances: Crowmoor had the higher xG at 1.59 and deserved to win on the chance model, which favoured them 67% to win.",
+  "decided": "The turning point was Rodrigo Olvera's goal at 82'. The match engine froze the instant the shot was struck and replayed it 20 times as it happened and 20 times as if it had been saved. As it happened, simulations gave Westmere an 80% chance to win and a 20% chance of a draw; had the shot been saved the most common final score was 1-1 and draws were far more likely.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md07-elm-ash": {
+  "headline": "Elmhurst Albion beat Ashvale Rovers 1-0 at The Orchard",
+  "recap": "Kieran Pollitt's 65' penalty settled a tight game as Elmhurst held on for a 1-0 win. Elmhurst controlled possession, recording 59% and 1.42 xG to Ashvale's 0.27. Despite that dominance Ashvale still managed two shots on target and the spot-kick made the difference.",
+  "decided": "The turning point was Kieran Pollitt's goal at 65', a chance worth xG 0.74. Replaying the moment showed Elmhurst won in 85% of simulations with the goal and 30% if it had been saved; the swing is larger than the 22% margin of error, so the penalty clearly swung the balance.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md07-ngc-sal": {
+  "headline": "Northgate City and Saltmarsh draw 0-0 at Beacon Stadium",
+  "recap": "A goalless stalemate saw Northgate City dominate possession and chances but fail to find a breakthrough; home expected goals were 0.68 to Saltmarsh's 0.25 and Northgate had 11 shots with four on target while Saltmarsh managed five and none on target. Yanis Morvan rattled the woodwork for Northgate in the 65th minute and Sergi Carbajosa was named player of the match for his influence despite the clean sheet; the result broadly matched the chances, with a draw the most likely outcome in the underlying numbers.",
+  "decided": "The turning point came when Yanis Morvan's 65' effort, a chance worth 0.09 xG, struck the woodwork. The engine froze the match the instant the shot was struck and played it to full time 20 times as it happened and 20 times as if the shot had gone in. As it happened the simulations produced home wins 30%, draws 45% and away wins 25%. Had the shot gone in the flipped simulations gave home wins 95% and draws 5%.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "riv-kin-1119": {
+  "headline": "Kingsport United beat Riverside Athletic 2-1 at The Wharf Ground",
+  "recap": "Kingsport took an instant lead when Rafael Duarte netted in the first minute from Chidi Balogun’s pass, and Riverside levelled early in the second half through Kwame Mensah after a Yanis Besnard assist. Darragh Gilmartin’s stoppage-time penalty settled it at 2-1; there were no red cards and Riverside dominated possession and registered a higher expected goals figure of 1.50 to Kingsport’s 1.40, so the scoreline slightly flatters the visitors compared with the chances. Kwame Mensah was Riverside’s man of the match for the equaliser and his influence around the final third.",
+  "decided": "The turning point was Darragh Gilmartin’s 90+6' penalty, an xG 0.74 chance. The match engine froze the instant the shot was struck and played 20 full-time simulations as happened and 20 if the shot had been saved; as it happened Kingsport won in 100% of those runs, and if flipped every simulated future was a 1-1 draw, so the single kick entirely determined the winner in those scenarios.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md08-crw-ash": {
+  "headline": "Crowmoor Wanderers beat Ashvale Rovers 1-0 at Heath Road",
+  "recap": "Crowmoor edged a tight match at Heath Road with Mikel Carbajosa's 49th-minute strike the only goal, and there were no red cards. The game was close on the numbers — Crowmoor's xG was 0.60 to Ashvale's 0.33, and shots were 11 to 10 with four on target to three — while the chances model actually gave a draw the highest probability at 47%.",
+  "decided": "The turning point was Mikel Carbajosa's 49th-minute finish, a chance with an xG of 0.14. When the match engine replayed the instant the shot was struck, Crowmoor won 90% of those simulated futures as it happened but would still have won 60% if the shot had been saved; the reported margin of error is 22%, and the most common alternate final score if the shot had been saved was 0-0.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md08-elm-riv": {
+  "headline": "Riverside Athletic and Elmhurst Albion draw 0-0 at The Orchard",
+  "recap": "A cautious goalless draw at The Orchard saw Riverside control 57% possession and take 12 shots to Elmhurst's 9, though both finished with one shot on target. Riverside created the clearer openings and finished with higher xG, 1.14 to 0.56, and Lucas Varga was named player of the match; there were no goals or red cards and the result broadly reflected the chances.",
+  "decided": "The decisive moment was Vegard Brekke's shot off the woodwork at 90+3' (xG 0.07); the match was frozen the instant it was struck and replayed 20 times as it happened and 20 times as if the shot had gone in. As it actually played out the simulations returned 95% draws and 5% away wins, but had the shot gone in Riverside would have won 100% of those flipped simulations, a swing well outside the 22% margin of error and decisive to the outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md08-kin-sal": {
+  "headline": "Kingsport United rout Saltmarsh FC 4-0 at Harborside Park",
+  "recap": "Kingsport United beat Saltmarsh FC 4-0 at Harborside Park. Rafael Duarte opened on 10' and doubled on 35', Cian Brennan added a third on 70', and Yuto Arakawa finished from a 90+5' penalty; Arakawa had a goal and an assist and was named player of the match. The scoreline matched the chances: Kingsport had 1.68 xG to Saltmarsh's 0.37 and eight shots on target to one.",
+  "decided": "The turning point was Rafael Duarte's 10' strike, a 0.09 xG chance. When the engine replayed the moment, Kingsport won 95% as it happened but would have won 55% with the shot saved; the margin of error is 22%, so the match could have gone either way and 0-0 was the most common flipped scoreline.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md08-ngc-wes": {
+  "headline": "Westmere Town draw 0-0 at Beacon Stadium",
+  "recap": "A goalless stalemate at Beacon Stadium as neither side could find a breakthrough; Ivan Vuković was Westmere's best player in a match with no goals or red cards. Westmere edged the quality of chances with an xG of 0.57 to Northgate City's 0.36, and the projected probabilities saw a draw as the likeliest outcome at 48%.",
+  "decided": "The turning point was Sergi Carbajosa's best chance at 49', an effort valued at xG 0.12. When the match was frozen and replayed, the actual run produced a draw in 75% of simulations and a Northgate win in 15%; had that 49th-minute shot gone in, Northgate wins rose to 80% and draws fell to 10%, a swing that exceeds the margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md09-crw-elm": {
+  "headline": "Crowmoor Wanderers beat Elmhurst Albion 1-0 at Heath Road",
+  "recap": "Crowmoor edged a tight game thanks to a 90' winner credited to Iker Valdivieso; that goal settled a match in which Crowmoor had the better chances, 1.18 xG to Elmhurst's 0.37, and out-shot their visitors 19 to 8. Elmhurst led in possession but rarely troubled the keeper; Valdivieso was named player of the match after the decisive strike.",
+  "decided": "The turning point came when Kaito Kubota fired the 90' chance with an xG of 0.18 and the match engine froze the instant the shot was struck. In 20 simulated finishes as it happened Crowmoor won 10% and drew 85%, but when the moment was flipped Crowmoor won 95% instead of 10%, so that single shot swung the likely outcome dramatically.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md09-kin-wes": {
+  "headline": "Kingsport United beat Westmere Town 2-1 at Harborside Park",
+  "recap": "Kingsport moved quickly when Yuto Arakawa struck in the 4th minute, then doubled the lead through Arakawa again from Ibrahima Sarr's assist in the 33rd. Marin Radošević pulled one back for Westmere in the 65th and Kingsport finished with ten men after Cian Brennan was sent off in the 75th; expected goals were 1.43 for Kingsport and 0.41 for Westmere, and the result broadly matched the chances created. Shots favoured Kingsport 14 to 4 while both sides managed three on target, and Arakawa was rightly named player of the match with two goals.",
+  "decided": "The turning point came early: Yuto Arakawa's 4th-minute strike, an xG 0.11 chance, set the game on its course. When the match was frozen at that instant and played 20 times as it happened, Kingsport won in 95% of those futures; when the shot was flipped to a save in 20 alternate plays, Kingsport's win probability fell to 40% and the most common flipped final score was 0-0, a swing well outside the 22% margin of error, so that early goal was decisive.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md09-ngc-ash": {
+  "headline": "Northgate City beat Ashvale Rovers 1-0 at Beacon Stadium",
+  "recap": "Northgate City dominated possession but it was a tight game; they had 76% possession and three shots on target while Ashvale managed six on target. Mathis Delaunay's 84th-minute finish, set up by Unai Escudero, was the only goal and there were no red cards. Expected goals slightly favoured Northgate at 0.87 to 0.69, so the result broadly matched the chances.",
+  "decided": "The turning point was Mathis Delaunay's goal at 84', an attempt worth xG 0.18. The engine replayed the instant 20 times each way; as it happened Northgate won 90% of those runs, but when flipped the home win rate fell to 5% and the most common alternate score was 0-0.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md09-riv-sal": {
+  "headline": "Saltmarsh FC beat Riverside Athletic 2-0",
+  "recap": "Goals: Jude Brierley (52', pen), Obinna Ihejirika (65'). Riverside Athletic had 72% of the ball, and the chances were worth 1.23 expected goals to 1.30.",
+  "decided": "The turning point was Jude Brierley's goal at 52'. In 20 simulated futures where it had been saved, Saltmarsh FC won 5% of the time, against 75% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 5,
+    "claim": "Simulations frozen at that instant and played out 20 times as it happened and 20 times if the shot had been saved shifted the outcomes, but the change sits within the stated margin of error, so the match could plausibly have gone either way.",
+    "problem": "The data show the simulated 'as it happened' away-win probability was 75% and the 'if flipped' away-win probability was 5% — a 70 percentage-point change, which is far larger than the stated margin_of_error_percent of 22. Saying the change 'sits within the stated margin of error' is contradicted by the provided numbers."
+   }
+  ]
+ },
+ "md10-crw-riv": {
+  "headline": "Riverside Athletic beat Crowmoor Wanderers 2-0 at Heath Road",
+  "recap": "A tight game at Heath Road was settled in stoppage time as Riverside struck twice late, Sindre Lunde on 90+1' and Vegard Brekke on 90+5'. Rodrigo Montes was sent off for Crowmoor in between those goals at 90+3'. The xG was low and close, 0.70 for Crowmoor and 0.81 for Riverside, and the chances map showed a narrow edge for Riverside rather than a one-sided win.",
+  "decided": "The turning point was Sindre Lunde's 90+1' finish, an event with a 0.12 xG. The match was frozen the instant the shot left his boot and replayed 20 times as it happened and 20 times as if the shot had been saved; as it happened Riverside won in 85% of those simulations while a saved attempt would most often have left a 0-0 outcome and a 90% chance of a draw.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md10-kin-ash": {
+  "headline": "Kingsport United beat Ashvale Rovers 3-1 at Harborside Park",
+  "recap": "Kingsport took control through Kelechi Nwosu's 18th-minute opener, Rafael Duarte doubled the lead on 41 minutes from Nwosu's assist, Thijs van Rijn pulled one back on 84 minutes and Nwosu sealed it with a 90+1 penalty. The scoreline reflected the chances: Kingsport had an xG of 2.52 to Ashvale's 0.32 and the result matched the chances deserved, with a 91% chance assigned to a Kingsport win.",
+  "decided": "The turning point was Kelechi Nwosu's 18th-minute goal, an xG 0.39 shot. When the match engine replayed the game 20 times as it happened and 20 times with that shot saved, Kingsport's win probability fell from 80% to 40% if the effort had been saved, a change larger than the 22% margin of error, so that strike decisively shifted the likely outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md10-ngc-elm": {
+  "headline": "Northgate City beat Elmhurst Albion 2-1",
+  "recap": "Goals: Mathis Delaunay, Domagoj Babić, Mathis Delaunay. Northgate City had 70% of the ball, and the chances were worth 0.81 expected goals to 0.98.",
+  "decided": "The turning point was Mathis Delaunay's goal at 90+4'. In 20 simulated futures where it had gone in, Northgate City won 100% of the time, against 10% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 5,
+    "claim": "The match was frozen the instant the sho",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md10-sal-wes": {
+  "headline": "Saltmarsh FC and Westmere Town draw 0-0",
+  "recap": "Neither side scored. Saltmarsh FC had 56% of the ball, and the chances were worth 0.51 expected goals to 0.65.",
+  "decided": "The turning point was Rodrigo Olvera's best chance at 90+4'. In 20 simulated futures where it had gone in, Westmere Town won 100% of the time, against 0% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 3,
+    "claim": "The turning point was Rodrigo Olvera's best chance in the 90+4 minute, a 0.25 xG opportunity that was struck and saved.",
+    "problem": "The data records Rodrigo Olvera's 90+4 chance (0.25 xG) and that the shot was struck, but does not state it was saved. Asserting it was 'saved' is not supported by the provided evidence."
+   }
+  ]
+ },
+ "md11-kin-elm": {
+  "headline": "Kingsport United beat Elmhurst Albion 2-1",
+  "recap": "Goals: Rafael Duarte (1'), Rafael Duarte (7'), Domagoj Babić (82'). Kingsport United had 42% of the ball, and the chances were worth 2.22 expected goals to 1.02.",
+  "decided": "The turning point was Rafael Duarte's goal at 1'. In 20 simulated futures where it had been saved, Kingsport United won 50% of the time, against 80% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 6,
+    "claim": "The engine replayed the match 20 times each way; as it happened Kingsport won in 80% of runs and when flipped their win rate fell to 50%, a change within the 22% margin of error so the game could have gone either way.",
+    "problem": "The change in Kingsport's win rate from 80% to 50% is a 30 percentage-point difference, which is larger than the stated 22% margin of error. The line incorrectly says this change is within the 22% margin of error."
+   }
+  ]
+ },
+ "md11-ngc-crw": {
+  "headline": "Northgate City and Crowmoor Wanderers draw 0-0 at Beacon Stadium",
+  "recap": "A goalless stalemate ended a game of contrasting profiles: Northgate City dominated possession, 66% to 34%, and had 11 shots, but Crowmoor Wanderers carried the clearer threat with 1.33 expected goals to 0.89 and six shots on target to two. Henrique Mourato was named man of the match as chances came and went for both sides; there were no goals or red cards and the clean sheet arguably flattered Northgate given the chances the visitors created. The result partly contradicted the underlying numbers, with the chances-deserved model giving Crowmoor the edge rather than a draw.",
+  "decided": "The decisive moment was Iker Valdivieso’s big chance at 90+2, an opportunity with xG 0.74. The match engine froze the instant his shot was struck and ran 20 simulated futures as it happened and 20 as if the shot had gone in: with the miss the simulations produced a draw in 95% and an away win in 0%, while if it had gone in the away side won in 100%, most commonly 0-1, so that single moment swung the simulated outcomes far beyond the margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md11-riv-wes": {
+  "headline": "Riverside Athletic and Westmere Town draw 0-0",
+  "recap": "Neither side scored. Riverside Athletic had 80% of the ball, and the chances were worth 0.47 expected goals to 0.27.",
+  "decided": "The turning point was Marin Radošević's best chance at 48'. In 20 simulated futures where it had gone in, Westmere Town won 65% of the time, against 20% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 5,
+    "claim": "As it happened the simulations returned ",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md11-sal-ash": {
+  "headline": "Saltmarsh FC and Ashvale Rovers draw 1-1",
+  "recap": "Goals: Thijs van Rijn (7'), Jude Brierley (58'). Saltmarsh FC had 60% of the ball, and the chances were worth 0.21 expected goals to 0.61.",
+  "decided": "The turning point was Jude Brierley's goal at 58'. In 20 simulated futures where it had been saved, Saltmarsh FC won 5% of the time, against 15% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 6,
+    "claim": "As it happened the simulated outcomes we",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md12-kin-crw": {
+  "headline": "Crowmoor win 2-0 at Harborside Park",
+  "recap": "Crowmoor Wanderers took an early shock when Nana Boakye scored in the 1st minute and Mikel Carbajosa sealed it on 60 minutes from a Borja Olabarri assist; there were no red cards. Crowmoor had the better chances, the xG was 0.94 to 0.18 and they registered 12 shots to Kingsport's 7, so the 2-0 scoreline broadly matched how the chances fell; Mikel Carbajosa was named player of the match.",
+  "decided": "The turning point was Nana Boakye's 1st-minute strike, a 0.23 xG chance. When the match engine replayed that instant 20 times as it happened and 20 times as if the shot had been saved, the away-win probability fell from 70% to 40% if it had been stopped, but that shift sits within the 22% margin of error, so the game could plausibly have gone either way; the most common flipped final score was 1-0.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md12-ngc-riv": {
+  "headline": "Riverside Athletic beat Northgate City 1-0 at Beacon Stadium",
+  "recap": "A tight Meridian League contest was settled by Kwame Mensah's 49' strike, and Northgate could not find a reply, later losing Adrián Sanromán to a 73' red card. Northgate edged the chance metrics with xG 0.76 to Riverside's 0.63 and created more shots; they had 14 shots to Riverside's 11 and 51% possession, but Mensah's finish made the difference. Mensah was named player of the match for his decisive goal.",
+  "decided": "The turning point was Mensah's 49' shot, an xG 0.19 chance; in the frozen-and-replayed sims Riverside won 70% as it happened but only 30% if the shot had been saved, so the strike swung the probable outcome markedly in Riverside's favour.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md12-sal-elm": {
+  "headline": "Elmhurst Albion beat Saltmarsh 1-0 at Estuary Road",
+  "recap": "Elmhurst controlled 60% of the ball and had 11 shots to Saltmarsh's 7. They led the xG race 1.00 to 0.31 and had four shots on target to two. Tae-yang Hwang's 86' strike, set up by Tyler Calloway, was the only goal; there were no red cards and the result matched the chances model that gave Elmhurst a 55% chance to win.",
+  "decided": "The turning point was Tae-yang Hwang's 86' strike, a low-quality chance with xG 0.06. When the match was frozen and played 20 times with the shot as scored, Elmhurst won 95% of those; when flipped to a save, 90% finished 0-0, so the swing was well beyond the 22% margin of error and decisively changed the likely outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md12-wes-ash": {
+  "headline": "Westmere Town and Ashvale Rovers draw 0-0",
+  "recap": "Neither side scored. Westmere Town had 60% of the ball, and the chances were worth 0.28 expected goals to 0.68.",
+  "decided": "The turning point was Oisín Mulcahy's best chance at 39'. In 20 simulated futures where it had gone in, Ashvale Rovers won 80% of the time, against 45% as it happened.",
+  "checked": true,
+  "attempts": 2,
+  "fallback": true,
+  "by": "code",
+  "rejected": [
+   {
+    "line": 4,
+    "claim": "As it happened the odds were 25% home, 3",
+    "problem": "too many numbers in one line"
+   }
+  ]
+ },
+ "md13-kin-ngc": {
+  "headline": "Kingsport United beat Northgate City 2-0 at Harborside Park",
+  "recap": "Kingsport took the lead through Rafael Duarte's 37th-minute finish from a Kelechi Nwosu assist, and Cian Brennan wrapped it up at 71 minutes with a finish set up by Ibrahima Sarr. There were no red cards and Kingsport finished with an xG of 1.10 to Northgate's 0.54. The result broadly matched the chances; the model gave a home win 50%, a draw 33% and an away win 17%.",
+  "decided": "The turning point was Rafael Duarte's goal at 37', a low-quality chance worth 0.02 xG. When the match was frozen at that shot and replayed, the as-played simulations produced a home win 75%, a draw 25% and an away win 0%. Had the shot been saved the flipped simulations gave a home win 30%, a draw 60% and an away win 10%, with a margin of error of 22%, so the goal materially shifted the likely outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md13-riv-ash": {
+  "headline": "Riverside Athletic beat Ashvale Rovers 2-1 at The Wharf Ground",
+  "recap": "Ashvale took the lead through Thijs van Rijn's 52nd-minute penalty, but Kieran Pennington levelled for Riverside in the 71st minute from a Luka Vuković assist and Vegard Brekke struck a stoppage-time penalty at 90+4 to win it. Riverside largely controlled the match — 70% possession, 17 shots to 9 and a higher xG of 1.84 to 1.49 — so the outcome broadly reflected the chances created.",
+  "decided": "The match engine froze the instant Vegard Brekke's 90+4' shot was struck and replayed the finish; the chance had an xG of 0.74. As it happened Riverside won in 95% of the simulated finishes and a draw occurred in 5%; had the shot been saved, simulations gave Riverside a 10% chance to win and a 90% chance of a draw, with 1-1 the most common flipped score, so that late penalty was the clear turning point.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md13-sal-crw": {
+  "headline": "Crowmoor Wanderers beat Saltmarsh FC 2-1 at Estuary Road",
+  "recap": "Saltmarsh took a shock lead inside a minute through Jude Brierley, but Nana Boakye levelled for Crowmoor in the 26th and Iker Valdivieso struck the winner in the 83rd. Crowmoor created the clearer chances; their xG was 1.28 to Saltmarsh's 0.35, and the scoreline reflected that superiority.",
+  "decided": "The turning point was Iker Valdivieso's goal at 83', a 0.11 xG chance. Frozen and replayed, the simulations gave Crowmoor an 85% chance to win as it happened and 5% if the shot had been saved, so the outcome swung decisively toward Crowmoor.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md13-wes-elm": {
+  "headline": "Westmere Town beat Elmhurst Albion 3-1 at The Quarry",
+  "recap": "Westmere Town took control early and won 3-1, with Marin Radošević opening in the 11' and Ivan Vuković scoring twice, including a penalty at 47'; Hyun-woo Moon pulled one back for Elmhurst in the 65'. The numbers suggested a tight game on expected goals, 1.55 to 1.43, but Westmere were far sharper with seven shots on target to Elmhurst's two. Lamine Gueye was sent off at 52', leaving Westmere a man down but they still saw the game out.",
+  "decided": "The turning point was Marin Radošević's 11' strike, an xG 0.17 chance; the margin of error on the simulations was 22%. When the match was frozen and replayed 20 times as it happened and 20 times as if the shot had been saved, Westmere won 65% of the as-played runs while Elmhurst won 55% of the flipped runs.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md14-ash-elm": {
+  "headline": "Ashvale Rovers thrash Elmhurst Albion 4-0 at Mill Lane",
+  "recap": "Ashvale Rovers swept Elmhurst Albion aside 4-0 at Mill Lane, with Oisín Mulcahy opening the scoring before Brandon Hendrix and Thijs van Rijn extended the lead and Cian Doherty finishing in stoppage time. Elmhurst were reduced to ten when Mason Pruitt was sent off, and the result broadly matched the chances: Ashvale had an xG of 1.15 to Elmhurst's 0.66 and the model gave Ashvale a 50% chance to win.",
+  "decided": "The turning point was Oisín Mulcahy's strike just before half-time, a chance with an xG of 0.06. When the match was frozen the instant that shot was struck and replayed 20 times as it happened and 20 times as if it had been saved, Ashvale won 80% as it happened but would have won 30% if it had been saved, with 0-0 the most common final score if the shot had not gone in, so the goal substantially shifted the likely outcome.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md14-kin-riv": {
+  "headline": "Kingsport United 0-0 Riverside Athletic at Harborside Park",
+  "recap": "Riverside dominated the game with 65% possession, 15 shots and an xG of 0.96 to Kingsport's 7 shots and 0.27 xG, but neither side could break the deadlock and there were no goals or red cards. Vegard Brekke was named player of the match after Riverside created the clearer chances; the draw slightly undersells Riverside's superiority according to the chances-deserved model, which rated an away win more likely than a draw.",
+  "decided": "The turning point was Kwame Mensah's shot off the woodwork at 9', a 0.10 xG chance. Frozen and replayed in simulation, the match as it happened gave Riverside a 25% chance of winning and a 40% chance of a draw; had Mensah scored the same shot the away win probability rose to 60% while the draw chance fell to 30%, a shift larger than the stated 22% margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 1,
+  "by": "gpt-5-mini-1"
+ },
+ "md14-sal-ngc": {
+  "headline": "Northgate City beat Saltmarsh FC 1-0 at Estuary Road",
+  "recap": "Northgate City edged Saltmarsh FC 1-0 at Estuary Road as Mathis Delaunay's 72' strike proved decisive. Saltmarsh were reduced to ten when Obinna Ihejirika was sent off in the 34th minute, leaving them with 0.20 xG to Northgate's 1.01 and Northgate a 60% chance on the chances-deserved model.",
+  "decided": "The turning point was Mathis Delaunay's goal at 72', an xG 0.17 strike. The moment was replayed 20 times both ways; as it happened Northgate won 95% of those futures, while if it had been saved the simulations most often produced a draw, a swing larger than the 22% margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ },
+ "md14-wes-crw": {
+  "headline": "Westmere Town draw Crowmoor Wanderers 2-2 at The Quarry",
+  "recap": "A lively draw at The Quarry saw Ivan Vuković open the scoring from the spot in the 32nd minute, Mikel Carbajosa equalise for Crowmoor in the 59th, Marin Radošević put Westmere back ahead in the 69th with a Vuković assist, and Iker Valdivieso levelled again three minutes later. Westmere finished with the higher expected goals, 1.63 to 0.97, but Crowmoor had more shots on target, 5 to 4, and the result broadly reflected the chances with the model giving Westmere the stronger single outcome. There were no red cards and Vuković's goal and assist earned him player of the match.",
+  "decided": "The turning point was Marin Radošević's 69th-minute finish, an xG 0.22 chance. Simulating from the instant the shot was struck shows Westmere winning 75% of those futures as it happened but only 5% if the shot had been saved, with a flip producing a most common final score of 1-1; the swing in outcomes was decisive beyond the simulation's margin of error.",
+  "checked": true,
+  "reviewed": true,
+  "attempts": 2,
+  "by": "gpt-5-mini-1"
+ }
+}
