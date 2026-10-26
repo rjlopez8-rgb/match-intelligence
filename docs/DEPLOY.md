@@ -1,6 +1,8 @@
-# Deploying Match Intelligence
+# Deploying Kairos
 
 ![Architecture](img/architecture.svg)
+
+The Azure and GitHub resource names below keep the repo's name (`match-intelligence`): renaming deployed resources would break them.
 
 What runs where:
 

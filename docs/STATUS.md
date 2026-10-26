@@ -127,6 +127,10 @@ Read this first when picking the project up in a new chat.
 - `docs/DEPLOY.md`: every command with its cost; Container Apps scale to zero, 1 replica, no Log Analytics; at the cap, at most ~135k vCPU-s and ~270k GiB-s a month, inside the free grant (180k / 360k). Caveat: the cap counter resets when the container restarts; budget alerts are the backstop; off switch documented.
 - `docs/img/architecture.svg` (+ `.png` at 2x for the video), in the README.
 
+## Done (Oct 25): renamed to Kairos; mannequin only
+- Product name is **Kairos** (Greek: the decisive moment): hub header and tab titles, the stadium's LED boards, README, docs, LICENSE, architecture diagram, MCP server (id `kairos`: restart it in VS Code; prompt files use `kairos/*`). Kept on purpose: the repo and Azure resource names, the `~/.match-intelligence` folder (holds the daily spend tracker) and package names.
+- The 3D page has one figure, the mannequin: the Clean model, its pose code and the player-style toggle are removed.
+
 ## Next
 1. Real-model editions run on the laptop (`matchagents editions ... --futures 40 --out editions-live.json`, ~$1.5-2.5, asks first), then `matchagents site` with it.
 2. Paid recap run on Ryan's laptop (`matchagents recaps ../data/season --out recaps-live.json`, ~$0.45, asks first), commit recaps-live.json. The research is done and committed (20 futures each way, all 56 matches).

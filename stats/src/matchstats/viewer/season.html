@@ -274,7 +274,7 @@ footer { border-top: 1px solid var(--line); padding: 22px 0 36px; color: var(--d
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#/"><i></i><span id="brandName">Meridian League</span><small id="brandSeason"></small></a>
+    <a class="brand" href="#/"><i></i><span id="brandName">Kairos</span><small id="brandSeason"></small></a>
     <nav aria-label="Season">
       <a href="#/" data-nav="table">Table</a>
       <a href="#/results" data-nav="results">Results</a>
@@ -325,7 +325,7 @@ const crest = (code, size = "") => `<span class="crest ${size}" title="${esc(C[c
 const playerLink = (id, label) => `<a href="#/player/${encodeURIComponent(id)}">${esc(label ?? P[id]?.name ?? id)}</a>`;
 const DEMO = D.matches.find((m) => m.link);
 if (DEMO) { const a = $("cta3d"); a.hidden = false; a.href = DEMO.link; a.title = `${C[DEMO.home].name} v ${C[DEMO.away].name}, matchday ${DEMO.md}`; }
-$("brandName").textContent = D.competition; $("brandSeason").textContent = `${D.season}, simulated`;
+$("brandSeason").textContent = `${D.competition} ${D.season}, simulated`;   // Kairos is the product; the league is fictional
 
 // ------------------------------------------------------------------ router
 const routes = { "": viewTable, table: viewTable, results: viewResults, match: viewMatch, players: viewPlayers, player: viewPlayer, clubs: viewClubs, club: viewClub };

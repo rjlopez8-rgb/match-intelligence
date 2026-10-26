@@ -505,8 +505,8 @@ def render_html(data: dict, standalone: bool = True, view: str = "replay") -> st
     ``standalone`` adds the document skeleton."""
     template = resources.files("matchstats").joinpath(f"viewer/{view}.html").read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":"), ensure_ascii=False).replace("</", "<\\/")
-    suffix = "Broadcast" if view == "broadcast" else "Replay"
-    title = f"{data['match']['home']['short']} v {data['match']['away']['short']} {suffix}"
+    suffix = "3D broadcast" if view == "broadcast" else "Replay"
+    title = f"{data['match']['home']['short']} v {data['match']['away']['short']} · Kairos {suffix}"
     page = template.replace('"__REPLAY_DATA__"', payload).replace("__TITLE__", html.escape(title))
     if not standalone:
         return page
@@ -517,7 +517,7 @@ def render_html(data: dict, standalone: bool = True, view: str = "replay") -> st
     )
 
 
-def render_viewer_shell(title: str = "Match Intelligence 3D") -> str:
+def render_viewer_shell(title: str = "Kairos · 3D broadcast") -> str:
     """The shared 3D page with no match inside: it loads ``matches/<id>.<hl|full>.json`` named in its URL
     (``watch.html?m=<id>&v=hl``), so the site ships one copy of the viewer instead of one per match."""
     template = resources.files("matchstats").joinpath("viewer/broadcast.html").read_text(encoding="utf-8")

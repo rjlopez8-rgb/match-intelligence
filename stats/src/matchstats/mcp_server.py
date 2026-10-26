@@ -1,4 +1,4 @@
-"""Match Intelligence as an MCP server: the stats layer, the season and Club mode as tools any MCP client can call
+"""Kairos as an MCP server: the stats layer, the season and Club mode as tools any MCP client can call
 (GitHub Copilot agent mode in VS Code, Claude, the Agent Framework...).
 
     matchstats mcp                       # stdio (what VS Code launches, see .vscode/mcp.json)
@@ -115,11 +115,11 @@ def build_server():
     from mcp.server.mcpserver import Context, MCPServer
 
     mcp = MCPServer(
-        name="match-intelligence",
-        title="Match Intelligence",
+        name="kairos",
+        title="Kairos",
         version="1.0.0",
         instructions=(
-            "Football match intelligence for the simulated Meridian League 2026/27 (8 fictional clubs, 56 matches). "
+            "Kairos: football match intelligence for the simulated Meridian League 2026/27 (8 fictional clubs, 56 matches). "
             "Start with list_matches or league_table to find ids. Match tools replay a match through the stats layer "
             "and can answer as of any minute (no future knowledge). Club mode tools try any player in any position by "
             "simulating the fixture (Riverside v Kingsport) many times. Every number comes from the stats layer or the "
@@ -361,7 +361,7 @@ def _seed_cache() -> None:
 
 
 def main(argv: list[str] | None = None) -> None:
-    ap = argparse.ArgumentParser(prog="matchstats mcp", description="Match Intelligence MCP server")
+    ap = argparse.ArgumentParser(prog="matchstats mcp", description="Kairos MCP server")
     ap.add_argument("--http", action="store_true", help="streamable HTTP instead of stdio")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8766)

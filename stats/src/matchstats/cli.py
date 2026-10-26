@@ -242,7 +242,7 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--board", default=None, help="Club mode board.json, to show try-outs on player pages")
     s.set_defaults(fn=cmd_season)
 
-    s = sub.add_parser("mcp", help="run the Match Intelligence MCP server (stdio; --http for streamable HTTP)")
+    s = sub.add_parser("mcp", help="run the Kairos MCP server (stdio; --http for streamable HTTP)")
     s.add_argument("--http", action="store_true")
     s.add_argument("--host", default="127.0.0.1")
     s.add_argument("--port", type=int, default=8766)

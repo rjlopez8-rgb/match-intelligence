@@ -1,4 +1,4 @@
-# Match Intelligence in GitHub Copilot (MCP)
+# Kairos in GitHub Copilot (MCP)
 
 The stats layer, the season and Club mode are an MCP server (`matchstats mcp`). In VS Code, GitHub Copilot's agent
 mode picks it up from `.vscode/mcp.json` and can answer football questions, run player try-outs on the match engine
@@ -14,11 +14,11 @@ engine; Copilot's own model only plans the tool calls and writes the answer.
    ```
 2. Open the repo folder in VS Code (File > Open Folder) with GitHub Copilot signed in.
 3. Trust the folder when VS Code asks (servers in `.vscode/mcp.json` cannot start in Restricted Mode). Start the
-   server: Command Palette > **MCP: List Servers** > match-intelligence > **Start Server** (or Chat > Open
+   server: Command Palette > **MCP: List Servers** > kairos > **Start Server** (or Chat > Open
    Customizations > MCP Servers > ... > Start Server). VS Code also starts new workspace servers by itself on your first
    chat message. If it fails, the same menu's **Show Output** shows why (usually the Python path in `.vscode/mcp.json`,
    or `mcp` not installed). On macOS or Linux, change `command` to `${workspaceFolder}/.venv/bin/python`.
-4. Open Chat, switch to **Agent**, and open the tools picker: a `match-intelligence` group with the 19 tools should be listed.
+4. Open Chat, switch to **Agent**, and open the tools picker: a `kairos` group with the 19 tools should be listed.
    `AGENTS.md` tells Copilot about the project and to quote only numbers the tools return.
 
 Check it outside VS Code: `matchstats mcp --help`, and `pytest stats/tests/test_mcp.py`.

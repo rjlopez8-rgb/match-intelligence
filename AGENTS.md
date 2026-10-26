@@ -1,4 +1,4 @@
-# Match Intelligence: notes for coding agents
+# Kairos: notes for coding agents
 
 AI match intelligence for a simulated football league (the Meridian League, 8 fictional clubs, 56 matches).
 Python 3.11+, three packages installed in editable mode from one `.venv`:
@@ -8,7 +8,7 @@ Python 3.11+, three packages installed in editable mode from one `.venv`:
   and the MCP server (`matchstats mcp`).
 - `agents/` (`matchagents`): the AI broadcast desk on Microsoft Foundry (Agent Framework), recaps, the website build.
 
-## The Match Intelligence MCP server
+## The Kairos MCP server
 `.vscode/mcp.json` starts it (`python -m matchstats.cli mcp`). Use its tools for any question about matches,
 players, the table or recruitment instead of reading data files: `list_matches`, `league_table`, `season_player`,
 `what_decided_it`, the per-match stats tools (each takes `match_id` and an optional `minute` to answer as of then),

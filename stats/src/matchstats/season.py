@@ -231,7 +231,7 @@ def _tryouts(board: Path) -> list[dict]:
 def render_season(data: dict) -> str:
     tpl = resources.files("matchstats").joinpath("viewer/season.html").read_text(encoding="utf-8")
     blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    page = tpl.replace('"__SEASON_DATA__"', blob).replace("__TITLE__", f"{data['competition']} {data['season']}")
+    page = tpl.replace('"__SEASON_DATA__"', blob).replace("__TITLE__", f"Kairos · {data['competition']} {data['season']}")
     return ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
             "</head>\n<body>\n" + page + "\n</body>\n</html>\n")

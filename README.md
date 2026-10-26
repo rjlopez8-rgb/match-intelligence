@@ -1,6 +1,6 @@
-# Match Intelligence (working title)
+# Kairos
 
-AI match intelligence for the Microsoft x Premier League hackathon: a 3D virtual broadcast run by AI agents on **Microsoft Foundry**. They explain every key moment with fact-checked commentary, call the cameras, draw on the replay, and **settle the "what if" arguments by simulating the alternative futures**.
+**Kairos** (Greek for *the decisive moment*) is AI match intelligence for the Microsoft x Premier League hackathon: a 3D virtual broadcast run by AI agents on **Microsoft Foundry**. They explain every key moment with fact-checked commentary, call the cameras, draw on the replay, and **settle the "what if" arguments by simulating the alternative futures**.
 
 **Your broadcast.** Every viewer gets their own cut of the same match. Pick a style (Fan, Analyst, Tactician, Academy), a language (English, Spanish, French), your club and your player: the live cameras, the replays, the graphics and the AI commentary all change. Commentary is written natively in each language and fact-checked in that language; a club's fans get their own channel; the Academy edition coaches the decision with the stats layer's options at the key moment; and player focus keeps your player in shot with his live stat line, alerts and every action marked on the timeline.
 
@@ -17,7 +17,7 @@ Status: engine, stats layer, the AI desk, ghost futures, the 3D broadcast for th
 
 ## Architecture
 
-![Match Intelligence architecture](docs/img/architecture.svg)
+![Kairos architecture](docs/img/architecture.svg)
 
 The site is static (Azure Static Web Apps); Club mode's live try-outs run on the match engine in Azure Container Apps
 (scale to zero); the AI desk runs on Microsoft Foundry from a laptop and its fact-checked results are committed, so the
@@ -131,7 +131,7 @@ happened and 40 times with the shot flipped, on any machine. The Recap agent wri
 decided it; code checks every number, scoreline and player name against the evidence, then the Fact-checker reviews
 every claim; one rewrite, else a code-written recap. Without `--recaps` the hub shows the code-written ones.
 
-### Match Intelligence as an MCP server (GitHub Copilot)
+### Kairos as an MCP server (GitHub Copilot)
 
 ```
 pip install -e "./stats[mcp]"

@@ -1,9 +1,9 @@
 ---
 agent: 'agent'
-description: 'Write a matchday report from the Match Intelligence tools into docs/reports/'
+description: 'Write a matchday report from the Kairos tools into docs/reports/'
 argument-hint: 'matchday number, e.g. 7'
 ---
-Write the report for matchday ${input:matchday:7} of the Meridian League using the Match Intelligence MCP tools only
+Write the report for matchday ${input:matchday:7} of the Meridian League using the Kairos MCP tools only
 for facts and numbers.
 
 1. `list_matches` for the matchday, then `league_table` (actual and expected).

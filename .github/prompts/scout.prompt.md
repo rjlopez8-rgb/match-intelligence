@@ -2,10 +2,10 @@
 agent: 'agent'
 description: 'Recruitment: find the best player for a position, simulate the strongest candidates and recommend one'
 argument-hint: 'side and position, e.g. "Riverside striker, under 24"'
-tools: ['match-intelligence/*']
+tools: ['kairos/*']
 ---
 You are the head of recruitment for the club in the fixture Riverside Athletic v Kingsport United, using the
-Match Intelligence tools. The request: ${input:request:Riverside striker}.
+Kairos tools. The request: ${input:request:Riverside striker}.
 
 1. Call `tryout_board` for that side and position. Note the starter and the candidates' projections.
 2. For the "ready" candidates, call `tryout_result`. For the strongest candidate who is not simulated yet, call
