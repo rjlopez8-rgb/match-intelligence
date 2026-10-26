@@ -3,6 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/big-shoulders-display@5.3.0/index.css">
 <style>
 /* Layout: the match is the hero, full-bleed like TV; broadcast graphics float on top in frosted glass.
    Single deliberate look: a floodlit night broadcast. */
@@ -463,6 +464,26 @@ body.hasfocus.replay .gfx { top: calc(7vh + 258px); }
 @media (max-width: 1500px) { .seg-label { display: none; } }
 @media (max-width: 480px) { .director { display: none; } .seg { max-width: 100%; overflow-x: auto; scrollbar-width: none; } .controls .row { gap: 6px 8px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation-duration: 0.01s !important; } }
+
+/* Shared identity with the season hub (kit and floodlights): turf-tinted glass, chalk type, the ground's signage face for
+   headlines and the score. Broadcast graphics keep their TV caps (scorebug, captions); the app's own panels read in
+   sentence case like the hub. */
+:root {
+  --night: #0a110e; --ink: #edefe8; --muted: #98a49d; --faint: #66736b;
+  --glass: rgba(10, 18, 15, 0.66); --glass-strong: rgba(9, 15, 13, 0.9); --edge: rgba(237, 239, 232, 0.12);
+  --accent: #edefe8;
+  --display: "Big Shoulders Display Variable", "Big Shoulders Display", "Archivo", sans-serif;
+}
+.yb-top h2, .lower .title, .gfx .gbig, .yb-style b { font-family: var(--display); font-stretch: normal; letter-spacing: 0.01em; }
+.yb-top h2 { font-size: 38px; }
+.lower .title { font-size: 30px; line-height: 1; } .lower.goal .title { font-size: 42px; }
+.yb-style b { font-size: 22px; }
+.bug-score { font-family: var(--display); font-size: 28px; font-weight: 800; background: var(--ink); }
+.seg-label, .panel h3, .deskp h3, .clubp h3, .yb-sec h4, .deskp .onair h4, .rcpt h4, .rcpt .rh, .to-report span, .dir-kicker {
+  text-transform: none; letter-spacing: 0; font-size: 12.5px; }
+.yb-chip[aria-pressed="true"] { color: var(--night); }
+.yb-style span, .yb-follow { color: #c9d0c7; }
+@media (max-width: 760px) { .yb-top h2 { font-size: 30px; } .lower .title { font-size: 21px; } .lower.goal .title { font-size: 28px; } }
 </style>
 
 <div id="stage"></div>
