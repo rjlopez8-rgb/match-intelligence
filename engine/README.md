@@ -2,7 +2,7 @@
 
 `matchengine` simulates complete, football-realistic matches and streams them as a live data feed: **events** (passes, shots, tackles, pressure, possession changes and more) plus **tracking frames** with every player's and the ball's position at up to 10 Hz.
 
-It is the data source for the rest of the project. Everything downstream (stats, agents, overlays, personalization) consumes this feed exactly as it would consume an official match-data provider.
+It is the data source for the rest of Kairos: everything downstream (stats, agents, the 3D broadcast) consumes this feed exactly as it would consume an official match-data provider. The same engine also plays out **what could have happened** (ghost futures), **tries any player in any position** (Club mode) and generates **a whole season** of 56 matches.
 
 ```
 pip install -e ".[dev]"
@@ -49,6 +49,11 @@ The showcase clubs have hand-written stars with storylines the narrative agents 
 | `matchengine scenario scenarios/red_card_turnaround.json --out DIR` | Run a scripted scenario |
 | `matchengine find-seed scenarios/showcase.json --tries 100` | Find a seed whose match follows the scenario's storyline |
 | `matchengine calibrate --matches 24` | Compare simulated averages with real-world ranges |
+| `matchengine season --out ../data/season --demo ../data/demo/riv-kin-1119` | Simulate the full season (56 matches, resumable, parallel) |
+| `matchengine season ... --tracking ../data/matches/season` | Re-play every season match with tracking for the 3D site, checked event for event against the committed season |
+| `matchengine tryout --home RIV --away KIN --side home --position ST --player wes-20 --n 12 --cache DIR` | Club mode: a candidate against the real starter over paired matches |
+| `matchengine board --home RIV --away KIN --n 12 --cache DIR --out board.json` | Recruitment board: rank every candidate for every position, pre-simulate two per position |
+| `matchengine serve --cache DIR` | Live try-out server for the 3D page (engine only, one job at a time, daily cap) |
 | `matchengine schema --out ../docs/schema` | Export JSON Schemas for events, frames and details |
 
 From Python:
@@ -60,6 +65,46 @@ result = simulate_match("RIV", "KIN", seed=7)            # events, frames, meta,
 for kind, item in SyntheticFeed(MatchConfig(home=get_club("RIV"), away=get_club("KIN"), seed=7), speed=0):
     ...                                                   # ("meta" | "event" | "frame", payload)
 ```
+
+## Ghost futures: what could have happened
+
+The engine is deterministic for a seed, so a recorded match can be replayed exactly up to any shot. At that instant
+the whole match state is frozen (positions, fatigue, cards, tactics, the ball in flight) and copied many times. Each
+copy gets its own random stream and plays to full time:
+
+- **What if it had gone in, or been saved?** The shot's outcome is changed the way the engine changes its own, and the
+  same random streams run with and without the change, so the difference between the two sets of futures is that one
+  moment. Results come with a 95% margin of error, a win-probability curve per future, and a featured future replayed
+  with tracking for the 3D ghost timeline.
+- **Ghost Scout: who would have scored it?** The engine's shot model is re-run for the exact same chance (position,
+  pressure, keeper, lane) with every attacker in the league.
+
+Exact replay depends on floating-point details that differ between platforms, so frozen states are recorded on the
+machine that generated the match and shipped with it (`ghost_checkpoints.pkl.gz`, and each season match's turning
+point in `data/season/turning_forks.pkl.gz`); any machine can then play futures from them.
+
+```python
+from matchengine.ghost import load_checkpoint, what_if_shot
+fork = load_checkpoint("../data/demo/riv-kin-1119", shot_event_id)
+result = what_if_shot(meta, shot_event, "shot_scores", n=40, fork=fork)   # with_change, as_it_happened, curves, featured
+```
+
+## Club mode: try any player in any position
+
+`tryout.py` puts a candidate into a copy of the club in place of the starter and plays the fixture `n` times with him
+and `n` times with the starter, on the same seeds (the tried position is protected from substitutions in both). The
+result: expected points from every shot's xG (low noise), results, xG for and against, the player's per-90 line
+against the starter's, and paired differences with 95% margins and a "clear" flag. Runs are cached per seed, so the
+starter's runs serve every try-out in that position. The board ranks every candidate by an attribute projection for
+the role and pre-simulates the top projected and best under-23 player per position, each with a clip of his best
+moment. `matchengine serve` streams new try-outs to the 3D page one match at a time.
+
+## The season
+
+`season.py` builds a double round robin of the eight clubs (14 matchdays, 56 matches, weekly from 12 September) with
+the demo match on its own date, and simulates it in parallel. The committed bundles are small (no tracking). For the
+3D site, `--tracking` re-plays every match on its seed with 5 Hz tracking and compares it with the committed match event
+for event; any difference stops the run with an explanation, so the 3D can never show a different game from the table.
 
 ## Output: a match bundle
 
@@ -102,6 +147,12 @@ Production path: `MatchFeed` is a protocol. Swap `SyntheticFeed` for an adapter 
 ```
 src/matchengine/
   engine.py        main loop: clock, ball, possession, duels, set pieces, discipline, subs, frames
+  ghost.py         frozen match states at shots, paired ghost futures, Ghost Scout
+  tryout.py        Club mode try-outs, recruitment boards, best-moment clips
+  serve.py         live try-out server (HTTP, streams one JSON line per finished match)
+  season.py        the 56-match season and its tracking re-play
+  summary.py       box score from a finished match
+  io.py            writing and reading match bundles
   decisions.py     on-ball decision model (vectorised option evaluation)
   tactics.py       team shape, pressing, cover, marking, runs, set-piece setups
   probability.py   xG, pass interception races, position value
@@ -119,8 +170,8 @@ tests/             contract and behaviour tests (pytest)
 
 ```
 pip install -e ".[dev]"
-pytest              # 19 tests; simulates a full match once
+pytest              # 37 tests
 ruff check src tests
 ```
 
-A full 90-minute match simulates in about 15 seconds on a laptop core. Same seed, same match: everything is deterministic.
+A full 90-minute match simulates in about 15 to 30 seconds per CPU core. Same seed, same platform, same match: everything is deterministic.

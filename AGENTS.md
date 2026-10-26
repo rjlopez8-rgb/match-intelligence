@@ -6,7 +6,7 @@ Python 3.11+, three packages installed in editable mode from one `.venv`:
 - `engine/` (`matchengine`): the 10 Hz match simulator, ghost futures, Club mode try-outs.
 - `stats/` (`matchstats`): stats layer, trained models, key moments, query tools, the 3D viewer, the season hub,
   and the MCP server (`matchstats mcp`).
-- `agents/` (`matchagents`): the AI broadcast desk on Microsoft Foundry (Agent Framework), recaps, the website build.
+- `agents/` (`matchagents`): the nine agents on Microsoft Foundry (the Agent Framework broadcast desk, Recap, Scout), the website build.
 
 ## The Kairos MCP server
 `.vscode/mcp.json` starts it (`python -m matchstats.cli mcp`). Use its tools for any question about matches,
