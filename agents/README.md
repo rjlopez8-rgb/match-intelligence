@@ -20,7 +20,7 @@ flowchart LR
 | Agent | Job | Output |
 |---|---|---|
 | **Producer** | Decides whether the moment airs, the angle, and which specialists to call. Keeps a rundown so it does not repeat itself (one "what if" per half). | `ProducerPlan` |
-| **Analyst** | Researches the moment with the stats layer's 11 tools. Never calculates a number itself. | `AnalystBrief`: facts with values, source tool and evidence event ids |
+| **Analyst** | Researches the moment with the stats layer's 12 tools. Never calculates a number itself. | `AnalystBrief`: facts with values, source tool and evidence event ids |
 | **Telestrator** | Chooses what to draw on the replay (rings, arrows, runs, zones). Code pins each shape to where players really were, from tracking data. | `Telestration` plus pitch coordinates |
 | **Scenario agent** | Turns a "what if" into one precise intervention, which the match engine then simulates: paired ghost futures ("what if it had gone in / been saved?") or Ghost Scout (the same chance taken by every attacker in the league). | `ScenarioSpec` plus simulated results |
 | **Director** | Calls the live camera, the replay sequence (with slow motion) and the on-screen graphic for the 3D viewer. | `DirectorCue` |

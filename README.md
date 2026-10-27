@@ -1,5 +1,7 @@
 # Kairos
 
+![Kairos: the what-if broadcast](docs/img/kairos-cover.png)
+
 **Kairos** (Greek for *the decisive moment*) is an AI football broadcast that explains every key moment, proves every
 number, and plays out what could have happened. Nine AI agents built with **Microsoft Agent Framework** on
 **Microsoft Foundry** run a personalised 3D broadcast of a simulated season; a match engine settles "what if"
@@ -13,6 +15,19 @@ player in any position, including from **GitHub Copilot** through our MCP server
 
 Built for the Microsoft x Premier League *Inside the Game* hackathon (Best Multi-Agent System). All data is
 synthetic: the Meridian League's clubs, players, managers and stadiums are fictional.
+
+## Try it in 2 minutes
+
+[Open Kairos](https://icy-grass-0e64d851e.5.azurestaticapps.net) in your browser; there is nothing to install.
+
+1. Click **Watch the 3D broadcast**. The AI desk covers every key moment; at a "what if" the picture splits into what
+   happened (gold) and the simulated future (cyan).
+2. Pick a style, a language, your club and your player (press **Y** to change them). Same match, your own edition.
+3. Press **R** on any line of commentary for its receipts, including the drafts the Fact-checker rejected, and **D** to
+   see what each agent did.
+4. Press **C** for Club mode: try any player in any position and see, with a margin of error, whether he makes the
+   team better.
+5. Back on the home page: the table, all 56 matches with 3D highlights, and a fact-checked report for every match.
 
 ## What it does
 
@@ -63,8 +78,9 @@ workflow; they share one ledger of tool results, and nothing airs until it has p
 | **Recap** | Writes each season match's report and what decided it, checked the same way |
 | **Scout** | Writes the verdict on each Club mode try-out; every number code-checked against the try-out |
 
-**In the live run** (gpt-5-mini; 10 moments × 18 editions; 561 model calls; $1.33 in total): 107 editions were
-approved first time, 52 after one rewrite, and 21 fell back to verified facts. Nothing unverified aired. Every model
+**In the live run** (gpt-5-mini; 10 moments × 18 editions; 561 model calls; $1.33 in total): 73 of the 180 first
+drafts (41%) were rejected, 31 by code checks and 42 by the Fact-checker. 52 passed after one rewrite and 21 fell back
+to verified facts, so 107 editions were approved first time. Nothing unverified aired. Every model
 call passes a budget guard that refuses to spend past a daily cap ($5 by default), and every paid command asks first.
 
 ## Architecture
@@ -93,7 +109,7 @@ season and checking every match event for event.
 - **Published accuracy.** The xG model scores AUC 0.886 on 33 matches it never saw; the win-probability model's error is 37% below a league-average baseline ([report](docs/MODEL_REPORT.md)).
 - **Honest simulations.** Paired futures on the same random streams, with a margin of error stated every time.
 - **Graceful failure.** A model error, a rejected draft or a spent budget degrades to verified facts, never a crash.
-- **105 tests** across the three packages, run on every push.
+- **100 tests** across the three packages, run on every push.
 
 ## Run it locally
 
@@ -159,7 +175,7 @@ data/sample/  one complete simulated match, used by the tests
 data/demo/    the demo match (Riverside 1-2 Kingsport) with its ghost checkpoints and 44 Club mode try-outs
 data/season/  the 2026/27 season: 56 match bundles, season.json, each match's turning point and what-if
 deploy/       the try-out server's container image
-docs/         deploying, the Copilot demo, event schema, model accuracy, engine calibration, project status
+docs/         deploying, the Copilot demo, event schema, model accuracy, engine calibration
 .github/      CI, the site build and deploy, the image build, Copilot prompt files
 ```
 

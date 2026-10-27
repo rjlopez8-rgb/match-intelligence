@@ -1,4 +1,4 @@
-"""Instructions for the seven agents. Each one has a narrow job and a hard rule about numbers."""
+"""Instructions for the nine agents. Each one has a narrow job and a hard rule about numbers."""
 
 from __future__ import annotations
 
