@@ -16,7 +16,7 @@ What runs where:
 The site build re-plays every season match with tracking on Linux (Ubuntu 24.04, numpy 2.5.3, the platform the season
 was generated on) and checks each one event for event against the committed season; any difference stops the build.
 
-## One-time setup (Ryan: subscription owner and repo admin, ~30 minutes)
+## One-time setup (subscription owner and repo admin, ~30 minutes)
 
 Run in PowerShell with the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli), signed in to the
 hackathon subscription. Every command says what it costs.
