@@ -10,7 +10,7 @@ player in any position, including from **GitHub Copilot** through our MCP server
 
 > Other tools tell you what happened. Kairos shows you what could have happened, and proves it.
 
-**[Watch the 2-minute video](VIDEO_URL)** · **[Try it live](https://icy-grass-0e64d851e.5.azurestaticapps.net)** · [Architecture](#architecture) ·
+**[Watch the 2-minute video](https://youtu.be/FCv4CNPWJLw)** · **[Try it live](https://icy-grass-0e64d851e.5.azurestaticapps.net)** · [Architecture](#architecture) ·
 [Copilot demo](docs/COPILOT_DEMO.md) · [Deploying](docs/DEPLOY.md)
 
 Built for the Microsoft x Premier League *Inside the Game* hackathon (Best Multi-Agent System). All data is
